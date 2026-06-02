@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { SetHtmlLang } from "@/components/set-html-lang";
 
 export const metadata: Metadata = {
   title: "NetTools Hub - Network Tools Navigation Platform",
@@ -32,7 +33,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <SetHtmlLang />
+        {children}
+      </body>
     </html>
   );
 }

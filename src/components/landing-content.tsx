@@ -29,6 +29,14 @@ export function LandingContent() {
       if (newLang === "en") url.searchParams.delete("lang");
       else url.searchParams.set("lang", newLang);
       window.history.replaceState({}, "", url.toString());
+      try {
+        window.localStorage.setItem("nethub.lang", newLang);
+      } catch {
+        /* storage may be disabled */
+      }
+      window.dispatchEvent(
+        new CustomEvent("nethub:langchange", { detail: { lang: newLang } }),
+      );
     }
   };
 

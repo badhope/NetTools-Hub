@@ -1,3 +1,11 @@
+packages:
+  - "."
+
+# Allow these native packages to run install scripts in CI (pnpm 10
+# blocks postinstall scripts by default; Next.js image optimisation needs
+# sharp, Tailwind v4 needs @tailwindcss/oxide, the bundler resolver needs
+# unrs-resolver).
 ignoredBuiltDependencies:
   - sharp
+  - "@tailwindcss/oxide"
   - unrs-resolver

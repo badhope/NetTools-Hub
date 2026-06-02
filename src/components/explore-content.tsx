@@ -53,6 +53,12 @@ export function ExploreContent() {
   const handleLangChange = (newLang: Lang) => {
     setLang(newLang);
     syncUrl({ lang: newLang === "en" ? null : newLang });
+    try {
+      window.localStorage.setItem("nethub.lang", newLang);
+    } catch {
+      /* storage may be disabled */
+    }
+    window.dispatchEvent(new CustomEvent("nethub:langchange", { detail: { lang: newLang } }));
   };
 
   const handleQueryChange = (newQuery: string) => {

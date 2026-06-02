@@ -18,12 +18,11 @@ Because the project is static and dependency-light, security exposure is limited
 
 **Please do not open a public GitHub Issue for security-sensitive reports.**
 
-Instead, use one of these private channels:
+The recommended private channel is **GitHub Security Advisories**:
+<https://github.com/badhope/NetTools-Hub/security/advisories/new>
 
-1. **GitHub Security Advisories** (preferred):
-   <https://github.com/badhope/NetTools-Hub/security/advisories/new>
-2. **Email**: open a private issue against a maintainer via their GitHub profile
-   (<https://github.com/badhope>).
+> 📌 **No dedicated security email** is published. Using GitHub Advisories
+> keeps the report encrypted, scoped, and tracked — please prefer it.
 
 ### What to include
 
