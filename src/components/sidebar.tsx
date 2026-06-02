@@ -4,113 +4,120 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { ProjectCategory, Lang } from "@/types/project";
 import { t } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/language-switcher";
+import { CATEGORY_GROUPS } from "@/lib/category-groups";
 
 interface SidebarProps {
   categories: Record<string, ProjectCategory>;
   counts: Record<string, number>;
   lang: Lang;
-  onLangChange?: (lang: Lang) => void;
+  activeCategory?: string;
 }
 
-export function Sidebar({ categories, counts, lang, onLangChange }: SidebarProps) {
-  const [open, setOpen] = useState(false);
+export function Sidebar({ categories, counts, lang, activeCategory }: SidebarProps) {
+  const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const totalProjects = Object.values(counts).reduce((a, b) => a + b, 0);
 
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
+    if (activeCategory) {
+      const group = CATEGORY_GROUPS.find((g) => g.slugs.includes(activeCategory));
+      if (group) {
+        setCollapsed((prev) => (prev[group.id] ? prev : { ...prev, [group.id]: false }));
+      }
     }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [open]);
+  }, [activeCategory]);
 
-  const toggle = useCallback(() => setOpen((v) => !v), []);
-  const close = useCallback(() => setOpen(false), []);
+  const toggle = useCallback((id: string) => {
+    setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
+  }, []);
+
+  const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
 
   return (
-    <>
-      <button
-        onClick={toggle}
-        className="fixed top-3 right-3 z-[60] flex h-10 w-10 items-center justify-center rounded-lg border border-[#30363d] bg-[#161b22] transition-all duration-200 hover:bg-[#21262d] active:scale-95 lg:hidden"
-        aria-label={open ? t(lang, "sidebar.close") : t(lang, "sidebar.open")}
-      >
-        {open ? (
-          <svg className="h-5 w-5 text-[#e6edf3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        ) : (
-          <svg className="h-5 w-5 text-[#e6edf3]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        )}
-      </button>
-
-      <div
-        className={`fixed inset-0 z-[55] bg-black/60 backdrop-blur-sm transition-all duration-300 lg:hidden ${
-          open ? "opacity-100" : "pointer-events-none opacity-0"
-        }`}
-        onClick={close}
-        aria-hidden="true"
-      />
-
-      <aside
-        className={`fixed right-0 top-0 z-[55] flex h-full w-60 flex-col border-l border-[#30363d] bg-[#161b22] shadow-2xl transition-all duration-300 lg:translate-x-0 lg:right-auto lg:left-0 lg:border-l-0 lg:border-r lg:shadow-none ${
-          open
-            ? "translate-x-0"
-            : "translate-x-full lg:translate-x-0"
-        }`}
-        aria-label={t(lang, "sidebar.nav_label")}
-        role="navigation"
-      >
-        <div className="flex h-14 shrink-0 items-center justify-between border-b border-[#30363d] px-4">
-          <Link href={lang !== "en" ? `/?lang=${lang}` : "/"} onClick={close} className="flex items-center gap-2 text-lg font-bold">
-            <span className="text-xl">🛠️</span>
-            <span className="bg-gradient-to-r from-[#58a6ff] to-[#3fb950] bg-clip-text text-transparent">
-              {t(lang, "site.title")}
-            </span>
-          </Link>
-          <div className="lg:hidden">
-            <LanguageSwitcher lang={lang} onChange={onLangChange} />
-          </div>
-        </div>
-
-        <div className="flex-1 overflow-y-auto p-3">
-          <Link
-            href={lang !== "en" ? `/explore?lang=${lang}` : "/explore"}
-            onClick={close}
-            className="mb-1 flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-[#8b949e] transition-colors hover:bg-[#21262d] hover:text-[#e6edf3]"
-          >
+    <aside
+      className="hidden lg:flex w-64 shrink-0 flex-col border-r border-[#21262d] bg-[#0d1117]"
+      aria-label={t(lang, "sidebar.nav_label")}
+      role="navigation"
+    >
+      <div className="flex-1 overflow-y-auto px-3 py-5">
+        <Link
+          href={langParam("/explore")}
+          className={`mb-5 flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+            !activeCategory
+              ? "bg-[#161b22] text-[#e6edf3] border border-[#30363d]"
+              : "text-[#8b949e] hover:bg-[#161b22] hover:text-[#e6edf3]"
+          }`}
+        >
+          <span className="flex items-center gap-2 truncate">
             <span>📦</span>
-            <span className="flex-1">{t(lang, "sidebar.all_projects")}</span>
-            <span className="rounded-full bg-[#21262d] px-2 py-0.5 text-xs text-[#6e7681]">
-              {totalProjects}
-            </span>
-          </Link>
+            <span className="truncate font-medium">{t(lang, "sidebar.all_projects")}</span>
+          </span>
+          <span className="shrink-0 rounded-md bg-[#21262d] px-1.5 py-0.5 text-[10px] text-[#6e7681]">
+            {totalProjects}
+          </span>
+        </Link>
 
-          {Object.entries(categories).map(([slug, cat]) => {
-            const count = counts[slug] || 0;
-            if (count === 0) return null;
+        <div className="space-y-4">
+          {CATEGORY_GROUPS.map((group) => {
+            const items = group.slugs
+              .map((slug) => ({ slug, cat: categories[slug], count: counts[slug] || 0 }))
+              .filter((item) => item.cat && item.count > 0);
+            if (items.length === 0) return null;
+            const isCollapsed = collapsed[group.id];
             return (
-              <Link
-                key={slug}
-                href={`/explore?category=${slug}${lang !== "en" ? `&lang=${lang}` : ""}`}
-                onClick={close}
-                className="mb-1 flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-[#8b949e] transition-colors hover:bg-[#21262d] hover:text-[#e6edf3]"
-              >
-                <span>{cat.icon}</span>
-                <span className="flex-1">{cat.name}</span>
-                <span className="rounded-full bg-[#21262d] px-2 py-0.5 text-xs text-[#6e7681]">
-                  {count}
-                </span>
-              </Link>
+              <div key={group.id}>
+                <button
+                  onClick={() => toggle(group.id)}
+                  className="mb-1.5 flex w-full items-center justify-between rounded-md px-1 py-1 text-left"
+                >
+                  <span className="flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#6e7681]">
+                    <span>{group.icon}</span>
+                    <span>{t(lang, group.labelKey)}</span>
+                  </span>
+                  <svg
+                    className={`h-3.5 w-3.5 text-[#6e7681] transition-transform duration-200 ${isCollapsed ? "-rotate-90" : ""}`}
+                    fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {!isCollapsed && (
+                  <ul className="space-y-0.5">
+                    {items.map(({ slug, cat, count }) => {
+                      const isActive = activeCategory === slug;
+                      return (
+                        <li key={slug}>
+                          <Link
+                            href={lang !== "en" ? `/explore?category=${slug}&lang=${lang}` : `/explore?category=${slug}`}
+                            className={`flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm transition-colors ${
+                              isActive
+                                ? "bg-[#161b22] text-[#58a6ff] border border-[#58a6ff]/30"
+                                : "text-[#8b949e] hover:bg-[#161b22] hover:text-[#e6edf3]"
+                            }`}
+                          >
+                            <span className="flex items-center gap-2 truncate">
+                              <span>{cat.icon}</span>
+                              <span className="truncate">{cat.name}</span>
+                            </span>
+                            <span className="shrink-0 rounded-md bg-[#21262d] px-1.5 py-0.5 text-[10px] text-[#6e7681]">
+                              {count}
+                            </span>
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
+              </div>
             );
           })}
         </div>
-      </aside>
-    </>
+      </div>
+
+      <div className="border-t border-[#21262d] px-5 py-4 text-[11px] text-[#6e7681]">
+        <div className="flex items-center justify-between">
+          <span>{t(lang, "footer.text")}</span>
+        </div>
+      </div>
+    </aside>
   );
 }

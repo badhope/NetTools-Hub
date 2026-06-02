@@ -34,11 +34,11 @@ export function ProjectCard({ project }: { project: Project }) {
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex flex-col rounded-xl border border-[#30363d] bg-[#161b22] p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#58a6ff]/30 hover:shadow-lg hover:shadow-black/20"
+      className="group flex flex-col rounded-2xl border border-[#30363d] bg-[#161b22] p-6 transition-all duration-200 hover:-translate-y-0.5 hover:border-[#58a6ff]/40 hover:shadow-lg hover:shadow-black/30"
       style={{ borderLeftWidth: "3px", borderLeftColor: project.gradient[0] }}
     >
-      <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="text-sm font-semibold text-[#e6edf3] group-hover:text-[#58a6ff] transition-colors line-clamp-1">
+      <div className="mb-3 flex items-start justify-between gap-3">
+        <h3 className="min-w-0 flex-1 text-[15px] font-semibold leading-snug text-[#e6edf3] group-hover:text-[#58a6ff] transition-colors line-clamp-1 break-all">
           {project.name}
         </h3>
         <div className="flex shrink-0 items-center gap-1 text-xs text-[#6e7681]">
@@ -49,12 +49,12 @@ export function ProjectCard({ project }: { project: Project }) {
         </div>
       </div>
 
-      <p className="mb-3 flex-1 text-xs leading-relaxed text-[#8b949e] line-clamp-2">
+      <p className="mb-5 text-[13px] leading-relaxed text-[#8b949e] line-clamp-2 break-words">
         {project.description}
       </p>
 
-      <div className="mb-3 flex flex-wrap gap-1.5">
-        {project.tags.slice(0, 3).map((tag) => (
+      <div className="mb-5 flex flex-wrap gap-1.5">
+        {project.tags.slice(0, 2).map((tag) => (
           <span
             key={tag}
             className="rounded-md bg-[#21262d] px-2 py-0.5 text-[10px] font-medium text-[#8b949e] border border-[#30363d]"
@@ -62,30 +62,22 @@ export function ProjectCard({ project }: { project: Project }) {
             {tag}
           </span>
         ))}
-        {project.tags.length > 3 && (
+        {project.tags.length > 2 && (
           <span className="rounded-md bg-[#21262d] px-2 py-0.5 text-[10px] text-[#6e7681]">
-            +{project.tags.length - 3}
+            +{project.tags.length - 2}
           </span>
         )}
       </div>
 
-      <div className="flex items-center justify-between text-[10px] text-[#6e7681]">
-        <div className="flex items-center gap-3">
-          <span className="flex items-center gap-1">
-            <span
-              className="inline-block h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: dotColor }}
-            />
-            {project.language}
-          </span>
-          <span className="flex items-center gap-1">
-            <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M5 5.372v.878c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75v-.878a2.25 2.25 0 1 1 1.5 0v.878a2.25 2.25 0 0 1-2.25 2.25h-1.5v2.128a2.251 2.251 0 1 1-1.5 0V8.5h-1.5A2.25 2.25 0 0 1 3.5 6.25v-.878a2.25 2.25 0 1 1 1.5 0ZM5 3.25a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Zm6.75.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm-3 8.75a.75.75 0 1 0-1.5 0 .75.75 0 0 0 1.5 0Z" />
-            </svg>
-            {formatNumber(project.forks)}
-          </span>
+      <div className="mt-auto flex items-center justify-between gap-2 border-t border-[#21262d] pt-4 text-[11px]">
+        <div className="flex items-center gap-1.5 text-[#8b949e]">
+          <span
+            className="inline-block h-2.5 w-2.5 rounded-full"
+            style={{ backgroundColor: dotColor }}
+          />
+          <span className="truncate">{project.language}</span>
         </div>
-        <span className="text-[#8b949e]">{project.author}</span>
+        <span className="truncate text-[#6e7681]">@{project.author}</span>
       </div>
     </Link>
   );
