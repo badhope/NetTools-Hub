@@ -2,10 +2,16 @@ blank_issues_enabled: false
 contact_links:
   - name: 💬 Discussions (Q&A, ideas, show & tell)
     url: https://github.com/badhope/NetTools-Hub/discussions
-    about: Prefer a forum for open-ended conversation? Use GitHub Discussions.
+    about: 'For "how do I…" questions, deployment tips, and open-ended conversation, use GitHub Discussions — it is the recommended channel.'
+  - name: ❓ Ask a Q&A question
+    url: https://github.com/badhope/NetTools-Hub/discussions/new?category=q-a
+    about: 'Direct link to open a new Q&A discussion. This is the fastest way to get help.'
+  - name: 💡 Share an idea
+    url: https://github.com/badhope/NetTools-Hub/discussions/new?category=ideas
+    about: 'Have a feature idea or a suggestion? Start a discussion first — issues are for confirmed work.'
   - name: 🔐 Private security disclosure
     url: https://github.com/badhope/NetTools-Hub/security/advisories/new
-    about: Found a security issue? Report it privately (do NOT open a public issue).
+    about: 'Found a security issue? Report it privately (do NOT open a public issue).'
   - name: 📖 Contributing guide
     url: https://github.com/badhope/NetTools-Hub/blob/main/CONTRIBUTING.md
-    about: How to set up locally, add a project, submit a PR, and write Conventional Commits.
+    about: 'How to set up locally, add a project, submit a PR, and write Conventional Commits.'

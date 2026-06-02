@@ -9,11 +9,18 @@ body:
       value: |
         Have a question? We're happy to help! 💬
 
-        For **security issues**, please follow the private disclosure process in
-        `SECURITY.md` instead — do **not** file a public issue.
-
-        For **English** bug / feature reports, use the dedicated templates:
-        `Bug Report` or `Feature Request`.
+        > **📌 Before opening an issue**, please consider using
+        > [**GitHub Discussions**](https://github.com/badhope/NetTools-Hub/discussions/new?category=q-a)
+        > for "how do I…" questions — it's faster, indexed by search engines,
+        > and easier for the community to help you.
+        >
+        > Use this **issue** template only for questions that **need
+        > maintainer attention** (e.g. a confirmed bug that is unclear,
+        > a deployment issue that blocks your fork, or a contribution
+        > process question that you couldn't resolve via the docs).
+        >
+        > For **security issues**, please follow the private disclosure
+        > process in `SECURITY.md` instead — do **not** file a public issue.
 
   - type: dropdown
     id: language
@@ -38,6 +45,17 @@ body:
         - i18n / translation
         - Contribution workflow
         - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: discussion_check
+    attributes:
+      label: Have you searched existing Discussions & Issues first?
+      options:
+        - "Yes — I searched and couldn't find an answer"
+        - "Yes — found a similar thread, but my question is different"
+        - "No, but I'll search before submitting"
     validations:
       required: true
 

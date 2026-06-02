@@ -1,0 +1,63 @@
+# Release Drafter configuration
+# https://github.com/release-drafter/release-drafter
+# Drafts the next GitHub Release notes from merged PRs and Conventional Commits.
+# The release is **not** created automatically — maintainers hit "Publish" in the
+# Drafts tab when ready. This is the recommended workflow for low-frequency
+# curated releases.
+name-template: "v$RESOLVED_VERSION"
+tag-template: "v$RESOLVED_VERSION"
+version-resolver:
+  major:
+    labels: ["breaking", "breaking-change"]
+  minor:
+    labels: ["feat", "feature", "enhancement"]
+  patch:
+    labels: ["fix", "bug", "docs", "chore", "refactor", "perf", "style", "test", "data"]
+  default: patch
+categories:
+  - title: "🚨 Breaking Changes"
+    labels: ["breaking", "breaking-change"]
+  - title: "✨ Features"
+    labels: ["feat", "feature", "enhancement"]
+  - title: "🐛 Bug Fixes"
+    labels: ["fix", "bug"]
+  - title: "📚 Documentation"
+    labels: ["docs"]
+  - title: "🛠 Refactors & Performance"
+    labels: ["refactor", "perf"]
+  - title: "🧹 Chores & Tooling"
+    labels: ["chore", "style", "test", "ci", "deps"]
+  - title: "📦 Data"
+    labels: ["data"]
+  - title: "🌍 Translations"
+    labels: ["i18n", "translation"]
+  - title: "🔒 Security"
+    labels: ["security"]
+  - title: "📝 Other Changes"
+    labels: ["*"]
+change-template: "- $TITLE (#$NUMBER) @$AUTHOR"
+template: |
+  ## Changes
+
+  $CHANGES
+
+  ## Contributors
+
+  $CONTRIBUTORS
+
+  ---
+
+  **Full Changelog**: https://github.com/badhope/NetTools-Hub/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
+exclude-labels:
+  - "duplicate"
+  - "invalid"
+  - "wontfix"
+  - "question"
+  - "needs-triage"
+no-changes-template: |
+  ## Changes
+
+  No notable changes — this release is a maintenance bump.
+replacers:
+  - search: "/(?:is|fixes|closes|resolves)\\s+(\\w+)\\/(\\w+)?#(\\d+)/gi"
+    replace: "[#$3](https://github.com/badhope/NetTools-Hub/issues/$3)"
