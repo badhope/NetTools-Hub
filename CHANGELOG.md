@@ -17,6 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RSS / Atom feed for new project additions
 - Per-language CHANGELOG (zh/ja) so the file is not English-only
 
+### Added
+- **Release Drafter** workflow: auto-drafts the next GitHub Release from Conventional Commits
+- **CITATION.cff**: enables GitHub's "Cite this repository" button
+- **Issue template** improvements: `question.yml` now nudges Q&A to Discussions; `config.yml` adds direct Q&A / Ideas / Security links
+- Git tag `v0.3.0` is the new baseline for future release drafts
+
 ---
 
 ## [0.3.0] – 2026-06-02
