@@ -11,7 +11,12 @@ interface LanguageSwitcherProps {
 export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
-  const current = LANG_OPTIONS.find((o) => o.value === lang) || LANG_OPTIONS[0];
+  // LANG_OPTIONS is a module-level constant and always has at least one
+  // element (en, zh, ja) — the `!` documents that invariant; under
+  // noUncheckedIndexedAccess, `LANG_OPTIONS[0]` would otherwise be
+  // `{ value, label } | undefined`.
+  const current =
+    LANG_OPTIONS.find((o) => o.value === lang) ?? LANG_OPTIONS[0]!;
 
   useEffect(() => {
     if (!open) return;

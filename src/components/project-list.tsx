@@ -60,7 +60,9 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
   }
 
   const groupedByGroup = CATEGORY_GROUPS.map((group) => {
-    const slugs = group.slugs.filter((s) => stats[s] > 0);
+    // Under noUncheckedIndexedAccess, `stats[s]` is `number | undefined`.
+    // `?? 0` is the safe coercion; an absent stat means "0 projects".
+    const slugs = group.slugs.filter((s) => (stats[s] ?? 0) > 0);
     const groupProjects = slugs.flatMap((slug) => sorted.filter((p) => p.category === slug));
     if (groupProjects.length === 0) return null;
     return { group, groupProjects };
@@ -84,7 +86,7 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
           </div>
 
           <div className="space-y-10">
-            {group.slugs.filter((s) => stats[s] > 0).map((slug) => {
+            {group.slugs.filter((s) => (stats[s] ?? 0) > 0).map((slug) => {
               const catInfo = categories[slug];
               const catProjects = groupProjects.filter((p) => p.category === slug);
               if (catProjects.length === 0) return null;

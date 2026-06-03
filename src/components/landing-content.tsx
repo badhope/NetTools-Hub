@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getAllProjects, getCategoryCounts, getCategories } from "@/lib/projects";
 import { t, Lang } from "@/lib/i18n";
+import type { ProjectCategory } from "@/types/project";
 import { TopNav } from "@/components/top-nav";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 
@@ -191,7 +192,15 @@ export function LandingContent() {
             {CATEGORY_GROUPS.map((group) => {
               const items = group.slugs
                 .map((slug) => ({ slug, cat: categories[slug], count: counts[slug] || 0 }))
-                .filter((item) => item.cat && item.count > 0);
+                // Type predicate: under noUncheckedIndexedAccess, `cat` is
+                // `ProjectCategory | undefined`. The filter callback returns
+                // a boolean, not a type guard, so without an explicit
+                // predicate the type is not narrowed and `item.cat.icon`
+                // below would be a TS error.
+                .filter(
+                  (item): item is { slug: string; cat: ProjectCategory; count: number } =>
+                    item.cat !== undefined && item.count > 0,
+                );
               if (items.length === 0) return null;
               const total = items.reduce((a, b) => a + b.count, 0);
               return (
