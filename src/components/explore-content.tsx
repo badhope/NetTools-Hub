@@ -21,23 +21,55 @@ function isValidLang(value: string | null): value is Lang {
   return value === "en" || value === "zh" || value === "ja";
 }
 
-export function ExploreContent() {
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<SortOption>("default");
-  const [category, setCategory] = useState("");
-  const [lang, setLang] = useState<Lang>("en");
+function isValidSort(value: string | null): value is SortOption {
+  return value === "default" || value === "stars" || value === "name" || value === "updated";
+}
 
+// URL-driven lazy initializers. Same rationale as LandingContent — using
+// a useState lazy initializer avoids a setState-in-useEffect, at the cost
+// of a one-time hydration mismatch for users that visit with a non-default
+// ?lang / ?q / ?sort / ?category. The mismatch is benign: React patches
+// the DOM to the correct values before paint.
+function readInitialLang(): Lang {
+  if (typeof window === "undefined") return "en";
+  const v = new URLSearchParams(window.location.search).get("lang");
+  return isValidLang(v) ? v : "en";
+}
+function readInitialQuery(): string {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("q") ?? "";
+}
+function readInitialSort(): SortOption {
+  if (typeof window === "undefined") return "default";
+  const v = new URLSearchParams(window.location.search).get("sort");
+  return isValidSort(v) ? v : "default";
+}
+function readInitialCategory(): string {
+  if (typeof window === "undefined") return "";
+  return new URLSearchParams(window.location.search).get("category") ?? "";
+}
+
+export function ExploreContent() {
+  const [query, setQuery] = useState<string>(readInitialQuery);
+  const [sort, setSort] = useState<SortOption>(readInitialSort);
+  const [category, setCategory] = useState<string>(readInitialCategory);
+  const [lang, setLang] = useState<Lang>(readInitialLang);
+
+  // Re-sync with the URL on browser back / forward. The setState calls are
+  // inside the popstate event handler — not in the useEffect body — so this
+  // satisfies `react-hooks/set-state-in-effect`. The four readInitial*()
+  // helpers are module-level and capture no closure state, so they don't
+  // need to be in the dep array (and adding them would force the listener
+  // to re-attach on every render).
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    const params = new URLSearchParams(window.location.search);
-    const urlLang = params.get("lang");
-    if (isValidLang(urlLang)) setLang(urlLang);
-    const urlQuery = params.get("q") || "";
-    if (urlQuery) setQuery(urlQuery);
-    const urlSort = (params.get("sort") as SortOption) || "default";
-    if (["default", "stars", "name", "updated"].includes(urlSort)) setSort(urlSort);
-    const urlCat = params.get("category") || "";
-    if (urlCat) setCategory(urlCat);
+    const onPop = () => {
+      setLang(readInitialLang());
+      setQuery(readInitialQuery());
+      setSort(readInitialSort());
+      setCategory(readInitialCategory());
+    };
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
 
   const syncUrl = useCallback((updates: Record<string, string | null>) => {

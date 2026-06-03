@@ -14,12 +14,29 @@ function readLangFromUrl(): Lang | null {
   return null;
 }
 
-export function LandingContent() {
-  const [lang, setLang] = useState<Lang>("en");
+// Read the initial language from the URL. Used as a useState lazy initializer
+// so the value is captured once at mount and does not require a setState call
+// inside a useEffect (which React 19's `react-hooks/set-state-in-effect` rule
+// flags as a cascading-render anti-pattern). The trade-off is a one-time
+// hydration mismatch warning for users that land on `/?lang=zh|ja` — the
+// static-export build always bakes the page in English, so the client first
+// render differs from the SSR HTML when ?lang= is present. React patches
+// the DOM to the correct value before paint, so the user sees the right
+// language immediately.
+function readInitialLang(): Lang {
+  return readLangFromUrl() ?? "en";
+}
 
+export function LandingContent() {
+  const [lang, setLang] = useState<Lang>(readInitialLang);
+
+  // Keep state in sync with browser back / forward navigation. The setLang
+  // call is inside the popstate event handler — not in the useEffect body —
+  // so this satisfies `react-hooks/set-state-in-effect`.
   useEffect(() => {
-    const fromUrl = readLangFromUrl();
-    if (fromUrl && fromUrl !== lang) setLang(fromUrl);
+    const onPop = () => setLang(readInitialLang());
+    window.addEventListener("popstate", onPop);
+    return () => window.removeEventListener("popstate", onPop);
   }, []);
 
   const handleLangChange = (newLang: Lang) => {

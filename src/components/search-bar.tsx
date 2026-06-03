@@ -13,9 +13,25 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
   const [inputValue, setInputValue] = useState(value);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // Sync local input state with the parent's debounced value. The two-way
+  // mirror (parent.value → inputValue via useEffect, inputValue → parent
+  // via debounced onChange) is the standard pattern for a debounced
+  // controlled input: the input must update on every keystroke (otherwise
+  // the user sees the input lag behind their typing) while the parent
+  // state lags by 300ms for the actual search filter.
+  //
+  // React 19's `react-hooks/set-state-in-effect` rule would normally flag
+  // the setInputValue call below, but in this case the cascade is bounded
+  // — the useEffect only fires when `value` actually changes (via the
+  // exhaustive-deps array), and setting inputValue to a string-equal
+  // value is a no-op in React. The standard escape hatch is to disable
+  // the rule for this single setState call; the comment above documents
+  // why.
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setInputValue(value);
   }, [value]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     return () => {

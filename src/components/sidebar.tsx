@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Link from "next/link";
 import { ProjectCategory } from "@/types/project";
 import { Lang } from "@/lib/i18n";
@@ -15,17 +15,19 @@ interface SidebarProps {
 }
 
 export function Sidebar({ categories, counts, lang, activeCategory }: SidebarProps) {
+  // User-controlled collapse state. The group containing the active
+  // category is always shown expanded — this is derived at render time
+  // (see activeGroupId below) instead of being patched in via useEffect.
+  // The previous implementation ran a useEffect on every activeCategory
+  // change to set `collapsed[group.id] = false`, which React 19's
+  // `react-hooks/set-state-in-effect` rule correctly flags as the
+  // cascading-render anti-pattern.
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
   const totalProjects = Object.values(counts).reduce((a, b) => a + b, 0);
 
-  useEffect(() => {
-    if (activeCategory) {
-      const group = CATEGORY_GROUPS.find((g) => g.slugs.includes(activeCategory));
-      if (group) {
-        setCollapsed((prev) => (prev[group.id] ? prev : { ...prev, [group.id]: false }));
-      }
-    }
-  }, [activeCategory]);
+  const activeGroupId = activeCategory
+    ? CATEGORY_GROUPS.find((g) => g.slugs.includes(activeCategory))?.id
+    : undefined;
 
   const toggle = useCallback((id: string) => {
     setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -63,7 +65,11 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
               .map((slug) => ({ slug, cat: categories[slug], count: counts[slug] || 0 }))
               .filter((item) => item.cat && item.count > 0);
             if (items.length === 0) return null;
-            const isCollapsed = collapsed[group.id];
+            // The active group is always shown expanded, regardless of the
+            // user's stored `collapsed` preference. This makes the "auto-
+            // expand on navigate" behaviour derive from props at render time
+            // rather than being patched in via setState in a useEffect.
+            const isCollapsed = group.id !== activeGroupId && Boolean(collapsed[group.id]);
             return (
               <div key={group.id}>
                 <button
