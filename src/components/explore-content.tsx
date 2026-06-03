@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useDeferredValue, useMemo, useRef } from "react";
+import { useState, useEffect, useDeferredValue, useMemo, useRef } from "react";
 import { Sidebar } from "@/components/sidebar";
 import { StatsBar } from "@/components/stats-bar";
 import { SearchBar, SearchBarHandle } from "@/components/search-bar";
@@ -16,7 +16,7 @@ import {
   getCategoryCount,
 } from "@/lib/projects";
 import { useClientLang } from "@/lib/use-client-lang";
-import { t, Lang, readLangFromUrl } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 import { SortOption } from "@/types/project";
 import { getGroupOfSlug } from "@/lib/category-groups";
 import { CategoryMark } from "@/components/category-mark";
@@ -34,27 +34,25 @@ const CATEGORIES = getCategories();
 const TOTAL_STARS = getTotalStars();
 const CATEGORY_COUNT = getCategoryCount();
 
-// The four URL-driven pieces of state — `lang`, `query`, `sort`,
-// `category` — must be initialised with the *server* value during
-// `useState`'s lazy initializer. If the client-side `readUrlState`
-// returned `?category=foo` while the SSR HTML was rendered without
-// the filter, React 19 would throw hydration error #418 ("text
-// content did not match") on the first paint.
+// Read the three URL-driven filter values (`q`, `sort`, `category`).
 //
-// The URL values are then re-read inside the mount effect (below)
-// and applied as a controlled state update. This is the documented
-// escape hatch for the `react-hooks/set-state-in-effect` rule:
-// `window.location` is only available on the client, so we *must*
-// do this inside an effect to avoid a window-touching render on
-// the server.
-function readUrlState() {
-  if (typeof window === "undefined") {
-    return { lang: "en" as Lang, query: "", sort: "default" as SortOption, category: "" };
-  }
+// This is intentionally client-only: it touches `window.location`.
+// The component's `useState` initializers must NOT call it directly
+// — the static prerender runs them on the server, where `window` is
+// undefined, and the call would also mismatch the prerender's empty
+// state. The first read happens in the mount effect, which is fine
+// because effects only run on the client after hydration.
+//
+// Kept as a module-scope helper (not a hook) because it has no React
+// dependencies — it just parses the current URL.
+function readUrlFilters(): {
+  query: string;
+  sort: SortOption;
+  category: string;
+} {
   const sp = new URLSearchParams(window.location.search);
   const sortV = sp.get("sort");
   return {
-    lang: readLangFromUrl(),
     query: sp.get("q") ?? "",
     sort: isValidSort(sortV) ? sortV : "default",
     category: sp.get("category") ?? "",
@@ -62,16 +60,18 @@ function readUrlState() {
 }
 
 export function ExploreContent() {
-  // Lazy initializers use the SSR value (always empty / "en" / default).
-  // The mount effect below applies the real URL state on the client.
+  // SSR-safe initial values: always the empty / default state. This
+  // matches the prerendered HTML and is the only way to keep React
+  // 19 happy during hydration (text content must agree between
+  // server render and the *first* client render). The mount effect
+  // below swaps in the real URL values once hydration is done.
   const [query, setQuery] = useState<string>("");
   const [sort, setSort] = useState<SortOption>("default");
   const [category, setCategory] = useState<string>("");
-  // `lang` and `handleLangChange` come from the shared hook so the
-  // URL/storage/event triplet is in lockstep with every other page
-  // that renders localised text. The three `useState`s above still
-  // sync on `popstate` from the URL (line ~123) — that effect is
-  // unaffected.
+  // `lang` and the language setter come from the shared
+  // `useClientLang` hook, which now centralises the popstate +
+  // `nethub:langchange` coordination for every page that renders
+  // localised text (see `lib/use-client-lang.ts`).
   const [lang, handleLangChange] = useClientLang();
   const searchRef = useRef<SearchBarHandle | null>(null);
 
@@ -107,40 +107,42 @@ export function ExploreContent() {
     return () => document.removeEventListener("keydown", onKey);
   }, []);
 
-  // Sync the three URL-driven pieces of UI state (query, sort,
-  // category) on mount and on every popstate (browser back/forward).
-  // `lang` is now driven by the shared `useClientLang` hook, which
-  // listens for `nethub:langchange` — we re-dispatch that event
-  // here so a `popstate` (e.g. user clicks a translated
-  // `/explore?lang=zh` link in a new tab) propagates through to the
-  // hook without each consumer needing its own URL listener. This
-  // is the documented escape hatch for the
-  // `react-hooks/set-state-in-effect` rule: `readUrlState()` reads
-  // `window.location`, which is only available on the client, so
-  // we *must* do this inside an effect to avoid a window-touching
-  // render on the server. The three remaining setState calls fire
-  // on the same event tick so React batches them into a single
-  // re-render.
+  // Hydration bridge for the three URL-driven filters.
+  //
+  //   - On mount, read the real values from the URL and apply them
+  //     as controlled state updates. This is the *only* place these
+  //     three `useState`s are populated client-side after the empty
+  //     SSR render, and the `react-hooks/set-state-in-effect` rule
+  //     is satisfied because the `setState` is in the effect body —
+  //     i.e. it is exactly the pattern the rule describes as the
+  //     legitimate escape hatch (cannot read `window.location`
+  //     during render, so the read must happen post-mount).
+  //   - On `popstate`, re-apply the URL values so browser
+  //     back/forward keeps the filter in sync. The `lang` change
+  //     that can ride along on `popstate` is handled by
+  //     `useClientLang`, so this listener only touches the three
+  //     filter pieces.
+  //
+  // We do NOT call `onPop()` synchronously inside this effect the
+  // way the previous version did — that would set the filter
+  // state during the same tick as hydration, and React 19 considers
+  // *any* synchronous setState in an effect body a violation of
+  // the rule. The mount effect runs after hydration, so a single
+  // `setQuery/setSort/setCategory` round trip is all that is
+  // needed to apply the URL.
   useEffect(() => {
-    const onPop = () => {
-      const next = readUrlState();
+    const applyFromUrl = () => {
+      const next = readUrlFilters();
       setQuery(next.query);
       setSort(next.sort);
       setCategory(next.category);
-      // Propagate the language change (if any) to other consumers.
-      // We use `setLangAndPersist`-shaped logic but without the
-      // URL/storage write — the URL is the *source* of this update,
-      // not the destination.
-      window.dispatchEvent(
-        new CustomEvent("nethub:langchange", { detail: { lang: next.lang } }),
-      );
     };
-    onPop();
-    window.addEventListener("popstate", onPop);
-    return () => window.removeEventListener("popstate", onPop);
+    applyFromUrl();
+    window.addEventListener("popstate", applyFromUrl);
+    return () => window.removeEventListener("popstate", applyFromUrl);
   }, []);
 
-  const syncUrl = useCallback((updates: Record<string, string | null>) => {
+  const syncUrl = (updates: Record<string, string | null>) => {
     if (typeof window === "undefined") return;
     const url = new URL(window.location.href);
     for (const [k, v] of Object.entries(updates)) {
@@ -148,7 +150,7 @@ export function ExploreContent() {
       else url.searchParams.set(k, v);
     }
     window.history.replaceState({}, "", url.toString());
-  }, []);
+  };
 
   const handleQueryChange = (newQuery: string) => {
     setQuery(newQuery);
@@ -217,35 +219,60 @@ export function ExploreContent() {
               </div>
             </div>
 
-            {category && (
-              <div className="border-t border-line px-5 py-5 sm:px-8">
-                <div className="flex flex-wrap items-end justify-between gap-4">
-                  <div className="flex min-w-0 items-end gap-4">
+            <div className="border-t border-line px-5 py-5 sm:px-8">
+              <div className="flex flex-wrap items-end justify-between gap-4">
+                <div className="flex min-w-0 items-end gap-4">
+                  {category ? (
                     <CategoryMark
                       slug={category}
                       size={32}
                       className="shrink-0 text-fg-2"
                     />
-                    <div className="min-w-0">
-                      <div className="kicker">
-                        {activeGroup
-                          ? `${t(lang, "editorial.plate", { n: activeGroup.id.toUpperCase() })} — ${t(lang, activeGroup.labelKey)}`
-                          : t(lang, "editorial.section.curated")}
-                      </div>
-                      <h1 className="mt-1 truncate font-display text-2xl leading-tight text-fg sm:text-3xl">
-                        {t(lang, "category.header", {
-                          name: CATEGORIES[category]?.name || category.replace(/_/g, " "),
-                        })}
-                      </h1>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-4 font-mono text-[11px] text-muted">
-                    {/* `aria-live="polite"` lets screen-reader users hear
-                     *  the new result count without it interrupting the
-                     *  user mid-typing. */}
-                    <span aria-live="polite">
-                      {t(lang, "list.results_count", { count: filtered.length })}
+                  ) : (
+                    <span
+                      aria-hidden
+                      className="grid h-8 w-8 shrink-0 place-items-center text-fg-3"
+                    >
+                      {/* Compass mark in lieu of a per-category glyph
+                       *  for the un-filtered "all" view. */}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2}>
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M15.5 8.5l-2 5-5 2 2-5z" />
+                      </svg>
                     </span>
+                  )}
+                  <div className="min-w-0">
+                    <div className="kicker">
+                      {category
+                        ? `${t(lang, "editorial.plate", {
+                            n: activeGroup
+                              ? activeGroup.id.toUpperCase()
+                              : "—",
+                          })} — ${
+                            activeGroup
+                              ? t(lang, activeGroup.labelKey)
+                              : t(lang, "editorial.section.curated")
+                          }`
+                        : t(lang, "editorial.section.curated")}
+                    </div>
+                    <h1 className="mt-1 truncate font-display text-2xl leading-tight text-fg sm:text-3xl">
+                      {category
+                        ? t(lang, "category.header", {
+                            name:
+                              CATEGORIES[category]?.name || category.replace(/_/g, " "),
+                          })
+                        : t(lang, "explore.title")}
+                    </h1>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4 font-mono text-[11px] text-muted">
+                  {/* `aria-live="polite"` lets screen-reader users hear
+                   *  the new result count without it interrupting the
+                   *  user mid-typing. */}
+                  <span aria-live="polite">
+                    {t(lang, "list.results_count", { count: filtered.length })}
+                  </span>
+                  {category && (
                     <button
                       onClick={() => {
                         setCategory("");
@@ -268,10 +295,10 @@ export function ExploreContent() {
                       </svg>
                       <span>{t(lang, "empty.clear")}</span>
                     </button>
-                  </div>
+                  )}
                 </div>
               </div>
-            )}
+            </div>
           </div>
 
           {filtered.length === 0 ? (

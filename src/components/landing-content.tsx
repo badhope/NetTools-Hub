@@ -110,7 +110,7 @@ export function LandingContent() {
           <div className="reveal reveal-1 flex flex-col">
             <div className="mb-8 flex items-center gap-3">
               <span className="kicker">
-                {t(lang, "editorial.eyebrow")}
+                {t(lang, "editorial.hero_atlas")}
               </span>
               <span className="h-px flex-1 bg-dim" />
               <span className="font-mono text-[10px] text-muted">
@@ -119,7 +119,7 @@ export function LandingContent() {
             </div>
 
             <h1 className="font-display text-[clamp(2.5rem,7vw,5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-fg">
-              <span className="text-fg-3">{t(lang, "editorial.eyebrow")}</span>
+              <span className="text-fg-3">{t(lang, "editorial.hero_atlas")}</span>
               <span aria-hidden className="mx-3 text-accent">/</span>
               <span className="text-accent">
                 {t(lang, "editorial.hero_title")}

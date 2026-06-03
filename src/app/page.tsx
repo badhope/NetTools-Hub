@@ -1,4 +1,5 @@
 import { LandingContent } from "@/components/landing-content";
+import { safeJsonLd } from "@/lib/utils";
 
 // JSON-LD WebSite + Organization schema for the landing page.
 // Search engines use this to build rich results (sitelinks
@@ -39,13 +40,14 @@ export default function LandingPage() {
     <>
       <script
         type="application/ld+json"
-        // `dangerouslySetInnerHTML` is safe here: the payload is
-        // 100% static, authored at build time, and never touches
-        // user input. The Next.js CSP already restricts
-        // `script-src` to `'self' 'unsafe-inline'` for the
-        // Next-injected hydration scripts; this is the same
-        // exception class.
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }}
+        // `dangerouslySetInnerHTML` is the documented Next.js pattern
+        // for an inline JSON-LD payload. The content goes through
+        // `safeJsonLd` so any project `description` that happens to
+        // contain `<`, `>`, or `&` (e.g. `<script>...` pasted by a
+        // contributor) is escaped to its `\uXXXX` form before it
+        // reaches the HTML — closing the `</script>`-injection
+        // vector that raw `JSON.stringify` leaves open.
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(siteJsonLd) }}
       />
       <LandingContent />
     </>

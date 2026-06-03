@@ -1,18 +1,18 @@
 "use client";
 
 import { useEffect } from "react";
-import { LANG_HTML_LANG, Lang } from "@/lib/i18n";
+import { LANG_HTML_LANG } from "@/lib/i18n";
 import { useClientLang } from "@/lib/use-client-lang";
 
 /**
  * Keeps `<html lang>` in sync with the client-side language state.
  *
  * The static export prerenders the document with `<html lang="en">`
- * (see `app/layout.tsx`), so we have to push the real language to the
- * DOM in a post-mount effect. We listen on the same
- * `nethub:langchange` event used by `setLangAndPersist` so any
- * language switch — from any component — updates the attribute
- * without prop-drilling a callback through the layout tree.
+ * (see `app/layout.tsx`); the real language is resolved post-mount
+ * by `useClientLang`, and we mirror that into `document.documentElement.lang`
+ * here so assistive tech and the browser's hyphenation engine pick
+ * the right language *immediately* after hydration, without waiting
+ * for the next user interaction.
  *
  * `tabIndex={-1}` is *not* on this element; the actual skip-link
  * target is the `<main id="main">` deeper in the tree, and giving
@@ -21,11 +21,8 @@ import { useClientLang } from "@/lib/use-client-lang";
  */
 export function SetHtmlLang() {
   const [lang] = useClientLang();
-
   useEffect(() => {
-    if (typeof document === "undefined") return;
-    document.documentElement.lang = LANG_HTML_LANG[lang as Lang];
+    document.documentElement.lang = LANG_HTML_LANG[lang];
   }, [lang]);
-
   return null;
 }

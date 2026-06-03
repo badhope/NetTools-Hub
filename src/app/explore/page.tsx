@@ -1,5 +1,6 @@
 import { ExploreContent } from "@/components/explore-content";
 import { getAllProjects } from "@/lib/projects";
+import { safeJsonLd } from "@/lib/utils";
 
 // JSON-LD `ItemList` for the explore page. The list is the same
 // 120+ projects that the page renders, in the same default order
@@ -42,7 +43,7 @@ export default function ExplorePage() {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
+        dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }}
       />
       <ExploreContent />
     </>

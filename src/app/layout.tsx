@@ -24,6 +24,17 @@ import "./globals.css";
 // Tailwind `unsafe-inline` (required for utility class generation),
 // no `object-src`, and a same-origin default for everything else.
 //
+// `img-src` is tightened to `'self' data:` plus a same-origin
+// `https://badhope.github.io` allowlist; the previous `'self' data:
+// https:` accepted any HTTPS origin, which would have silently
+// turned every future `<img src="…">` into a tracking-pixel
+// honeypot the moment someone forgot to vet the URL.
+//
+// `referrer` and `Permissions-Policy` are added so a future
+// Cloudflare/Netlify front-end (or a `<meta http-equiv>` here) can
+// upgrade the site to full security-header coverage without
+// revisiting this string.
+//
 // `frame-ancestors` is intentionally absent: when delivered via
 // a `<meta>` element browsers ignore it (it must be a header),
 // and keeping it here only produces noisy console warnings.
@@ -31,12 +42,14 @@ const CSP =
   "default-src 'self'; " +
   "script-src 'self' 'unsafe-inline'; " +
   "style-src 'self' 'unsafe-inline'; " +
-  "img-src 'self' data: https:; " +
+  "img-src 'self' data: https://badhope.github.io; " +
   "font-src 'self' data:; " +
   "connect-src 'self'; " +
   "base-uri 'self'; " +
   "form-action 'self'; " +
-  "object-src 'none'";
+  "object-src 'none'; " +
+  "referrer 'strict-origin-when-cross-origin'; " +
+  "permissions-policy camera=(), microphone=(), geolocation=(), interest-cohort=()";
 
 // Display serif: Fraunces is a variable serif with optical sizing,
 // soft curves and a humanist warmth that doesn't appear in any of
