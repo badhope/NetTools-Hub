@@ -2,22 +2,28 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { getAllProjects, getCategoryCounts, getCategories } from "@/lib/projects";
-import { t, Lang } from "@/lib/i18n";
+import {
+  getAllProjects,
+  getCategoryCounts,
+  getCategories,
+  getLastUpdated,
+} from "@/lib/projects";
+import { t, Lang, readLangFromUrl } from "@/lib/i18n";
 import { TopNav } from "@/components/top-nav";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { GroupMark, SiteMark } from "@/components/category-mark";
 import { formatNumber } from "@/lib/utils";
 
-// Read the current language from the URL. Safe on both server and client.
-function readLangFromUrl(): Lang {
-  // Default to "en" on the server (the static export bakes the page in
-  // English); on the client, honour ?lang= when it is a valid value.
-  if (typeof window === "undefined") return "en";
-  const urlLang = new URLSearchParams(window.location.search).get("lang");
-  if (urlLang === "en" || urlLang === "zh" || urlLang === "ja") return urlLang;
-  return "en";
-}
+// `lastUpdated` is read from data/projects.json at module load and
+// shared across the whole landing render. The field is the source of
+// truth for "last indexed" — hard-coding a date here would silently
+// drift the moment the data file is updated.
+const LAST_UPDATED = getLastUpdated();
+
+// Total stars is derived from the same static dataset, so it can be
+// hoisted alongside `LAST_UPDATED` and computed exactly once for the
+// lifetime of the bundle.
+const TOTAL_STARS = getAllProjects().reduce((sum, p) => sum + p.stars, 0);
 
 const FEATURES = [
   {
@@ -88,13 +94,13 @@ export function LandingContent() {
     }
   };
 
+  // Static, immutable for the lifetime of the bundle — see the
+  // module-scope definitions of `LAST_UPDATED` and `TOTAL_STARS`.
   const projects = getAllProjects();
   const counts = getCategoryCounts();
   const categories = getCategories();
   const totalProjects = projects.length;
-  const totalStars = projects.reduce((sum, p) => sum + p.stars, 0);
   const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
-  const lastUpdated = "2026-06-01";
 
   return (
     <div className="min-h-screen bg-bg text-fg">
@@ -170,7 +176,7 @@ export function LandingContent() {
 
               <span className="flex items-baseline gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                {t(lang, "editorial.last_indexed")} · {lastUpdated}
+                {t(lang, "editorial.last_indexed")} · {LAST_UPDATED}
               </span>
             </div>
           </div>
@@ -200,7 +206,7 @@ export function LandingContent() {
                   {t(lang, "stats.total_stars")}
                 </dt>
                 <dd className="font-display text-3xl leading-none text-fg">
-                  {(totalStars / 1000000).toFixed(1)}
+                  {(TOTAL_STARS / 1000000).toFixed(1)}
                   <span className="ml-1 text-base text-fg-2">M</span>
                 </dd>
               </div>
@@ -218,7 +224,7 @@ export function LandingContent() {
         <div className="mx-auto flex max-w-6xl items-center gap-4 border-t border-line px-5 py-5 sm:px-8">
           <SiteMark size={14} className="shrink-0 text-fg-2" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-            Folio 01 · Six groups · 21 categories · {formatNumber(totalStars)} cumulative stars
+            Folio 01 · Six groups · 21 categories · {formatNumber(TOTAL_STARS, lang)} cumulative stars
           </span>
           <span className="ml-auto font-mono text-[10px] text-muted">
             {t(lang, "editorial.edition", { date: "2026" })}
@@ -254,7 +260,7 @@ export function LandingContent() {
               >
                 <span className="editorial-index" data-index={f.fig}>
                   <span className="font-mono text-[11px] text-muted">
-                    {t(lang, f.key, { total: totalProjects, stars: (totalStars / 1000000).toFixed(1) })}
+                    {t(lang, f.key, { total: totalProjects, stars: (TOTAL_STARS / 1000000).toFixed(1) })}
                   </span>
                 </span>
                 <p className="text-[13.5px] leading-[1.7] text-fg-2">
@@ -421,7 +427,7 @@ export function LandingContent() {
             </div>
             <div>
               <span className="kicker">— {t(lang, "editorial.last_indexed")}</span>
-              <p className="mt-3 font-display text-lg text-fg">{lastUpdated}</p>
+              <p className="mt-3 font-display text-lg text-fg">{LAST_UPDATED}</p>
               <p className="mt-3 max-w-xs text-[11px] leading-relaxed text-muted">
                 {t(lang, "footer.disclaimer")}
               </p>

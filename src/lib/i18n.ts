@@ -3,15 +3,6 @@ export type Lang = "en" | "zh" | "ja";
 const translations: Record<Lang, Record<string, string>> = {
   en: {
     "site.title": "NetTools Hub",
-    "site.description": "One-stop navigation platform for network tools, proxies, VPNs, and more",
-    "hero.title1": "Network Tools",
-    "hero.title2": "One-Stop Navigation",
-    "hero.description": "Curating proxy tools, VPNs, Clash family, GitHub acceleration, router plugins, DNS tools, security tools & more — {total}+ hand-picked projects to help you find the right network tools.",
-    "hero.browse": "Browse",
-    "hero.explore": "Explore",
-    "hero.explore_platform": "Explore Platform",
-    "hero.learn_more": "Learn More",
-    "hero.updated": "Actively Updated · 2026",
     "features.title": "Why NetTools Hub",
     "features.subtitle": "Discover, search, and filter the network tools you need — all in one place",
     "features.curated": "{total}+ Curated Projects",
@@ -51,8 +42,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "sort.stars": "⭐ Stars",
     "sort.name": "🔤 Name",
     "sort.updated": "🕐 Updated",
-    "list.not_found": "No matching projects found",
-    "list.try_again": "Try different keywords",
     "list.found": "Found {count} projects",
     "empty.title": "No projects to show",
     "empty.description": "Try removing the search keyword or selecting a different category.",
@@ -72,6 +61,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.explore": "Explore",
     "nav.menu": "Menu",
     "nav.close": "Close",
+    "nav.switch_language": "Switch language",
     "404.title": "404 - Page Not Found",
     "404.description": "This category or page does not exist",
     "404.back": "← Back to Home",
@@ -81,7 +71,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "error.explore_title": "Failed to load projects",
     "error.explore_desc": "Something went wrong while loading the project list.",
     "error.explore_retry": "Retry",
-    "loading.explore": "Loading...",
     // Editorial atlas chrome (design-language strings, not page content).
     "editorial.eyebrow": "An Atlas of",
     "editorial.subtitle":
@@ -97,20 +86,10 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "Colophon",
     "editorial.compiled_by": "Compiled by",
     "editorial.edition": "Edition I · {date}",
-    "editorial.folio": "Folio {n}",
-    "editorial.summary": "{n} entries · {m} groups · indexed daily",
+    "editorial.summary": "{n} entries · {m} categories · indexed daily",
   },
   zh: {
     "site.title": "NetTools Hub",
-    "site.description": "网络工具、代理、VPN 一站式导航平台",
-    "hero.title1": "网络工具",
-    "hero.title2": "一站式导航",
-    "hero.description": "汇集代理工具、VPN、Clash 家族、GitHub 加速、路由器插件、DNS 工具、安全工具等 — {total}+ 个精选项目，帮你快速找到合适的网络工具。",
-    "hero.browse": "浏览",
-    "hero.explore": "探索",
-    "hero.explore_platform": "探索平台",
-    "hero.learn_more": "了解更多",
-    "hero.updated": "持续更新 · 2026",
     "features.title": "为什么选择 NetTools Hub",
     "features.subtitle": "发现、搜索、筛选你需要的网络工具 — 一站式搞定",
     "features.curated": "{total}+ 个精选项目",
@@ -150,8 +129,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "sort.stars": "⭐ 星数",
     "sort.name": "🔤 名称",
     "sort.updated": "🕐 更新",
-    "list.not_found": "未找到匹配的项目",
-    "list.try_again": "试试其他关键词",
     "list.found": "找到 {count} 个项目",
     "empty.title": "没有可显示的项目",
     "empty.description": "尝试清除搜索关键词或选择其他分类。",
@@ -171,6 +148,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.explore": "探索",
     "nav.menu": "菜单",
     "nav.close": "关闭",
+    "nav.switch_language": "切换语言",
     "404.title": "404 - 页面未找到",
     "404.description": "该分类或页面不存在",
     "404.back": "← 返回首页",
@@ -180,7 +158,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "error.explore_title": "加载项目失败",
     "error.explore_desc": "加载项目列表时出现问题。",
     "error.explore_retry": "重试",
-    "loading.explore": "加载中...",
     // Editorial atlas chrome.
     "editorial.eyebrow": "一本",
     "editorial.subtitle":
@@ -196,20 +173,10 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "版权页",
     "editorial.compiled_by": "编纂",
     "editorial.edition": "第一版 · {date}",
-    "editorial.folio": "第 {n} 页",
-    "editorial.summary": "{n} 个条目 · {m} 个分组 · 每日更新",
+    "editorial.summary": "{n} 个条目 · {m} 个分类 · 每日更新",
   },
   ja: {
     "site.title": "NetTools Hub",
-    "site.description": "ネットワークツール、プロキシ、VPNの一元ナビゲーションプラットフォーム",
-    "hero.title1": "ネットワークツール",
-    "hero.title2": "オールインワンナビ",
-    "hero.description": "プロキシツール、VPN、Clashファミリー、GitHub高速化、ルータープラグイン、DNSツール、セキュリティツールなど — {total}+ の厳選プロジェクトであなたに最適なネットワークツールが見つかります。",
-    "hero.browse": "ブラウズ",
-    "hero.explore": "探索",
-    "hero.explore_platform": "プラットフォーム",
-    "hero.learn_more": "詳しくは",
-    "hero.updated": "継続更新 · 2026",
     "features.title": "NetTools Hubの特徴",
     "features.subtitle": "必要なネットワークツールを発見、検索、フィルタリング — すべて一箇所で",
     "features.curated": "{total}+ 厳選プロジェクト",
@@ -249,8 +216,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "sort.stars": "⭐ スター",
     "sort.name": "🔤 名前",
     "sort.updated": "🕐 更新",
-    "list.not_found": "該当するプロジェクトが見つかりません",
-    "list.try_again": "別のキーワードをお試しください",
     "list.found": "{count} 件のプロジェクトが見つかりました",
     "empty.title": "表示できるプロジェクトがありません",
     "empty.description": "検索キーワードをクリアするか、別のカテゴリを選んでください。",
@@ -270,6 +235,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.explore": "探索",
     "nav.menu": "メニュー",
     "nav.close": "閉じる",
+    "nav.switch_language": "言語を切り替え",
     "404.title": "404 - ページが見つかりません",
     "404.description": "このカテゴリまたはページは存在しません",
     "404.back": "← ホームに戻る",
@@ -279,7 +245,6 @@ const translations: Record<Lang, Record<string, string>> = {
     "error.explore_title": "プロジェクトの読み込みに失敗しました",
     "error.explore_desc": "プロジェクト一覧の読み込み中にエラーが発生しました。",
     "error.explore_retry": "再試行",
-    "loading.explore": "読み込み中...",
     // Editorial atlas chrome.
     "editorial.eyebrow": "一巻の",
     "editorial.subtitle":
@@ -295,8 +260,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "奥付",
     "editorial.compiled_by": "編纂",
     "editorial.edition": "初版 · {date}",
-    "editorial.folio": "folio {n}",
-    "editorial.summary": "{n} エントリ · {m} テーマ · 毎日更新",
+    "editorial.summary": "{n} エントリ · {m} カテゴリ · 毎日更新",
   },
 };
 
@@ -315,3 +279,28 @@ export const LANG_OPTIONS: { value: Lang; label: string }[] = [
   { value: "zh", label: "中文" },
   { value: "ja", label: "日本語" },
 ];
+
+/**
+ * Read the current language from the URL `?lang=` query parameter.
+ *
+ * Safe to call on the server (returns `"en"`) and on the client
+ * (returns the URL value when valid, otherwise `"en"`).
+ *
+ * Why this lives in the i18n module: the same `output: "export"`
+ * static-page constraint means every page that wants to honour
+ * `?lang=` must read the URL client-side. Duplicating the parse
+ * logic in each component (LandingContent, ExploreContent, the
+ * error pages, the not-found page) is brittle — a single source of
+ * truth keeps the fallback rules aligned.
+ */
+export function readLangFromUrl(): Lang {
+  if (typeof window === "undefined") return "en";
+  try {
+    const url = new URL(window.location.href);
+    const v = url.searchParams.get("lang");
+    if (v === "en" || v === "zh" || v === "ja") return v;
+  } catch {
+    /* ignore: invalid URL or restricted env */
+  }
+  return "en";
+}

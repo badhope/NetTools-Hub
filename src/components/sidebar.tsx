@@ -69,11 +69,6 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
           {CATEGORY_GROUPS.map((group, idx) => {
             const items = group.slugs
               .map((slug) => ({ slug, cat: categories[slug], count: counts[slug] || 0 }))
-              // Type predicate: under noUncheckedIndexedAccess, `cat` is
-              // `ProjectCategory | undefined`. The filter callback returns
-              // a boolean, not a type guard, so without an explicit
-              // predicate the type is not narrowed and `item.cat.icon`
-              // below would be a TS error.
               .filter(
                 (item): item is { slug: string; cat: ProjectCategory; count: number } =>
                   item.cat !== undefined && item.count > 0,

@@ -14,6 +14,10 @@ export function getAllProjects() {
   return data.projects;
 }
 
+export function getLastUpdated(): string {
+  return data.lastUpdated;
+}
+
 export function getCategories(): Record<string, ProjectCategory> {
   return data.categories;
 }

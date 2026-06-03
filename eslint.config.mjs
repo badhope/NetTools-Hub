@@ -12,6 +12,10 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The audit script is a Node-only tool, not a Next.js module —
+    // keeping it out of the lint scope avoids `require`-style-import
+    // false positives and other framework-specific rules.
+    "scripts/**",
   ]),
 ]);
 

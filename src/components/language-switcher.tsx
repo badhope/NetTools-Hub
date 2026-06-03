@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { Lang, LANG_OPTIONS } from "@/lib/i18n";
+import { Lang, LANG_OPTIONS, t } from "@/lib/i18n";
 
 interface LanguageSwitcherProps {
   lang: Lang;
@@ -32,7 +32,7 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
       <button
         onClick={() => setOpen((v) => !v)}
         className="inline-flex h-9 items-center gap-1.5 border border-dim px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
-        aria-label="Switch language"
+        aria-label={t(lang, "nav.switch_language")}
         aria-expanded={open}
       >
         <span>{current.label}</span>

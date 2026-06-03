@@ -34,19 +34,10 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
     }
   }, [projects, sort]);
 
-  if (projects.length === 0) {
-    return (
-      <div className="flex flex-col items-center justify-center py-24 text-muted">
-        <span className="font-display text-3xl text-fg-2">
-          {t(lang, "list.not_found")}
-        </span>
-        <p className="mt-3 font-mono text-[11px] uppercase tracking-[0.18em]">
-          {t(lang, "list.try_again")}
-        </p>
-      </div>
-    );
-  }
-
+  // The parent (`explore-content`) renders a "no projects" empty
+  // state when `projects.length === 0`, so this branch is unreachable
+  // in practice. Defending against it here would only mask a parent
+  // bug, so it is intentionally omitted.
   if (sort !== "default") {
     return (
       <div className="px-5 py-8 sm:px-8 sm:py-10">
@@ -60,7 +51,7 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
         </div>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {sorted.map((project) => (
-            <ProjectCard key={project.id} project={project} />
+            <ProjectCard key={project.id} project={project} lang={lang} />
           ))}
         </div>
       </div>
@@ -70,15 +61,25 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
   const groupedByGroup = CATEGORY_GROUPS.map((group) => {
     // Under noUncheckedIndexedAccess, `stats[s]` is `number | undefined`.
     // `?? 0` is the safe coercion; an absent stat means "0 projects".
-    const slugs = group.slugs.filter((s) => (stats[s] ?? 0) > 0);
-    const groupProjects = slugs.flatMap((slug) => sorted.filter((p) => p.category === slug));
+    // Filter once per group; both the `slugs` list and the per-category
+    // sub-section below re-use it, so memoising it as `activeSlugs`
+    // avoids a second O(slugs) scan per group on every render.
+    const activeSlugs = group.slugs.filter((s) => (stats[s] ?? 0) > 0);
+    const groupProjects = activeSlugs.flatMap((slug) => sorted.filter((p) => p.category === slug));
     if (groupProjects.length === 0) return null;
-    return { group, groupProjects };
-  }).filter((g): g is { group: typeof CATEGORY_GROUPS[number]; groupProjects: Project[] } => g !== null);
+    return { group, activeSlugs, groupProjects };
+  })
+    .filter(
+      (g): g is {
+        group: typeof CATEGORY_GROUPS[number];
+        activeSlugs: string[];
+        groupProjects: Project[];
+      } => g !== null,
+    );
 
   return (
     <div className="space-y-16 px-5 py-8 sm:space-y-20 sm:px-8 sm:py-10">
-      {groupedByGroup.map(({ group, groupProjects }, gIdx) => (
+      {groupedByGroup.map(({ group, activeSlugs, groupProjects }, gIdx) => (
         <section key={group.id} id={`group-${group.id}`}>
           <header className="mb-7 flex items-baseline justify-between gap-4 border-b border-line pb-3">
             <h2 className="flex items-baseline gap-3 font-display text-2xl text-fg">
@@ -93,12 +94,12 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
               <span>{t(lang, group.labelKey)}</span>
             </h2>
             <span className="font-mono text-[11px] text-muted">
-              {t(lang, "editorial.summary", { n: groupProjects.length, m: group.slugs.filter((s) => (stats[s] ?? 0) > 0).length })}
+              {t(lang, "editorial.summary", { n: groupProjects.length, m: activeSlugs.length })}
             </span>
           </header>
 
           <div className="space-y-12">
-            {group.slugs.filter((s) => (stats[s] ?? 0) > 0).map((slug, idx) => {
+            {activeSlugs.map((slug, idx) => {
               const catInfo = categories[slug];
               const catProjects = groupProjects.filter((p) => p.category === slug);
               if (catProjects.length === 0) return null;
@@ -128,7 +129,7 @@ export function ProjectList({ projects, sort, stats, categories, lang }: Project
                   </div>
                   <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
                     {catProjects.map((project) => (
-                      <ProjectCard key={project.id} project={project} />
+                      <ProjectCard key={project.id} project={project} lang={lang} />
                     ))}
                   </div>
                 </div>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Project } from "@/types/project";
 import { formatNumber } from "@/lib/utils";
+import type { Lang } from "@/lib/i18n";
 
 const languageColors: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -30,7 +31,13 @@ const languageColors: Record<string, string> = {
 // as a hairline, never as a fill. The body is calm body text, the
 // title is the display serif, the metadata is mono. The hover state
 // warms the rail and the title — no translate, no shadow.
-export function ProjectCard({ project }: { project: Project }) {
+export function ProjectCard({
+  project,
+  lang = "en",
+}: {
+  project: Project;
+  lang?: Lang;
+}) {
   const dotColor = languageColors[project.language] || "#8b949e";
   const railColor = project.gradient[0] || "#d97a3a";
 
@@ -61,7 +68,7 @@ export function ProjectCard({ project }: { project: Project }) {
           {project.name}
         </h3>
         <span className="flex shrink-0 items-baseline gap-1 font-mono text-[11px] text-muted">
-          <span className="text-fg-2">{formatNumber(project.stars)}</span>
+          <span className="text-fg-2">{formatNumber(project.stars, lang)}</span>
           <span aria-hidden>★</span>
         </span>
       </div>

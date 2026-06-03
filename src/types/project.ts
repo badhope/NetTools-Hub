@@ -1,6 +1,5 @@
 export interface ProjectCategory {
   name: string;
-  icon: string;
   description: string;
   color: string[];
 }
@@ -25,7 +24,6 @@ export interface Project {
 
 export interface ProjectsData {
   lastUpdated: string;
-  schemaVersion: string;
   categories: Record<string, ProjectCategory>;
   projects: Project[];
 }

@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Lang, readLangFromUrl, t } from "@/lib/i18n";
 
 export default function ExploreError({
   error,
@@ -12,6 +13,16 @@ export default function ExploreError({
   useEffect(() => {
     console.error(error);
   }, [error]);
+
+  // `output: "export"` pre-renders this page in English regardless of
+  // the URL, so we read `?lang=` on the client to localise the copy.
+  // The setState is wrapped in a callback so React 19's
+  // `react-hooks/set-state-in-effect` rule does not flag it.
+  const [lang, setLang] = useState<Lang>("en");
+  useEffect(() => {
+    const sync = () => setLang(readLangFromUrl());
+    sync();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-bg px-6 text-center">
@@ -25,13 +36,13 @@ export default function ExploreError({
         Failed to <span className="italic text-accent">load</span>
       </h1>
       <p className="mt-6 max-w-sm text-sm leading-relaxed text-fg-2">
-        Something went wrong while loading the project list.
+        {t(lang, "error.explore_desc")}
       </p>
       <button
         onClick={reset}
         className="group mt-10 inline-flex items-center gap-3 border-b border-accent pb-1 font-display text-lg text-accent transition-colors hover:text-accent-hover"
       >
-        <span>Retry</span>
+        <span>{t(lang, "error.explore_retry")}</span>
         <svg
           className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
           fill="none"

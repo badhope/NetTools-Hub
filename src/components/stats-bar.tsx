@@ -34,7 +34,7 @@ export function StatsBar({ projectCount, categoryCount, totalStars, lang }: Stat
     <div
       className="flex flex-wrap items-end gap-x-8 gap-y-3"
       role="status"
-      aria-label="Platform statistics"
+      aria-label={`${t(lang, "stats.projects")} · ${t(lang, "stats.categories")} · ${t(lang, "stats.total_stars")}`}
     >
       <Stat
         label={t(lang, "stats.projects")}

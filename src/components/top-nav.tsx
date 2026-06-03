@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { Lang, t } from "@/lib/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
@@ -21,17 +21,86 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
   const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() =>
     Object.fromEntries(CATEGORY_GROUPS.map((g) => [g.id, true])),
   );
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
 
+  // Scroll-lock the page when the mobile drawer is open. We remember
+  // the previous overflow value so that whatever rule the page already
+  // had in place (e.g. `auto`) is restored when the drawer closes —
+  // blindly setting `body.style.overflow = ""` would clobber it.
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    if (!mobileOpen) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = previous;
     };
   }, [mobileOpen]);
+
+  // Close the drawer on Escape, and trap focus inside it while it is
+  // open. The trap is a minimal but correct two-step: when Tab would
+  // move past the last focusable element, wrap back to the close
+  // button; when Shift+Tab would move past the close button, wrap to
+  // the last focusable element. The close button receives focus on
+  // open and the trigger receives focus back on close so the user's
+  // keyboard position is preserved.
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const panel = panelRef.current;
+    // Snapshot the trigger ref now (not in the cleanup) — by the time
+    // cleanup runs the component may have re-rendered with a fresh
+    // ref value, and focusing the wrong button is a small but real
+    // a11y bug.
+    const trigger = triggerRef.current;
+    const focusables = () =>
+      panel
+        ? Array.from(
+            panel.querySelectorAll<HTMLElement>(
+              'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+            ),
+          )
+        : [];
+    const closeBtn = panel?.querySelector<HTMLElement>("[data-drawer-close]");
+    closeBtn?.focus();
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const first = items[0]!;
+      const last = items[items.length - 1]!;
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      trigger?.focus();
+    };
+  }, [mobileOpen]);
+
+  // Closing the drawer on language change is part of the spec: the
+  // language switcher in the mobile drawer (`onChange`) and the one in
+  // the top bar both call this, and leaving the drawer up after the
+  // copy under it has re-rendered would be visually confusing.
+  const handleLangChange = useCallback(
+    (next: Lang) => {
+      onLangChange?.(next);
+      setMobileOpen(false);
+    },
+    [onLangChange],
+  );
 
   const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
   const homeHref = langParam("/");
@@ -90,9 +159,12 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
           </Link>
 
           <button
+            ref={triggerRef}
             onClick={() => setMobileOpen(true)}
             className="inline-flex h-9 w-9 items-center justify-center border border-dim text-fg-2 transition-colors hover:border-accent hover:text-accent lg:hidden"
             aria-label={t(lang, "nav.menu")}
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-drawer"
           >
             <svg
               className="h-4 w-4"
@@ -113,10 +185,18 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
             className="absolute inset-0 bg-bg/80"
             onClick={() => setMobileOpen(false)}
           />
-          <div className="absolute inset-y-0 right-0 flex w-[min(88vw,360px)] flex-col border-l border-line bg-bg-elev">
+          <div
+            id="mobile-drawer"
+            ref={panelRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t(lang, "nav.categories")}
+            className="absolute inset-y-0 right-0 flex w-[min(88vw,360px)] flex-col border-l border-line bg-bg-elev"
+          >
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
               <span className="kicker">{t(lang, "nav.categories")}</span>
               <button
+                data-drawer-close
                 onClick={() => setMobileOpen(false)}
                 className="text-fg-2 hover:text-accent"
                 aria-label={t(lang, "nav.close")}
@@ -146,6 +226,7 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
                       }
                       className="editorial-index mb-2 w-full text-left"
                       data-index={String(idx + 1).padStart(2, "0")}
+                      aria-expanded={isOpen}
                     >
                       <span className="flex shrink-0 items-center gap-2 text-fg-2">
                         <GroupMark id={group.id} size={14} />
@@ -185,7 +266,7 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
               })}
             </nav>
             <div className="shrink-0 border-t border-line p-4">
-              <LanguageSwitcher lang={lang} onChange={onLangChange} />
+              <LanguageSwitcher lang={lang} onChange={handleLangChange} />
             </div>
           </div>
         </div>

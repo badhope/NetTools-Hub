@@ -61,7 +61,7 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
         <path strokeLinecap="square" d="M21 21l-5-5" />
       </svg>
       <input
-        type="text"
+        type="search"
         value={inputValue}
         onChange={(e) => handleInput(e.target.value)}
         placeholder={t(lang, "search.placeholder")}

@@ -1,10 +1,8 @@
 {
   "lastUpdated": "2026-06-01",
-  "schemaVersion": "1.0.0",
   "categories": {
     "core": {
       "name": "Proxy Cores",
-      "icon": "⚙️",
       "description": "Core implementations of various proxy protocols",
       "color": [
         "#667eea",
@@ -13,7 +11,6 @@
     },
     "gui": {
       "name": "GUI Clients",
-      "icon": "🖥️",
       "description": "Visual operation interface clients",
       "color": [
         "#4facfe",
@@ -22,7 +19,6 @@
     },
     "subscription": {
       "name": "Subscription Management",
-      "icon": "📋",
       "description": "Subscription conversion, aggregation, and management tools",
       "color": [
         "#f093fb",
@@ -31,7 +27,6 @@
     },
     "github_tools": {
       "name": "GitHub Acceleration",
-      "icon": "🚀",
       "description": "GitHub access and download acceleration tools",
       "color": [
         "#fa709a",
@@ -40,7 +35,6 @@
     },
     "router": {
       "name": "Router Plugins",
-      "icon": "🌏",
       "description": "OpenWrt and router firmware plugins",
       "color": [
         "#43e97b",
@@ -49,7 +43,6 @@
     },
     "docker": {
       "name": "Docker Deployment",
-      "icon": "🐳",
       "description": "Containerized deployment solutions",
       "color": [
         "#2496ed",
@@ -58,7 +51,6 @@
     },
     "rules": {
       "name": "Rule Collections",
-      "icon": "📜",
       "description": "Routing rules and subscription sharing",
       "color": [
         "#a18cd1",
@@ -67,7 +59,6 @@
     },
     "utilities": {
       "name": "Utilities",
-      "icon": "🛠️",
       "description": "Network-related utility tools",
       "color": [
         "#f092fb",
@@ -76,7 +67,6 @@
     },
     "mirrors": {
       "name": "Mirror Acceleration",
-      "icon": "🪞",
       "description": "Various mirror sources and acceleration services",
       "color": [
         "#667eea",
@@ -85,7 +75,6 @@
     },
     "network_test": {
       "name": "Network Testing",
-      "icon": "📊",
       "description": "Network speed test and latency testing tools",
       "color": [
         "#10b981",
@@ -94,7 +83,6 @@
     },
     "node_tools": {
       "name": "Node Tools",
-      "icon": "📍",
       "description": "Node management, testing, and sharing tools",
       "color": [
         "#f59e0b",
@@ -103,7 +91,6 @@
     },
     "protocol_tools": {
       "name": "Protocol Tools",
-      "icon": "🔐",
       "description": "Tools and libraries for specific protocols",
       "color": [
         "#ec4899",
@@ -112,7 +99,6 @@
     },
     "server_mgmt": {
       "name": "Server Management",
-      "icon": "🖥️",
       "description": "Server operations and management tools",
       "color": [
         "#8b5cf6",
@@ -121,7 +107,6 @@
     },
     "security_tools": {
       "name": "Security Tools",
-      "icon": "🛡️",
       "description": "Network security, audit, and testing tools",
       "color": [
         "#f59e0b",
@@ -130,7 +115,6 @@
     },
     "data_transfer": {
       "name": "Data Transfer",
-      "icon": "📤",
       "description": "File transfer, sync, and backup tools",
       "color": [
         "#22c55e",
@@ -139,7 +123,6 @@
     },
     "monitoring": {
       "name": "Monitoring Tools",
-      "icon": "📊",
       "description": "System monitoring, logging, and analytics tools",
       "color": [
         "#06b6d4",
@@ -148,7 +131,6 @@
     },
     "container": {
       "name": "Container Orchestration",
-      "icon": "☸️",
       "description": "Kubernetes and container orchestration tools",
       "color": [
         "#326ce5",
@@ -157,7 +139,6 @@
     },
     "tunnel_tools": {
       "name": "Tunnel Tools",
-      "icon": "🕳️",
       "description": "NAT traversal and tunneling tools",
       "color": [
         "#a78bfa",
@@ -166,7 +147,6 @@
     },
     "dns_tools": {
       "name": "DNS Tools",
-      "icon": "🌐",
       "description": "DNS services, encryption, and optimization tools",
       "color": [
         "#14b8a6",
@@ -175,7 +155,6 @@
     },
     "cert_tools": {
       "name": "Certificate Tools",
-      "icon": "🔑",
       "description": "SSL/TLS certificate management tools",
       "color": [
         "#f97316",
@@ -184,7 +163,6 @@
     },
     "collection": {
       "name": "Project Collections",
-      "icon": "🗂️",
       "description": "Various project collections and summary repositories",
       "color": [
         "#6366f1",

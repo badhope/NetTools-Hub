@@ -13,18 +13,23 @@ import {
   getCategoryCounts,
   getCategories,
 } from "@/lib/projects";
-import { t, Lang } from "@/lib/i18n";
+import { t, Lang, readLangFromUrl } from "@/lib/i18n";
 import { SortOption } from "@/types/project";
 import { getGroupOfSlug } from "@/lib/category-groups";
 import { CategoryMark } from "@/components/category-mark";
 
-function isValidLang(value: string | null): value is Lang {
-  return value === "en" || value === "zh" || value === "ja";
-}
-
 function isValidSort(value: string | null): value is SortOption {
   return value === "default" || value === "stars" || value === "name" || value === "updated";
 }
+
+// The dataset is static and immutable for the lifetime of the bundle.
+// Hoist these lookups to the module scope so the component body does
+// not rebuild the counts map and the categories map on every render.
+const ALL_PROJECTS = getAllProjects();
+const STATS = getCategoryCounts();
+const CATEGORIES = getCategories();
+const TOTAL_STARS = ALL_PROJECTS.reduce((sum, p) => sum + p.stars, 0);
+const CATEGORY_COUNT = Object.keys(STATS).length;
 
 // Read the initial values from the URL.
 // Safe to call on the server (returns the empty / default), and on the
@@ -45,10 +50,9 @@ function readUrlState() {
     return { lang: "en" as Lang, query: "", sort: "default" as SortOption, category: "" };
   }
   const sp = new URLSearchParams(window.location.search);
-  const langV = sp.get("lang");
   const sortV = sp.get("sort");
   return {
-    lang: isValidLang(langV) ? langV : "en",
+    lang: readLangFromUrl(),
     query: sp.get("q") ?? "",
     sort: isValidSort(sortV) ? sortV : "default",
     category: sp.get("category") ?? "",
@@ -113,16 +117,11 @@ export function ExploreContent() {
     syncUrl({ sort: newSort === "default" ? null : newSort });
   };
 
-  const allProjects = getAllProjects();
   const filtered = query
     ? searchProjects(query, category || undefined)
     : category
-    ? allProjects.filter((p) => p.category === category)
-    : allProjects;
-  const stats = getCategoryCounts();
-  const categories = getCategories();
-  const totalStars = allProjects.reduce((sum, p) => sum + p.stars, 0);
-  const categoryCount = Object.keys(stats).length;
+    ? ALL_PROJECTS.filter((p) => p.category === category)
+    : ALL_PROJECTS;
   const activeGroup = category ? getGroupOfSlug(category) : undefined;
 
   return (
@@ -130,15 +129,15 @@ export function ExploreContent() {
       <TopNav
         lang={lang}
         onLangChange={handleLangChange}
-        categories={categories}
-        counts={stats}
+        categories={CATEGORIES}
+        counts={STATS}
         variant="explore"
       />
 
       <div className="flex flex-1">
         <Sidebar
-          categories={categories}
-          counts={stats}
+          categories={CATEGORIES}
+          counts={STATS}
           lang={lang}
           activeCategory={category}
         />
@@ -147,9 +146,9 @@ export function ExploreContent() {
           <div className="sticky top-16 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
             <div className="flex flex-col gap-5 px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-8">
               <StatsBar
-                projectCount={allProjects.length}
-                categoryCount={categoryCount}
-                totalStars={totalStars}
+                projectCount={ALL_PROJECTS.length}
+                categoryCount={CATEGORY_COUNT}
+                totalStars={TOTAL_STARS}
                 lang={lang}
               />
               <div className="flex items-center gap-3">
@@ -175,7 +174,7 @@ export function ExploreContent() {
                       </div>
                       <h1 className="mt-1 truncate font-display text-2xl leading-tight text-fg sm:text-3xl">
                         {t(lang, "category.header", {
-                          name: categories[category]?.name || category.replace(/_/g, " "),
+                          name: CATEGORIES[category]?.name || category.replace(/_/g, " "),
                         })}
                       </h1>
                     </div>
@@ -190,7 +189,7 @@ export function ExploreContent() {
                         syncUrl({ category: null });
                       }}
                       className="link-editorial inline-flex items-center gap-1.5"
-                      aria-label="Clear category"
+                      aria-label={t(lang, "empty.clear")}
                     >
                       <svg
                         className="h-3 w-3"
@@ -237,8 +236,8 @@ export function ExploreContent() {
             <ProjectList
               projects={filtered}
               sort={sort}
-              stats={stats}
-              categories={categories}
+              stats={STATS}
+              categories={CATEGORIES}
               lang={lang}
             />
           )}
