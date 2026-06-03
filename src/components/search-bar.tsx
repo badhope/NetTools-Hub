@@ -1,17 +1,37 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useImperativeHandle, forwardRef } from "react";
 import { t, Lang } from "@/lib/i18n";
 
 interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   lang: Lang;
+  shortcutHint: string;
 }
 
-export function SearchBar({ value, onChange, lang }: SearchBarProps) {
+export interface SearchBarHandle {
+  focus: () => void;
+}
+
+export const SearchBar = forwardRef<SearchBarHandle, SearchBarProps>(function SearchBar(
+  { value, onChange, lang, shortcutHint },
+  ref,
+) {
   const [inputValue, setInputValue] = useState(value);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+
+  // Expose `focus()` to the parent so the global `/` shortcut in
+  // explore-content can drive focus into the search box without
+  // the search box having to know about the global keymap.
+  useImperativeHandle(
+    ref,
+    () => ({
+      focus: () => inputRef.current?.focus(),
+    }),
+    [],
+  );
 
   // Sync local input state with the parent's debounced value. The two-way
   // mirror (parent.value → inputValue via useEffect, inputValue → parent
@@ -19,19 +39,9 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
   // controlled input: the input must update on every keystroke (otherwise
   // the user sees the input lag behind their typing) while the parent
   // state lags by 300ms for the actual search filter.
-  //
-  // React 19's `react-hooks/set-state-in-effect` rule would normally flag
-  // the setInputValue call below, but in this case the cascade is bounded
-  // — the useEffect only fires when `value` actually changes (via the
-  // exhaustive-deps array), and setting inputValue to a string-equal
-  // value is a no-op in React. The standard escape hatch is to disable
-  // the rule for this single setState call; the comment above documents
-  // why.
-  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     setInputValue(value);
   }, [value]);
-  /* eslint-enable react-hooks/set-state-in-effect */
 
   useEffect(() => {
     return () => {
@@ -45,6 +55,10 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
     debounceRef.current = setTimeout(() => onChange(next), 300);
   };
 
+  // The `<kbd>` is a screen-reader-friendly hint that the input can
+  // be reached with `/`. We render it inside the placeholder-area
+  // only when the input is empty, so the user does not see both
+  // placeholder text and a hint at the same time.
   return (
     <div className="relative w-full sm:w-72">
       <svg
@@ -61,13 +75,22 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
         <path strokeLinecap="square" d="M21 21l-5-5" />
       </svg>
       <input
+        ref={inputRef}
         type="search"
         value={inputValue}
         onChange={(e) => handleInput(e.target.value)}
         placeholder={t(lang, "search.placeholder")}
         className="w-full border border-dim bg-transparent py-2 pl-9 pr-8 font-sans text-sm text-fg placeholder:font-mono placeholder:text-[11px] placeholder:uppercase placeholder:tracking-[0.18em] placeholder:text-muted focus:border-accent focus:outline-none"
-        aria-label={t(lang, "search.aria_label")}
+        aria-label={`${t(lang, "search.aria_label")} (${shortcutHint})`}
       />
+      {!inputValue && (
+        <kbd
+          aria-hidden
+          className="pointer-events-none absolute right-3 top-1/2 hidden -translate-y-1/2 rounded-sm border border-dim px-1.5 py-0.5 font-mono text-[10px] text-muted sm:inline"
+        >
+          /
+        </kbd>
+      )}
       {inputValue && (
         <button
           onClick={() => handleInput("")}
@@ -90,4 +113,4 @@ export function SearchBar({ value, onChange, lang }: SearchBarProps) {
       )}
     </div>
   );
-}
+});

@@ -66,3 +66,6 @@ Desktop.ini
 
 # QA / visual regression artifacts
 /screenshots/
+
+# Local smoke-test screenshots
+/smoke-*.png

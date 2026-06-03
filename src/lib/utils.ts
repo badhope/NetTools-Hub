@@ -24,3 +24,33 @@ export function formatNumber(num: number, lang: Lang = "en"): string {
     return num.toString();
   }
 }
+
+/**
+ * Format the cumulative-stars number for the landing-page hero.
+ *
+ * English uses Western compact notation ("1.2M"); Chinese and
+ * Japanese read more naturally in their native unit ("120万"),
+ * which the CLDR `compact` notation does *not* emit for `zh` / `ja`
+ * (it still picks the Latin "M" / "k" suffixes). We hand-format
+ * the East-Asian variant in the locale-specific script to keep the
+ * editorial tone consistent across languages.
+ */
+export function formatTotalStars(num: number, lang: Lang = "en"): string {
+  if (lang === "zh" || lang === "ja") {
+    // 1_000_000 → 100万 (one million, in the CJK unit convention).
+    // We render an integer when the division is exact and one
+    // decimal otherwise (e.g. 1.4万 for 14_000).
+    if (num >= 10_000) {
+      const v = num / 10_000;
+      const text = Number.isInteger(v) ? v.toString() : v.toFixed(1);
+      return `${text}万`;
+    }
+    if (num >= 1_000) {
+      const v = num / 1_000;
+      const text = Number.isInteger(v) ? v.toString() : v.toFixed(1);
+      return `${text}千`;
+    }
+    return num.toString();
+  }
+  return formatNumber(num, lang);
+}

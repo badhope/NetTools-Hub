@@ -15,7 +15,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "features.responsive_desc": "Perfectly adapted for desktop, tablet, and mobile — browse anywhere",
     "features.maintained": "Actively Maintained",
     "features.maintained_desc": "Only includes actively updated projects, outdated ones are removed",
-    "features.stars": "{stars}M+ Total Stars",
+    "features.stars": "{stars}+ Total Stars",
     "features.stars_desc": "High-quality open-source projects with clear community recognition",
     "categories.title": "Browse by Group",
     "categories.subtitle": "6 themed groups covering the full network toolchain — click into any group to dive deeper",
@@ -34,15 +34,18 @@ const translations: Record<Lang, Record<string, string>> = {
     "stats.projects": "projects",
     "stats.categories": "categories",
     "stats.total_stars": "total stars",
+    "stats.total": "{count} projects · {categories} categories · {stars} total stars",
     "search.placeholder": "Search projects, authors, tags...",
     "search.aria_label": "Search projects",
     "search.clear": "Clear search",
+    "search.shortcut_hint": "Press / to search",
     "sort.aria_label": "Sort by",
     "sort.default": "Default",
     "sort.stars": "⭐ Stars",
     "sort.name": "🔤 Name",
     "sort.updated": "🕐 Updated",
     "list.found": "Found {count} projects",
+    "list.results_count": "{count} results",
     "empty.title": "No projects to show",
     "empty.description": "Try removing the search keyword or selecting a different category.",
     "empty.clear": "Clear filters",
@@ -62,6 +65,9 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.menu": "Menu",
     "nav.close": "Close",
     "nav.switch_language": "Switch language",
+    "a11y.skip_to_main": "Skip to main content",
+    "a11y.main": "Main content",
+    "404.folio": "Folio 404",
     "404.title": "404 - Page Not Found",
     "404.description": "This category or page does not exist",
     "404.back": "← Back to Home",
@@ -86,7 +92,11 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "Colophon",
     "editorial.compiled_by": "Compiled by",
     "editorial.edition": "Edition I · {date}",
+    "editorial.divider": "Folio {n} · {groups} groups · {cats} categories · {stars} cumulative stars",
     "editorial.summary": "{n} entries · {m} categories · indexed daily",
+    "editorial.compendium": "— Compendium",
+    "error.folio": "Folio — error",
+    "error.explore_folio": "Folio — explore / error",
   },
   zh: {
     "site.title": "NetTools Hub",
@@ -102,7 +112,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "features.responsive_desc": "完美适配桌面端、平板和手机 — 随时随地浏览",
     "features.maintained": "持续维护",
     "features.maintained_desc": "仅收录活跃更新的项目，淘汰过时项目",
-    "features.stars": "{stars}M+ 总星数",
+    "features.stars": "{stars}+ 总星数",
     "features.stars_desc": "高质量开源项目，拥有清晰的社区认可度",
     "categories.title": "按主题浏览",
     "categories.subtitle": "6 大主题分组覆盖网络工具全链路 — 点击进入任意分组深入探索",
@@ -121,15 +131,18 @@ const translations: Record<Lang, Record<string, string>> = {
     "stats.projects": "个项目",
     "stats.categories": "个分类",
     "stats.total_stars": "总星数",
+    "stats.total": "{count} 个项目 · {categories} 个分类 · {stars} 总星数",
     "search.placeholder": "搜索项目、作者、标签...",
     "search.aria_label": "搜索项目",
     "search.clear": "清除搜索",
+    "search.shortcut_hint": "按 / 搜索",
     "sort.aria_label": "排序方式",
     "sort.default": "默认",
     "sort.stars": "⭐ 星数",
     "sort.name": "🔤 名称",
     "sort.updated": "🕐 更新",
     "list.found": "找到 {count} 个项目",
+    "list.results_count": "{count} 条结果",
     "empty.title": "没有可显示的项目",
     "empty.description": "尝试清除搜索关键词或选择其他分类。",
     "empty.clear": "清除筛选",
@@ -149,6 +162,9 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.menu": "菜单",
     "nav.close": "关闭",
     "nav.switch_language": "切换语言",
+    "a11y.skip_to_main": "跳到主要内容",
+    "a11y.main": "主要内容",
+    "404.folio": "第 404 卷",
     "404.title": "404 - 页面未找到",
     "404.description": "该分类或页面不存在",
     "404.back": "← 返回首页",
@@ -173,7 +189,11 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "版权页",
     "editorial.compiled_by": "编纂",
     "editorial.edition": "第一版 · {date}",
+    "editorial.divider": "第 {n} 卷 · {groups} 大主题 · {cats} 个分类 · 累计 {stars} 星",
     "editorial.summary": "{n} 个条目 · {m} 个分类 · 每日更新",
+    "editorial.compendium": "— 概览",
+    "error.folio": "错误页",
+    "error.explore_folio": "探索页错误",
   },
   ja: {
     "site.title": "NetTools Hub",
@@ -189,7 +209,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "features.responsive_desc": "デスクトップ、タブレット、スマートフォンに完全対応",
     "features.maintained": "継続メンテナンス",
     "features.maintained_desc": "積極的に更新されているプロジェクトのみを収録",
-    "features.stars": "{stars}M+ 総スター数",
+    "features.stars": "{stars}+ 総スター数",
     "features.stars_desc": "高品質なオープンソースプロジェクト、コミュニティの認知度も明確",
     "categories.title": "テーマで探す",
     "categories.subtitle": "6テーマグループがネットワークツールチェーンを網羅 — 任意のグループをクリックして深掘り",
@@ -208,15 +228,18 @@ const translations: Record<Lang, Record<string, string>> = {
     "stats.projects": "プロジェクト",
     "stats.categories": "カテゴリ",
     "stats.total_stars": "総スター数",
+    "stats.total": "{count} プロジェクト · {categories} カテゴリ · {stars} 総スター数",
     "search.placeholder": "プロジェクト、作者、タグを検索...",
     "search.aria_label": "プロジェクト検索",
     "search.clear": "検索をクリア",
+    "search.shortcut_hint": "/ を押して検索",
     "sort.aria_label": "並び替え",
     "sort.default": "デフォルト",
     "sort.stars": "⭐ スター",
     "sort.name": "🔤 名前",
     "sort.updated": "🕐 更新",
     "list.found": "{count} 件のプロジェクトが見つかりました",
+    "list.results_count": "{count} 件の結果",
     "empty.title": "表示できるプロジェクトがありません",
     "empty.description": "検索キーワードをクリアするか、別のカテゴリを選んでください。",
     "empty.clear": "フィルターをクリア",
@@ -236,6 +259,9 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.menu": "メニュー",
     "nav.close": "閉じる",
     "nav.switch_language": "言語を切り替え",
+    "a11y.skip_to_main": "メインコンテンツへスキップ",
+    "a11y.main": "メインコンテンツ",
+    "404.folio": "第 404 巻",
     "404.title": "404 - ページが見つかりません",
     "404.description": "このカテゴリまたはページは存在しません",
     "404.back": "← ホームに戻る",
@@ -260,7 +286,11 @@ const translations: Record<Lang, Record<string, string>> = {
     "editorial.colophon": "奥付",
     "editorial.compiled_by": "編纂",
     "editorial.edition": "初版 · {date}",
+    "editorial.divider": "第 {n} 巻 · {groups} テーマ · {cats} カテゴリ · 累計 {stars} スター",
     "editorial.summary": "{n} エントリ · {m} カテゴリ · 毎日更新",
+    "editorial.compendium": "— 全書",
+    "error.folio": "エラー",
+    "error.explore_folio": "探索エラー",
   },
 };
 
@@ -279,6 +309,36 @@ export const LANG_OPTIONS: { value: Lang; label: string }[] = [
   { value: "zh", label: "中文" },
   { value: "ja", label: "日本語" },
 ];
+
+/**
+ * Build a localized internal path. The English variant is the canonical
+ * URL (no `?lang=` query) so that search engines and the sitemap
+ * see a single, stable address; the other two languages opt in via
+ * the `?lang=` query parameter. Centralising the rule here avoids
+ * subtle bugs where one component forgets the `lang === "en"` check
+ * and ends up with `/explore?lang=zh&lang=en` style URL soup.
+ */
+export function langParam(lang: Lang, path: string): string {
+  return lang === "en" ? path : `${path}?lang=${lang}`;
+}
+
+/**
+ * BCP-47 tags for each language. Used to drive `<html lang>`,
+ * `<link rel="alternate" hreflang>` and the OpenGraph `locale` field.
+ * Keeping them next to the `Lang` union makes it impossible to ship
+ * a translation in a new language without also declaring its locale.
+ */
+export const LANG_HTML_LANG: Record<Lang, string> = {
+  en: "en",
+  zh: "zh-Hans",
+  ja: "ja",
+};
+
+export const LANG_OG_LOCALE: Record<Lang, string> = {
+  en: "en_US",
+  zh: "zh_CN",
+  ja: "ja_JP",
+};
 
 /**
  * Read the current language from the URL `?lang=` query parameter.

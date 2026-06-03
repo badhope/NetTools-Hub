@@ -2,17 +2,20 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { ProjectCategory } from "@/types/project";
 import {
   getAllProjects,
   getCategoryCounts,
   getCategories,
   getLastUpdated,
+  getTotalStars,
+  getCategoryCount,
 } from "@/lib/projects";
-import { t, Lang, readLangFromUrl } from "@/lib/i18n";
+import { t, Lang, readLangFromUrl, langParam } from "@/lib/i18n";
+import { formatTotalStars } from "@/lib/utils";
 import { TopNav } from "@/components/top-nav";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { GroupMark, SiteMark } from "@/components/category-mark";
-import { formatNumber } from "@/lib/utils";
 
 // `lastUpdated` is read from data/projects.json at module load and
 // shared across the whole landing render. The field is the source of
@@ -23,7 +26,9 @@ const LAST_UPDATED = getLastUpdated();
 // Total stars is derived from the same static dataset, so it can be
 // hoisted alongside `LAST_UPDATED` and computed exactly once for the
 // lifetime of the bundle.
-const TOTAL_STARS = getAllProjects().reduce((sum, p) => sum + p.stars, 0);
+const TOTAL_STARS = getTotalStars();
+const TOTAL_PROJECTS = getAllProjects().length;
+const CATEGORY_COUNT = getCategoryCount();
 
 const FEATURES = [
   {
@@ -95,12 +100,10 @@ export function LandingContent() {
   };
 
   // Static, immutable for the lifetime of the bundle — see the
-  // module-scope definitions of `LAST_UPDATED` and `TOTAL_STARS`.
-  const projects = getAllProjects();
+  // module-scope definitions of `LAST_UPDATED`, `TOTAL_STARS`, etc.
   const counts = getCategoryCounts();
   const categories = getCategories();
-  const totalProjects = projects.length;
-  const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
+  const starsShort = formatTotalStars(TOTAL_STARS, lang);
 
   return (
     <div className="min-h-screen bg-bg text-fg">
@@ -151,12 +154,12 @@ export function LandingContent() {
             </h1>
 
             <p className="mt-8 max-w-xl text-balance text-[15px] leading-[1.7] text-fg-2 sm:text-base">
-              {t(lang, "editorial.subtitle", { total: totalProjects })}
+              {t(lang, "editorial.subtitle", { total: TOTAL_PROJECTS })}
             </p>
 
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Link
-                href={langParam("/explore")}
+                href={langParam(lang, "/explore")}
                 className="group inline-flex items-center gap-3 border-b border-accent pb-1.5 font-display text-lg text-accent transition-colors hover:text-accent-hover"
               >
                 <span>{t(lang, "editorial.open_atlas")}</span>
@@ -183,14 +186,14 @@ export function LandingContent() {
 
           {/* Right rail: stats column framed by hairlines */}
           <aside className="reveal reveal-3 flex flex-col gap-6 self-stretch border-l border-dim pl-8 sm:pl-10">
-            <span className="kicker">— Compendium</span>
+            <span className="kicker">{t(lang, "editorial.compendium")}</span>
             <dl className="grid grid-cols-1 gap-y-5">
               <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
                 <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                   {t(lang, "stats.projects")}
                 </dt>
                 <dd className="font-display text-3xl leading-none text-fg">
-                  {String(totalProjects).padStart(3, "0")}
+                  {String(TOTAL_PROJECTS).padStart(3, "0")}
                 </dd>
               </div>
               <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
@@ -198,7 +201,7 @@ export function LandingContent() {
                   {t(lang, "stats.categories")}
                 </dt>
                 <dd className="font-display text-3xl leading-none text-fg">
-                  {String(CATEGORY_GROUPS.length).padStart(2, "0")}
+                  {String(CATEGORY_COUNT).padStart(2, "0")}
                 </dd>
               </div>
               <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
@@ -206,8 +209,7 @@ export function LandingContent() {
                   {t(lang, "stats.total_stars")}
                 </dt>
                 <dd className="font-display text-3xl leading-none text-fg">
-                  {(TOTAL_STARS / 1000000).toFixed(1)}
-                  <span className="ml-1 text-base text-fg-2">M</span>
+                  {starsShort}
                 </dd>
               </div>
               <div className="flex items-baseline justify-between gap-4">
@@ -220,11 +222,19 @@ export function LandingContent() {
           </aside>
         </div>
 
-        {/* Editorial divider: a row of typography marks */}
+        {/* Editorial divider: a row of typography marks. The summary
+         *  copy is now a single i18n key so the divider line reads
+         *  naturally in EN / ZH / JA (the old hardcoded English copy
+         *  leaked into all three locales). */}
         <div className="mx-auto flex max-w-6xl items-center gap-4 border-t border-line px-5 py-5 sm:px-8">
           <SiteMark size={14} className="shrink-0 text-fg-2" />
           <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-            Folio 01 · Six groups · 21 categories · {formatNumber(TOTAL_STARS, lang)} cumulative stars
+            {t(lang, "editorial.divider", {
+              n: "01",
+              groups: CATEGORY_GROUPS.length,
+              cats: CATEGORY_COUNT,
+              stars: starsShort,
+            })}
           </span>
           <span className="ml-auto font-mono text-[10px] text-muted">
             {t(lang, "editorial.edition", { date: "2026" })}
@@ -260,7 +270,10 @@ export function LandingContent() {
               >
                 <span className="editorial-index" data-index={f.fig}>
                   <span className="font-mono text-[11px] text-muted">
-                    {t(lang, f.key, { total: totalProjects, stars: (TOTAL_STARS / 1000000).toFixed(1) })}
+                    {t(lang, f.key, {
+                      total: TOTAL_PROJECTS,
+                      stars: starsShort,
+                    })}
                   </span>
                 </span>
                 <p className="text-[13.5px] leading-[1.7] text-fg-2">
@@ -297,7 +310,7 @@ export function LandingContent() {
               const items = group.slugs
                 .map((slug) => ({ slug, cat: categories[slug], count: counts[slug] || 0 }))
                 .filter(
-                  (item): item is { slug: string; cat: { name: string; icon: string; description: string; color: string[] }; count: number } =>
+                  (item): item is { slug: string; cat: ProjectCategory; count: number } =>
                     item.cat !== undefined && item.count > 0,
                 );
               if (items.length === 0) return null;
@@ -329,11 +342,7 @@ export function LandingContent() {
                     {items.map(({ slug, cat, count }) => (
                       <li key={slug}>
                         <Link
-                          href={
-                            lang !== "en"
-                              ? `/explore?category=${slug}&lang=${lang}`
-                              : `/explore?category=${slug}`
-                          }
+                          href={langParam(lang, `/explore?category=${slug}`)}
                           className="group/link flex items-center justify-between gap-2 py-1 text-[13px] text-fg-2 transition-colors hover:text-fg"
                         >
                           <span className="flex items-center gap-2 truncate">
@@ -374,7 +383,7 @@ export function LandingContent() {
           </p>
           <div className="mt-10 flex items-center justify-center gap-6">
             <Link
-              href={langParam("/explore")}
+              href={langParam(lang, "/explore")}
               className="group inline-flex items-center gap-3 border-b border-accent pb-1.5 font-display text-lg text-accent transition-colors hover:text-accent-hover"
             >
               <span>{t(lang, "editorial.continue_reading")}</span>

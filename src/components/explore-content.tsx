@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useDeferredValue, useMemo, useRef } from "react";
 import { Sidebar } from "@/components/sidebar";
 import { StatsBar } from "@/components/stats-bar";
-import { SearchBar } from "@/components/search-bar";
+import { SearchBar, SearchBarHandle } from "@/components/search-bar";
 import { SortSelect } from "@/components/sort-select";
 import { ProjectList } from "@/components/project-list";
 import { TopNav } from "@/components/top-nav";
@@ -12,6 +12,8 @@ import {
   searchProjects,
   getCategoryCounts,
   getCategories,
+  getTotalStars,
+  getCategoryCount,
 } from "@/lib/projects";
 import { t, Lang, readLangFromUrl } from "@/lib/i18n";
 import { SortOption } from "@/types/project";
@@ -28,8 +30,8 @@ function isValidSort(value: string | null): value is SortOption {
 const ALL_PROJECTS = getAllProjects();
 const STATS = getCategoryCounts();
 const CATEGORIES = getCategories();
-const TOTAL_STARS = ALL_PROJECTS.reduce((sum, p) => sum + p.stars, 0);
-const CATEGORY_COUNT = Object.keys(STATS).length;
+const TOTAL_STARS = getTotalStars();
+const CATEGORY_COUNT = getCategoryCount();
 
 // The four URL-driven pieces of state — `lang`, `query`, `sort`,
 // `category` — must be initialised with the *server* value during
@@ -65,6 +67,39 @@ export function ExploreContent() {
   const [sort, setSort] = useState<SortOption>("default");
   const [category, setCategory] = useState<string>("");
   const [lang, setLang] = useState<Lang>("en");
+  const searchRef = useRef<SearchBarHandle | null>(null);
+
+  // Defer the heavy work of filtering + rendering the (potentially
+  // large) result list behind React's scheduler. Typing into the
+  // search box updates `query` immediately (so the input stays
+  // responsive), but the actual filter+render of the project grid
+  // happens on `deferredQuery`, which is allowed to lag a frame or
+  // two under load. This is the documented pattern for keeping a
+  // controlled input snappy against an expensive render.
+  const deferredQuery = useDeferredValue(query);
+
+  // Global `/` keyboard shortcut to focus the search box. The
+  // `keydown` listener is attached to the document and the
+  // handler ignores the event when the user is already typing in
+  // any other input/textarea/contenteditable element, so the `/`
+  // key stays usable in the search box itself and in the sort
+  // dropdown. This is the de-facto search-shortcut convention
+  // (GitHub, Algolia docs, Linear all do the same).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "/") return;
+      if (e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      if (target) {
+        const tag = target.tagName;
+        if (tag === "INPUT" || tag === "TEXTAREA" || target.isContentEditable) return;
+      }
+      e.preventDefault();
+      searchRef.current?.focus();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, []);
 
   // Sync the four URL-driven pieces of state on mount and on every
   // popstate (browser back/forward). This is the documented escape
@@ -118,11 +153,18 @@ export function ExploreContent() {
     syncUrl({ sort: newSort === "default" ? null : newSort });
   };
 
-  const filtered = query
-    ? searchProjects(query, category || undefined)
-    : category
-    ? ALL_PROJECTS.filter((p) => p.category === category)
-    : ALL_PROJECTS;
+  // `deferredQuery` is what drives the actual filter+render, so the
+  // filter is recomputed against the deferred value (and so does
+  // not block the input). The result is memoised by the same
+  // (deferredQuery, category) key, so a re-render that re-uses the
+  // same values returns the same array reference and skips the
+  // ProjectList work entirely.
+  const filtered = useMemo(() => {
+    if (deferredQuery) return searchProjects(deferredQuery, category || undefined);
+    if (category) return ALL_PROJECTS.filter((p) => p.category === category);
+    return ALL_PROJECTS;
+  }, [deferredQuery, category]);
+
   const activeGroup = category ? getGroupOfSlug(category) : undefined;
 
   return (
@@ -143,7 +185,11 @@ export function ExploreContent() {
           activeCategory={category}
         />
 
-        <main className="min-w-0 flex-1">
+        <main
+          id="main"
+          aria-label={t(lang, "a11y.main")}
+          className="min-w-0 flex-1"
+        >
           <div className="sticky top-16 z-30 border-b border-line bg-bg/85 backdrop-blur-md">
             <div className="flex flex-col gap-5 px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-8">
               <StatsBar
@@ -153,7 +199,13 @@ export function ExploreContent() {
                 lang={lang}
               />
               <div className="flex items-center gap-3">
-                <SearchBar value={query} onChange={handleQueryChange} lang={lang} />
+                <SearchBar
+                  ref={searchRef}
+                  value={query}
+                  onChange={handleQueryChange}
+                  lang={lang}
+                  shortcutHint={t(lang, "search.shortcut_hint")}
+                />
                 <SortSelect value={sort} onChange={handleSortChange} lang={lang} />
               </div>
             </div>
@@ -181,8 +233,11 @@ export function ExploreContent() {
                     </div>
                   </div>
                   <div className="flex items-center gap-4 font-mono text-[11px] text-muted">
-                    <span>
-                      {t(lang, "category.count", { count: filtered.length })}
+                    {/* `aria-live="polite"` lets screen-reader users hear
+                     *  the new result count without it interrupting the
+                     *  user mid-typing. */}
+                    <span aria-live="polite">
+                      {t(lang, "list.results_count", { count: filtered.length })}
                     </span>
                     <button
                       onClick={() => {

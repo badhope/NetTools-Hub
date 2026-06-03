@@ -28,7 +28,7 @@ export default function ExploreError({
     <div className="flex min-h-screen flex-col items-center justify-center bg-bg px-6 text-center">
       <div className="mb-6 flex items-center gap-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-          Folio — explore / error
+          {t(lang, "error.explore_folio")}
         </span>
         <span className="h-px w-12 bg-dim" />
       </div>

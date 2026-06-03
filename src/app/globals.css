@@ -256,3 +256,50 @@
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Skip-to-content link. Visually hidden until focused (keyboard
+ * Tab), at which point it slides into the top-left of the viewport
+ * and announces itself. Critical a11y primitive: keyboard users
+ * should be one Tab away from the main content, not twenty. */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translateY(-200%);
+  padding: 0.5rem 0.875rem;
+  border: 1px solid var(--color-accent);
+  background-color: var(--color-bg-elev);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: transform 150ms var(--ease-snap);
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  transform: translateY(0);
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* `content-visibility: auto` + an intrinsic-size hint. The browser
+ * skips layout and paint of off-screen sections until they scroll
+ * into the viewport (or near it), which is a massive win on the
+ * /explore page where 120+ project cards would otherwise be
+ * rendered up-front. The `contain-intrinsic-size` value is the
+ * last-known rendered height; when the browser is forced to
+ * re-measure (e.g. on first load), the page keeps its scroll-bar
+ * geometry instead of jumping. The reduced-motion media query is
+ * not used here: `content-visibility` has no motion, and the
+ * `contain-intrinsic-size` placeholder is invisible to ATs. */
+.cv-auto {
+  content-visibility: auto;
+  /* The intrinsic height is a conservative upper bound for a single
+   * editorial group (a heading + 1–4 rows of cards). The browser
+   * will replace it with the real height once the section has
+   * been measured. */
+  contain-intrinsic-size: auto 600px;
+}
