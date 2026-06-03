@@ -9,15 +9,20 @@
 ## 1. Top-level shape
 
 ```ts
+// The top-level shape of data/projects.json.
 type ProjectsFile = {
-  meta: {
-    version: number;       // bump when the schema changes
-    lastUpdated: string;   // ISO-8601 date
-    totalProjects: number;
-    totalCategories: number;
-  };
-  categories: Record<string, Category>;
-  projects: Project[];
+  lastUpdated: string;                       // ISO-8601 date (e.g. "2026-06-01")
+  schemaVersion: string;                     // SemVer of the data shape itself
+                                             // (independent of the app version in
+                                             // package.json — they are unrelated
+                                             // concepts and only intentionally synced
+                                             // at release time). Bump on any change
+                                             // to the JSON shape (added/renamed/
+                                             // removed fields) so future
+                                             // data-validation tooling can migrate.
+  categories: Record<string, Category>;     // keyed by Category.id
+  projects: Project[];                       // already includes the slug
+                                             // field used for routing
 };
 ```
 

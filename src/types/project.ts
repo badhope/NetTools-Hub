@@ -25,7 +25,7 @@ export interface Project {
 
 export interface ProjectsData {
   lastUpdated: string;
-  version: string;
+  schemaVersion: string;
   categories: Record<string, ProjectCategory>;
   projects: Project[];
 }

@@ -35,7 +35,6 @@ authors:
     alias: badhope
     email: badhope@users.noreply.github.com
     affiliation: NetTools Hub Maintainer
-    orcid: ""
 preferred-citation:
   type: software
   title: "NetTools Hub — One-stop navigation for 120+ open-source network tools"

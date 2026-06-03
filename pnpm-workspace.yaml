@@ -1,8 +1,14 @@
-# Allow these native packages to run install scripts in CI (pnpm 10
-# blocks postinstall scripts by default; Next.js image optimisation needs
-# sharp, Tailwind v4 needs @tailwindcss/oxide, the bundler resolver needs
-# unrs-resolver).
+# Allow these native packages to run install scripts in CI.
+#
+# pnpm 10 blocks postinstall scripts by default. The site uses:
+#   - @tailwindcss/oxide — Tailwind v4's Rust-based engine, required
+#   - unrs-resolver     — Next.js 16's Rust-based module resolver, required
+#
+# Note: `sharp` is intentionally NOT listed. Next.js image optimisation
+# is disabled in next.config.ts (`images: { unoptimized: true }`) because
+# the site is a static export to GitHub Pages, which does not run an
+# image proxy. If image optimisation is ever re-enabled, add `sharp`
+# back to this list.
 ignoredBuiltDependencies:
-  - sharp
   - "@tailwindcss/oxide"
   - unrs-resolver

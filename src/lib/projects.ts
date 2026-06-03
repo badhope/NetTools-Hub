@@ -1,5 +1,9 @@
 import { ProjectsData, ProjectCategory } from "@/types/project";
-import rawData from "@/../data/projects.json";
+// data/projects.json lives at the repository root (kept outside src/ so
+// that future tooling — e.g. a separate data-validation script — can
+// read it without going through the Next.js import graph). Resolve
+// with a relative path; the @/ alias only covers src/.
+import rawData from "../../data/projects.json";
 import { formatNumber } from "@/lib/utils";
 
 export { formatNumber };
