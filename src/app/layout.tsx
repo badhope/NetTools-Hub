@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { SetHtmlLang } from "@/components/set-html-lang";
+import { LANG_HTML_LANG, LANG_OG_LOCALE } from "@/lib/i18n";
 import "./globals.css";
 
 // Content Security Policy.
@@ -134,7 +135,15 @@ export const metadata: Metadata = {
       "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
     url: SITE_URL,
     siteName: "NetTools Hub",
-    locale: "en_US",
+    // Static export means `<html lang>` and the OG card both have to be
+    // resolved at build time — we have no per-request metadata. We
+    // pick English as the primary locale and expose the other two as
+    // `og:locale:alternate` (the BCP-47-valid underscore form, e.g.
+    // `zh_CN` rather than `zh-CN`, that crawlers actually parse).
+    // The per-language URLs themselves are still discoverable via
+    // `alternates.languages` above, which is what Google indexes.
+    locale: LANG_OG_LOCALE.en,
+    alternateLocale: [LANG_OG_LOCALE.zh, LANG_OG_LOCALE.ja],
     type: "website",
     // Social-card preview. The PNG lives in /public; using a PNG
     // (not SVG) means Twitter, LinkedIn, WeChat and most other
@@ -171,7 +180,7 @@ export default function RootLayout({
 }) {
   return (
     <html
-      lang="en"
+      lang={LANG_HTML_LANG.en}
       className={`${fraunces.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
     >
       <head>

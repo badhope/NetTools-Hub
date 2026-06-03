@@ -115,6 +115,19 @@ export function LandingContent() {
         variant="landing"
       />
 
+      {/* Skip-link target. The `<a className="skip-link" href="#main">` in
+       *  `app/layout.tsx` jumps to the first element with this id, and
+       *  the `aria-label` is what screen readers announce when the
+       *  focus lands. Without this wrapper, a keyboard user pressing
+       *  Tab from the URL bar would tab through every section /
+       *  footer link before reaching the main content. */}
+      <main
+        id="main"
+        aria-label={t(lang, "a11y.main")}
+        className="outline-none"
+        tabIndex={-1}
+      >
+
       {/* =========================================================
        *  Plate 0 — Cover / hero
        * ========================================================= */}
@@ -450,6 +463,7 @@ export function LandingContent() {
           </div>
         </div>
       </footer>
+      </main>
     </div>
   );
 }

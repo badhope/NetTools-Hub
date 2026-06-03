@@ -323,6 +323,18 @@ export function langParam(lang: Lang, path: string): string {
 }
 
 /**
+ * Like {@link langParam}, but safe to call on a path that already
+ * carries a query string (e.g. `/explore?category=core`). The
+ * `?lang=` is then appended with `&` so we never end up with the
+ * `?category=core?lang=zh` double-question-mark bug that the static
+ * sitemap hit and rolled back once already.
+ */
+export function withLang(lang: Lang, path: string): string {
+  if (lang === "en") return path;
+  return path.includes("?") ? `${path}&lang=${lang}` : `${path}?lang=${lang}`;
+}
+
+/**
  * BCP-47 tags for each language. Used to drive `<html lang>`,
  * `<link rel="alternate" hreflang>` and the OpenGraph `locale` field.
  * Keeping them next to the `Lang` union makes it impossible to ship

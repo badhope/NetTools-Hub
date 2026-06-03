@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { Lang, LANG_OPTIONS, t } from "@/lib/i18n";
 
 interface LanguageSwitcherProps {
@@ -8,31 +8,148 @@ interface LanguageSwitcherProps {
   onChange?: (lang: Lang) => void;
 }
 
+/**
+ * WAI-ARIA listbox pattern (`role="listbox"`).
+ *
+ * Keyboard contract:
+ *  - `Enter` / `Space` / `ArrowDown` on the trigger: open the listbox
+ *    and move focus to the *currently selected* option.
+ *  - `ArrowDown` / `ArrowUp` inside the listbox: cycle through
+ *    options, wrapping at the ends.
+ *  - `Home` / `End`: jump to the first / last option.
+ *  - `Enter` / `Space` inside the listbox: select the focused option
+ *    and close.
+ *  - `Escape` inside the listbox: close and return focus to the
+ *    trigger without changing the language.
+ *  - Click outside: close (no focus change).
+ *
+ * The visual styling is unchanged from the previous implementation;
+ * this rewrite only adds the keyboard layer and the ARIA semantics
+ * that screen readers (NVDA, VoiceOver, JAWS) need to expose the
+ * widget as a listbox rather than as a bare cluster of buttons.
+ */
 export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
   const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  // LANG_OPTIONS is a module-level constant and always has at least one
-  // element (en, zh, ja) — the `!` documents that invariant; under
-  // noUncheckedIndexedAccess, `LANG_OPTIONS[0]` would otherwise be
-  // `{ value, label } | undefined`.
-  const current =
-    LANG_OPTIONS.find((o) => o.value === lang) ?? LANG_OPTIONS[0]!;
+  // The *visual* highlight index is separate from the *selected*
+  // language: the user can arrow-key through options without having
+  // committed to one yet. Committing happens on Enter/Space/click.
+  const [highlight, setHighlight] = useState(() =>
+    Math.max(
+      0,
+      LANG_OPTIONS.findIndex((o) => o.value === lang),
+    ),
+  );
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
+  // LANG_OPTIONS is a module-level constant and always has at least
+  // one element (en, zh, ja) — the `!` documents that invariant;
+  // under noUncheckedIndexedAccess, `LANG_OPTIONS[0]` would otherwise
+  // be `{ value, label } | undefined`.
+  const current = LANG_OPTIONS.find((o) => o.value === lang) ?? LANG_OPTIONS[0]!;
+
+  const close = useCallback((returnFocus = false) => {
+    setOpen(false);
+    if (returnFocus) triggerRef.current?.focus();
+  }, []);
+
+  const select = useCallback(
+    (value: Lang) => {
+      onChange?.(value);
+      close(true);
+    },
+    [onChange, close],
+  );
+
+  // Click-outside closes the menu without disturbing focus. We
+  // intentionally do *not* return focus to the trigger on click-out
+  // (that would be jarring — the user clicked somewhere else on
+  // purpose). Escape is the keyboard equivalent of the same intent
+  // but, per the listbox spec, *does* return focus to the trigger.
   useEffect(() => {
     if (!open) return;
-    const onClickOutside = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    const onPointer = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
     };
-    document.addEventListener("mousedown", onClickOutside);
-    return () => document.removeEventListener("mousedown", onClickOutside);
+    document.addEventListener("mousedown", onPointer);
+    return () => document.removeEventListener("mousedown", onPointer);
   }, [open]);
 
+  // Whenever the listbox opens, focus the highlighted option. The
+  // highlight is initialised to the currently-selected language, so a
+  // user re-opening the menu lands on whatever they last picked —
+  // matching the behaviour of every native `<select>`.
+  useEffect(() => {
+    if (!open) return;
+    optionRefs.current[highlight]?.focus();
+    // We only want to re-focus on the *open* transition, not every
+    // time `highlight` changes while the menu is open (that would
+    // re-focus the option under the user's cursor and feel "stuck").
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [open]);
+
+  const onTriggerKey = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setHighlight(
+        Math.max(
+          0,
+          LANG_OPTIONS.findIndex((o) => o.value === lang),
+        ),
+      );
+      setOpen(true);
+    }
+  };
+
+  const onListKey = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    const last = LANG_OPTIONS.length - 1;
+    const move = (next: number) => {
+      e.preventDefault();
+      const wrapped = (next + LANG_OPTIONS.length) % LANG_OPTIONS.length;
+      setHighlight(wrapped);
+      optionRefs.current[wrapped]?.focus();
+    };
+    switch (e.key) {
+      case "ArrowDown":
+        move(highlight + 1);
+        return;
+      case "ArrowUp":
+        move(highlight - 1);
+        return;
+      case "Home":
+        move(0);
+        return;
+      case "End":
+        move(last);
+        return;
+      case "Escape":
+        e.preventDefault();
+        close(true);
+        return;
+      case "Tab":
+        // Tabbing away from the menu closes it but does NOT return
+        // focus to the trigger — the user is moving on, and the
+        // browser is already taking focus wherever they intended.
+        setOpen(false);
+        return;
+      default:
+        return;
+    }
+  };
+
   return (
-    <div ref={ref} className="relative">
+    <div ref={containerRef} className="relative">
       <button
+        ref={triggerRef}
+        type="button"
         onClick={() => setOpen((v) => !v)}
+        onKeyDown={onTriggerKey}
         className="inline-flex h-9 items-center gap-1.5 border border-dim px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
         aria-label={t(lang, "nav.switch_language")}
+        aria-haspopup="listbox"
         aria-expanded={open}
       >
         <span>{current.label}</span>
@@ -44,6 +161,7 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={1.5}
+          aria-hidden
         >
           <path
             strokeLinecap="square"
@@ -54,20 +172,41 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
       </button>
 
       {open && (
-        <div className="absolute right-0 top-full z-50 mt-2 min-w-[160px] border border-line bg-bg-elev p-1 shadow-xl">
-          {LANG_OPTIONS.map((opt) => {
+        <div
+          role="listbox"
+          aria-label={t(lang, "nav.switch_language")}
+          aria-activedescendant={`lang-opt-${LANG_OPTIONS[highlight]?.value ?? "en"}`}
+          onKeyDown={onListKey}
+          className="absolute right-0 top-full z-50 mt-2 min-w-[160px] border border-line bg-bg-elev p-1 shadow-xl"
+        >
+          {LANG_OPTIONS.map((opt, idx) => {
             const active = opt.value === lang;
+            const focused = idx === highlight;
             return (
               <button
                 key={opt.value}
-                onClick={() => {
-                  onChange?.(opt.value);
-                  setOpen(false);
+                id={`lang-opt-${opt.value}`}
+                ref={(el) => {
+                  optionRefs.current[idx] = el;
+                }}
+                type="button"
+                role="option"
+                aria-selected={active}
+                tabIndex={focused ? 0 : -1}
+                onMouseEnter={() => setHighlight(idx)}
+                onClick={() => select(opt.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    select(opt.value);
+                  }
                 }}
                 className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] transition-colors ${
                   active
                     ? "text-accent"
-                    : "text-fg-2 hover:bg-bg-sunk hover:text-fg"
+                    : focused
+                      ? "bg-bg-sunk text-fg"
+                      : "text-fg-2 hover:bg-bg-sunk hover:text-fg"
                 }`}
               >
                 <span>{opt.label}</span>
@@ -78,6 +217,7 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     strokeWidth={2}
+                    aria-hidden
                   >
                     <path
                       strokeLinecap="square"

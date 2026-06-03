@@ -3,7 +3,7 @@
 import { useState, useCallback } from "react";
 import Link from "next/link";
 import { ProjectCategory } from "@/types/project";
-import { Lang, t } from "@/lib/i18n";
+import { Lang, langParam, t, withLang } from "@/lib/i18n";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { GroupMark, CategoryMark } from "@/components/category-mark";
 
@@ -33,8 +33,6 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
     setCollapsed((prev) => ({ ...prev, [id]: !prev[id] }));
   }, []);
 
-  const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
-
   return (
     <aside
       className="hidden w-[252px] shrink-0 flex-col border-r border-line bg-bg lg:flex"
@@ -43,7 +41,7 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
     >
       <div className="flex-1 overflow-y-auto px-5 py-7">
         <Link
-          href={langParam("/explore")}
+          href={langParam(lang, "/explore")}
           className={`mb-6 flex items-center justify-between gap-2 border-l-2 py-2 pl-3 pr-1 text-sm transition-colors ${
             !activeCategory
               ? "border-accent text-fg"
@@ -104,11 +102,7 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
                       return (
                         <li key={slug}>
                           <Link
-                            href={
-                              lang !== "en"
-                                ? `/explore?category=${slug}&lang=${lang}`
-                                : `/explore?category=${slug}`
-                            }
+                            href={withLang(lang, `/explore?category=${slug}`)}
                             className={`group flex items-center justify-between gap-2 border-l-2 px-3 py-1.5 text-[13px] transition-colors ${
                               isActive
                                 ? "border-accent bg-bg-sunk text-fg"

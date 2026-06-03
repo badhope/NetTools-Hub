@@ -1,6 +1,7 @@
 "use client";
 
 import { t, Lang } from "@/lib/i18n";
+import { formatTotalStars } from "@/lib/utils";
 
 interface StatsBarProps {
   projectCount: number;
@@ -47,8 +48,7 @@ export function StatsBar({ projectCount, categoryCount, totalStars, lang }: Stat
       <div className="hidden sm:block">
         <Stat
           label={t(lang, "stats.total_stars")}
-          value={(totalStars / 1000000).toFixed(1)}
-          unit="M"
+          value={formatTotalStars(totalStars, lang)}
         />
       </div>
     </div>

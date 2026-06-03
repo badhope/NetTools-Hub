@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { Lang, t } from "@/lib/i18n";
+import { Lang, langParam, t, withLang } from "@/lib/i18n";
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { ProjectCategory } from "@/types/project";
@@ -102,9 +102,8 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
     [onLangChange],
   );
 
-  const langParam = (path: string) => (lang !== "en" ? `${path}?lang=${lang}` : path);
-  const homeHref = langParam("/");
-  const exploreHref = langParam("/explore");
+  const homeHref = langParam(lang, "/");
+  const exploreHref = langParam(lang, "/explore");
   const primaryCta = variant === "landing" ? t(lang, "editorial.open_atlas") : t(lang, "nav.home");
   const primaryHref = variant === "landing" ? exploreHref : homeHref;
 
@@ -243,11 +242,7 @@ export function TopNav({ lang, onLangChange, categories, counts, variant }: TopN
                           return (
                             <li key={slug}>
                               <Link
-                                href={
-                                  lang !== "en"
-                                    ? `/explore?category=${slug}&lang=${lang}`
-                                    : `/explore?category=${slug}`
-                                }
+                                href={withLang(lang, `/explore?category=${slug}`)}
                                 onClick={() => setMobileOpen(false)}
                                 className="flex items-center justify-between gap-2 px-3 py-2 text-sm text-fg-2 transition-colors hover:bg-bg-sunk hover:text-fg"
                               >
