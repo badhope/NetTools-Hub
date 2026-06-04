@@ -35,7 +35,12 @@ export function Sidebar({ categories, counts, lang, activeCategory }: SidebarPro
 
   return (
     <aside
-      className="hidden w-[252px] shrink-0 flex-col border-r border-line bg-bg lg:flex"
+      // The sidebar is 252 px wide, so it only really fits on
+      // desktop layouts (xl = 1280 px in Tailwind v4). On the
+      // 1024-px `lg` band the sidebar would crowd the project
+      // cards into a single, very narrow column — a worse
+      // experience than just relying on the mobile drawer.
+      className="hidden w-[252px] shrink-0 flex-col border-r border-line bg-bg xl:flex"
       aria-label={t(lang, "sidebar.nav_label")}
       role="navigation"
     >

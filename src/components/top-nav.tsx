@@ -7,6 +7,7 @@ import { LanguageSwitcher } from "@/components/language-switcher";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { ProjectCategory } from "@/types/project";
 import { SiteMark, GroupMark } from "@/components/category-mark";
+import { COPYRIGHT_YEAR } from "@/lib/site";
 
 interface TopNavProps {
   lang: Lang;
@@ -154,12 +155,20 @@ export function TopNav({
           />
 
           <span className="kicker hidden md:inline-block">
-            {t(lang, "editorial.edition", { date: "2026" })}
+            {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
           </span>
 
           <div className="flex-1" />
 
           <LanguageSwitcher lang={lang} onChange={onLangChange} />
+
+          <Link
+            href={exploreHref}
+            className="link-editorial hidden h-9 items-center gap-1.5 px-1 text-sm md:inline-flex"
+            aria-label={t(lang, "nav.explore")}
+          >
+            <span>{t(lang, "nav.explore")}</span>
+          </Link>
 
           <Link
             href={primaryHref}

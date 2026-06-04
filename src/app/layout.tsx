@@ -2,6 +2,12 @@ import type { Metadata, Viewport } from "next";
 import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
 import { SetHtmlLang } from "@/components/set-html-lang";
 import { LANG_HTML_LANG, LANG_OG_LOCALE } from "@/lib/i18n";
+import {
+  PROJECT_COUNT,
+  SITE_BASE_PATH,
+  SITE_CANONICAL,
+  SITE_OWNER,
+} from "@/lib/site";
 import "./globals.css";
 
 // Content Security Policy.
@@ -60,7 +66,7 @@ const CSP =
 // the browser pick a tighter or looser cut depending on rendered
 // size; that alone makes the type feel "drawn for" the page.
 const fraunces = Fraunces({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-fraunces",
   axes: ["opsz", "SOFT", "WONK"],
@@ -73,7 +79,7 @@ const fraunces = Fraunces({
 // in the slightly condensed x-height and the open apertures,
 // which give UI text a calm, considered feel.
 const instrumentSans = Instrument_Sans({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-instrument",
   weight: ["400", "500", "600", "700"],
@@ -85,14 +91,11 @@ const instrumentSans = Instrument_Sans({
 // "calt" ligature set we want for `=>`, `!=`, and `>=` glyphs
 // in this codebase.
 const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
+  subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-jetbrains",
   weight: ["400", "500", "600"],
 });
-
-const SITE_URL = "https://badhope.github.io/NetTools-Hub";
-const BASE_PATH = "/NetTools-Hub";
 
 export const viewport: Viewport = {
   // Match the warm dark palette so the browser chrome (Safari
@@ -108,8 +111,7 @@ export const metadata: Metadata = {
     default: "NetTools Hub — An Atlas of Network Tools",
     template: "%s — NetTools Hub",
   },
-  description:
-    "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
+  description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
   keywords: [
     "network tools",
     "open source",
@@ -121,32 +123,31 @@ export const metadata: Metadata = {
     "DNS",
     "monitoring",
   ],
-  authors: [{ name: "badhope" }],
-  creator: "badhope",
-  metadataBase: new URL(SITE_URL),
+  authors: [{ name: SITE_OWNER }],
+  creator: SITE_OWNER,
+  metadataBase: new URL(SITE_CANONICAL),
   // Per-language alternates. `<link rel="alternate" hreflang>` is
   // what tells Google which URL serves which language so it does
   // not have to guess from the URL's `?lang=` query. The English
   // variant is the canonical URL (no query) and the `x-default`
   // fallback for unrecognised locales.
   alternates: {
-    canonical: SITE_URL,
+    canonical: SITE_CANONICAL,
     languages: {
-      en: SITE_URL,
-      "zh-Hans": `${SITE_URL}/?lang=zh`,
-      ja: `${SITE_URL}/?lang=ja`,
-      "x-default": SITE_URL,
+      en: SITE_CANONICAL,
+      "zh-Hans": `${SITE_CANONICAL}/?lang=zh`,
+      ja: `${SITE_CANONICAL}/?lang=ja`,
+      "x-default": SITE_CANONICAL,
     },
   },
   // The PWA manifest is a sibling of the favicon in /public. We
   // link it from here so Next.js emits the `<link rel="manifest">`
   // tag in the document head.
-  manifest: `${BASE_PATH}/manifest.webmanifest`,
+  manifest: `${SITE_BASE_PATH}/manifest.webmanifest`,
   openGraph: {
     title: "NetTools Hub — An Atlas of Network Tools",
-    description:
-      "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
-    url: SITE_URL,
+    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    url: SITE_CANONICAL,
     siteName: "NetTools Hub",
     // Static export means `<html lang>` and the OG card both have to be
     // resolved at build time — we have no per-request metadata. We
@@ -163,26 +164,25 @@ export const metadata: Metadata = {
     // link-preview bots can render it.
     images: [
       {
-        url: `${SITE_URL}/og-image.png`,
+        url: `${SITE_CANONICAL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: "NetTools Hub — A curated atlas of 120+ open-source network tools",
+        alt: `NetTools Hub — A curated atlas of ${PROJECT_COUNT}+ open-source network tools`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "NetTools Hub — An Atlas of Network Tools",
-    description:
-      "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
-    images: [`${SITE_URL}/og-image.png`],
+    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    images: [`${SITE_CANONICAL}/og-image.png`],
   },
   robots: {
     index: true,
     follow: true,
   },
   icons: {
-    icon: `${BASE_PATH}/favicon.ico`,
+    icon: `${SITE_BASE_PATH}/favicon.ico`,
   },
 };
 

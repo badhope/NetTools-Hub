@@ -146,6 +146,30 @@ export function ExploreContent() {
     let pendingDelta = 0;
     let rafId: number | null = null;
 
+    // Returns true when keyboard focus is currently inside the
+    // sticky header (the tab that the user just used to *expand*
+    // it, the search box, the sort dropdown, the language switcher,
+    // etc). When that is the case we suppress the auto-collapse so
+    // a Tab/Space press does not get "interrupted" by the very
+    // element it just revealed disappearing again — which is
+    // exactly the kind of jitter that made the previous design
+    // confusing to keyboard users.
+    const isFocusInsideHeader = () => {
+      const active = document.activeElement;
+      if (!active || active === document.body) return false;
+      // The header is the first <header> ancestor of the focused
+      // element. Using `.closest("header")` is robust to the exact
+      // wrapping structure (the search bar lives in a sibling
+      // section, not inside <header>, so we widen the predicate
+      // to "any ancestor within the sticky wrapper", which is
+      // identified here by walking up to the wrapper that carries
+      // the .sticky top-0 z-40 class set in the JSX below).
+      const wrapper = (active as HTMLElement).closest?.(
+        ".sticky.top-0",
+      );
+      return wrapper !== null && wrapper !== undefined;
+    };
+
     const flush = () => {
       rafId = null;
       const y = window.scrollY;
@@ -155,6 +179,12 @@ export function ExploreContent() {
       // user is one short swipe away from needing it back.
       if (y < 120) {
         if (headerCollapsedRef.current) setHeaderCollapsed(false);
+        lastY = y;
+        return;
+      }
+      // Don't yank the chrome away from a keyboard user who
+      // just focused something inside it.
+      if (isFocusInsideHeader()) {
         lastY = y;
         return;
       }
@@ -289,7 +319,18 @@ export function ExploreContent() {
 
   const activeGroup = category ? getGroupOfSlug(category) : undefined;
 
-  const clearHeader = useCallback(() => setHeaderCollapsed(false), []);
+  const clearHeader = useCallback(() => {
+    setHeaderCollapsed(false);
+    // Tapping the peek tab is also a one-tap "back to top" — that
+    // is the natural expectation on a long list (most other
+    // apps collapse the header *and* jump you back to the
+    // anchor of the page you came from). `behavior: "smooth"`
+    // is fine here because we are *not* in a passive scroll
+    // listener, so the user gesture is unambiguously a click.
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col bg-bg text-fg">
@@ -298,17 +339,19 @@ export function ExploreContent() {
        *  wrapper. The inner `<div>` carries the `transform:
        *  translateY(...)` animation, so a `headerCollapsed` flip
        *  smoothly slides the whole 200-ish-pixel chrome out of
-       *  the way without leaving a hole (the `top-3` peek shows
-       *  a 12 px-tall "expand" tab so the user can re-open the
-       *  header with one tap). `will-change-transform` is set on
-       *  the inner div so the browser can promote the layer once
+       *  the way without leaving a hole. The 32-px `top-0` peek
+       *  stays reachable at every scroll position — large enough
+       *  to be a comfortable touch target (WCAG 2.2 SC 2.5.8
+       *  wants ≥24×24) and big enough to also fit a small text
+       *  label + chevron. `will-change-transform` is set on the
+       *  inner div so the browser can promote the layer once
        *  and reuse it across the many tiny scroll deltas the
-       *  rAF flush coalesces. The wrapper itself is sticky so the
-       *  visible tab stays reachable at all scroll positions. */}
+       *  rAF flush coalesces. The wrapper itself is sticky so
+       *  the visible tab stays reachable at all scroll positions. */}
       <div className="sticky top-0 z-40">
         <div
           className={`will-change-transform transition-transform duration-300 ease-out motion-reduce:transition-none ${
-            headerCollapsed ? "-translate-y-[calc(100%-12px)]" : "translate-y-0"
+            headerCollapsed ? "-translate-y-[calc(100%-32px)]" : "translate-y-0"
           }`}
         >
           <TopNav
@@ -428,18 +471,25 @@ export function ExploreContent() {
         {/* The "expand" handle: the only piece of the header
          *  that remains visible while `headerCollapsed` is true.
          *  Tapping it (or any downward swipe) brings the rest
-         *  back. It is also keyboard-focusable and labelled so
-         *  screen readers do not lose access to the nav. */}
+         *  back AND smooth-scrolls the page to the top — see
+         *  the `clearHeader` callback above.
+         *
+         *  The button is 32px tall (h-8) so it stays a comfortable
+         *  touch target under WCAG 2.2 SC 2.5.8 (≥24×24px) and the
+         *  `active:scale-95` gives an immediate press feedback on
+         *  touch devices. `aria-label` describes the *action* —
+         *  "Show header" — not the visual state, because that is
+         *  what the screen reader user is about to invoke. */}
         {headerCollapsed && (
           <button
             type="button"
             onClick={clearHeader}
             aria-label={t(lang, "nav.show_header")}
-            className="absolute inset-x-0 top-0 z-10 mx-auto flex h-3 w-24 items-center justify-center rounded-b-full border border-t-0 border-line bg-bg-elev/90 text-fg-3 backdrop-blur transition-colors hover:text-accent"
+            className="absolute inset-x-0 top-0 z-10 mx-auto flex h-8 w-28 items-center justify-center gap-1.5 rounded-b-full border border-t-0 border-line bg-bg-elev/90 text-fg-3 backdrop-blur transition-all duration-150 hover:text-accent focus-visible:border-accent focus-visible:text-accent active:scale-95 motion-reduce:transition-none"
           >
             <svg
               aria-hidden
-              className="h-2.5 w-2.5"
+              className="h-3 w-3"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -447,6 +497,9 @@ export function ExploreContent() {
             >
               <path strokeLinecap="square" d="M6 9l6 6 6-6" />
             </svg>
+            <span className="font-mono text-[10px] uppercase tracking-[0.18em]">
+              {t(lang, "nav.show_header")}
+            </span>
           </button>
         )}
       </div>

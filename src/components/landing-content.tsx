@@ -17,6 +17,7 @@ import { formatTotalStars } from "@/lib/utils";
 import { TopNav } from "@/components/top-nav";
 import { CATEGORY_GROUPS } from "@/lib/category-groups";
 import { GroupMark, SiteMark } from "@/components/category-mark";
+import { COPYRIGHT_YEAR, SITE_OWNER } from "@/lib/site";
 
 // `lastUpdated` is read from data/projects.json at module load and
 // shared across the whole landing render. The field is the source of
@@ -164,7 +165,7 @@ export function LandingContent() {
           <div className="reveal reveal-1 flex flex-col">
             <div className="mb-8 flex items-center gap-3">
               <span className="kicker">
-                {t(lang, "editorial.hero_atlas")}
+                {t(lang, "editorial.eyebrow")}
               </span>
               <span className="h-px flex-1 bg-dim" />
               <span className="font-mono text-[10px] text-muted">
@@ -243,7 +244,7 @@ export function LandingContent() {
                 <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
                   {t(lang, "editorial.compiled_by")}
                 </dt>
-                <dd className="font-mono text-sm text-fg-2">badhope</dd>
+                <dd className="font-mono text-sm text-fg-2">{SITE_OWNER}</dd>
               </div>
             </dl>
           </aside>
@@ -264,7 +265,7 @@ export function LandingContent() {
             })}
           </span>
           <span className="ml-auto font-mono text-[10px] text-muted">
-            {t(lang, "editorial.edition", { date: "2026" })}
+            {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
           </span>
         </div>
       </section>
@@ -441,15 +442,15 @@ export function LandingContent() {
             </div>
             <div>
               <span className="kicker">— {t(lang, "editorial.compiled_by")}</span>
-              <p className="mt-3 font-display text-lg text-fg">badhope</p>
+              <p className="mt-3 font-display text-lg text-fg">{SITE_OWNER}</p>
               <p className="mt-1 text-[13px] text-fg-2">
                 <a
-                  href="https://github.com/badhope/NetTools-Hub"
+                  href={`https://github.com/${SITE_OWNER}/NetTools-Hub`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-editorial"
                 >
-                  github.com/badhope/NetTools-Hub
+                  github.com/{SITE_OWNER}/NetTools-Hub
                 </a>
               </p>
             </div>
@@ -463,9 +464,9 @@ export function LandingContent() {
           </div>
           <div className="mt-10 flex flex-col items-start justify-between gap-2 border-t border-line pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted sm:flex-row sm:items-center">
             <span>
-              {t(lang, "editorial.edition", { date: "2026" })}
+              {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
             </span>
-            <span>© badhope · Set in Fraunces, Instrument Sans, JetBrains Mono</span>
+            <span>© {SITE_OWNER} · Set in Fraunces, Instrument Sans, JetBrains Mono</span>
           </div>
         </div>
       </footer>

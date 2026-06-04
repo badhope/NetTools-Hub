@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Project } from "@/types/project";
 import { formatNumber } from "@/lib/utils";
 import type { Lang } from "@/lib/i18n";
+import { t } from "@/lib/i18n";
 
 const languageColors: Record<string, string> = {
   TypeScript: "#3178c6",
@@ -46,6 +47,7 @@ export function ProjectCard({
       href={project.url}
       target="_blank"
       rel="noopener noreferrer"
+      aria-label={t(lang, "card.open_external") + ": " + project.name}
       className="group relative flex h-full flex-col gap-3 border border-line bg-bg-elev/60 p-5 pl-6 transition-colors duration-300 hover:border-dim hover:bg-bg-elev focus-visible:border-accent"
       style={
         {
@@ -67,9 +69,30 @@ export function ProjectCard({
         <h3 className="min-w-0 flex-1 font-display text-[1.15rem] font-medium leading-tight text-fg transition-colors duration-200 group-hover:text-accent line-clamp-1 break-words">
           {project.name}
         </h3>
-        <span className="flex shrink-0 items-baseline gap-1 font-mono text-[11px] text-muted">
-          <span className="text-fg-2">{formatNumber(project.stars, lang)}</span>
-          <span aria-hidden>★</span>
+        <span className="flex shrink-0 items-center gap-2 font-mono text-[11px] text-muted">
+          <span className="flex items-baseline gap-1" title={`${project.stars} stars`}>
+            <span className="text-fg-2">{formatNumber(project.stars, lang)}</span>
+            <span aria-hidden>★</span>
+          </span>
+          {/* External-link arrow — sits at the corner of the card
+           *  so the user knows the link opens in a new tab. The
+           *  whole card is already a link, so the arrow is purely
+           *  decorative (`aria-hidden`) and the link's own
+           *  `aria-label` (above) is what screen readers announce. */}
+          <svg
+            aria-hidden
+            className="h-3 w-3 text-fg-3 transition-colors duration-200 group-hover:text-accent"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.5}
+          >
+            <path
+              strokeLinecap="square"
+              strokeLinejoin="miter"
+              d="M14 3h7v7M21 3l-9 9M21 14v7H3V3h7"
+            />
+          </svg>
         </span>
       </div>
 
@@ -96,7 +119,46 @@ export function ProjectCard({
           />
           {project.language}
         </span>
-        <span className="truncate">@{project.author}</span>
+        <span className="flex min-w-0 items-center gap-3 truncate">
+          {/* Forks are a second, smaller popularity signal — only
+           *  rendered when there is at least one, so a fresh
+           *  project does not look "unpopular" by virtue of being
+           *  new. The icon is the standard GitHub branch mark. */}
+          {project.forks > 0 && (
+            <span
+              className="flex shrink-0 items-center gap-1"
+              title={t(lang, "card.forks", { count: project.forks })}
+            >
+              <svg
+                aria-hidden
+                className="h-3 w-3"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+              >
+                <circle cx="6" cy="6" r="2" />
+                <circle cx="6" cy="18" r="2" />
+                <circle cx="18" cy="6" r="2" />
+                <path d="M6 8v8M18 8c0 6-6 4-6 10" />
+              </svg>
+              <span>{formatNumber(project.forks, lang)}</span>
+            </span>
+          )}
+          {/* License is rendered verbatim from the data file
+           *  (e.g. "MIT", "Apache-2.0") and prefixed with the
+           *  localised "License: " label so it is still useful
+           *  when the abbreviation is unfamiliar. */}
+          {project.license && (
+            <span
+              className="shrink-0 truncate"
+              title={t(lang, "card.license", { name: project.license })}
+            >
+              <span aria-hidden className="mr-1 text-fg-3">ⓘ</span>
+              {project.license}
+            </span>
+          )}
+        </span>
       </div>
     </Link>
   );

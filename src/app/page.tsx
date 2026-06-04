@@ -1,5 +1,6 @@
 import { LandingContent } from "@/components/landing-content";
 import { safeJsonLd } from "@/lib/utils";
+import { PROJECT_COUNT, SITE_CANONICAL, SITE_OWNER } from "@/lib/site";
 
 // JSON-LD WebSite + Organization schema for the landing page.
 // Search engines use this to build rich results (sitelinks
@@ -12,14 +13,13 @@ const siteJsonLd = {
   "@type": "WebSite",
   name: "NetTools Hub",
   alternateName: "Network Tools Atlas",
-  url: "https://badhope.github.io/NetTools-Hub",
-  description:
-    "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
+  url: SITE_CANONICAL,
+  description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
   inLanguage: ["en", "zh-Hans", "ja"],
   publisher: {
     "@type": "Person",
-    name: "badhope",
-    url: "https://github.com/badhope",
+    name: SITE_OWNER,
+    url: `https://github.com/${SITE_OWNER}`,
   },
   // The search box is purely client-side (state held in
   // `ExploreContent`); it does *not* rewrite the URL with
@@ -31,7 +31,7 @@ const siteJsonLd = {
   // we just don't claim one exists.
   potentialAction: {
     "@type": "ReadAction",
-    target: "https://badhope.github.io/NetTools-Hub/explore",
+    target: `${SITE_CANONICAL}explore`,
   },
 };
 
