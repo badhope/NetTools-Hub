@@ -164,6 +164,7 @@ const translations: Record<Lang, Record<string, string>> = {
     "nav.explore": "探索",
     "nav.menu": "菜单",
     "nav.close": "关闭",
+    "nav.show_header": "显示顶栏",
     "nav.switch_language": "切换语言",
     "a11y.skip_to_main": "跳到主要内容",
     "a11y.main": "主要内容",
