@@ -1,128 +1,89 @@
-name: 🐛 Bug Report
-description: Report a bug, broken link, typo, or unexpected behaviour.
-title: "[Bug] "
-labels: ["bug", "needs-triage"]
+name: Bug Report
+description: Something is broken or behaving wrong.
+title: "[bug]: "
+labels: ["bug", "triage"]
 assignees: []
+
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to file a bug report! 🐛
-        Please fill in the sections below — the more info you give, the faster we can fix it.
-
-        🌐 **Preferred language for this report** (English / 简体中文 / 日本語)
-        ⏳ **Response time** — we aim to acknowledge within **3 business days**.
-
-  - type: dropdown
-    id: language
-    attributes:
-      label: Preferred language for follow-up
-      description: Which language would you like us to reply in?
-      options:
-        - English
-        - 简体中文
-        - 日本語
-    validations:
-      required: true
-
-  - type: input
-    id: url
-    attributes:
-      label: URL where the bug occurs
-      description: "e.g. https://badhope.github.io/NetTools-Hub/explore/?category=core"
-      placeholder: "https://..."
-    validations:
-      required: true
-
-  - type: dropdown
-    id: browser
-    attributes:
-      label: Browser & version
-      options:
-        - Chrome
-        - Firefox
-        - Safari
-        - Edge
-        - Mobile Safari (iOS)
-        - Chrome for Android
-        - Other (add a comment)
-    validations:
-      required: true
-
-  - type: dropdown
-    id: device
-    attributes:
-      label: Device
-      options:
-        - Desktop / Laptop
-        - Tablet
-        - Phone
-        - Other
-    validations:
-      required: false
-
-  - type: dropdown
-    id: viewport
-    attributes:
-      label: Approximate viewport / window width
-      options:
-        - ≤ 480 px (small mobile)
-        - 481 – 768 px (tablet)
-        - 769 – 1280 px (small desktop)
-        - > 1280 px (large desktop)
-    validations:
-      required: false
+        Thanks for taking the time. The more detail, the faster I can
+        reproduce and fix this.
 
   - type: textarea
-    id: steps
+    id: what
+    attributes:
+      label: What happened?
+      description: Clear, short description of the bug.
+      placeholder: "When I run `...`, I get `...` instead of `...`."
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
     attributes:
       label: Steps to reproduce
-      description: Numbered list — what you clicked, in what order.
+      description: Numbered. Smallest example you can manage.
       placeholder: |
-        1. Open https://badhope.github.io/NetTools-Hub/explore/
-        2. Click on a category in the sidebar
-        3. Observe that the category header overlaps with the top nav
+        1. Install with `...`
+        2. Run `...`
+        3. Open `...`
     validations:
       required: true
 
   - type: textarea
     id: expected
     attributes:
-      label: Expected behaviour
-      placeholder: "The category header should sit below the top nav without overlap."
+      label: Expected
     validations:
       required: true
 
   - type: textarea
     id: actual
     attributes:
-      label: Actual behaviour
-      placeholder: "The category header overlaps the top nav by ~12 px."
+      label: Actual (include logs / stack traces)
     validations:
       required: true
 
-  - type: textarea
-    id: console
+  - type: input
+    id: version
     attributes:
-      label: Browser console output (if any)
-      description: "Open DevTools → Console and paste any red error messages here."
+      label: Version / commit
+      placeholder: "v1.2.3 or abcdef0"
     validations:
-      required: false
+      required: true
 
-  - type: textarea
-    id: screenshots
+  - type: dropdown
+    id: where
     attributes:
-      label: Screenshots / screen recordings
-      description: "Drag-and-drop images here, or paste Markdown image links."
-    validations:
-      required: false
-
-  - type: checkboxes
-    id: checks
-    attributes:
-      label: Pre-submission checks
+      label: Where did you run it?
       options:
-        - label: I searched existing issues and didn't find a duplicate.
-          required: true
-        - label: I tested in the latest version of the site (no cache).
-          required: false
+        - Local (macOS)
+        - Local (Linux)
+        - Local (Windows)
+        - Docker / container
+        - CI
+        - Cloud / VM
+        - Other
+    validations:
+      required: false
+
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How bad?
+      options:
+        - Low (cosmetic / minor inconvenience)
+        - Medium (broken feature, workaround exists)
+        - High (broken feature, no workaround)
+        - Critical (data loss, security, outage)
+    validations:
+      required: false
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Anything else
+    validations:
+      required: false

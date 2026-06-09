@@ -1,75 +1,35 @@
-# Security Policy
+# Security
 
-## 🛡 Supported Versions
+Found a hole? **Don't file a public issue.** Open a private security
+advisory or email me (the address is in `CITATION.cff` if there's one;
+otherwise it's on my profile page). I prefer the advisory form because
+GitHub handles the disclosure timeline.
 
-NetTools Hub is a **purely static** navigation platform — it ships pre-rendered HTML, CSS, and JavaScript to GitHub Pages. There is no server, no database, no user accounts, and no API keys stored in the application code or the deployed bundle.
+What I'll do:
 
-| Version | Supported |
-| --- | --- |
-| `main` (latest) | ✅ Active |
-| Older deployments | ⚠️ Best-effort — re-deploy from `main` |
+- Reply within 3 business days.
+- Triage and try to reproduce within 10 business days.
+- Ship a fix, or at least a documented mitigation, as soon as I can.
+- Credit you in the advisory if you want it. Say "anonymous" if you don't.
 
-Because the project is static and dependency-light, security exposure is limited to:
+I follow responsible disclosure: please keep the report private until I
+publish a fix and (if needed) a CVE / advisory. I won't sue you for
+security research done in good faith, and I won't go after security
+researchers for things that are obviously bugs.
 
-1. **Build-time supply chain** — npm packages and GitHub Actions versions pinned in `pnpm-lock.yaml` and `.github/workflows/deploy.yml`.
-2. **Content integrity of `data/projects.json`** — links and descriptions only; no executable code.
+## What I patch
 
-## 📣 Reporting a Vulnerability
+Only the latest commit on `main`. I don't backport. If you're on an
+older version, the right fix is to upgrade.
 
-**Please do not open a public GitHub Issue for security-sensitive reports.**
+## In scope
 
-The recommended private channel is **GitHub Security Advisories**:
-<https://github.com/badhope/NetTools-Hub/security/advisories/new>
+- Code in this repository.
+- Official container images and release artifacts that came from this
+  repo (when they exist).
 
-> 📌 **No dedicated security email** is published. Using GitHub Advisories
-> keeps the report encrypted, scoped, and tracked — please prefer it.
+## Out of scope
 
-### What to include
-
-- A clear, descriptive title
-- A reproduction path (URL, build command, browser, OS)
-- An assessment of **impact** and **likelihood**
-- A suggested fix or mitigation, if you have one
-- Whether you'd like to be credited in the advisory
-
-### What to **expect**
-
-| Step | Timeline |
-| --- | --- |
-| Acknowledgement | within **3 business days** |
-| Initial triage & severity assessment | within **7 business days** |
-| Patch (or documented mitigation) | within **30 days** for `Critical` / `High` issues |
-| Public disclosure | coordinated with the reporter, typically **after** a fix is shipped |
-
-We follow [coordinated disclosure](https://en.wikipedia.org/wiki/Coordinated_vulnerability_disclosure) — please give us a reasonable window before publishing details.
-
-## 🔐 Scope of This Project
-
-### In scope
-
-- Cross-site scripting (XSS) via the static build, sitemap, or robots output
-- Content injection in `data/projects.json` that could lead to XSS in the deployed site
-- Vulnerable dependencies in `package.json` / `pnpm-lock.yaml`
-- Tampered CI artifacts or compromised GitHub Actions versions
-- Unsafe defaults in `.github/workflows/deploy.yml` (e.g. overly broad `permissions:`)
-
-### Out of scope
-
-- **Third-party projects** linked from `data/projects.json` — please report those to the upstream maintainers directly.
-- **GitHub Pages infrastructure** itself — escalate to GitHub Support.
-- **Network policies of the user's environment** — the project has no influence over which tools users can or cannot run.
-
-## 🧰 Security Best Practices for Contributors
-
-- **Never commit secrets** (API keys, tokens, credentials) — the repo is public and history rewrites are destructive.
-  Even a one-line `.env` is enough; use `.env.example` as a template.
-- **Pin GitHub Actions** to a full commit SHA in `.github/workflows/deploy.yml` for high-risk steps, or stay on a current major tag (`@v4`) for routine ones.
-- **Validate `data/projects.json`** with `pnpm lint` before pushing — schema drift can break the build.
-- **Don't load remote scripts** at runtime in components; the project is intentionally self-hosted.
-
-## 🪪 Disclosure & Credits
-
-We are happy to credit reporters in the security advisory (or to keep it anonymous — your choice).
-By submitting a report, you confirm the information is provided in good faith and that you will keep the details confidential until coordinated disclosure.
-
-Thank you for helping keep NetTools Hub and its users safe. 🙏
+- Third-party dependencies. Report upstream unless I pinned and shipped
+  a vulnerable version myself.
+- Scanners, social engineering, DoS, or "you used a default port".
