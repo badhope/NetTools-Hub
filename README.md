@@ -1,29 +1,33 @@
-<div align="center">
-
 # 🛠️ NetTools Hub
 
-> **One-stop navigation platform for 120+ actively maintained open-source network tools.**
-> Proxies · VPNs · Clash family · GitHub acceleration · DNS · Security · Monitoring
+> **一个我自己用的网络工具导航站**。收录了 120+ 还在活跃维护的
+> 开源网络工具 —— 代理、VPN、Clash 系列、GitHub 加速、DNS、安全、监控。
+> 不托管任何东西,只做跳转。
 
-[**🌐 Live Site**](https://badhope.github.io/NetTools-Hub/) · [**📖 Docs**](./docs) · [**🐛 Report Bug**](../../issues/new?template=bug_report.yml) · [**✨ Request Feature**](../../issues/new?template=feature_request.yml) · [**🌍 Help Translate**](../../issues/new?template=translation.yml)
+起因是每次我重新装系统,都要重新去 GitHub 翻一遍"现在 Clash 哪个
+仓库还活着、Sing-box 比 Xray 好在哪、有没有更轻的 V2Ray 实现"。
+这个站是我给自己做的备忘,顺便公开了。
 
-<!-- LANGUAGE BADGES -->
-[English](README.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
+---
 
-<!-- PROJECT SHIELDS -->
-[![Live Site](https://img.shields.io/badge/🌐_Live_NetTools_Hub-blue?style=for-the-badge)](https://badhope.github.io/NetTools-Hub/)
-[![Deploy](https://img.shields.io/github/actions/workflow/status/badhope/NetTools-Hub/deploy.yml?branch=main&label=Deploy&style=flat-square)](https://github.com/badhope/NetTools-Hub/actions/workflows/deploy.yml)
-[![Pages Status](https://img.shields.io/github/deployments/badhope/NetTools-Hub/github-pages?style=flat-square&label=Pages)](https://github.com/badhope/NetTools-Hub/deployments)
-[![MIT License](https://img.shields.io/github/license/badhope/NetTools-Hub?style=flat-square)](./LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/badhope/NetTools-Hub?style=social)](https://github.com/badhope/NetTools-Hub/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/badhope/NetTools-Hub?style=social)](https://github.com/badhope/NetTools-Hub/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/pulls)
-[![Last commit](https://img.shields.io/github/last-commit/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/commits/main)
-[![Deployed on GitHub Pages](https://img.shields.io/badge/Deployed_on-GitHub_Pages-222?logo=github&style=flat-square)](https://github.com/badhope/NetTools-Hub/deployments)
-[![Top language](https://img.shields.io/github/languages/top/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/search?l=typescript)
+## 收录的类别
 
-</div>
+- **代理协议**:Clash / Mihomo / Sing-box / V2Ray / Xray / Shadowsocks / Hysteria / TUIC
+- **VPN**:WireGuard / OpenVPN / IPSec / 算法实现
+- **DNS**:CoreDNS / SmartDNS / AdGuardHome / mosdns
+- **GitHub 加速**:各种镜像、raw 加速、clone 加速
+- **安全**:WAF / IDS / IPS / 蜜罐
+- **监控**:Smokeping / Prometheus exporters / Uptime Kuma
+- **辅助**:Hosts 编辑器 / 端口扫描 / 路由跟踪
+
+每条都有:仓库地址、license、最近一次 release 时间、是否还在维护。
+
+## i18n
+
+- [English](README.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
+
+界面是 i18n 的,但**每条收录说明都是中文写的** —— 因为我
+只懂中文。翻译需要从社区收集,贡献指南在 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
 ---
 
