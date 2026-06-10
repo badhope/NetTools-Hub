@@ -1,43 +1,22 @@
-# CODEOWNERS
-# Each line is a file pattern followed by one or more owners.
-# Order matters — the last matching pattern wins.
-# See https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+# CODEOWNERS — default review ownership
+# badhope is the sole owner; replace with team handles in a
+# multi-maintainer setup.
 
-# Default owners for everything
+# Default: everything
 *       @badhope
 
-# Documentation (English)
-README.md              @badhope
-CHANGELOG.md           @badhope
-CONTRIBUTING.md        @badhope
-CODE_OF_CONDUCT.md     @badhope
-SECURITY.md            @badhope
-LICENSE                @badhope
+# GitHub configuration
+/.github/        @badhope
 
-# Documentation (zh-CN)
-README.zh.md           @badhope
-CHANGELOG.zh.md        @badhope
+# Documentation
+/docs/           @badhope
+/README.md       @badhope
+/CHANGELOG.md    @badhope
 
-# Documentation (ja-JP)
-README.ja.md           @badhope
-CHANGELOG.ja.md        @badhope
-
-# Issue / PR templates
-/.github/ISSUE_TEMPLATE/   @badhope
-/.github/PULL_REQUEST_TEMPLATE.md  @badhope
-
-# GitHub workflows
-/.github/workflows/  @badhope
-
-# Core data & schema
-/data/projects.json    @badhope
-/src/types/            @badhope
-/src/lib/projects.ts   @badhope
-/src/lib/category-groups.ts  @badhope
-
-# i18n (any change requires all 3 languages to be updated in lockstep)
-/src/lib/i18n.ts       @badhope
-
-# Components & pages
-/src/components/       @badhope
-/src/app/              @badhope
+# Build / release config
+/package.json    @badhope
+/uv.lock         @badhope
+/package-lock.json @badhope
+/pnpm-lock.yaml  @badhope
+/Cargo.toml      @badhope
+/Cargo.lock      @badhope
