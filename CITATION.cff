@@ -1,63 +1,29 @@
 cff-version: 1.2.0
 message: >-
-  If you use NetTools Hub in academic or research work, please cite it using
-  the metadata below. This file also enables GitHub's "Cite this repository"
-  button.
-title: "NetTools Hub"
-type: software
-date-released: 2026-06-02
-license: MIT
-license-url: https://github.com/badhope/NetTools-Hub/blob/main/LICENSE
-repository-code: https://github.com/badhope/NetTools-Hub
-url: https://badhope.github.io/NetTools-Hub/
-keywords:
-  - network-tools
-  - proxy
-  - vpn
-  - clash
-  - shadowsocks
-  - v2ray
-  - sing-box
-  - hysteria
-  - github-acceleration
-  - dns
-  - security
-  - navigation
-  - directory
-  - static-site
-  - nextjs
-  - open-source
-  - i18n
-  - multilingual
+  If you use this software in academic work, please cite it using the
+  metadata below.
+title: NetTools-Hub
 authors:
   - family-names: badhope
     given-names: badhope
     alias: badhope
-    email: badhope@users.noreply.github.com
-    affiliation: NetTools Hub Maintainer
-preferred-citation:
-  type: software
-  title: "NetTools Hub — One-stop navigation for 120+ open-source network tools"
-  authors:
-    - family-names: badhope
-      given-names: badhope
-      alias: badhope
-  date-released: 2026-06-02
-  year: 2026
-  month: 6
-  publisher: GitHub
-  version: "0.3.0"
-  url: https://badhope.github.io/NetTools-Hub/
-  contact:
-    - name: GitHub Issues
-      url: https://github.com/badhope/NetTools-Hub/issues
-references:
-  - type: software
-    title: "Next.js — The React Framework"
-    url: https://nextjs.org/
-  - type: software
-    title: "Tailwind CSS"
-    url: https://tailwindcss.com/
-  - type: software
-    title: "GitHub Pages"
-    url: https://pages.github.com/
+identifiers:
+  - type: url
+    value: https://github.com/badhope/NetTools-Hub
+license: MIT
+type: software
+url: https://github.com/badhope/NetTools-Hub
+repository-code: https://github.com/badhope/NetTools-Hub
+keywords:
+  - clash
+  - dns
+  - hysteria
+  - navigation
+  - nettools
+  - network-tools
+  - nextjs
+  - open-source
+  - proxy
+  - security-tools
+abstract: >-
+  NetTools Hub — my index of 120+ actively-maintained open-source network tools. Proxies, VPNs, Clash family, DNS, security, monitoring. EN / 中文 / 日本語. Nothing hosted, just links.

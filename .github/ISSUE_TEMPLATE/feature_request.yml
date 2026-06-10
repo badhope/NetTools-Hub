@@ -1,83 +1,55 @@
-name: ✨ Feature Request
-description: Propose a new feature, improvement, or design change.
-title: "[Feature] "
-labels: ["enhancement", "needs-triage"]
+name: Feature Request
+description: Suggest a new feature or improvement.
+title: "[feat]: "
+labels: ["enhancement", "triage"]
 assignees: []
+
 body:
   - type: markdown
     attributes:
       value: |
-        Have an idea that would make **NetTools Hub** better? We'd love to hear it! ✨
-        Please describe the problem first, then the proposed solution.
-
-  - type: dropdown
-    id: language
-    attributes:
-      label: Preferred language for follow-up
-      options:
-        - English
-        - 简体中文
-        - 日本語
-    validations:
-      required: true
-
-  - type: dropdown
-    id: category
-    attributes:
-      label: Area
-      options:
-        - Search & filtering
-        - Project cards / data model
-        - Internationalisation (i18n)
-        - Layout & navigation
-        - Theming / dark mode
-        - Accessibility
-        - Performance
-        - Documentation / README
-        - Other
-    validations:
-      required: true
+        Describe the **problem** first, then the proposed **solution**.
+        The "why" matters more than the "how".
 
   - type: textarea
     id: problem
     attributes:
-      label: Problem / motivation
-      description: "What's the current pain point? Why does it matter?"
-      placeholder: |
-        When I search for projects by tag, the search bar doesn't suggest popular tags,
-        so I have to type the full tag name. This makes the feature harder to discover.
+      label: The problem
+      description: What's painful? What can't you do today?
+      placeholder: "Right now I have to ...; this is annoying because ..."
     validations:
       required: true
 
   - type: textarea
     id: solution
     attributes:
-      label: Proposed solution
-      description: "What would you like to see built? Mock-ups welcome."
+      label: What I want
+      description: The feature, change, or improvement.
     validations:
       required: true
 
   - type: textarea
     id: alternatives
     attributes:
-      label: Alternatives considered
-      description: "What other approaches did you weigh?"
+      label: What I tried / considered
     validations:
       required: false
 
   - type: textarea
-    id: screenshots
+    id: scope
     attributes:
-      label: Screenshots / mockups
+      label: Scope
+      description: Does this change user-facing behavior, the API, the data model, or the build? Any backward-compat risk?
     validations:
       required: false
 
-  - type: checkboxes
-    id: checks
+  - type: dropdown
+    id: willingness
     attributes:
-      label: Pre-submission checks
+      label: My willingness
       options:
-        - label: I searched existing feature requests and didn't find a duplicate.
-          required: true
-        - label: I'm willing to help implement this (open a PR).
-          required: false
+        - I'd send a PR for this
+        - I can help test / review
+        - I can only describe the use case
+    validations:
+      required: false
