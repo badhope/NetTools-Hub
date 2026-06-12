@@ -1,7 +1,7 @@
 {
   "name": "NetTools Hub",
   "short_name": "NetTools",
-  "description": "A field manual of 200+ open-source network tools, organised by kind (proxy, VPN, DNS, ...) and by platform (desktop, mobile, CLI, server, browser, router).",
+  "description": "A field manual of 210 open-source network tools, organised by kind (proxy, VPN, DNS, ...) and by platform (desktop, mobile, CLI, server, browser, router).",
   "start_url": "/NetTools-Hub/",
   "scope": "/NetTools-Hub/",
   "display": "standalone",

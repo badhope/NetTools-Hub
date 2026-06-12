@@ -22,8 +22,8 @@ describe("formatNumber", () => {
   });
 
   it("handles undefined and null", () => {
-    expect(formatNumber(undefined as any)).toBe("NaN");
-    expect(formatNumber(null as any)).toBe("0");
+    expect(formatNumber(undefined as unknown as number)).toBe("NaN");
+    expect(formatNumber(null as unknown as number)).toBe("0");
   });
 
   it("handles negative numbers", () => {

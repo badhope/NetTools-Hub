@@ -37,20 +37,28 @@ export default withSentryConfig(nextConfig, {
   //   name: process.env.SENTRY_RELEASE,
   // },
 
-  // Disable automatic instrumentation of Next.js features
-  // to reduce bundle size
-  autoInstrumentServerFunctions: false,
-  autoInstrumentMiddleware: false,
+  // Webpack-level Sentry options (the top-level ones are deprecated).
+  webpack: {
+    // Disable automatic instrumentation of Next.js features
+    // to reduce bundle size
+    autoInstrumentServerFunctions: false,
+    autoInstrumentMiddleware: false,
+
+    // Tree-shake Sentry logger statements to reduce bundle size
+    treeshake: {
+      removeDebugLogging: true,
+    },
+
+    // Enables automatic instrumentation of Vercel Cron Monitors.
+    // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/cron-jobs/
+    automaticVercelMonitors: false,
+  },
 
   // Disable source map upload (not needed for static export)
   sourcemaps: {
     disable: true,
   },
 
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-
-  // Enables automatic instrumentation of Vercel Cron Monitors.
-  // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/cron-jobs/
-  automaticVercelMonitors: false,
+  // Disable telemetry data collection
+  telemetry: false,
 });
