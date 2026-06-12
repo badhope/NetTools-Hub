@@ -22,7 +22,7 @@ const CURRENT_SCHEMA_VERSION = 2;
 
 if (data.schemaVersion !== CURRENT_SCHEMA_VERSION) {
   console.warn(
-    `[projects] Schema version mismatch: expected ${CURRENT_SCHEMA_VERSION}, got ${data.schemaVersion}. Some features may not work correctly.`
+    `[projects] Schema version mismatch: expected ${CURRENT_SCHEMA_VERSION}, got ${data.schemaVersion}. Some features may not work correctly.`,
   );
 }
 

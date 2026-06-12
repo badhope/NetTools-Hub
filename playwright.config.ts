@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright E2E test configuration for NetTools Hub.
- * 
+ *
  * Tests critical user paths:
  * - Homepage rendering and language switching
  * - Explore page navigation and filtering
@@ -15,14 +15,14 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: process.env.CI ? 1 : 2,
   reporter: 'html',
   use: {
     baseURL: 'http://localhost:8080',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
   },
-  
+
   projects: [
     {
       name: 'chromium',

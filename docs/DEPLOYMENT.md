@@ -67,11 +67,21 @@ That's it. The next push to `main` (or the Actions tab on this very fork) will t
 1. Sets up Node 22 + pnpm 10
 2. Installs deps with `pnpm install --frozen-lockfile`
 3. Audits production dependencies (`pnpm audit --prod --audit-level=high`)
-4. Builds with `next build` (static export, ~63 pre-rendered pages)
+4. Builds with `next build` (static export, ~270 pre-rendered pages)
 5. Uploads the artifact
 6. Deploys via `actions/deploy-pages@v4`
 
 Your site will be live at `https://<your-username>.github.io/NetTools-Hub/` within a couple of minutes.
+
+**Note**: The build now includes:
+
+- 210 project detail pages (one per project)
+- 48 kind+platform pages
+- 8 kind pages
+- Search and filter functionality
+- PWA support (Service Worker, manifest)
+- Light/dark theme toggle
+- Related projects recommendations
 
 ---
 

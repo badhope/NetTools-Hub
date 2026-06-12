@@ -17,6 +17,61 @@ Run whatever the project has: `pnpm test`, `pytest`, `cargo test`, etc.
 If linter / formatter configs are checked in, run them too. CI will
 catch what you missed, but a green push is faster than a red one.
 
+### Testing workflow
+
+This project uses multiple testing layers:
+
+1. **Unit tests** (Vitest):
+
+   ```bash
+   pnpm test              # Run unit tests
+   pnpm test:coverage     # Run with coverage report
+   ```
+
+2. **E2E tests** (Playwright):
+
+   ```bash
+   pnpm test:e2e          # Run E2E tests
+   pnpm test:e2e:ui       # Run with Playwright UI mode
+   pnpm test:e2e:report   # View test report
+   ```
+
+3. **Type checking**:
+
+   ```bash
+   pnpm type-check        # TypeScript type checking
+   ```
+
+4. **Linting and formatting**:
+   ```bash
+   pnpm lint              # ESLint
+   pnpm format:check      # Check Prettier formatting
+   pnpm format            # Auto-fix formatting
+   ```
+
+**Important**: Run all checks before submitting a PR:
+
+```bash
+pnpm lint && pnpm type-check && pnpm test && pnpm test:e2e
+```
+
+### Accessibility requirements
+
+All UI changes must maintain WCAG 2.1 AA compliance:
+
+- Use semantic HTML elements
+- Include proper ARIA labels where needed
+- Ensure keyboard navigation works
+- Test with screen readers (VoiceOver, NVDA, JAWS)
+- Verify color contrast ratios meet standards
+
+### Performance considerations
+
+- Keep bundle size minimal (check with `pnpm analyze`)
+- Use React.memo for expensive components
+- Implement lazy loading for images and heavy components
+- Test Core Web Vitals (LCP, FID, CLS)
+
 ## Commit messages
 
 I don't enforce Conventional Commits. Subject, blank line, body, done.

@@ -13,7 +13,7 @@ export function WebVitals() {
     if (process.env.NODE_ENV === 'production') {
       // You can send to your analytics service here
       // Example: sendToAnalytics(metric);
-      
+
       // For now, just log important metrics
       if (metric.name === 'LCP' && metric.value > 2500) {
         console.warn(`LCP is slow: ${metric.value}ms`);

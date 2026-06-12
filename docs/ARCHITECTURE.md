@@ -44,20 +44,23 @@ HTML on disk before a request ever arrives.
 
 ## 2. URL tree
 
-The exploration surface is a strict 2-level hierarchy derived from
-the two orthogonal taxonomies on each project:
+The exploration surface is a 2-level hierarchy derived from
+the two orthogonal taxonomies on each project, plus individual
+project detail pages:
 
 | Path                             | Filter                                                                          |
 | -------------------------------- | ------------------------------------------------------------------------------- |
 | `/explore`                       | no filter (all 210)                                                             |
 | `/explore/k/<kind>`              | one of `proxy / vpn / dns / acceleration / security / monitoring / ops / tools` |
 | `/explore/k/<kind>/p/<platform>` | kind + one of `desktop / mobile / cli / server / browser / router`              |
+| `/explore/project/<id>`          | individual project detail page with related recommendations                     |
 
-`generateStaticParams` is wired into both dynamic pages, so the
+`generateStaticParams` is wired into all dynamic pages, so the
 build emits a complete set of static HTML:
 
 - 8 kind pages
 - 8 × 6 = 48 kind+platform pages
+- 210 project detail pages (one per project)
 - 1 root page
 - 1 sitemap.xml
 - 1 manifest.webmanifest
@@ -153,16 +156,17 @@ untouched), so a single 404 cannot poison the whole run.
 
 ## 9. Folder layout
 
-| Path                 | Purpose                                                                                                                                                                                                          |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/app/`           | Next.js App Router pages: `/`, `/explore`, `/explore/k/[kind]`, `/explore/k/[kind]/p/[platform]`, `/not-found`, `/error`, `/explore/error`, `/robots.ts`, `/sitemap.ts`                                          |
-| `src/components/`    | Reusable UI: `top-nav`, `tree-sidebar`, `project-table`, `explore-layout`, `landing-content`, `breadcrumb`, `language-switcher`, `set-html-lang`, `site-footer`, `site-mark`                                     |
-| `src/lib/`           | Pure modules: `projects.ts` (data access + frozen indexes), `i18n.ts` (trilingual table), `taxonomy.ts` (kind/platform label table), `site.ts` (identity constants), `utils.ts`, `use-client-lang.ts`            |
-| `src/types/`         | TypeScript types: `project.ts` (the single source of truth for the data shape)                                                                                                                                   |
-| `data/projects.json` | 210 curated projects (the content)                                                                                                                                                                               |
-| `public/`            | Static assets: `favicon.ico`, `og-image.png`, `icon-192/512.png`, `manifest.webmanifest`                                                                                                                         |
-| `scripts/`           | Node + Python utilities: `validate-projects.mjs`, `refresh-projects.mjs`, `scan-awesome.mjs`, `migrate-schema.mjs`, `add-batch.mjs`, plus optional `smoke.py` / `snap.py` / `pageshot.py` (require `playwright`) |
-| `docs/`              | User-facing documentation                                                                                                                                                                                        |
+| Path                 | Purpose                                                                                                                                                                                                                                                             |
+| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/app/`           | Next.js App Router pages: `/`, `/explore`, `/explore/k/[kind]`, `/explore/k/[kind]/p/[platform]`, `/explore/project/[id]`, `/not-found`, `/error`, `/explore/error`, `/robots.ts`, `/sitemap.ts`                                                                    |
+| `src/components/`    | Reusable UI: `top-nav`, `tree-sidebar`, `project-table`, `project-detail`, `explore-layout`, `landing-content`, `breadcrumb`, `language-switcher`, `search-filter`, `theme-toggle`, `pwa-install-prompt`, `web-vitals`, `set-html-lang`, `site-footer`, `site-mark` |
+| `src/lib/`           | Pure modules: `projects.ts` (data access + frozen indexes + related projects), `i18n.ts` (trilingual table), `taxonomy.ts` (kind/platform label table), `site.ts` (identity constants), `utils.ts`, `use-client-lang.ts`                                            |
+| `src/types/`         | TypeScript types: `project.ts` (the single source of truth for the data shape)                                                                                                                                                                                      |
+| `data/projects.json` | 210 curated projects (the content)                                                                                                                                                                                                                                  |
+| `public/`            | Static assets: `favicon.ico`, `og-image.png`, `icon-192/512.png`, `manifest.webmanifest`, `sw.js` (Service Worker)                                                                                                                                                  |
+| `scripts/`           | Node + Python utilities: `validate-projects.mjs`, `refresh-projects.mjs`, `scan-awesome.mjs`, `migrate-schema.mjs`, `add-batch.mjs`, plus optional `smoke.py` / `snap.py` / `pageshot.py` (require `playwright`)                                                    |
+| `e2e/`               | Playwright E2E tests: homepage, explore, project-detail, responsive design                                                                                                                                                                                          |
+| `docs/`              | User-facing documentation                                                                                                                                                                                                                                           |
 
 ## 10. Disclaimer placement
 

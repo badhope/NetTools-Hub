@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import type { Project } from '@/types/project';
-import { Lang } from '@/lib/i18n';
+import { Lang, t } from '@/lib/i18n';
 import { useLinkPreflight } from './project-row/use-link-preflight';
 import { PlatformBadges, StatusBadge, VerdictBadge } from './project-row/project-badges';
 import { ProjectMeta } from './project-row/project-meta';

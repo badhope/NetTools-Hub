@@ -168,20 +168,20 @@ async function fetchRepo(ownerRepo, etagCache, { retries = 3 } = {}) {
     headers.Accept = 'application/json';
     if (TOKEN) headers['PRIVATE-TOKEN'] = TOKEN;
   }
-  
+
   // Add ETag if we have a cached response
   if (etagCache[ownerRepo]) {
     headers['If-None-Match'] = etagCache[ownerRepo];
   }
-  
+
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     const res = await fetch(apiUrl, { headers });
-    
+
     // 304 Not Modified — use cached data
     if (res.status === 304) {
       return { cached: true, data: null };
     }
-    
+
     if (res.status === 200) {
       const data = await res.json();
       // Save ETag for future requests
@@ -191,7 +191,7 @@ async function fetchRepo(ownerRepo, etagCache, { retries = 3 } = {}) {
       }
       return { cached: false, data };
     }
-    
+
     if (res.status === 403 || res.status === 429) {
       // rate limit / secondary rate limit
       const retryAfter = Number(res.headers.get('retry-after') || 1);
@@ -256,7 +256,7 @@ async function main() {
     }
     try {
       const result = await fetchRepo(ownerRepo, etagCache);
-      
+
       // 304 Not Modified — use cached data
       if (result.cached) {
         cached += 1;
@@ -265,7 +265,7 @@ async function main() {
         );
         continue;
       }
-      
+
       const r = result.data;
       // Each forge returns a slightly different shape. Map it
       // to a common {stars, forks, language, license, pushed_at}.

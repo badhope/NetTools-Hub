@@ -6,14 +6,14 @@ import {
   getAllProjects,
   getKindCounts,
   getKindPlatformCounts,
-  getTotalStars,
   getProjectById,
   getRelatedProjects,
+  getTotalStars,
 } from '@/lib/projects';
 import { Breadcrumb, rootCrumb } from '@/components/breadcrumb';
-import { PROJECT_COUNT, SITE_CANONICAL } from '@/lib/site';
 import { safeJsonLd, formatStars } from '@/lib/utils';
 import { Lang } from '@/lib/i18n';
+import type { ProjectKind } from '@/types/project';
 
 export const metadata: Metadata = {
   title: 'Project Detail',
@@ -34,7 +34,6 @@ export default function ProjectDetailPage({ params, searchParams }: ProjectDetai
   }
 
   const projects = getAllProjects();
-  const totalStars = getTotalStars();
   const kindCounts = getKindCounts();
   const kpCounts = getKindPlatformCounts();
   const relatedProjects = getRelatedProjects(project.id, 4);
@@ -69,7 +68,7 @@ export default function ProjectDetailPage({ params, searchParams }: ProjectDetai
 
   return (
     <ExploreLayout
-      current={{ kind: project.kind as any }}
+      current={{ kind: project.kind as ProjectKind }}
       kindCounts={kindCounts}
       kindPlatformCounts={kpCounts}
       total={projects.length}

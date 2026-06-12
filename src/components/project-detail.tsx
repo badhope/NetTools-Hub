@@ -29,14 +29,14 @@ interface ProjectDetailProps {
  * (name, description, stars) is at the top, followed by structured
  * metadata in a two-column grid on desktop, stacking on mobile.
  */
-export function ProjectDetail({ project: p, lang }: ProjectDetailProps) {
+export function ProjectDetail({ project: p, lang, relatedProjects }: ProjectDetailProps) {
   const addedDate = new Date(p.addedAt).toLocaleDateString(
     lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en-US',
-    { year: 'numeric', month: 'short', day: 'numeric' }
+    { year: 'numeric', month: 'short', day: 'numeric' },
   );
   const lastCommitDate = new Date(p.lastCommit).toLocaleDateString(
     lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en-US',
-    { year: 'numeric', month: 'short', day: 'numeric' }
+    { year: 'numeric', month: 'short', day: 'numeric' },
   );
 
   return (
@@ -204,7 +204,9 @@ function MetricCard({ label, value }: { label: string; value: string }) {
   return (
     <div className="border border-line p-3" role="group" aria-label={label}>
       <dt className="kicker mb-1">{label}</dt>
-      <dd className="font-mono text-lg text-fg" aria-label={`${label}: ${value}`}>{value}</dd>
+      <dd className="font-mono text-lg text-fg" aria-label={`${label}: ${value}`}>
+        {value}
+      </dd>
     </div>
   );
 }

@@ -434,12 +434,16 @@
   .page-transition-enter-active {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity 200ms ease-out, transform 200ms ease-out;
+    transition:
+      opacity 200ms ease-out,
+      transform 200ms ease-out;
   }
 
   /* Card hover lift */
   .card-lift {
-    transition: transform 200ms var(--ease-editorial), box-shadow 200ms var(--ease-editorial);
+    transition:
+      transform 200ms var(--ease-editorial),
+      box-shadow 200ms var(--ease-editorial);
   }
   .card-lift:hover {
     transform: translateY(-2px);

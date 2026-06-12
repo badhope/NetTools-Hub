@@ -1,35 +1,46 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+function getInitialState(): { isInstalled: boolean; showPrompt: boolean } {
+  if (typeof window === 'undefined') {
+    return { isInstalled: false, showPrompt: false };
+  }
+  // Check if already installed
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    return { isInstalled: true, showPrompt: false };
+  }
+  // Check if dismissed recently
+  const dismissed = localStorage.getItem('pwa-install-dismissed');
+  if (dismissed) {
+    const daysSinceDismissed = (Date.now() - parseInt(dismissed)) / (1000 * 60 * 60 * 24);
+    if (daysSinceDismissed < 7) {
+      return { isInstalled: false, showPrompt: false };
+    }
+  }
+  return { isInstalled: false, showPrompt: false };
+}
+
 export function PWAInstallPrompt() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-  const [showPrompt, setShowPrompt] = useState(false);
+  const [{ isInstalled, showPrompt }, setState] = useState(getInitialState);
 
   useEffect(() => {
-    // Check if already installed
-    if (window.matchMedia('(display-mode: standalone)').matches) {
-      setIsInstalled(true);
-      return;
-    }
-
     // Listen for beforeinstallprompt event
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setShowPrompt(true);
+      setState((prev) => ({ ...prev, showPrompt: true }));
     };
 
     // Listen for app installed event
     const handleAppInstalled = () => {
-      setIsInstalled(true);
-      setShowPrompt(false);
+      setState({ isInstalled: true, showPrompt: false });
       setDeferredPrompt(null);
     };
 
@@ -42,35 +53,23 @@ export function PWAInstallPrompt() {
     };
   }, []);
 
-  const handleInstall = async () => {
+  const handleInstall = useCallback(async () => {
     if (!deferredPrompt) return;
 
     await deferredPrompt.prompt();
     const { outcome } = await deferredPrompt.userChoice;
 
     if (outcome === 'accepted') {
-      setIsInstalled(true);
+      setState({ isInstalled: true, showPrompt: false });
     }
 
     setDeferredPrompt(null);
-    setShowPrompt(false);
-  };
+  }, [deferredPrompt]);
 
-  const handleDismiss = () => {
-    setShowPrompt(false);
+  const handleDismiss = useCallback(() => {
+    setState((prev) => ({ ...prev, showPrompt: false }));
     // Don't show again for 7 days
     localStorage.setItem('pwa-install-dismissed', Date.now().toString());
-  };
-
-  // Don't show if already installed or dismissed recently
-  useEffect(() => {
-    const dismissed = localStorage.getItem('pwa-install-dismissed');
-    if (dismissed) {
-      const daysSinceDismissed = (Date.now() - parseInt(dismissed)) / (1000 * 60 * 60 * 24);
-      if (daysSinceDismissed < 7) {
-        setShowPrompt(false);
-      }
-    }
   }, []);
 
   if (isInstalled || !showPrompt) return null;

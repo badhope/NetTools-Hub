@@ -14,13 +14,13 @@ interface SearchFilterProps {
 export function SearchFilter({ projects, lang }: SearchFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   // 从 URL 读取初始状态
   // 注意：使用 'language' 参数避免与 UI 语言的 'lang' 冲突
   const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
   const [languageFilter, setLanguageFilter] = useState(searchParams.get('language') || '');
   const [sortBy, setSortBy] = useState<'stars' | 'name' | 'lastCommit'>(
-    (searchParams.get('sort') as 'stars' | 'name' | 'lastCommit') || 'stars'
+    (searchParams.get('sort') as 'stars' | 'name' | 'lastCommit') || 'stars',
   );
 
   // 防抖：延迟更新实际用于过滤的搜索词
@@ -45,20 +45,18 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
   // 更新 URL 参数（使用防抖后的搜索词）
   useEffect(() => {
     const params = new URLSearchParams();
-    
+
     // 保留现有的 UI 语言参数
     const currentLang = searchParams.get('lang');
     if (currentLang) params.set('lang', currentLang);
-    
+
     // 添加搜索和筛选参数
     if (debouncedSearchTerm) params.set('q', debouncedSearchTerm);
     if (languageFilter) params.set('language', languageFilter);
     if (sortBy !== 'stars') params.set('sort', sortBy);
-    
-    const newUrl = params.toString() 
-      ? `/explore?${params.toString()}`
-      : '/explore';
-    
+
+    const newUrl = params.toString() ? `/explore?${params.toString()}` : '/explore';
+
     router.replace(newUrl, { scroll: false });
   }, [debouncedSearchTerm, languageFilter, sortBy, router, searchParams]);
 
@@ -82,7 +80,7 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
         (p) =>
           p.name.toLowerCase().includes(term) ||
           p.description.toLowerCase().includes(term) ||
-          p.tags.some((tag) => tag.toLowerCase().includes(term))
+          p.tags.some((tag) => tag.toLowerCase().includes(term)),
       );
     }
 

@@ -15,30 +15,18 @@ import { SITE_CANONICAL } from '@/lib/site';
 import { safeJsonLd } from '@/lib/utils';
 import type { ProjectKind, ProjectPlatform } from '@/types/project';
 
-const KINDS = [
-  'proxy',
-  'vpn',
-  'dns',
-  'acceleration',
-  'security',
-  'monitoring',
-  'ops',
-  'tools',
-] as const;
-const PLATFORMS = ['desktop', 'mobile', 'cli', 'server', 'browser', 'router'] as const;
-
 export function generateStaticParams() {
   // Only generate combinations that actually have projects.
   // This avoids creating empty pages that just show "no entries".
   const projects = getAllProjects();
   const combinations = new Set<string>();
-  
+
   for (const project of projects) {
     for (const platform of project.platform) {
       combinations.add(`${project.kind}/${platform}`);
     }
   }
-  
+
   return Array.from(combinations).map((combo) => {
     const [kind, platform] = combo.split('/');
     return { kind, platform };

@@ -12,14 +12,14 @@ test.describe('Responsive Design', () => {
 
     test('should stack project table on mobile', async ({ page }) => {
       await page.goto('/explore');
-      
+
       // Table should be visible but in mobile layout
       const table = page.locator('[data-testid="project-table"]');
       await expect(table).toBeVisible();
-      
+
       // Check if table has mobile-specific styling
       const firstRow = page.locator('[data-testid="project-row"]').first();
-      const display = await firstRow.evaluate(el => window.getComputedStyle(el).display);
+      const display = await firstRow.evaluate((el) => window.getComputedStyle(el).display);
       expect(display).toBe('block');
     });
   });
@@ -29,11 +29,11 @@ test.describe('Responsive Design', () => {
 
     test('should display tablet layout', async ({ page }) => {
       await page.goto('/explore');
-      
+
       // Should show both sidebar and content
       const sidebar = page.locator('[data-testid="sidebar"]');
       const content = page.locator('[data-testid="main-content"]');
-      
+
       await expect(sidebar).toBeVisible();
       await expect(content).toBeVisible();
     });
@@ -44,14 +44,14 @@ test.describe('Responsive Design', () => {
 
     test('should display desktop layout', async ({ page }) => {
       await page.goto('/explore');
-      
+
       // Should show full table with all columns
       const table = page.locator('[data-testid="project-table"]');
       await expect(table).toBeVisible();
-      
+
       // Check table has desktop layout
       const firstRow = page.locator('[data-testid="project-row"]').first();
-      const display = await firstRow.evaluate(el => window.getComputedStyle(el).display);
+      const display = await firstRow.evaluate((el) => window.getComputedStyle(el).display);
       expect(display).toBe('table-row');
     });
   });

@@ -6,7 +6,7 @@ test.describe('Project Detail Page', () => {
     await page.goto('/explore');
     const firstProjectLink = page.locator('[data-testid="project-row"]').first().locator('a');
     await firstProjectLink.click();
-    
+
     // Should show project details
     await expect(page.locator('h1')).toBeVisible();
     await expect(page.locator('[data-testid="project-description"]')).toBeVisible();
@@ -16,7 +16,7 @@ test.describe('Project Detail Page', () => {
     await page.goto('/explore');
     const firstProjectLink = page.locator('[data-testid="project-row"]').first().locator('a');
     await firstProjectLink.click();
-    
+
     // Should show stars, forks, language
     await expect(page.locator('[data-testid="stars"]')).toBeVisible();
     await expect(page.locator('[data-testid="language"]')).toBeVisible();
@@ -26,7 +26,7 @@ test.describe('Project Detail Page', () => {
     await page.goto('/explore');
     const firstProjectLink = page.locator('[data-testid="project-row"]').first().locator('a');
     await firstProjectLink.click();
-    
+
     // Click back button
     await page.click('[data-testid="back-button"]');
     await expect(page).toHaveURL(/\/explore/);
@@ -36,7 +36,7 @@ test.describe('Project Detail Page', () => {
     await page.goto('/explore');
     const firstProjectLink = page.locator('[data-testid="project-row"]').first().locator('a');
     await firstProjectLink.click();
-    
+
     // Should show related projects section
     const relatedSection = page.locator('[data-testid="related-projects"]');
     await expect(relatedSection).toBeVisible();

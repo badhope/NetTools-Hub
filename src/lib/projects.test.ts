@@ -22,6 +22,7 @@ describe('projects', () => {
       const projects = getAllProjects();
       const project = projects[0];
       expect(project).toBeDefined();
+      if (!project) return;
       expect(project.id).toBeDefined();
       expect(project.name).toBeDefined();
       expect(project.kind).toBeDefined();

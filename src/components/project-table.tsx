@@ -34,12 +34,24 @@ export function ProjectTable({ projects, lang }: ProjectTableProps) {
       <thead>
         <tr>
           <th scope="col">{t(lang, 'table.col.name')}</th>
-          <th scope="col" className="hide-md">{t(lang, 'table.col.platforms')}</th>
-          <th scope="col" className="num text-right">{t(lang, 'table.col.stars')}</th>
-          <th scope="col" className="hide-md">{t(lang, 'table.col.last_commit')}</th>
-          <th scope="col" className="hide-md">{t(lang, 'table.col.license')}</th>
-          <th scope="col" className="hide-md">{t(lang, 'table.col.status')}</th>
-          <th scope="col" className="hide-md">{t(lang, 'table.col.verdict')}</th>
+          <th scope="col" className="hide-md">
+            {t(lang, 'table.col.platforms')}
+          </th>
+          <th scope="col" className="num text-right">
+            {t(lang, 'table.col.stars')}
+          </th>
+          <th scope="col" className="hide-md">
+            {t(lang, 'table.col.last_commit')}
+          </th>
+          <th scope="col" className="hide-md">
+            {t(lang, 'table.col.license')}
+          </th>
+          <th scope="col" className="hide-md">
+            {t(lang, 'table.col.status')}
+          </th>
+          <th scope="col" className="hide-md">
+            {t(lang, 'table.col.verdict')}
+          </th>
         </tr>
       </thead>
       <tbody>

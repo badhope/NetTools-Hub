@@ -1,6 +1,6 @@
-import type { Project } from "@/types/project";
-import { Lang, t } from "@/lib/i18n";
-import { formatNumber } from "@/lib/utils";
+import type { Project } from '@/types/project';
+import { Lang, t } from '@/lib/i18n';
+import { formatNumber } from '@/lib/utils';
 
 export function ProjectMeta({ project, lang }: { project: Project; lang: Lang }) {
   return (

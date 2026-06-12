@@ -36,10 +36,7 @@ export default function ExploreLoading() {
 
         {/* Table rows */}
         {Array.from({ length: 8 }).map((_, i) => (
-          <div
-            key={i}
-            className="grid grid-cols-7 gap-4 border-b border-line py-4"
-          >
+          <div key={i} className="grid grid-cols-7 gap-4 border-b border-line py-4">
             <div className="col-span-2 space-y-2">
               <div className="h-4 w-32 animate-pulse bg-bg-elev" />
               <div className="h-3 w-48 animate-pulse bg-bg-elev" />

@@ -82,13 +82,13 @@ export function TreeSidebar({
       case 'ArrowDown':
         e.preventDefault();
         if (currentIndex < items.length - 1) {
-          items[currentIndex + 1].focus();
+          items[currentIndex + 1]?.focus();
         }
         break;
       case 'ArrowUp':
         e.preventDefault();
         if (currentIndex > 0) {
-          items[currentIndex - 1].focus();
+          items[currentIndex - 1]?.focus();
         }
         break;
       case 'Home':
@@ -139,7 +139,13 @@ export function TreeSidebar({
             if (kCount === 0) return null;
             const kActive = isKindActive(k);
             return (
-              <li key={k} role="treeitem" aria-level={1} aria-selected={kActive} aria-expanded={kActive}>
+              <li
+                key={k}
+                role="treeitem"
+                aria-level={1}
+                aria-selected={kActive}
+                aria-expanded={kActive}
+              >
                 {/* Kind row */}
                 <Link
                   href={withLang(lang, `/explore/k/${k}`)}
