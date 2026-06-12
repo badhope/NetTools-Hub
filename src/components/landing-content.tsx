@@ -51,11 +51,11 @@ export function LandingContent({ lang = "en" as Lang }: { lang?: Lang }) {
         kindCounts={counts}
         total={projects.length}
       />
-      <main id="main" className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+      <main id="main" aria-label="Main content" className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
         {/* ============================================================
          *  Hero
          * ============================================================ */}
-        <section className="border-b border-line pb-10">
+        <section aria-label="Introduction" className="border-b border-line pb-10">
           <div className="manual-index mb-3" data-index="00">
             <span>Index</span>
           </div>
@@ -107,7 +107,7 @@ export function LandingContent({ lang = "en" as Lang }: { lang?: Lang }) {
         {/* ============================================================
          *  Table of contents — 8 kind cards in a 2×4 grid
          * ============================================================ */}
-        <section className="mt-10">
+        <section aria-label="Browse by kind" className="mt-10">
           <div className="manual-index mb-4" data-index="01">
             <span>Browse by kind</span>
           </div>
@@ -145,7 +145,7 @@ export function LandingContent({ lang = "en" as Lang }: { lang?: Lang }) {
         {/* ============================================================
          *  How the index is maintained
          * ============================================================ */}
-        <section className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-3">
+        <section aria-label="How the index is maintained" className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
             <div className="manual-index mb-3" data-index="02">
               <span>How the index is maintained</span>
@@ -216,9 +216,9 @@ pnpm run dev`}
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div>
-      <p className="kicker">{label}</p>
-      <p className="mt-0.5 font-mono text-[1.05rem] font-medium text-fg">
+    <div role="group" aria-label={`${label} statistic`}>
+      <p className="kicker" aria-label="Label">{label}</p>
+      <p className="mt-0.5 font-mono text-[1.05rem] font-medium text-fg" aria-label="Value">
         {value}
       </p>
     </div>

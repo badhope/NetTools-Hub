@@ -54,9 +54,14 @@
     "lint": "eslint",
     "validate": "node scripts/validate-projects.mjs",
     "refresh": "node scripts/refresh-projects.mjs",
-    "scan": "node scripts/scan-awesome.mjs"
+    "scan": "node scripts/scan-awesome.mjs",
+    "i18n:audit": "node scripts/i18n-audit.mjs",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "analyze": "node scripts/analyze-bundle.mjs"
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.57.0",
     "next": "16.2.9",
     "react": "19.2.7",
     "react-dom": "19.2.7"
@@ -82,13 +87,17 @@
     "@types/node": "^25.9.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^10.4.1",
     "eslint-config-next": "16.2.9",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^7.1.1",
     "globals": "^15.14.0",
+    "jsdom": "^29.1.1",
     "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.61.0"
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
   }
 }

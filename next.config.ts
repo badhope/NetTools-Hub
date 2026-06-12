@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { withSentryConfig } from "@sentry/nextjs";
 
 // `GITHUB_REPOSITORY` is the GitHub Actions env var of the form
 // "owner/repo". On CI we want the site to live at "/<repo>/" so
@@ -19,4 +20,37 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withSentryConfig(nextConfig, {
+  // For all available options, see:
+  // https://github.com/getsentry/sentry-webpack-plugin#options
+
+  // Suppresses source map uploading logs during build
+  silent: !process.env.CI,
+
+  org: process.env.SENTRY_ORG,
+  project: process.env.SENTRY_PROJECT,
+
+  // Set the release name for source maps
+  // release: {
+  //   create: true,
+  //   finalize: true,
+  //   name: process.env.SENTRY_RELEASE,
+  // },
+
+  // Disable automatic instrumentation of Next.js features
+  // to reduce bundle size
+  autoInstrumentServerFunctions: false,
+  autoInstrumentMiddleware: false,
+
+  // Disable source map upload (not needed for static export)
+  sourcemaps: {
+    disable: true,
+  },
+
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
+
+  // Enables automatic instrumentation of Vercel Cron Monitors.
+  // See: https://docs.sentry.io/platforms/javascript/guides/nextjs/cron-jobs/
+  automaticVercelMonitors: false,
+});

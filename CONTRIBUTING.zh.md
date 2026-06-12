@@ -125,7 +125,7 @@ pnpm dev
 │   └── workflows/
 │       └── deploy.yml          # GitHub Pages CI/CD
 ├── data/
-│   └── projects.json           # 124 条收录项目，21 个子分类（6 大主题组）
+│   └── projects.json           # 210 条收录项目，21 个子分类（6 大主题组）
 ├── src/
 │   ├── app/
 │   │   ├── explore/            # /explore — 可筛选 / 可排序列表
@@ -160,14 +160,35 @@ pnpm dev
 interface Project {
   id: string;              // URL 安全的 slug，例如 "sing-box"
   name: string;            // 显示名称，例如 "sing-box"
+  author: string;          // 作者或组织名，例如 "SagerNet"
   description: string;     // 一句话简介（英文）
   url: string;             // 官方主页或仓库 URL
-  category: ProjectCategory;
+  homepage?: string;       // 可选的项目主页（非 GitHub）
+  
+  // 指标（由 scripts/refresh-projects.mjs 自动刷新）
+  stars: number;           // GitHub star 数
+  forks: number;           // GitHub fork 数
+  language: string;        // 主要语言，例如 "Go"
+  license: string;         // SPDX 标识符，例如 "MIT"
+  
+  // 分类维度
+  kind: ProjectKind;       // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
+  platform: ProjectPlatform[];  // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
+  category: string;        // 编辑分类，例如 "proxy-core"
   tags: string[];          // 自由形式，小写、连字符
-  language?: string;       // 主要语言，例如 "Go"
-  stars?: number;          // 估算的 GitHub star 数
-  lastUpdate?: string;     // ISO 8601 日期，例如 "2026-05-01"
-  license?: string;        // SPDX 标识符，例如 "MIT"
+  
+  // 编辑内容
+  notes?: string;          // 可选的维护者备注
+  verdict?: ProjectVerdict; // "recommended" | "neutral" | "caution" | "avoid"
+  
+  // 生命周期
+  lastCommit: string;      // ISO 8601 日期，例如 "2026-05-01"
+  addedAt: string;         // 首次加入日期
+  status: ProjectStatus;   // "active" | "stale" | "archived"
+  
+  // 视觉
+  highlights: string[];    // 项目亮点
+  gradient: string[];      // 卡片渐变色
 }
 ```
 

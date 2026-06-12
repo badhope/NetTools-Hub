@@ -125,7 +125,7 @@ pnpm dev
 │   └── workflows/
 │       └── deploy.yml          # GitHub Pages CI/CD
 ├── data/
-│   └── projects.json           # 124 のプロジェクト、21 サブカテゴリ（6 テーマグループ）
+│   └── projects.json           # 210 のプロジェクト、21 サブカテゴリ（6 テーマグループ）
 ├── src/
 │   ├── app/
 │   │   ├── explore/            # /explore — 絞り込み / 並び替え可能なリスト
@@ -160,14 +160,35 @@ pnpm dev
 interface Project {
   id: string;              // URL セーフなスラッグ（例 "sing-box"）
   name: string;            // 表示名（例 "sing-box"）
+  author: string;          // 著者または組織名（例 "SagerNet"）
   description: string;     // 1 行の説明（英語）
   url: string;             // 公式ホームページまたはリポジトリ URL
-  category: ProjectCategory;
+  homepage?: string;       // オプションのプロジェクトホームページ（GitHub 以外）
+  
+  // メトリクス（scripts/refresh-projects.mjs によって自動更新）
+  stars: number;           // GitHub スター数
+  forks: number;           // GitHub フォーク数
+  language: string;        // 主要言語（例 "Go"）
+  license: string;         // SPDX 識別子（例 "MIT"）
+  
+  // 分類軸
+  kind: ProjectKind;       // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
+  platform: ProjectPlatform[];  // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
+  category: string;        // 編集分類（例 "proxy-core"）
   tags: string[];          // 自由形式、小文字、ハイフン区切り
-  language?: string;       // 主要言語（例 "Go"）
-  stars?: number;          // 概算の GitHub スター数
-  lastUpdate?: string;     // ISO 8601 日付（例 "2026-05-01"）
-  license?: string;        // SPDX 識別子（例 "MIT"）
+  
+  // 編集内容
+  notes?: string;          // オプションのメンテナーメモ
+  verdict?: ProjectVerdict; // "recommended" | "neutral" | "caution" | "avoid"
+  
+  // ライフサイクル
+  lastCommit: string;      // ISO 8601 日付（例 "2026-05-01"）
+  addedAt: string;         // 初回追加日
+  status: ProjectStatus;   // "active" | "stale" | "archived"
+  
+  // ビジュアル
+  highlights: string[];    // プロジェクトのハイライト
+  gradient: string[];      // カードのグラデーション色
 }
 ```
 
