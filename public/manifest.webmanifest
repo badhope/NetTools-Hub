@@ -1,13 +1,13 @@
 {
   "name": "NetTools Hub",
   "short_name": "NetTools",
-  "description": "A curated atlas of 120+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.",
+  "description": "A field manual of 200+ open-source network tools, organised by kind (proxy, VPN, DNS, ...) and by platform (desktop, mobile, CLI, server, browser, router).",
   "start_url": "/NetTools-Hub/",
   "scope": "/NetTools-Hub/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#0e0c0a",
-  "theme_color": "#0e0c0a",
+  "background_color": "#0b0d10",
+  "theme_color": "#0b0d10",
   "categories": ["developer", "utilities", "productivity"],
   "lang": "en",
   "icons": [

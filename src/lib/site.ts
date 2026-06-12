@@ -9,7 +9,7 @@
  * import from `@/lib/site`, but `site` itself imports nothing.
  */
 
-import { getAllProjects, getCategoryCount, getTotalForks, getTotalStars } from "./projects";
+import { getAllProjects, getTotalStars } from "./projects";
 
 /** GitHub owner used everywhere we attribute the work / link the repo. */
 export const SITE_OWNER = "badhope";
@@ -44,17 +44,11 @@ export const SITE_ORIGIN = "https://badhope.github.io";
  *  mistake obvious. */
 export const SITE_CANONICAL = `${SITE_ORIGIN}${SITE_BASE_PATH}`;
 
-/** Total number of curated projects — drives every "{n}+" copy. */
+/** Total number of curated projects — drives every "{n}" copy. */
 export const PROJECT_COUNT: number = getAllProjects().length;
-
-/** Total number of distinct categories. */
-export const CATEGORY_COUNT: number = getCategoryCount();
 
 /** Sum of `stars` across all projects. */
 export const TOTAL_STARS: number = getTotalStars();
-
-/** Sum of `forks` across all projects. */
-export const TOTAL_FORKS: number = getTotalForks();
 
 /** Current year (build-time). Static export freezes this, but the
  *  value is recomputed on every `next build` so the year stays in

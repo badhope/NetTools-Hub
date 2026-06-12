@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { SetHtmlLang } from "@/components/set-html-lang";
+import { SiteFooter } from "@/components/site-footer";
 import { LANG_HTML_LANG, LANG_OG_LOCALE } from "@/lib/i18n";
 import {
   PROJECT_COUNT,
@@ -57,50 +58,38 @@ const CSP =
   "referrer 'strict-origin-when-cross-origin'; " +
   "permissions-policy camera=(), microphone=(), geolocation=(), interest-cohort=()";
 
-// Display serif: Fraunces is a variable serif with optical sizing,
-// soft curves and a humanist warmth that doesn't appear in any of
-// the typical "AI default" front-end stacks (Inter / Space Grotesk /
-// Geist). It is the visual signature of the editorial-atlas
-// direction: the hero / section headings all use it.
-// "opsz" 9..144 makes the optical-size axis available, which lets
-// the browser pick a tighter or looser cut depending on rendered
-// size; that alone makes the type feel "drawn for" the page.
-const fraunces = Fraunces({
+// Display + body sans: IBM Plex Sans is a humanist grotesque
+// designed at IBM Research. It is the only major sans shipped
+// with a true monospace sibling (IBM Plex Mono) so the type
+// pairing is guaranteed to match. We use IBM Plex Sans for
+// both body and headings — the "field manual" design system
+// does not mix faces; the personality comes from spacing and
+// hairline rules, not from a contrasting display face.
+const plex = IBM_Plex_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  variable: "--font-fraunces",
-  axes: ["opsz", "SOFT", "WONK"],
-});
-
-// Body / UI sans: Instrument Sans is a humanist geometric sans
-// with a slight terminal flavour, designed by Instrument (the
-// same studio behind Linear / Vercel's design system) but
-// deliberately not the Vercel-default Geist. Its character lies
-// in the slightly condensed x-height and the open apertures,
-// which give UI text a calm, considered feel.
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-instrument",
+  variable: "--font-plex-sans",
   weight: ["400", "500", "600", "700"],
 });
 
-// Monospace for technical metadata: project stars, repo URLs,
-// version numbers, category counts, "last updated" timestamps.
-// JetBrains Mono is the only monospace that ships with the
-// "calt" ligature set we want for `=>`, `!=`, and `>=` glyphs
-// in this codebase.
-const jetbrainsMono = JetBrains_Mono({
+// Mono for technical data: project stars, repo URLs, version
+// numbers, category counts, "last updated" timestamps. Plex
+// Mono is the only monospace that ships with the same metrics
+// as Plex Sans, so the two faces align on the same baseline.
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin", "latin-ext"],
   display: "swap",
-  variable: "--font-jetbrains",
+  variable: "--font-plex-mono",
   weight: ["400", "500", "600"],
 });
 
 export const viewport: Viewport = {
-  // Match the warm dark palette so the browser chrome (Safari
-  // status bar, Android system bar, PWA splash) blends in.
-  themeColor: "#0e0c0a",
+  // Match the cool dark palette (`--color-bg` in globals.css) so
+  // the browser chrome (Safari status bar, Android system bar, PWA
+  // splash) blends in. The "field manual" look is monochrome-cool;
+  // a warm theme would clash with the hairlines and the steel-blue
+  // accent.
+  themeColor: "#0b0d10",
   colorScheme: "dark",
   width: "device-width",
   initialScale: 1,
@@ -108,17 +97,18 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: "NetTools Hub — An Atlas of Network Tools",
+    default: "NetTools Hub — A field manual of open-source network tools",
     template: "%s — NetTools Hub",
   },
-  description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+  description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind (proxy, VPN, DNS, acceleration, security, monitoring, ops, tools) and by platform (desktop, mobile, CLI, server, browser, router).`,
   keywords: [
     "network tools",
     "open source",
-    "atlas",
     "proxy",
     "VPN",
     "Clash",
+    "sing-box",
+    "WireGuard",
     "GitHub acceleration",
     "DNS",
     "monitoring",
@@ -145,8 +135,8 @@ export const metadata: Metadata = {
   // tag in the document head.
   manifest: `${SITE_BASE_PATH}/manifest.webmanifest`,
   openGraph: {
-    title: "NetTools Hub — An Atlas of Network Tools",
-    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    title: "NetTools Hub — A field manual of open-source network tools",
+    description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind and by platform.`,
     url: `${SITE_CANONICAL}/`,
     siteName: "NetTools Hub",
     // Static export means `<html lang>` and the OG card both have to be
@@ -167,14 +157,14 @@ export const metadata: Metadata = {
         url: `${SITE_CANONICAL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: `NetTools Hub — A curated atlas of ${PROJECT_COUNT}+ open-source network tools`,
+        alt: `NetTools Hub — A field manual of ${PROJECT_COUNT}+ open-source network tools`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "NetTools Hub — An Atlas of Network Tools",
-    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    title: "NetTools Hub — A field manual of open-source network tools",
+    description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind and by platform.`,
     images: [`${SITE_CANONICAL}/og-image.png`],
   },
   robots: {
@@ -194,7 +184,7 @@ export default function RootLayout({
   return (
     <html
       lang={LANG_HTML_LANG.en}
-      className={`${fraunces.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
+      className={`${plex.variable} ${plexMono.variable}`}
     >
       <head>
         <meta httpEquiv="Content-Security-Policy" content={CSP} />
@@ -213,6 +203,7 @@ export default function RootLayout({
         </a>
         <SetHtmlLang />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );

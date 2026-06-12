@@ -1,7 +1,7 @@
 {
   "name": "net-tools-hub",
   "version": "0.3.0",
-  "description": "🛠️ One-stop navigation platform for 120+ actively-maintained open-source network tools (proxies, VPNs, Clash family, GitHub acceleration, DNS, security, monitoring). Static site, MIT, multilingual EN/中文/日本語.",
+  "description": "🛠️ A field manual of 210 actively-maintained open-source network tools (proxies, VPNs, Clash family, GitHub acceleration, DNS, security, monitoring). Static site, MIT, multilingual EN/中文/日本語.",
   "author": {
     "name": "badhope",
     "url": "https://github.com/badhope"
@@ -51,7 +51,10 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "npx serve@latest out -p 8080",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate": "node scripts/validate-projects.mjs",
+    "refresh": "node scripts/refresh-projects.mjs",
+    "scan": "node scripts/scan-awesome.mjs"
   },
   "dependencies": {
     "next": "16.2.9",
@@ -74,13 +77,18 @@
     }
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "16.2.9",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/node": "^25.9.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "eslint": "^10.4.1",
     "eslint-config-next": "16.2.9",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^15.14.0",
     "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0"
   }
 }

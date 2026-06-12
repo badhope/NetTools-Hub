@@ -1,476 +1,232 @@
-"use client";
-
-import { useMemo } from "react";
-import { useClientLang } from "@/lib/use-client-lang";
 import Link from "next/link";
-import { ProjectCategory } from "@/types/project";
+import { TopNav } from "@/components/top-nav";
+import { Lang, withLang } from "@/lib/i18n";
+import {
+  PROJECT_COUNT,
+  TOTAL_STARS,
+  SITE_OWNER,
+  COPYRIGHT_YEAR,
+} from "@/lib/site";
 import {
   getAllProjects,
-  getCategoryCounts,
-  getCategories,
+  getKindCounts,
   getLastUpdated,
-  getTotalStars,
-  getCategoryCount,
 } from "@/lib/projects";
-import { t, withLang } from "@/lib/i18n";
-import { formatTotalStars } from "@/lib/utils";
-import { TopNav } from "@/components/top-nav";
-import { CATEGORY_GROUPS } from "@/lib/category-groups";
-import { GroupMark, SiteMark } from "@/components/category-mark";
-import { COPYRIGHT_YEAR, SITE_OWNER } from "@/lib/site";
+import { kindLabel } from "@/lib/taxonomy";
+import type { ProjectKind } from "@/types/project";
 
-// `lastUpdated` is read from data/projects.json at module load and
-// shared across the whole landing render. The field is the source of
-// truth for "last indexed" — hard-coding a date here would silently
-// drift the moment the data file is updated.
-const LAST_UPDATED = getLastUpdated();
+const KIND_ORDER: ProjectKind[] = [
+  "proxy", "vpn", "dns", "acceleration", "security", "monitoring", "ops", "tools",
+];
 
-// Total stars is derived from the same static dataset, so it can be
-// hoisted alongside `LAST_UPDATED` and computed exactly once for the
-// lifetime of the bundle.
-const TOTAL_STARS = getTotalStars();
-const TOTAL_PROJECTS = getAllProjects().length;
-const CATEGORY_COUNT = getCategoryCount();
-
-// `counts` and `categories` are themselves cached inside the data
-// module (the getters are pure look-ups against a static Map /
-// Record), but the function-call overhead is wasted on every render.
-// Hoist the resolved references to module scope so the component
-// body just hands the same object identity down to `<TopNav>`.
-const COUNTS = getCategoryCounts();
-const CATEGORIES = getCategories();
-
-// `GROUP_CARDS` pre-resolves the (slug → category, count) join that
-// the "six groups" plate needs. Both `CATEGORIES` and `COUNTS` are
-// stable for the lifetime of the bundle, so the join only has to
-// run once; the render path then just maps over the result. The
-// pre-filter (`cat !== undefined && count > 0`) drops the rare
-// groups that have no live projects at the moment of the build,
-// which is the same logic the inline `.filter` used to do.
-type GroupCardItem = { slug: string; cat: ProjectCategory; count: number };
-type GroupCard = {
-  group: (typeof CATEGORY_GROUPS)[number];
-  items: GroupCardItem[];
-  total: number;
+const KIND_BLURB: Record<ProjectKind, string> = {
+  proxy:        "Cores & clients (Clash / Mihomo / sing-box / V2Ray / Xray).",
+  vpn:          "Wire protocols (WireGuard / OpenVPN / IPsec / Tailscale / ZeroTier).",
+  dns:          "Resolvers, filters, sinkholes.",
+  acceleration: "GitHub / Docker mirror, reverse proxy, tunnel.",
+  security:     "WAF, IDS / IPS, fail2ban, honeypots.",
+  monitoring:   "Prometheus / Grafana / Uptime Kuma / Netdata.",
+  ops:          "Container, Kubernetes, self-hosted control planes.",
+  tools:        "CLI utilities, network test, data transfer.",
 };
-// `GROUP_CARDS` pre-resolves the (slug → category, count) join
-// that the "six groups" plate needs. Both `CATEGORIES` and
-// `COUNTS` are stable for the lifetime of the bundle, so the
-// join only has to run once; the render path then just maps
-// over the result. The pre-filter (`cat !== undefined &&
-// count > 0`) drops the rare groups that have no live
-// projects at the moment of the build, which is the same
-// logic the inline `.filter` used to do.
-const GROUP_CARDS: GroupCard[] = (() => {
-  const cards: GroupCard[] = [];
-  for (const group of CATEGORY_GROUPS) {
-    const items: GroupCardItem[] = [];
-    for (const slug of group.slugs) {
-      const cat = CATEGORIES[slug];
-      if (!cat) continue;
-      const count = COUNTS[slug] ?? 0;
-      if (count <= 0) continue;
-      items.push({ slug, cat, count });
-    }
-    if (items.length === 0) continue;
-    let total = 0;
-    for (const it of items) total += it.count;
-    cards.push({ group, items, total });
-  }
-  return cards;
-})();
 
-const FEATURES = [
-  {
-    key: "features.curated",
-    descKey: "features.curated_desc",
-    fig: "06",
-  },
-  {
-    key: "features.search",
-    descKey: "features.search_desc",
-    fig: "12",
-  },
-  {
-    key: "features.sort",
-    descKey: "features.sort_desc",
-    fig: "21",
-  },
-  {
-    key: "features.responsive",
-    descKey: "features.responsive_desc",
-    fig: "30",
-  },
-  {
-    key: "features.maintained",
-    descKey: "features.maintained_desc",
-    fig: "48",
-  },
-  {
-    key: "features.stars",
-    descKey: "features.stars_desc",
-    fig: "55",
-  },
-] as const;
-
-export function LandingContent() {
-  // All five pages that render localised text (landing, explore,
-  // not-found, error, explore-error) used to repeat the same 14-line
-  // "useState English, mount effect to read the URL, manually
-  // rewrite the URL and dispatch a custom event on change" dance.
-  // It's a hook now, so the SSR / hydration / cross-component
-  // coordination rules live in exactly one place — see
-  // `lib/use-client-lang.ts` for the long version of the comment.
-  const [lang, handleLangChange] = useClientLang();
-
-  // Static, immutable for the lifetime of the bundle — see the
-  // module-scope definitions of `LAST_UPDATED`, `TOTAL_STARS`, etc.
-  // `starsShort` depends on `lang` (zh/ja render "万" instead of
-  // "M"), so it has to be recomputed when the language changes;
-  // `useMemo` keeps the format pass from running on every other
-  // re-render (the static `lang` part of the page is the only
-  // thing that triggers a re-render in practice, but the
-  // downstream `<TopNav>` re-renders when `lang` changes too, so
-  // the memo's input is essentially the only dep that matters).
-  const starsShort = useMemo(() => formatTotalStars(TOTAL_STARS, lang), [lang]);
-
+/**
+ * Landing content.
+ *
+ * The site is a directory; the landing page is a *table of
+ * contents* with a hero, a one-line description, a stat bar, and
+ * a kind-card grid. No marketing copy, no "atlas" metaphor, no
+ * gradients, no round-corner card with a coloured rail — those
+ * are gone with the editorial direction this design replaces.
+ */
+export function LandingContent({ lang = "en" as Lang }: { lang?: Lang }) {
+  const projects = getAllProjects();
+  const counts = getKindCounts();
+  const lastUpdated = getLastUpdated();
   return (
     <div className="min-h-screen bg-bg text-fg">
       <TopNav
         lang={lang}
-        onLangChange={handleLangChange}
-        categories={CATEGORIES}
-        counts={COUNTS}
         variant="landing"
+        kindCounts={counts}
+        total={projects.length}
       />
-
-      {/* Skip-link target. The `<a className="skip-link" href="#main">` in
-       *  `app/layout.tsx` jumps to the first element with this id, and
-       *  the `aria-label` is what screen readers announce when the
-       *  focus lands. Without this wrapper, a keyboard user pressing
-       *  Tab from the URL bar would tab through every section /
-       *  footer link before reaching the main content. */}
-      <main
-        id="main"
-        aria-label={t(lang, "a11y.main")}
-        className="outline-none"
-        tabIndex={-1}
-      >
-
-      {/* =========================================================
-       *  Plate 0 — Cover / hero
-       * ========================================================= */}
-      <section className="relative overflow-hidden">
-        <div className="mx-auto grid max-w-6xl gap-12 px-5 pb-24 pt-20 sm:px-8 sm:pt-28 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:pb-32 lg:pt-32">
-          <div className="reveal reveal-1 flex flex-col">
-            <div className="mb-8 flex items-center gap-3">
-              <span className="kicker">
-                {t(lang, "editorial.eyebrow")}
-              </span>
-              <span className="h-px flex-1 bg-dim" />
-              <span className="font-mono text-[10px] text-muted">
-                {t(lang, "editorial.plate", { n: "00" })}
-              </span>
-            </div>
-
-            <h1 className="font-display text-[clamp(2.5rem,7vw,5rem)] font-normal leading-[1.05] tracking-[-0.025em] text-fg">
-              <span className="text-fg-3">{t(lang, "editorial.hero_atlas")}</span>
-              <span aria-hidden className="mx-3 text-accent">/</span>
-              <span className="text-accent">
-                {t(lang, "editorial.hero_title")}
-              </span>
-            </h1>
-
-            <p className="mt-8 max-w-xl text-balance text-[15px] leading-[1.7] text-fg-2 sm:text-base">
-              {t(lang, "editorial.subtitle", { total: TOTAL_PROJECTS })}
-            </p>
-
-            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
-              <Link
-                href={withLang(lang, "/explore")}
-                className="group inline-flex items-center gap-3 border-b border-accent pb-1.5 font-display text-lg text-accent transition-colors hover:text-accent-hover"
-              >
-                <span>{t(lang, "editorial.open_atlas")}</span>
-                <svg
-                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="square"
-                    d="M5 12h14M13 6l6 6-6 6"
-                  />
-                </svg>
-              </Link>
-
-              <span className="flex items-baseline gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-                {t(lang, "editorial.last_indexed")} · {LAST_UPDATED}
-              </span>
-            </div>
+      <main id="main" className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14">
+        {/* ============================================================
+         *  Hero
+         * ============================================================ */}
+        <section className="border-b border-line pb-10">
+          <div className="manual-index mb-3" data-index="00">
+            <span>Index</span>
           </div>
+          <h1 className="max-w-4xl text-[2rem] font-semibold leading-[1.1] tracking-tight sm:text-[2.5rem]">
+            A field manual of{" "}
+            <span className="text-accent-2">{PROJECT_COUNT}</span>{" "}
+            open-source network tools,
+            <br className="hidden sm:inline" />
+            organised by{" "}
+            <Link
+              href={withLang(lang, "/explore/k/proxy")}
+              className="link-editorial"
+            >
+              kind
+            </Link>{" "}
+            and by{" "}
+            <Link
+              href={withLang(lang, "/explore/k/proxy/p/desktop")}
+              className="link-editorial"
+            >
+              platform
+            </Link>
+            .
+          </h1>
+          <p className="mt-4 max-w-3xl text-[14.5px] leading-relaxed text-fg-2">
+            NetTools Hub is a personal link index, not a directory service and
+            not a proxy. We do not host, distribute, endorse, or operate any
+            project linked from this page. Use at your own risk;{" "}
+            <Link
+              href="https://github.com/badhope/NetTools-Hub/blob/main/DISCLAIMER.md"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="link-editorial"
+            >
+              read the full disclaimer
+            </Link>{" "}
+            before installing anything.
+          </p>
 
-          {/* Right rail: stats column framed by hairlines */}
-          <aside className="reveal reveal-3 flex flex-col gap-6 self-stretch border-l border-dim pl-8 sm:pl-10">
-            <span className="kicker">{t(lang, "editorial.compendium")}</span>
-            <dl className="grid grid-cols-1 gap-y-5">
-              <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                  {t(lang, "stats.projects")}
-                </dt>
-                <dd className="font-display text-3xl leading-none text-fg">
-                  {String(TOTAL_PROJECTS).padStart(3, "0")}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                  {t(lang, "stats.categories")}
-                </dt>
-                <dd className="font-display text-3xl leading-none text-fg">
-                  {String(CATEGORY_COUNT).padStart(2, "0")}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4 border-b border-line pb-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                  {t(lang, "stats.total_stars")}
-                </dt>
-                <dd className="font-display text-3xl leading-none text-fg">
-                  {starsShort}
-                </dd>
-              </div>
-              <div className="flex items-baseline justify-between gap-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-                  {t(lang, "editorial.compiled_by")}
-                </dt>
-                <dd className="font-mono text-sm text-fg-2">{SITE_OWNER}</dd>
-              </div>
-            </dl>
-          </aside>
-        </div>
+          {/* Stat bar — one line of "facts about the index" */}
+          <div className="mt-6 grid grid-cols-2 gap-3 border-y border-line py-3 sm:grid-cols-4">
+            <Stat label="Projects" value={String(PROJECT_COUNT)} />
+            <Stat label="Kinds" value={String(KIND_ORDER.length)} />
+            <Stat label="Total stars" value={formatStars(TOTAL_STARS)} />
+            <Stat label="Last indexed" value={lastUpdated} />
+          </div>
+        </section>
 
-        {/* Editorial divider: a row of typography marks. The summary
-         *  copy is now a single i18n key so the divider line reads
-         *  naturally in EN / ZH / JA (the old hardcoded English copy
-         *  leaked into all three locales). */}
-        <div className="mx-auto flex max-w-6xl items-center gap-4 border-t border-line px-5 py-5 sm:px-8">
-          <SiteMark size={14} className="shrink-0 text-fg-2" />
-          <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-            {t(lang, "editorial.divider", {
-              n: "01",
-              groups: CATEGORY_GROUPS.length,
-              cats: CATEGORY_COUNT,
-              stars: starsShort,
-            })}
-          </span>
-          <span className="ml-auto font-mono text-[10px] text-muted">
-            {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
-          </span>
-        </div>
-      </section>
-
-      {/* =========================================================
-       *  Plate I — Why this atlas
-       * ========================================================= */}
-      <section className="border-t border-line">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
-          <header className="mb-12 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
-            <div>
-              <span className="kicker">
-                {t(lang, "editorial.plate", { n: "I" })} —{" "}
-                {t(lang, "editorial.section.why")}
-              </span>
-              <h2 className="mt-3 font-display text-3xl leading-tight text-fg sm:text-4xl">
-                {t(lang, "features.title")}
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-fg-2">
-              {t(lang, "features.subtitle")}
-            </p>
-          </header>
-
-          <ul className="grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map((f, i) => (
-              <li
-                key={f.key}
-                className={`reveal reveal-${Math.min(i + 1, 8)} flex flex-col gap-3`}
-              >
-                <span className="editorial-index" data-index={f.fig}>
-                  <span className="font-mono text-[11px] text-muted">
-                    {t(lang, f.key, {
-                      total: TOTAL_PROJECTS,
-                      stars: starsShort,
-                    })}
-                  </span>
-                </span>
-                <p className="text-[13.5px] leading-[1.7] text-fg-2">
-                  {t(lang, f.descKey)}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      {/* =========================================================
-       *  Plate II — The six groups (asymmetric atlas grid)
-       * ========================================================= */}
-      <section className="border-t border-line bg-bg-sunk/40">
-        <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
-          <header className="mb-12 flex flex-col gap-3 sm:flex-row sm:items-baseline sm:justify-between">
-            <div>
-              <span className="kicker">
-                {t(lang, "editorial.plate", { n: "II" })} —{" "}
-                {t(lang, "editorial.section.groups")}
-              </span>
-              <h2 className="mt-3 font-display text-3xl leading-tight text-fg sm:text-4xl">
-                {t(lang, "categories.title")}
-              </h2>
-            </div>
-            <p className="max-w-sm text-sm leading-relaxed text-fg-2">
-              {t(lang, "categories.subtitle")}
-            </p>
-          </header>
-
-          <div className="grid grid-cols-1 gap-px bg-line sm:grid-cols-2 lg:grid-cols-3">
-            {GROUP_CARDS.map(({ group, items, total }, gIdx) => {
+        {/* ============================================================
+         *  Table of contents — 8 kind cards in a 2×4 grid
+         * ============================================================ */}
+        <section className="mt-10">
+          <div className="manual-index mb-4" data-index="01">
+            <span>Browse by kind</span>
+          </div>
+          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {KIND_ORDER.map((k) => {
+              const n = counts[k] || 0;
+              if (n === 0) return null;
               return (
-                <article
-                  key={group.id}
-                  className="reveal group relative flex flex-col gap-5 bg-bg p-6 transition-colors duration-300 hover:bg-bg-elev sm:p-7"
-                >
-                  <header className="flex items-start justify-between gap-3">
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono text-[10px] text-muted">
-                        {String(gIdx + 1).padStart(2, "0")}
+                <li key={k}>
+                  <Link
+                    href={withLang(lang, `/explore/k/${k}`)}
+                    className="block border border-line bg-bg-elev/40 p-4 transition-colors hover:border-accent hover:bg-bg-sunk"
+                  >
+                    <div className="flex items-baseline justify-between">
+                      <span className="font-mono text-[10.5px] text-muted">
+                        /{k}
                       </span>
-                      <GroupMark
-                        id={group.id}
-                        size={26}
-                        className="text-fg-2 transition-colors group-hover:text-accent"
-                      />
+                      <span className="font-mono text-[10.5px] text-muted">
+                        {String(n).padStart(3, "0")}
+                      </span>
                     </div>
-                    <span className="font-mono text-[11px] text-muted">
-                      {String(total).padStart(2, "0")}
-                    </span>
-                  </header>
-                  <h3 className="font-display text-xl text-fg transition-colors group-hover:text-accent">
-                    {t(lang, group.labelKey)}
-                  </h3>
-                  <ul className="space-y-1.5">
-                    {items.map(({ slug, cat, count }) => (
-                      <li key={slug}>
-                        <Link
-                          href={withLang(lang, `/explore?category=${slug}`)}
-                          className="group/link flex items-center justify-between gap-2 py-1 text-[13px] text-fg-2 transition-colors hover:text-fg"
-                        >
-                          <span className="flex items-center gap-2 truncate">
-                            <span
-                              aria-hidden
-                              className="inline-block h-px w-2 bg-dim transition-colors group-hover/link:bg-accent"
-                            />
-                            <span className="truncate">{cat.name}</span>
-                          </span>
-                          <span className="shrink-0 font-mono text-[10px] text-muted">
-                            {String(count).padStart(2, "0")}
-                          </span>
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </article>
+                    <p className="mt-2 text-[15px] font-medium text-fg">
+                      {kindLabel(k, lang)}
+                    </p>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-fg-2">
+                      {KIND_BLURB[k]}
+                    </p>
+                  </Link>
+                </li>
               );
             })}
-          </div>
-        </div>
-      </section>
+          </ul>
+        </section>
 
-      {/* =========================================================
-       *  Plate III — Begin reading
-       * ========================================================= */}
-      <section className="border-t border-line">
-        <div className="mx-auto max-w-4xl px-5 py-24 text-center sm:py-32">
-          <span className="kicker">
-            {t(lang, "editorial.plate", { n: "III" })} —{" "}
-            {t(lang, "editorial.section.begin")}
-          </span>
-          <h2 className="mx-auto mt-5 max-w-2xl font-display text-4xl leading-[1.05] text-fg sm:text-5xl">
-            {t(lang, "cta.title")}
-          </h2>
-          <p className="mx-auto mt-6 max-w-md text-sm leading-relaxed text-fg-2">
-            {t(lang, "cta.description")}
-          </p>
-          <div className="mt-10 flex items-center justify-center gap-6">
-            <Link
-              href={withLang(lang, "/explore")}
-              className="group inline-flex items-center gap-3 border-b border-accent pb-1.5 font-display text-lg text-accent transition-colors hover:text-accent-hover"
-            >
-              <span>{t(lang, "editorial.continue_reading")}</span>
-              <svg
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <path
-                  strokeLinecap="square"
-                  d="M5 12h14M13 6l6 6-6 6"
-                />
-              </svg>
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
-       *  Colophon
-       * ========================================================= */}
-      <footer className="border-t border-line bg-bg-sunk/50">
-        <div className="mx-auto max-w-6xl px-5 py-14 sm:px-8">
-          <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-            <div>
-              <span className="kicker">{t(lang, "editorial.colophon")}</span>
-              <div className="mt-3 flex items-center gap-2.5 text-fg">
-                <SiteMark size={20} className="text-accent" />
-                <span className="font-display text-lg">{t(lang, "site.title")}</span>
-              </div>
-              <p className="mt-3 max-w-xs text-sm leading-relaxed text-fg-2">
-                {t(lang, "footer.text")}
-              </p>
+        {/* ============================================================
+         *  How the index is maintained
+         * ============================================================ */}
+        <section className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-3">
+          <div className="lg:col-span-2">
+            <div className="manual-index mb-3" data-index="02">
+              <span>How the index is maintained</span>
             </div>
-            <div>
-              <span className="kicker">— {t(lang, "editorial.compiled_by")}</span>
-              <p className="mt-3 font-display text-lg text-fg">{SITE_OWNER}</p>
-              <p className="mt-1 text-[13px] text-fg-2">
-                <a
-                  href={`https://github.com/${SITE_OWNER}/NetTools-Hub`}
+            <p className="max-w-3xl text-[14px] leading-relaxed text-fg-2">
+              The <code className="font-mono text-fg">data/projects.json</code>{" "}
+              file is the only source of truth. The schema and entry format
+              are documented in{" "}
+              <Link
+                href="https://github.com/badhope/NetTools-Hub/blob/main/docs/data-model.md"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="link-editorial"
+              >
+                docs/data-model.md
+              </Link>
+              ; the validator is{" "}
+              <code className="font-mono text-fg">scripts/validate-projects.mjs</code>
+              ; the live metadata is refreshed by a scheduled GitHub Action
+              every Sunday 03:00 UTC.
+            </p>
+            <pre className="mt-3 overflow-x-auto border border-line bg-bg-sunk/60 p-3 font-mono text-[12px] leading-relaxed text-fg-2">
+{`#   validate   the data file
+pnpm run validate
+#   refresh    stars / forks / license / lastCommit
+pnpm run refresh
+#   mine       candidates from awesome-* repos
+pnpm run scan
+#   preview    the site locally
+pnpm run dev`}
+            </pre>
+          </div>
+          <aside>
+            <div className="manual-index mb-3" data-index="03">
+              <span>Facts</span>
+            </div>
+            <ul className="space-y-2 text-[13px] text-fg-2">
+              <li>
+                <span className="kicker mr-1">Type</span> Static, no backend
+              </li>
+              <li>
+                <span className="kicker mr-1">Maintainer</span>{" "}
+                <Link
+                  href={`https://github.com/${SITE_OWNER}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="link-editorial"
                 >
-                  github.com/{SITE_OWNER}/NetTools-Hub
-                </a>
-              </p>
-            </div>
-            <div>
-              <span className="kicker">— {t(lang, "editorial.last_indexed")}</span>
-              <p className="mt-3 font-display text-lg text-fg">{LAST_UPDATED}</p>
-              <p className="mt-3 max-w-xs text-[11px] leading-relaxed text-muted">
-                {t(lang, "footer.disclaimer")}
-              </p>
-            </div>
-          </div>
-          <div className="mt-10 flex flex-col items-start justify-between gap-2 border-t border-line pt-5 font-mono text-[10px] uppercase tracking-[0.2em] text-muted sm:flex-row sm:items-center">
-            <span>
-              {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
-            </span>
-            <span>© {SITE_OWNER} · Set in Fraunces, Instrument Sans, JetBrains Mono</span>
-          </div>
-        </div>
-      </footer>
+                  @{SITE_OWNER}
+                </Link>
+              </li>
+              <li>
+                <span className="kicker mr-1">License</span> MIT
+              </li>
+              <li>
+                <span className="kicker mr-1">Edition</span> {COPYRIGHT_YEAR}
+              </li>
+              <li>
+                <span className="kicker mr-1">Stack</span> Next.js · TypeScript · Tailwind v4
+              </li>
+            </ul>
+          </aside>
+        </section>
       </main>
     </div>
   );
+}
+
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
+      <p className="kicker">{label}</p>
+      <p className="mt-0.5 font-mono text-[1.05rem] font-medium text-fg">
+        {value}
+      </p>
+    </div>
+  );
+}
+
+function formatStars(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return String(n);
 }

@@ -1,66 +1,96 @@
-# 🛠️ NetTools Hub
+# NetTools Hub
 
-> **一个我自己用的网络工具导航站**。收录了 120+ 还在活跃维护的
-> 开源网络工具 —— 代理、VPN、Clash 系列、GitHub 加速、DNS、安全、监控。
-> 不托管任何东西,只做跳转。
+> **⚠️ Read first — [DISCLAIMER.md](./DISCLAIMER.md)**
+> This site is a personal link index. It does not host, distribute,
+> endorse, or operate any of the linked software. Inclusion is **not**
+> an endorsement. Use at your own risk.
 
-起因是每次我重新装系统,都要重新去 GitHub 翻一遍"现在 Clash 哪个
-仓库还活着、Sing-box 比 Xray 好在哪、有没有更轻的 V2Ray 实现"。
-这个站是我给自己做的备忘,顺便公开了。
+A field manual of 210 actively-maintained, open-source network tools
+— proxies, VPN cores, DNS servers, GitHub accelerators, monitoring
+agents, security utilities — organised by **kind** and by
+**platform**, navigable by URL path (no infinite scroll, no JS
+state).
 
----
+```
+/                                ← landing
+/explore                         ← all 210, sorted
+/explore/k/proxy                 ← kind drill-down (8 kinds)
+/explore/k/proxy/p/desktop       ← kind + platform (6 platforms)
+```
 
-## 收录的类别
+The site is a single pre-rendered static bundle. **No backend, no
+database, no tracking, no ads, no analytics.** Hosted on **GitHub
+Pages**. The data is one JSON file
+([`data/projects.json`](./data/projects.json)). The metadata is
+auto-refreshed weekly by a GitHub Action.
 
-- **代理协议**:Clash / Mihomo / Sing-box / V2Ray / Xray / Shadowsocks / Hysteria / TUIC
-- **VPN**:WireGuard / OpenVPN / IPSec / 算法实现
-- **DNS**:CoreDNS / SmartDNS / AdGuardHome / mosdns
-- **GitHub 加速**:各种镜像、raw 加速、clone 加速
-- **安全**:WAF / IDS / IPS / 蜜罐
-- **监控**:Smokeping / Prometheus exporters / Uptime Kuma
-- **辅助**:Hosts 编辑器 / 端口扫描 / 路由跟踪
-
-每条都有:仓库地址、license、最近一次 release 时间、是否还在维护。
-
-## i18n
-
-- [English](README.md) · [简体中文](README.zh.md) · [日本語](README.ja.md)
-
-界面是 i18n 的,但**每条收录说明都是中文写的** —— 因为我
-只懂中文。翻译需要从社区收集,贡献指南在 [CONTRIBUTING.md](CONTRIBUTING.md)。
+> See also: 🇬🇧 [`README.md`](./README.md) (you are here) ·
+> 🇨🇳 [`README.zh.md`](./README.zh.md) · 🇯🇵 [`README.ja.md`](./README.ja.md)
 
 ---
 
-## 🎯 What is NetTools Hub?
+## What is this?
 
-**NetTools Hub** is a **static navigation website** that helps you discover and compare actively-maintained open-source network tools. All data lives in a single JSON file ([`data/projects.json`](./data/projects.json)) and the site is automatically built and deployed to **GitHub Pages** — no backend, no database, no tracking, no ads.
+Every time I re-install a system, I find myself re-asking the same
+questions on GitHub: *which Clash core is still alive, how does
+sing-box differ from Xray, is there a lighter V2Ray implementation,
+what's the cleanest WireGuard UI*. This site is my personal cheat
+sheet, made public.
 
-| 💡 What it is | ❌ What it is NOT |
-|---|---|
-| A curated **directory** of network tool projects | Not a VPN service or proxy provider |
-| A **searchable catalog** with filters and sorting | Not a hosting platform for the listed tools |
-| A **static site** built with Next.js + React | Not a SaaS / paid product |
-| **100% free & open source** under MIT | Not a content scraper (data is hand-curated) |
-| **Internationalised UI** (EN / 中文 / 日本語) | Not limited to a single language or region |
+It is **not** a VPN service. It is **not** a proxy provider. It is
+**not** a hosting platform for any of the listed tools. It is a
+**link index** — every entry is a real `<a href>` to a real GitHub
+repo. See [DISCLAIMER.md](./DISCLAIMER.md).
 
 ---
 
-## 🚀 Quick start
+## The 8 kinds × 6 platforms
 
-### 👤 As a user (just want to find a tool)
+The directory is built on two orthogonal taxonomies, which become
+the URL hierarchy:
 
-1. **Open the live site** 👉 <https://badhope.github.io/NetTools-Hub/>
-2. **Browse or search** — pick a themed group from the sidebar (e.g. *Proxy Core*, *Acceleration*, *Deploy & Ops*), then refine by sub-category, or type keywords into the search bar (search by name, author, tag, or description).
-3. **Click a card** to jump to the project's GitHub repo and read the docs.
+| `kind` (URL: `/explore/k/<kind>/`) | count | `platform` (URL: `.../p/<platform>/`) | count |
+|---|---:|---|---:|
+| `proxy` — proxy cores & clients | 78 | `desktop` | 102 |
+| `vpn` — VPN servers & clients | 19 | `mobile` | 56 |
+| `dns` — recursive, authoritative, filtering | 18 | `cli` | 81 |
+| `acceleration` — GitHub acceleration, mirror tools, tunnels | 31 | `server` | 134 |
+| `security` — WAF, IDS, IPS, honeypots | 21 | `browser` | 38 |
+| `monitoring` — uptime, metrics, observability | 14 | `router` | 23 |
+| `ops` — deploy, orchestration, management | 12 | | |
+| `tools` — utility scripts, port scanners, debuggers | 17 | | |
 
-The site is fully responsive and works on **desktop / tablet / mobile**. A language switcher (top right) lets you toggle between **English / 中文 / 日本語** at any time.
+A project can be tagged with multiple `platform` values (e.g. a
+proxy might be both `desktop` and `cli`); the URL hierarchy is
+driven by them, so every (kind, platform) pair is its own static
+page. `generateStaticParams` is wired into both dynamic routes, so
+the build emits 1 + 8 + 8 × 6 = 57 pre-rendered pages.
 
-### 🛠️ As a developer / contributor (want to run or modify it)
+---
+
+## Quick start
+
+### As a user (just want to find a tool)
+
+1. Open the live site → **<https://badhope.github.io/NetTools-Hub/>**
+2. **Drill down by URL**:
+   - `/explore` — all 210
+   - `/explore/k/proxy` — every proxy
+   - `/explore/k/proxy/p/desktop` — desktop-only proxies
+3. **Or use the tree sidebar** on the left of every `/explore` page
+   (kinds on level 1, platforms on level 2 under each kind).
+4. **Click a row** to jump to the project's GitHub repo.
+
+The site is responsive (desktop, tablet, mobile). The language
+switcher is in the top-right; switch any time — the URL gains
+`?lang=zh` or `?lang=ja`.
+
+### As a contributor
 
 ```bash
 git clone https://github.com/badhope/NetTools-Hub.git
 cd NetTools-Hub
-pnpm install --frozen-lockfile   # requires Node 22+ & pnpm 10+
+pnpm install --frozen-lockfile   # Node 22+ & pnpm 10+
 pnpm dev                          # http://localhost:8080
 ```
 
@@ -71,98 +101,147 @@ pnpm build        # produces ./out (static export)
 pnpm start        # serve the build at http://localhost:8080
 ```
 
-Then read [`CONTRIBUTING.md`](./CONTRIBUTING.md) for how to add a project, propose a fix, or submit a PR.
+To validate the data before pushing:
 
-### 🚢 As a maintainer (want to fork & deploy your own)
+```bash
+pnpm run validate # runs scripts/validate-projects.mjs (CI also runs this)
+```
 
-This repo ships with a ready-to-use **GitHub Actions** workflow. After forking:
+To refresh project metadata from the GitHub API (uses
+`GITHUB_TOKEN` if set, otherwise anonymous):
 
-1. Go to **Settings → Pages**
-2. Set **Source** to **GitHub Actions**
-3. Push to `main` — `.github/workflows/deploy.yml` will build and deploy automatically.
+```bash
+pnpm run refresh
+```
 
-Your fork will be live at `https://<your-username>.github.io/NetTools-Hub/`.
+To mine new candidates from `awesome-*` lists:
 
----
+```bash
+pnpm run scan     # writes data/candidates.json for review
+```
 
-## ✨ Features
+See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for the full guide.
 
-- 🔍 **Smart search** — match by name, author, tag, or description (debounced 300 ms)
-- 📊 **Multi-dimensional sort** — by ⭐ stars, name, or last update
-- 🗂 **6 themed groups / 21 sub-categories** — Proxy Core, Acceleration, Deploy & Ops, Config & DNS, Tools & Test, Security & More
-- 🌐 **Trilingual UI** — English / 中文 / 日本語 (switchable at runtime)
-- 📱 **Fully responsive** — desktop, tablet, mobile (collapsible sidebar, hamburger drawer)
-- ⚡ **Static export** — light-speed load from GitHub Pages CDN
-- 🔒 **SEO ready** — `robots.txt`, `sitemap.xml`, OpenGraph, Twitter Card
-- ♿ **Accessible** — ARIA labels, `focus-visible`, keyboard navigation
-- 🎯 **Curated quality** — only projects active in the last 6 months
-- 🌓 **Dark theme** by default, GitHub-style design tokens
+### As a maintainer (fork & deploy)
 
----
+This repo ships with a ready-to-use **GitHub Actions** workflow. After
+forking:
 
-## 📸 Preview
+1. **Settings → Pages → Source** = **GitHub Actions**
+2. Push to `main` — `.github/workflows/deploy.yml` builds and deploys.
+3. (Optional) Edit `basePath` in [`next.config.ts`](./next.config.ts)
+   if you renamed the repo.
 
-🌐 **Live demo**: <https://badhope.github.io/NetTools-Hub/>
-
-The site has two main views:
-
-- **`/`** — **Landing page** — hero, feature highlights, 6 themed-group cards, call-to-action
-- **`/explore`** — **Browse & search** — sidebar with 6 themed groups (collapsible), real-time search, sort dropdown, project grid
+Your fork is live at
+`https://<your-username>.github.io/NetTools-Hub/`. See
+[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) for full instructions.
 
 ---
 
-## 🗂 Project structure
+## Features
+
+- **URL-path navigation** — `/explore/k/<kind>/p/<platform>/`, no
+  infinite scroll, no client-side state, deep links just work
+- **Tree sidebar** — kinds on level 1, platforms on level 2, active
+  node highlighted, collapses on mobile
+- **Pre-rendered** — every page is static HTML; the `out/` bundle is
+  one `pnpm build` away
+- **Trilingual UI** — English / 中文 / 日本語, swap with the
+  top-right language switcher or `?lang=` query
+- **PWA** — installable, offline-friendly, with a manifest and
+  proper `<html lang>` and OG card
+- **SEO-ready** — `robots.txt`, `sitemap.xml`, JSON-LD, `hreflang`
+  alternates, OpenGraph, Twitter Card
+- **Auto-refreshed** — a weekly GitHub Action updates stars / forks
+  / license / last commit, with `status: archived` derived from
+  no-commit-in-2-years
+- **Validated** — every PR is checked by
+  `scripts/validate-projects.mjs` in a separate CI job
+- **Field-manual design** — cool near-black palette, hairline
+  rules, IBM Plex Sans + Mono, monospace numerics, no shadows, no
+  rounded cards
+- **MIT-licensed** — fork, modify, redeploy
+
+---
+
+## Project structure
 
 ```
 NetTools-Hub/
 ├── .github/
-│   ├── ISSUE_TEMPLATE/         # Bug report, feature request, translation
+│   ├── ISSUE_TEMPLATE/
 │   ├── workflows/
-│   │   └── deploy.yml          # GitHub Pages auto-deploy
+│   │   ├── deploy.yml          # GitHub Pages auto-deploy
+│   │   ├── refresh-projects.yml # weekly metadata refresh
+│   │   └── ci.yml              # lint + typecheck + validate
 │   ├── CODEOWNERS
 │   ├── FUNDING.yml
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── data/
-│   └── projects.json           # 124 projects × 21 sub-categories (6 themed groups) (the source of truth)
-├── docs/                       # Additional documentation
+│   ├── projects.json           # 210 projects × (kind + platform)  ← source of truth
+│   └── candidates.json         # generated by `pnpm run scan`
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── DATA-MODEL.md
+│   ├── DEPLOYMENT.md
+│   ├── I18N.md
+│   ├── I18N.zh.md
+│   └── I18N.ja.md
+├── public/
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── manifest.webmanifest
+│   ├── og-image.png
+│   └── robots.txt
+├── scripts/
+│   ├── validate-projects.mjs   # schema validator (CI)
+│   ├── refresh-projects.mjs    # weekly GitHub API refresh
+│   ├── scan-awesome.mjs        # awesome-* candidate miner
+│   ├── migrate-schema.mjs      # one-shot v1 → v2
+│   ├── add-batch.mjs           # hand-curated add-on (legacy)
+│   ├── build-og-image.py       # regenerates og-image.png + icons
+│   ├── smoke.py                # Playwright smoke test (manual)
+│   ├── snap.py                 # Playwright page screenshots (manual)
+│   └── pageshot.py             # Playwright deployment check (manual)
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   │   ├── layout.tsx          # Root layout (metadata, fonts)
-│   │   ├── page.tsx            # Landing page
-│   │   ├── globals.css         # Tailwind v4 + custom theme tokens
-│   │   ├── robots.ts           # /robots.txt
-│   │   ├── sitemap.ts          # /sitemap.xml
-│   │   ├── not-found.tsx       # 404
-│   │   ├── error.tsx           # Global error boundary
-│   │   └── explore/            # /explore — browse & search
-│   ├── components/             # UI: sidebar, cards, search, sort, language switcher…
-│   ├── lib/                    # i18n tables, data access, utils
-│   └── types/                  # TypeScript types
+│   │   ├── layout.tsx          # root layout, fonts, metadata, OG
+│   │   ├── page.tsx            # landing page
+│   │   ├── globals.css         # Tailwind v4 + field-manual theme
+│   │   ├── not-found.tsx
+│   │   ├── error.tsx
+│   │   ├── explore/            # /explore, /explore/k/<kind>/, /explore/k/<kind>/p/<platform>/
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/             # top-nav, tree-sidebar, project-table, …
+│   ├── lib/                    # i18n, taxonomy, projects, site
+│   └── types/
+│       └── project.ts          # schema v2 type definitions
 ├── .editorconfig
 ├── .gitattributes
 ├── .gitignore
-├── .npmrc                      # pnpm@10
+├── .npmrc
 ├── .nvmrc                      # node 22
-├── CHANGELOG.md                # All notable changes
-├── CODE_OF_CONDUCT.md          # Contributor Covenant v2.1
-├── CONTRIBUTING.md             # Full contributor guide
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── DISCLAIMER.md               # full legal text
 ├── LICENSE                     # MIT
-├── README.md                   # You are here (English)
+├── README.md                   # you are here (English)
 ├── README.zh.md                # 简体中文
 ├── README.ja.md                # 日本語
-├── SECURITY.md                 # Vulnerability disclosure policy
+├── SECURITY.md
 ├── eslint.config.mjs
-├── next.config.ts              # output: "export" (static)
+├── next.config.ts              # output: "export" + basePath
 ├── package.json
 ├── pnpm-lock.yaml
-├── pnpm-workspace.yaml
-├── postcss.config.mjs          # Tailwind v4
+├── postcss.config.mjs
 └── tsconfig.json
 ```
 
 ---
 
-## 🛠 Tech stack
+## Tech stack
 
 | Layer | Choice | Why |
 |---|---|---|
@@ -174,67 +253,78 @@ NetTools-Hub/
 | Hosting | **GitHub Pages** | Free, fast CDN, no vendor lock-in |
 | CI/CD | **GitHub Actions** | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
 | i18n | Hand-rolled trilingual table | Zero JS bundle overhead, runtime switch |
+| Type | **IBM Plex Sans + Mono** | Cool, engineering feel; numerals tabular |
 
 ---
 
-## ➕ Adding or editing a project
+## Adding or editing a project
 
-All content is in a **single JSON file** — no CMS, no migration scripts.
+The content is a single JSON file. The schema is documented in full
+at [`docs/DATA-MODEL.md`](./docs/DATA-MODEL.md); the TypeScript
+type lives in [`src/types/project.ts`](./src/types/project.ts). A
+minimal entry:
 
-1. Open [`data/projects.json`](./data/projects.json).
-2. Add or edit an entry following this schema (also typed in [`src/types/project.ts`](./src/types/project.ts)):
+```json
+{
+  "id": "sing-box",
+  "name": "sing-box",
+  "kind": "proxy",
+  "platform": ["desktop", "cli", "server"],
+  "category": "proxy-core",
+  "description": "Universal proxy platform",
+  "url": "https://github.com/SagerNet/sing-box",
+  "language": "Go",
+  "license": "MIT",
+  "addedAt": "2024-04-01",
+  "verdict": "best-in-class"
+}
+```
 
-   ```json
-   {
-     "id": "sing-box",
-     "name": "sing-box",
-     "description": "Universal proxy platform…",
-     "url": "https://github.com/SagerNet/sing-box",
-     "category": "proxy-core",
-     "tags": ["proxy", "shadowsocks", "trojan"],
-     "language": "Go",
-     "stars": 25000,
-     "lastUpdate": "2026-05-30",
-     "license": "MIT"
-   }
-   ```
+Inclusion criteria: active commits within the last 6 months,
+OSI-approved license, real-world use case. See
+[`CONTRIBUTING.md`](./CONTRIBUTING.md).
 
-3. Open a PR. The CI will deploy a preview on the next push to `main`.
-
-> ✅ Inclusion criteria: active commits within the last 6 months, OSI-approved license, and a real-world use case. See the [contributing guide](./CONTRIBUTING.md) for the full guide.
+> The `stars`, `forks`, `lastCommit` and `status` fields are
+> **regenerated** by `scripts/refresh-projects.mjs` on Sundays — you
+> do not have to maintain them by hand.
 
 ---
 
-## 📑 The 6 themed groups (21 sub-categories)
+## The automation pipeline
 
-| Group | Icon | Sub-categories |
+| Trigger | Script | Output |
 |---|---|---|
-| **Proxy Core** | 🔌 | Proxy Cores · GUI Clients · Subscription Management · Protocol Tools |
-| **Acceleration** | 🚀 | GitHub Acceleration · Router Plugins · Mirror Acceleration · Tunnel Tools |
-| **Deploy & Ops** | 🐳 | Docker Deployment · Container Orchestration · Server Management · Node Tools · Monitoring |
-| **Config & DNS** | ⚙️ | Rule Collections · DNS Tools · Certificate Tools |
-| **Tools & Test** | 🧰 | Utilities · Network Testing · Data Transfer |
-| **Security & More** | 🛡️ | Security Tools · Project Collections |
+| Cron (Sun 03:00 UTC) | `scripts/refresh-projects.mjs` | Updates `stars` / `forks` / `license` / `lastCommit` / `status`; auto-commits if dirty |
+| Manual `workflow_dispatch` | same | same |
+| Push to `data/projects.json` | same (via `paths:` filter) | same |
+| `pnpm run scan` (local) | `scripts/scan-awesome.mjs` | Writes `data/candidates.json` for maintainer review |
+| `pnpm run validate` (CI) | `scripts/validate-projects.mjs` | Exits 0/1/2; fails the PR if validation fails |
+
+The refresh workflow uses `git diff --exit-code` to decide whether
+to commit. Partial GitHub API failures on a single project are
+logged and skipped, so a 404 on one repo cannot poison the whole
+run.
 
 ---
 
-## 🌍 Internationalisation (i18n)
+## Internationalisation (i18n)
 
-The site UI and this repository's documentation are available in three languages:
-
-| Language | Code | UI translation | Docs |
+| Language | Code | UI | Docs |
 |---|---|---|---|
 | 🇬🇧 English (default) | `en` | ✅ | [`README.md`](./README.md) |
 | 🇨🇳 简体中文 | `zh` | ✅ | [`README.zh.md`](./README.zh.md) |
 | 🇯🇵 日本語 | `ja` | ✅ | [`README.ja.md`](./README.ja.md) |
 
-To **add a new translation** or **improve an existing one**, please open a PR — see [`CONTRIBUTING.md` → "Adding or improving translations"](./CONTRIBUTING.md#-adding-or-improving-translations).
+UI strings live in [`src/lib/i18n.ts`](./src/lib/i18n.ts) (a
+3-column table of ~36 keys). The current language is read from
+`?lang=` URL param, with `localStorage` as a sticky preference.
+See [`docs/I18N.md`](./docs/I18N.md) for how to add a new language.
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-We welcome PRs! See the contributing guide for:
+PRs welcome. See [`CONTRIBUTING.md`](./CONTRIBUTING.md) for:
 
 - Local dev setup & scripts
 - The data schema and how to add a project
@@ -242,34 +332,24 @@ We welcome PRs! See the contributing guide for:
 - PR review process
 - How to add or improve a translation
 
-**Contributing guide:** [🇬🇧 English](CONTRIBUTING.md) · [🇨🇳 简体中文](CONTRIBUTING.zh.md) · [🇯🇵 日本語](CONTRIBUTING.ja.md)
+By participating, you agree to follow the
+[Code of Conduct](./CODE_OF_CONDUCT.md).
 
-By participating, you agree to follow the [Code of Conduct](./CODE_OF_CONDUCT.md).
+---
 
-## 🔐 Security
+## Security
 
-Found a vulnerability? **Do not open a public Issue.** Follow the private disclosure process in [`SECURITY.md`](./SECURITY.md) — we aim to acknowledge within **3 business days**.
+Found a vulnerability? **Do not open a public Issue.** Follow the
+private disclosure process in [`SECURITY.md`](./SECURITY.md) — we aim
+to acknowledge within **3 business days**.
 
-## 💬 Support & community
+---
 
-Need help or have questions? See [`SUPPORT.md`](./.github/SUPPORT.md) for the recommended channels.
-
-## 📄 License
+## License
 
 Distributed under the [MIT License](./LICENSE).
 
 ---
 
-## ⭐ Star history
-
-If this project helped you discover a useful tool, consider giving it a star — it helps others find it too.
-
-[![Star History Chart](https://api.star-history.com/svg?repos=badhope/NetTools-Hub&type=Date)](https://star-history.com/#badhope/NetTools-Hub&Date)
-
----
-
-<div align="center">
-
-Made with ❤️ · **NetTools Hub** · 🛠️ One-stop navigation for the open-source network-tools ecosystem · **English** · [简体中文](README.zh.md) · [日本語](README.ja.md)
-
-</div>
+> NetTools Hub · A field manual of 210 open-source network tools ·
+> English · [简体中文](README.zh.md) · [日本語](README.ja.md)

@@ -1,25 +1,29 @@
-import { ExploreContent } from "@/components/explore-content";
-import { getAllProjects } from "@/lib/projects";
+import { ExploreLayout } from "@/components/explore-layout";
+import { ProjectTable } from "@/components/project-table";
+import {
+  getAllProjects,
+  getKindCounts,
+  getKindPlatformCounts,
+  getTotalStars,
+} from "@/lib/projects";
+import { Breadcrumb, rootCrumb } from "@/components/breadcrumb";
 import { PROJECT_COUNT, SITE_CANONICAL } from "@/lib/site";
 import { safeJsonLd } from "@/lib/utils";
 
-// JSON-LD `ItemList` for the explore page. The list is the same
-// PROJECT_COUNT projects that the page renders, in the same default
-// order (which is the order they appear in `data/projects.json`).
-// Google uses this to build "list" rich results, where each entry
-// shows the project name, URL, and a short description.
-//
-// We deliberately cap at 100 items. Google's documentation says
-// more than 100 is allowed but the visible rich result only shows
-// the first ~10 anyway; the rest still help with entity indexing
-// but inflate the HTML payload for the static export. 100 keeps
-// the trade-off honest.
+export const metadata = {
+  title: "Explore",
+  description: `Browse ${PROJECT_COUNT}+ open-source network tools. Drill down by kind (proxy, VPN, DNS, ...) and platform (desktop, mobile, CLI, server, browser, router).`,
+};
+
+// JSON-LD `ItemList` for the explore root. Capped at 100 items
+// (Google only renders ~10 in rich results; the rest still help
+// with entity indexing but the payload is the cost).
 const itemListJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
-  name: "NetTools Hub — Curated Network Tools",
+  name: "NetTools Hub — Open-source Network Tools",
   description:
-    "A curated atlas of open-source network tools, organised by purpose, with multilingual annotations.",
+    "A curated link index of open-source network tools, organised by kind and platform.",
   url: `${SITE_CANONICAL}/explore`,
   numberOfItems: getAllProjects().length,
   itemListElement: getAllProjects()
@@ -33,19 +37,47 @@ const itemListJsonLd = {
     })),
 };
 
-export const metadata = {
-  title: "Explore",
-  description: `Browse and search ${PROJECT_COUNT}+ curated network tools across 6 themed groups. Filter by proxy, VPN, Clash, DNS, security tools and more.`,
-};
-
-export default function ExplorePage() {
+export default function ExploreRootPage() {
+  const projects = getAllProjects();
+  // Sort by kind, then by stars desc — a deterministic order that
+  // makes the page usable for users who only scroll the table.
+  const sorted = [...projects].sort((a, b) => {
+    if (a.kind !== b.kind) return a.kind.localeCompare(b.kind);
+    if (a.stars !== b.stars) return b.stars - a.stars;
+    return a.name.localeCompare(b.name);
+  });
+  const totalStars = getTotalStars();
+  const kindCounts = getKindCounts();
+  const kpCounts = getKindPlatformCounts();
   return (
-    <>
+    <ExploreLayout
+      current={{}}
+      kindCounts={kindCounts}
+      kindPlatformCounts={kpCounts}
+      total={sorted.length}
+      lang="en" // hydrated on the client; the breadcrumb/server text is static
+      title="All projects"
+      meta={
+        <p className="text-[12.5px] text-fg-2">
+          <span className="font-mono text-muted">[ index ]</span>{" "}
+          {sorted.length} entries · {formatStars(totalStars)} total stars ·{" "}
+          <span className="font-mono text-muted">
+            sorted by kind, then stars
+          </span>
+        </p>
+      }
+      breadcrumb={<Breadcrumb trail={[rootCrumb("en")]} lang="en" />}
+    >
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }}
       />
-      <ExploreContent />
-    </>
+      <ProjectTable projects={sorted} lang="en" />
+    </ExploreLayout>
   );
+}
+
+function formatStars(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return String(n);
 }

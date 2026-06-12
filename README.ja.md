@@ -1,263 +1,357 @@
-<div align="center">
+# NetTools Hub · ネットワークツールハブ
 
-# 🛠️ NetTools Hub · NetTools ハブ
+> **⚠️ まず [DISCLAIMER.md](./DISCLAIMER.md) をお読みください**
+> 本リポジトリは**リンクの目次に過ぎません**。リンク先のソフトウェ
+> アをホスティング・配布・推奨・運営することは一切ありません。**掲載
+> ＝推奨ではありません**。利用は自己責任で。
 
-> **120以上の活発にメンテナンスされているオープンソースネットワークツールを一元的に集約したナビゲーションプラットフォーム。**
-> プロキシ · VPN · Clash ファミリー · GitHub 高速化 · DNS · セキュリティ · 監視
+活発にメンテナンスされている **210 件のオープンソース・ネットワーク
+ツール**を集約した**フィールドマニュアル**：プロキシ、VPN コア、DNS
+サーバー、GitHub 高速化、監視エージェント、セキュリティユーティリティ。
+**kind（種別）** と **platform（実行環境）** の 2 軸で分類し、**URL
+パスでドリルダウン**します（無限スクロールもクライアント状態もありま
+せん）。
 
-[**🌐 ライブサイト**](https://badhope.github.io/NetTools-Hub/) · [**📖 ドキュメント**](./docs) · [**🐛 バグ報告**](../../issues/new?template=bug_report.yml) · [**✨ 機能要望**](../../issues/new?template=feature_request.yml) · [**🌍 翻訳に協力**](../../issues/new?template=translation.yml)
+```
+/                                ← ホーム
+/explore                         ← 210 件すべて
+/explore/k/proxy                 ← kind でドリルダウン（8 種別）
+/explore/k/proxy/p/desktop       ← kind + platform でドリルダウン（6 環境）
+```
 
-<!-- LANG -->
-[**English**](README.md) · [**简体中文**](README.zh.md) · **日本語**
+サイトは**事前レンダリングされた単一の静的バンドル**です。**バックエ
+ンド、データベース、トラッキング、広告、解析ツールは一切なし**。ホス
+ティングは **GitHub Pages**。データは 1 つの JSON ファイル
+（[`data/projects.json`](./data/projects.json)）に集約され、メタ
+データは GitHub Action により**毎週自動更新**されます。
 
-<!-- BADGES -->
-[![Live Site](https://img.shields.io/badge/🌐_ライブサイト-blue?style=for-the-badge)](https://badhope.github.io/NetTools-Hub/)
-[![Deploy](https://img.shields.io/github/actions/workflow/status/badhope/NetTools-Hub/deploy.yml?branch=main&label=Deploy&style=flat-square)](https://github.com/badhope/NetTools-Hub/actions/workflows/deploy.yml)
-[![Pages Status](https://img.shields.io/github/deployments/badhope/NetTools-Hub/github-pages?style=flat-square&label=Pages)](https://github.com/badhope/NetTools-Hub/deployments)
-[![MIT License](https://img.shields.io/github/license/badhope/NetTools-Hub?style=flat-square)](./LICENSE)
-[![GitHub stars](https://img.shields.io/github/stars/badhope/NetTools-Hub?style=social)](https://github.com/badhope/NetTools-Hub/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/badhope/NetTools-Hub?style=social)](https://github.com/badhope/NetTools-Hub/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/pulls)
-[![Last commit](https://img.shields.io/github/last-commit/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/commits/main)
-[![Deployed on GitHub Pages](https://img.shields.io/badge/Deployed_on-GitHub_Pages-222?logo=github&style=flat-square)](https://github.com/badhope/NetTools-Hub/deployments)
-[![Top language](https://img.shields.io/github/languages/top/badhope/NetTools-Hub?style=flat-square)](https://github.com/badhope/NetTools-Hub/search?l=typescript)
-
-</div>
-
----
-
-## 🎯 これは何？
-
-**NetTools Hub** は、活発にメンテナンスされているオープンソースのネットワークツールを発見・比較するための**静的ナビゲーションサイト**です。すべてのデータは単一の JSON ファイル（[`data/projects.json`](./data/projects.json)）にまとめられ、**GitHub Pages** に自動デプロイされます。**バックエンド、データベース、トラッキング、広告は一切ありません**。
-
-| 💡 何か | ❌ 何ではないか |
-|---|---|
-| ネットワークツールの**厳選ディレクトリ** | VPN サービスやプロキシ提供元ではない |
-| 検索・フィルター・並び替え可能な**検索可能カタログ** | 掲載ツールのホスティングプラットフォームではない |
-| Next.js + React で構築された**静的サイト** | SaaS / 有料プロダクトではない |
-| **MIT ライセンスの 100% フリー & オープンソース** | コンテンツスクレイパーではない（データは手作業で厳選） |
-| **3 言語 UI**（英語 / 中文 / 日本語） | 単一言語・単一地域に限定されない |
+> 関連：[🇬🇧 `README.md`](./README.md) · [🇨🇳 `README.zh.md`](./README.zh.md) ·
+> 🇯🇵 `README.ja.md`（ここ）
 
 ---
 
-## 🚀 クイックスタート
+## これは何？
 
-### 👤 ユーザー（ツールを探すだけの場合）
+システムを再インストールするたびに、私は毎回 GitHub で同じ問いを投げ
+かけています。*Clash のどのコアがまだ生きているか、sing-box と Xray
+の違い、もっと軽い V2Ray 実装はあるか、WireGuard の UI で一番きれい
+なのはどれか*。このサイトは私の個人的なチートシートを公開したものです。
 
-1. **オンラインサイトを開く** 👉 <https://badhope.github.io/NetTools-Hub/>
-2. **ブラウズまたは検索** —— サイドバーからテーマグループ（例：*プロキシコア*、*高速化*、*デプロイと運用*）を選び、サブカテゴリに絞り込むか、検索バーにキーワードを入力（名前、作者、タグ、説明での検索に対応）
-3. **カードをクリック** して該当 GitHub リポジトリへ移動し、公式ドキュメントを読む
+これは **VPN サービスではありません**。**プロキシ提供元ではありま
+せん**。**掲載ツールのホスティングプラットフォームでもありません**。
+**リンクの目次**です。各エントリは実際の GitHub リポジトリを指す
+`<a href>` です。[DISCLAIMER.md](./DISCLAIMER.md) を必ずご
+確認ください。
 
-サイトは完全レスポンシブ対応で、**デスクトップ / タブレット / モバイル** で動作します。右上の言語スイッチャーで **英語 / 中文 / 日本語** をいつでも切り替えられます。
+---
 
-### 🛠️ 開発者 / コントリビューター（実行・改変したい場合）
+## 8 種別 × 6 環境
+
+ディレクトリは 2 つの**直交する分類軸**で構成されており、それがそのま
+ま URL 階層になります：
+
+| `kind`（URL: `/explore/k/<kind>/`） | 件数 | `platform`（URL: `.../p/<platform>/`） | 件数 |
+|---|---:|---|---:|
+| `proxy` プロキシコアとクライアント | 78 | `desktop` | 102 |
+| `vpn` VPN サーバーとクライアント | 19 | `mobile` | 56 |
+| `dns` 再帰・権威・フィルタリング | 18 | `cli` | 81 |
+| `acceleration` GitHub 高速化、ミラー、トンネル | 31 | `server` | 134 |
+| `security` WAF、IDS、IPS、ハニーポット | 21 | `browser` | 38 |
+| `monitoring` 稼働率、指標、可観測性 | 14 | `router` | 23 |
+| `ops` デプロイ、オーケストレーション、管理 | 12 | | |
+| `tools` ユーティリティスクリプト、ポートスキャナ、デバッガ | 17 | | |
+
+1 つのプロジェクトに複数の `platform` タグを付けることができます
+（例：プロキシが `desktop` と `cli` の両方）。URL 階層はこの 2 軸の
+直積となるので、すべての `(kind, platform)` ペアが独立した静的ページ
+になります。両方の動的ルートに `generateStaticParams` が組み込まれて
+おり、ビルド成果物は 1 + 8 + 8 × 6 = **57 個の事前レンダリングされた
+ページ** を出力します。
+
+---
+
+## クイックスタート
+
+### ユーザー（ツールを探すだけ）
+
+1. **<https://badhope.github.io/NetTools-Hub/>** を開く
+2. **URL でドリルダウン**：
+   - `/explore` —— 210 件すべて
+   - `/explore/k/proxy` —— プロキシすべて
+   - `/explore/k/proxy/p/desktop` —— デスクトップ向けプロキシのみ
+3. **左のツリーサイドバー**を使う（kind が第 1 階層、その下の platform
+   が第 2 階層）。
+4. **行をクリック** して GitHub リポジトリへ。
+
+レスポンシブ対応（デスクトップ / タブレット / モバイル）。右上のラン
+ゲージスイッチャで **English / 中文 / 日本語** をいつでも切替可能。
+URL に `?lang=zh` または `?lang=ja` が付与されます。
+
+### コントリビュータ
 
 ```bash
 git clone https://github.com/badhope/NetTools-Hub.git
 cd NetTools-Hub
-pnpm install --frozen-lockfile   # Node 22+ と pnpm 10+ が必要
+pnpm install --frozen-lockfile   # Node 22+ & pnpm 10+
 pnpm dev                          # http://localhost:8080
 ```
 
-ローカルビルド：
+静的サイトをローカルビルド：
 
 ```bash
 pnpm build        # ./out に静的エクスポート
-pnpm start        # http://localhost:8080 でビルドをプレビュー
+pnpm start        # http://localhost:8080 で確認
 ```
 
-コントリビューションの手順は [`CONTRIBUTING.md`](./CONTRIBUTING.md) をご覧ください。
+データをプッシュ前に検証：
 
-### 🚢 メンテナー（Fork して独自デプロイしたい場合）
+```bash
+pnpm run validate # scripts/validate-projects.mjs を実行（CI でも実行）
+```
 
-リポジトリには GitHub Actions ワークフローが同梱されています。Fork 後：
+GitHub API からメタデータを更新（`GITHUB_TOKEN` があれば高レート、
+無ければ匿名）：
 
-1. **Settings → Pages** に移動
-2. **Source** を **GitHub Actions** に設定
-3. `main` にプッシュ —— `.github/workflows/deploy.yml` が自動でビルド・デプロイを実行
+```bash
+pnpm run refresh
+```
 
-Fork したリポジトリは `https://<ユーザー名>.github.io/NetTools-Hub/` に公開されます。
+`awesome-*` リストから新規候補を発掘：
 
----
+```bash
+pnpm run scan     # data/candidates.json に書き出し
+```
 
-## ✨ 機能
+詳細は [`CONTRIBUTING.md`](./CONTRIBUTING.md) を参照。
 
-- 🔍 **スマート検索** —— 名前、作者、タグ、説明にマッチ（300 ms デバウンス）
-- 📊 **多次元ソート** —— ⭐ スター、名前、更新日
-- 🗂 **6 テーマグループ / 21 サブカテゴリ** —— プロキシコア、高速化、デプロイと運用、設定と DNS、ツールとテスト、セキュリティ他
-- 🌐 **3 言語 UI** —— English / 中文 / 日本語（ランタイム切り替え可能）
-- 📱 **フルレスポンシブ** —— デスクトップ、タブレット、モバイル（折りたたみ可能サイドバー、ハンバーガードロワー）
-- ⚡ **静的エクスポート** —— GitHub Pages CDN で超高速ロード
-- 🔒 **SEO 完備** —— `robots.txt`、`sitemap.xml`、OpenGraph、Twitter Card
-- ♿ **アクセシビリティ** —— ARIA ラベル、`focus-visible`、キーボードナビゲーション
-- 🎯 **厳選品質** —— 直近 6 か月以内に更新のあるプロジェクトのみ
-- 🌓 **ダークテーマ** デフォルト、GitHub 風デザイントークン
+### メンテナ（Fork & デプロイ）
 
----
+リポジトリに **GitHub Actions** ワークフローが同梱されています。
+Fork 後：
 
-## 📸 プレビュー
+1. **Settings → Pages → Source** を **GitHub Actions** に設定
+2. `main` に push —— `.github/workflows/deploy.yml` が自動ビルド &
+   デプロイ
+3. （任意）リポジトリ名を変更した場合は [`next.config.ts`](./next.config.ts) の `basePath` も更新
 
-🌐 **ライブデモ**：<https://badhope.github.io/NetTools-Hub/>
-
-サイトには 2 つの主要ビューがあります：
-
-- **`/`** —— **ランディングページ** —— Hero、機能のハイライト、6 テーマグループカード、コールトゥアクション
-- **`/explore`** —— **ブラウズと検索** —— 6 テーマグループのサイドバー（折りたたみ可能）、リアルタイム検索、ソートドロップダウン、プロジェクトグリッド
+あなたの fork は
+`https://<username>.github.io/NetTools-Hub/` に公開されます。詳細は
+[`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) を参照。
 
 ---
 
-## 🗂 プロジェクト構成
+## 特徴
+
+- **URL パスナビゲーション** —— `/explore/k/<kind>/p/<platform>/`、
+  無限スクロールなし、クライアント状態なし、ディープリンクがそのまま動
+  く
+- **ツリーサイドバー** —— 第 1 階層が kind、第 2 階層が platform、アク
+  ティブなノードをハイライト、モバイルでは折りたたみ
+- **事前レンダリング** —— 全ページが静的 HTML。`out/` バンドルは
+  `pnpm build` 一発
+- **3 言語 UI** —— English / 中文 / 日本語、ランゲージスイッチャまたは
+  `?lang=` クエリで切替
+- **PWA** —— インストール可、オフライン対応、`manifest` 付き、適切な
+  `<html lang>` と OG カード
+- **SEO 対応** —— `robots.txt`、`sitemap.xml`、JSON-LD、`hreflang`、
+  OpenGraph、Twitter Card
+- **メタデータの自動更新** —— 週次の GitHub Action が stars / forks /
+  license / last commit を更新し、2 年コミットなしで `status: archived`
+  に自動判定
+- **データバリデーション** —— 全 PR を独立した CI ジョブで
+  `scripts/validate-projects.mjs` がスキャン
+- **フィールドマニュアル・デザイン** —— クールなニアブラックの配色、
+  ヘアラインルール、IBM Plex Sans + Mono、等幅数字、影なし、角丸なし
+- **MIT ライセンス** —— fork / 改変 / 再デプロイ自由
+
+---
+
+## プロジェクト構成
 
 ```
 NetTools-Hub/
 ├── .github/
-│   ├── ISSUE_TEMPLATE/         # バグ報告、機能要望、翻訳リクエスト
+│   ├── ISSUE_TEMPLATE/
 │   ├── workflows/
-│   │   └── deploy.yml          # GitHub Pages 自動デプロイ
+│   │   ├── deploy.yml          # GitHub Pages 自動デプロイ
+│   │   ├── refresh-projects.yml # 週次メタデータ更新
+│   │   └── ci.yml              # lint + typecheck + validate
 │   ├── CODEOWNERS
 │   ├── FUNDING.yml
 │   └── PULL_REQUEST_TEMPLATE.md
 ├── data/
-│   └── projects.json           # 124 プロジェクト × 21 サブカテゴリ（6 テーマグループ、データの真実の源）
-├── docs/                       # 追加ドキュメント
+│   ├── projects.json           # 210 プロジェクト × (kind + platform) ← データの単一ソース
+│   └── candidates.json         # pnpm run scan が生成
+├── docs/
+│   ├── ARCHITECTURE.md
+│   ├── DATA-MODEL.md
+│   ├── DEPLOYMENT.md
+│   ├── I18N.md
+│   ├── I18N.zh.md
+│   └── I18N.ja.md
+├── public/
+│   ├── icon-192.png
+│   ├── icon-512.png
+│   ├── manifest.webmanifest
+│   ├── og-image.png
+│   └── robots.txt
+├── scripts/
+│   ├── validate-projects.mjs   # スキーマバリデータ（CI で実行）
+│   ├── refresh-projects.mjs    # 週次 GitHub API 更新
+│   ├── scan-awesome.mjs        # awesome-* 候補マイナー
+│   ├── migrate-schema.mjs      # v1 → v2 ワンショット
+│   ├── add-batch.mjs           # 手作業追加（レガシー）
+│   ├── build-og-image.py       # og-image.png + アイコン再生成
+│   ├── smoke.py                # Playwright スモークテスト（手動）
+│   ├── snap.py                 # Playwright ページショット（手動）
+│   └── pageshot.py             # Playwright デプロイ後チェック（手動）
 ├── src/
 │   ├── app/                    # Next.js App Router
-│   ├── components/             # UI：サイドバー、カード、検索、ソート、言語スイッチャー…
-│   ├── lib/                    # i18n テーブル、データアクセス、ユーティリティ
-│   └── types/                  # TypeScript 型
+│   │   ├── layout.tsx          # ルートレイアウト、フォント、metadata、OG
+│   │   ├── page.tsx            # ホーム
+│   │   ├── globals.css         # Tailwind v4 + フィールドマニュアルテーマ
+│   │   ├── not-found.tsx
+│   │   ├── error.tsx
+│   │   ├── explore/            # /explore, /explore/k/<kind>/, /explore/k/<kind>/p/<platform>/
+│   │   ├── robots.ts
+│   │   └── sitemap.ts
+│   ├── components/             # top-nav, tree-sidebar, project-table, …
+│   ├── lib/                    # i18n, taxonomy, projects, site
+│   └── types/
+│       └── project.ts          # スキーマ v2 型定義
 ├── .editorconfig
 ├── .gitattributes
 ├── .gitignore
-├── .npmrc                      # pnpm@10
+├── .npmrc
 ├── .nvmrc                      # node 22
-├── CHANGELOG.md                # 変更履歴
-├── CODE_OF_CONDUCT.md          # コントリビュータ・コーヴェナント v2.1
-├── CONTRIBUTING.md             # 完全なコントリビューションガイド
+├── CHANGELOG.md
+├── CODE_OF_CONDUCT.md
+├── CONTRIBUTING.md
+├── DISCLAIMER.md               # 完全な免責事項（必読）
 ├── LICENSE                     # MIT
-├── README.md                   # English（デフォルト）
+├── README.md                   # 英語（デフォルト）
 ├── README.zh.md                # 简体中文
-├── README.ja.md                # あなたがここを見ています
-├── SECURITY.md                 # 脆弱性開示ポリシー
+├── README.ja.md                # 日本語（ここ）
+├── SECURITY.md
 ├── eslint.config.mjs
-├── next.config.ts              # output: "export"（静的）
+├── next.config.ts              # output: "export" + basePath
 ├── package.json
 ├── pnpm-lock.yaml
-├── pnpm-workspace.yaml
-├── postcss.config.mjs          # Tailwind v4
+├── postcss.config.mjs
 └── tsconfig.json
 ```
 
 ---
 
-## 🛠 技術スタック
+## 技術スタック
 
-| レイヤー | 選択 | 理由 |
+| レイヤ | 採用 | 理由 |
 |---|---|---|
-| フレームワーク | **Next.js 16** (App Router) | 静的エクスポート、RSC、ファイルベースルーティング |
+| フレームワーク | **Next.js 16**（App Router） | 静的エクスポート、RSC、ファイルベースルーティング |
 | UI | **React 19** | 最新安定版 |
 | スタイリング | **Tailwind CSS v4** | `@import "tailwindcss"` + `@theme` トークン |
 | 言語 | **TypeScript 5.9** | strict モード |
-| パッケージマネージャー | **pnpm 10** | 高速、ディスク効率 |
+| パッケージマネージャ | **pnpm 10** | 高速、ディスク効率 |
 | ホスティング | **GitHub Pages** | 無料、高速 CDN、ベンダーロックインなし |
 | CI/CD | **GitHub Actions** | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
-| i18n | 手書きの 3 言語対応表 | JS バンドルオーバーヘッドゼロ、ランタイム切り替え |
+| i18n | 手書き 3 言語対応表 | JS バンドルゼロ、ランタイム切替 |
+| フォント | **IBM Plex Sans + Mono** | クールで工学的；数字は等幅 |
 
 ---
 
-## ➕ プロジェクトの追加 / 編集
+## プロジェクトの追加 / 編集
 
-すべてのコンテンツは単一の JSON ファイルに格納されています。CMS もマイグレーションスクリプトも不要です。
+コンテンツは単一の JSON ファイル。スキーマの全容は
+[`docs/DATA-MODEL.md`](./docs/DATA-MODEL.md)、TypeScript 型は
+[`src/types/project.ts`](./src/types/project.ts) を参照。最小
+エントリ：
 
-1. [`data/projects.json`](./data/projects.json) を開く
-2. 以下のスキーマでエントリを追加（型定義は [`src/types/project.ts`](./src/types/project.ts)）：
+```json
+{
+  "id": "sing-box",
+  "name": "sing-box",
+  "kind": "proxy",
+  "platform": ["desktop", "cli", "server"],
+  "category": "proxy-core",
+  "description": "Universal proxy platform",
+  "url": "https://github.com/SagerNet/sing-box",
+  "language": "Go",
+  "license": "MIT",
+  "addedAt": "2024-04-01",
+  "verdict": "best-in-class"
+}
+```
 
-   ```json
-   {
-     "id": "sing-box",
-     "name": "sing-box",
-     "description": "ユニバーサルプロキシプラットフォーム…",
-     "url": "https://github.com/SagerNet/sing-box",
-     "category": "proxy-core",
-     "tags": ["proxy", "shadowsocks", "trojan"],
-     "language": "Go",
-     "stars": 25000,
-     "lastUpdate": "2026-05-30",
-     "license": "MIT"
-   }
-   ```
+掲載基準：直近 6 ヶ月に活発なコミットがある、OSI 認定のオープンソース
+ライセンス、実用的なユースケース。詳細：
+[`CONTRIBUTING.md`](./CONTRIBUTING.md)。
 
-3. PR を作成。CI が次回 `main` へのプッシュ時にプレビューをデプロイします。
-
-> ✅ 収録基準：直近 6 か月以内のアクティブコミット、OSI 認定ライセンス、実用的なユースケース。詳細は [`CONTRIBUTING.md`](./CONTRIBUTING.md) を参照。
+> `stars`、`forks`、`lastCommit`、`status` は
+> `scripts/refresh-projects.mjs` により**毎週自動再生成**されます。手
+> で埋める必要はありません。
 
 ---
 
-## 📑 6 テーマグループ（21 サブカテゴリ）
+## 自動化パイプライン
 
-| グループ | アイコン | サブカテゴリ |
+| トリガ | スクリプト | 出力 |
 |---|---|---|
-| **プロキシコア** | 🔌 | プロキシコア · GUI クライアント · サブスクリプション管理 · プロトコルツール |
-| **高速化** | 🚀 | GitHub 高速化 · ルータープラグイン · ミラー高速化 · トンネルツール |
-| **デプロイと運用** | 🐳 | Docker デプロイ · コンテナオーケストレーション · サーバー管理 · ノードツール · 監視 |
-| **設定と DNS** | ⚙️ | ルールコレクション · DNS ツール · 証明書ツール |
-| **ツールとテスト** | 🧰 | ユーティリティ · ネットワークテスト · データ転送 |
-| **セキュリティ他** | 🛡️ | セキュリティツール · プロジェクトコレクション |
+| cron（日曜 03:00 UTC） | `scripts/refresh-projects.mjs` | `stars` / `forks` / `license` / `lastCommit` / `status` を更新、差分があれば自動コミット |
+| 手動 `workflow_dispatch` | 同上 | 同上 |
+| `data/projects.json` への push | 同上（`paths:` フィルタで） | 同上 |
+| `pnpm run scan`（ローカル） | `scripts/scan-awesome.mjs` | `data/candidates.json` に書き出し（メンテナが確認） |
+| `pnpm run validate`（CI） | `scripts/validate-projects.mjs` | 終了コード 0/1/2；不合格なら PR を落とす |
+
+リフレッシュワークフローは `git diff --exit-code` でコミット要否を判定
+します。単一プロジェクトの GitHub API 呼び出し失敗はログしてスキップ
+するので、1 件の 404 がラン全体をつぶすことはありません。
 
 ---
 
-## 🌍 国際化 (i18n)
+## 国際化（i18n）
 
-サイト UI と本リポジトリのドキュメントは 3 言語で提供されています：
-
-| 言語 | コード | UI 翻訳 | ドキュメント |
+| 言語 | コード | UI | ドキュメント |
 |---|---|---|---|
 | 🇬🇧 English（デフォルト） | `en` | ✅ | [`README.md`](./README.md) |
 | 🇨🇳 简体中文 | `zh` | ✅ | [`README.zh.md`](./README.zh.md) |
 | 🇯🇵 日本語 | `ja` | ✅ | [`README.ja.md`](./README.ja.md) |
 
-**新しい翻訳を追加** または **既存翻訳を改善** したい場合は、PR を作成してください。詳細は [`CONTRIBUTING.md` → "翻訳の追加・改善"](./CONTRIBUTING.md#-翻訳の追加--改善)。
+UI 文字列は [`src/lib/i18n.ts`](./src/lib/i18n.ts) に集約（約 36 キー
+の 3 列表）。現在の言語は `?lang=` URL パラメータから読み取られ、
+`localStorage` が粘着的な嗜好として保持します。詳細は
+[`docs/I18N.md`](./docs/I18N.md)。
 
 ---
 
-## 🤝 コントリビューション
+## コントリビュート
 
-PR を歓迎します！コントリビューションガイドを参照：
+PR を歓迎します。詳細は [`CONTRIBUTING.md`](./CONTRIBUTING.md)：
 
-- ローカル開発セットアップ & スクリプト
+- ローカル開発環境とスクリプト
 - データスキーマとプロジェクトの追加方法
-- コードスタイル、Lint、**Conventional Commits**（`feat:`、`fix:`、`docs:`、…）
+- コードスタイル、lint、**Conventional Commits**（`feat:`、`fix:`、`docs:`、…）
 - PR レビュープロセス
 - 翻訳の追加・改善方法
 
-**コントリビューションガイド：** [🇬🇧 English](CONTRIBUTING.md) · [🇨🇳 简体中文](CONTRIBUTING.zh.md) · **🇯🇵 日本語**
-
-参加することで、[行動規範](./CODE_OF_CONDUCT.md) に同意したものとみなされます。
-
-## 🔐 セキュリティ
-
-脆弱性を発見しましたか？**公開 Issue で開示しないでください。** [`SECURITY.md`](./SECURITY.md) の非公開開示プロセスに従ってください。**3 営業日以内** に対応します。
-
-## 💬 サポート & コミュニティ
-
-ヘルプや質問が必要ですか？推奨チャネルは [`SUPPORT.md`](./.github/SUPPORT.md) を参照。
-
-## 📄 ライセンス
-
-[MIT ライセンス](./LICENSE) の下で配布されています。
+参加することで、[行動規範](./CODE_OF_CONDUCT.md) に同意したものと
+みなされます。
 
 ---
 
-## ⭐ スター履歴
+## セキュリティ
 
-このプロジェクトが適切なツール発見の役に立ったら、⭐ でのサポートをお願いします。更多人への周知につながります。
-
-[![Star History Chart](https://api.star-history.com/svg?repos=badhope/NetTools-Hub&type=Date)](https://star-history.com/#badhope/NetTools-Hub&Date)
+脆弱性を発見されましたら、**公開 Issue には記載しないでください**。
+[`SECURITY.md`](./SECURITY.md) に従い非公開で開示してください。**3
+営業日以内** を目安に返信します。
 
 ---
 
-<div align="center">
+## ライセンス
 
-Made with ❤️ · **NetTools Hub** · 🛠️ オープンソースネットワークツールエコシステムの一元的ナビゲーション · [**English**](README.md) · [**简体中文**](README.zh.md) · **日本語**
+[MIT ライセンス](./LICENSE) のもとで公開。
 
-</div>
+---
+
+> NetTools Hub · 210 件のオープンソース・ネットワークツールのフィー
+> ルドマニュアル · [English](README.md) · [简体中文](README.zh.md) ·
+> 日本語（ここ）

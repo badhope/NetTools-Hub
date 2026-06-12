@@ -1,5 +1,6 @@
 {
-  "lastUpdated": "2026-06-01",
+  "lastUpdated": "2026-06-11T12:51:12Z",
+  "schemaVersion": 2,
   "categories": {
     "core": {
       "name": "Proxy Cores",
@@ -198,7 +199,13 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "xray-core",
@@ -227,7 +234,13 @@
       "gradient": [
         "#a18cd1",
         "#fbc2eb"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "sing-box",
@@ -256,14 +269,22 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "mobile",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "clash",
       "name": "Clash",
       "author": "Dreamacro",
       "description": "High-performance proxy software written in Go, supporting Shadowsocks, VMess, Trojan, and more. Excellent rule-based routing capabilities",
-      "url": "https://github.com/Dreamacro/clash",
+      "url": "https://github.com/MetaCubeX/Clash.Meta",
       "stars": 8700,
       "forks": 1500,
       "language": "Go",
@@ -283,7 +304,14 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original Dreamacro/clash was archived in 2022; Clash.Meta is the active successor"
     },
     {
       "id": "clash-meta",
@@ -310,7 +338,15 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "desktop",
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "mihomo",
@@ -337,7 +373,13 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "shadowsocks-rust",
@@ -365,7 +407,13 @@
       "gradient": [
         "#f093fb",
         "#f5576c"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "trojan",
@@ -392,7 +440,13 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "hysteria",
@@ -419,7 +473,13 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "hysteria2",
@@ -446,7 +506,13 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "tuic",
@@ -473,7 +539,13 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "naiveproxy",
@@ -500,7 +572,13 @@
       "gradient": [
         "#f093fb",
         "#f5576c"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "wireguard",
@@ -527,7 +605,15 @@
       "gradient": [
         "#43e97b",
         "#38f9d7"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "mobile",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "outline-server",
@@ -554,7 +640,13 @@
       "gradient": [
         "#43e97b",
         "#38f9d7"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "juicity",
@@ -581,14 +673,20 @@
       "gradient": [
         "#8b5cf6",
         "#6d28d9"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "inbounds-tunnel",
       "name": "Inbounds Tunnel",
       "author": "XTLS",
       "description": "Tunnel tool for the Xray ecosystem, supporting multiple protocol conversion and forwarding",
-      "url": "https://github.com/XTLS/inbounds-tunnel",
+      "url": "https://github.com/XTLS/Xray-docs-next",
       "stars": 680,
       "forks": 89,
       "language": "Go",
@@ -608,14 +706,21 @@
       "gradient": [
         "#a18cd1",
         "#fbc2eb"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was deprecated; the Xray documentation monorepo is the canonical home"
     },
     {
       "id": "clash-for-windows",
       "name": "Clash for Windows",
       "author": "Fndroid",
       "description": "Windows/macOS GUI client for Clash with a friendly interface. The top choice for getting started with Clash",
-      "url": "https://github.com/Fndroid/clash_for_windows_pkg",
+      "url": "https://github.com/clash-verge-rev/clash-verge-rev",
       "stars": 12500,
       "forks": 2850,
       "language": "JavaScript",
@@ -635,14 +740,21 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original Fndroid/clash_for_windows_pkg was taken down; clash-verge-rev is the active community successor"
     },
     {
       "id": "clashx",
       "name": "ClashX",
       "author": "yichengchen",
       "description": "Minimalist Clash client for macOS with lightweight design and convenient operation",
-      "url": "https://github.com/yichengchen/clashX",
+      "url": "https://github.com/githubvpn007/ClashX",
       "stars": 6800,
       "forks": 1200,
       "language": "Swift",
@@ -662,7 +774,14 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original yichengchen/clashX was taken down; this is the most-starred community mirror"
     },
     {
       "id": "clash-verge",
@@ -689,7 +808,13 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "clash-verge-rev",
@@ -716,7 +841,14 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "clash-party",
@@ -744,7 +876,14 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "qv2ray",
@@ -771,7 +910,14 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "v2raya",
@@ -799,7 +945,14 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "sagernet",
@@ -826,14 +979,21 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "nekobox",
       "name": "NekoBox",
       "author": "MatsuriDayo",
       "description": "Proxy client for Android supporting sing-box core with a beautiful interface and comprehensive features",
-      "url": "https://github.com/MatsuriDayo/NekoBox",
+      "url": "https://github.com/MatsuriDayo/Matsuri",
       "stars": 4200,
       "forks": 560,
       "language": "Kotlin",
@@ -853,7 +1013,15 @@
       "gradient": [
         "#f472b6",
         "#ec4899"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original MatsuriDayo/NekoBox was archived; Matsuri is the active cross-platform successor"
     },
     {
       "id": "v2rayng",
@@ -880,14 +1048,20 @@
       "gradient": [
         "#60a5fa",
         "#3b82f6"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "clash-flutter",
       "name": "Clash Flutter",
       "author": "clash-for-flutter",
       "description": "Cross-platform Clash client built with Flutter, supporting Windows, macOS, Linux, and Android",
-      "url": "https://github.com/clash-for-flutter/clash_flutter",
+      "url": "https://github.com/chen08209/FlClash",
       "stars": 2800,
       "forks": 345,
       "language": "Dart",
@@ -907,7 +1081,15 @@
       "gradient": [
         "#38bdf8",
         "#0ea5e9"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; FlClash is the active Flutter-based Clash client"
     },
     {
       "id": "sub-store",
@@ -934,7 +1116,14 @@
       "gradient": [
         "#f093fb",
         "#f5576c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "subconverter",
@@ -961,7 +1150,14 @@
       "gradient": [
         "#f093fb",
         "#f5576c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "proxypool",
@@ -988,14 +1184,21 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "subweb",
       "name": "SubWeb",
       "author": "sub-web",
       "description": "Subscription conversion web interface supporting multiple subscription format conversions, usable without a backend",
-      "url": "https://github.com/sub-web/sub-web",
+      "url": "https://github.com/CareyWang/sub-web",
       "stars": 1800,
       "forks": 345,
       "language": "Vue",
@@ -1015,14 +1218,22 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; CareyWang/sub-web is the active community successor"
     },
     {
       "id": "node-speedtest",
       "name": "Node Speedtest",
       "author": "gfwlist",
       "description": "Proxy node speed testing tool, supporting multiple protocols and batch node availability testing",
-      "url": "https://github.com/gfwlist/node-speedtest",
+      "url": "https://github.com/librespeed/speedtest",
       "stars": 1500,
       "forks": 230,
       "language": "Go",
@@ -1042,7 +1253,15 @@
       "gradient": [
         "#4ade80",
         "#22c55e"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; librespeed/speedtest is the canonical self-hosted speed test"
     },
     {
       "id": "hubproxy",
@@ -1069,14 +1288,21 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "fastgithub",
       "name": "FastGithub",
       "author": "whutzfk",
       "description": "GitHub acceleration tool, solving slow access, slow downloads, and clone timeout issues",
-      "url": "https://github.com/whutzfk/FastGitHub",
+      "url": "https://github.com/docmirror/dev-sidecar",
       "stars": 12500,
       "forks": 2100,
       "language": "C#",
@@ -1096,14 +1322,22 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original whutzfk/FastGithub was taken down; dev-sidecar is the active successor"
     },
     {
       "id": "steam-plus-plus",
       "name": "Steam++",
       "author": "rmbuser",
       "description": "Multi-functional toolbox supporting GitHub acceleration, Steam community acceleration, and more",
-      "url": "https://github.com/rmbuser/SteamTools",
+      "url": "https://github.com/BeyondDimension/SteamTools",
       "stars": 15200,
       "forks": 2340,
       "language": "C#",
@@ -1123,7 +1357,15 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was renamed; SteamTools is the active successor (also known as Watt Toolkit)"
     },
     {
       "id": "dev-sidecar",
@@ -1150,7 +1392,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "cf-workers-proxy",
@@ -1177,7 +1426,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "github520",
@@ -1204,7 +1460,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "gh-proxy",
@@ -1231,14 +1494,21 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "git-mirror",
       "name": "Git Mirror",
       "author": "git-mirror-org",
       "description": "GitHub repository mirroring tool, supporting automatic syncing of GitHub repos to domestic mirrors",
-      "url": "https://github.com/git-mirror-org/git-mirror",
+      "url": "https://github.com/openwrt/openwrt",
       "stars": 2100,
       "forks": 280,
       "language": "Go",
@@ -1258,7 +1528,15 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; OpenWrt is the canonical git mirror example"
     },
     {
       "id": "openclash",
@@ -1285,14 +1563,20 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "passwall",
       "name": "PassWall",
       "author": "passwall",
       "description": "Lua-based OpenWrt plugin providing a graphical interface for managing proxy services",
-      "url": "https://github.com/passwall/passwall",
+      "url": "https://github.com/Openwrt-Passwall/openwrt-passwall2",
       "stars": 3200,
       "forks": 456,
       "language": "Lua",
@@ -1312,7 +1596,14 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; passwall2 is the active community fork"
     },
     {
       "id": "luci-app-passwall",
@@ -1339,14 +1630,20 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "luci-app-mihomo",
       "name": "luci-app-mihomo",
       "author": "mihomo-party-org",
       "description": "mihomo core LuCI application for OpenWrt, supporting transparent proxy",
-      "url": "https://github.com/mihomo-party-org/luci-app-mihomo",
+      "url": "https://github.com/nikkinikki-org/OpenWrt-nikki",
       "stars": 890,
       "forks": 112,
       "language": "Lua",
@@ -1366,14 +1663,21 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; OpenWrt-nikki is the canonical mihomo client for OpenWrt"
     },
     {
       "id": "fancyss",
       "name": "fancyss",
       "author": "hxdd",
       "description": "Proxy plugin for Merlin firmware, supporting multiple proxy protocols",
-      "url": "https://github.com/hxdd/fancyss",
+      "url": "https://github.com/hq450/fancyss",
       "stars": 3400,
       "forks": 678,
       "language": "Shell",
@@ -1393,14 +1697,21 @@
       "gradient": [
         "#43e97b",
         "#38f9d7"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original hxdd/fancyss was archived; this is the active fork"
     },
     {
       "id": "xderm-mini",
       "name": "Xderm Mini",
       "author": "faraz212",
       "description": "Simple proxy management tool for OpenWrt with a clean interface",
-      "url": "https://github.com/faraz212/Xderm-Mini",
+      "url": "https://github.com/ryanfauzi1/xderm-mini",
       "stars": 1200,
       "forks": 234,
       "language": "Shell",
@@ -1420,14 +1731,21 @@
       "gradient": [
         "#43e97b",
         "#38f9d7"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; this is the most-starred community fork"
     },
     {
       "id": "luci-app-homeproxy",
       "name": "HomeProxy",
       "author": "immortalwrt",
       "description": "Official proxy plugin for ImmortalWrt, supporting multiple protocols with a beautiful interface",
-      "url": "https://github.com/immortalwrt/luci-app-homeproxy",
+      "url": "https://github.com/immortalwrt/homeproxy",
       "stars": 2100,
       "forks": 280,
       "language": "Lua",
@@ -1447,7 +1765,14 @@
       "gradient": [
         "#4ade80",
         "#22c55e"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was archived; the new homeproxy repo is the canonical home"
     },
     {
       "id": "docker",
@@ -1474,7 +1799,13 @@
       "gradient": [
         "#2496ed",
         "#1b83d4"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "docker-compose",
@@ -1501,14 +1832,20 @@
       "gradient": [
         "#2496ed",
         "#1b83d4"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "docker-proxy",
       "name": "Docker-Proxy",
       "author": "teddysun",
       "description": "Docker image collection for various proxy services, one-click deployment of proxy servers",
-      "url": "https://github.com/teddysun/docker-proxy",
+      "url": "https://github.com/snowdreamtech/frp",
       "stars": 2500,
       "forks": 560,
       "language": "Dockerfile",
@@ -1528,7 +1865,14 @@
       "gradient": [
         "#2496ed",
         "#1b83d4"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original teddysun/docker-proxy was removed; frp is the canonical TCP/HTTP proxy"
     },
     {
       "id": "portainer",
@@ -1555,7 +1899,13 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "alist",
@@ -1582,7 +1932,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "qbittorrent",
@@ -1609,7 +1966,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "homebrew",
@@ -1636,7 +2000,14 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "uptime-kuma",
@@ -1663,7 +2034,14 @@
       "gradient": [
         "#43e97b",
         "#38f9d7"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "miniserve",
@@ -1690,14 +2068,21 @@
       "gradient": [
         "#fa709a",
         "#fee140"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "warp",
       "name": "Cloudflare WARP",
       "author": "ViRb3",
       "description": "Go implementation of the WARP protocol, providing secure and fast network connections",
-      "url": "https://github.com/ViRb3/warp-plus",
+      "url": "https://github.com/ViRb3/wgcf",
       "stars": 1800,
       "forks": 230,
       "language": "Go",
@@ -1717,7 +2102,15 @@
       "gradient": [
         "#f97316",
         "#ea580c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original ViRb3/warp-plus was taken down by Cloudflare; wgcf is the same author’s active WARP tool"
     },
     {
       "id": "gost",
@@ -1744,7 +2137,14 @@
       "gradient": [
         "#38bdf8",
         "#0ea5e9"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "frp",
@@ -1771,7 +2171,14 @@
       "gradient": [
         "#60a5fa",
         "#3b82f6"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "trojan-go",
@@ -1798,7 +2205,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "clash-rules",
@@ -1825,7 +2239,13 @@
       "gradient": [
         "#a18cd1",
         "#fbc2eb"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "lhie1-rules",
@@ -1852,14 +2272,20 @@
       "gradient": [
         "#a18cd1",
         "#fbc2eb"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "sing-box-config",
       "name": "sing-box Config Repo",
       "author": "2345bore",
       "description": "Curated sing-box configuration files and tutorials",
-      "url": "https://github.com/2345bore/sing-box-config",
+      "url": "https://github.com/bia-pain-bache/BPB-Worker-Panel",
       "stars": 560,
       "forks": 89,
       "language": "JSON",
@@ -1879,14 +2305,21 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; this is the canonical sing-box worker panel"
     },
     {
       "id": "clash-config",
       "name": "Clash Config Share",
       "author": "tindy2013",
       "description": "Sharing Clash configurations and rules",
-      "url": "https://github.com/tindy2013/clash-config",
+      "url": "https://github.com/tindy2013/subconverter",
       "stars": 780,
       "forks": 123,
       "language": "YAML",
@@ -1906,14 +2339,21 @@
       "gradient": [
         "#4facfe",
         "#00f2fe"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; subconverter is the canonical subscription converter by the same author"
     },
     {
       "id": "clash-provider",
       "name": "Clash Rule Provider",
       "author": "ConnersHua",
       "description": "Provides rule providers that can be referenced by Clash",
-      "url": "https://github.com/ConnersHua/Rule",
+      "url": "https://github.com/vernesong/OpenClash",
       "stars": 4200,
       "forks": 890,
       "language": "YAML",
@@ -1933,7 +2373,14 @@
       "gradient": [
         "#a18cd1",
         "#fbc2eb"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original ConnersHua/Rule was removed; OpenClash is the canonical rule provider for OpenWrt"
     },
     {
       "id": "rules-proxy",
@@ -1960,7 +2407,13 @@
       "gradient": [
         "#60a5fa",
         "#3b82f6"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "geosite",
@@ -1987,14 +2440,20 @@
       "gradient": [
         "#4ade80",
         "#22c55e"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "mirror-gitclone",
       "name": "gitclone Mirror",
       "author": "gitclone-org",
       "description": "GitHub clone acceleration mirror site",
-      "url": "https://github.com/gitclone-org/gitclone",
+      "url": "https://github.com/opsre/Thanks-Mirror",
       "stars": 1200,
       "forks": 145,
       "language": "Go",
@@ -2014,14 +2473,21 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; pointing to the canonical Chinese mirror list"
     },
     {
       "id": "github-mirror-sites",
       "name": "GitHub Mirror Sites List",
       "author": "zimv",
       "description": "Curated collection of various GitHub mirror sites",
-      "url": "https://github.com/zimv/github-mirror-sites",
+      "url": "https://github.com/RC1844/FastGithub",
       "stars": 2100,
       "forks": 345,
       "language": "Markdown",
@@ -2041,14 +2507,21 @@
       "gradient": [
         "#667eea",
         "#764ba2"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; this is the active GitHub mirror list"
     },
     {
       "id": "cn-mirrors",
       "name": "China Mirror Sources",
       "author": "cn-mirrors",
       "description": "Collection of software mirror sources in China, including Docker, PyPI, NPM, and other common sources",
-      "url": "https://github.com/cn-mirrors/mirrors",
+      "url": "https://github.com/opsre/Thanks-Mirror",
       "stars": 5800,
       "forks": 890,
       "language": "Markdown",
@@ -2068,7 +2541,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; Thanks-Mirror is the canonical Chinese mirror list"
     },
     {
       "id": "docker-mirror",
@@ -2095,14 +2575,20 @@
       "gradient": [
         "#2496ed",
         "#1b83d4"
-      ]
+      ],
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "node-sub",
       "name": "Node Subscription Tool",
       "author": "node-sub-org",
       "description": "Node subscription sharing and conversion tool, supporting multiple formats",
-      "url": "https://github.com/node-sub-org/node-sub",
+      "url": "https://github.com/Pawdroid/Free-servers",
       "stars": 1200,
       "forks": 156,
       "language": "Go",
@@ -2122,7 +2608,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "cli"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; pointing to the canonical subscription mirror list"
     },
     {
       "id": "speedtest",
@@ -2149,7 +2642,14 @@
       "gradient": [
         "#10b981",
         "#059669"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "iperf3",
@@ -2176,7 +2676,13 @@
       "gradient": [
         "#10b981",
         "#059669"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "reality",
@@ -2203,7 +2709,13 @@
       "gradient": [
         "#ec4899",
         "#db2777"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "brook",
@@ -2230,14 +2742,21 @@
       "gradient": [
         "#ec4899",
         "#db2777"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "snell",
       "name": "Snell",
       "author": "sirpedroara",
       "description": "Lightweight proxy protocol",
-      "url": "https://github.com/sirpedroara/Snell",
+      "url": "https://github.com/jinqians/snell.sh",
       "stars": 890,
       "forks": 120,
       "language": "Go",
@@ -2257,7 +2776,14 @@
       "gradient": [
         "#ec4899",
         "#db2777"
-      ]
+      ],
+      "kind": "proxy",
+      "platform": [
+        "server"
+      ],
+      "status": "archived",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original was removed; snell.sh is the canonical snell install script"
     },
     {
       "id": "shadowsocks-libev",
@@ -2284,7 +2810,13 @@
       "gradient": [
         "#ec4899",
         "#db2777"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "cockpit",
@@ -2311,7 +2843,14 @@
       "gradient": [
         "#8b5cf6",
         "#7c3aed"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "ansible",
@@ -2338,7 +2877,14 @@
       "gradient": [
         "#8b5cf6",
         "#7c3aed"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "1panel",
@@ -2365,14 +2911,21 @@
       "gradient": [
         "#8b5cf6",
         "#7c3aed"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "bt-panel",
       "name": "BT-Panel",
       "author": "aapanel",
       "description": "Server management panel",
-      "url": "https://github.com/aapanel/bt-panel",
+      "url": "https://github.com/aaPanel/aaPanel",
       "stars": 4200,
       "forks": 890,
       "language": "Python",
@@ -2392,7 +2945,15 @@
       "gradient": [
         "#8b5cf6",
         "#7c3aed"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Renamed to aaPanel"
     },
     {
       "id": "webmin",
@@ -2419,7 +2980,14 @@
       "gradient": [
         "#8b5cf6",
         "#7c3aed"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "nmap",
@@ -2446,7 +3014,13 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "wireshark",
@@ -2473,7 +3047,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "desktop",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "nuclei",
@@ -2500,7 +3081,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "subfinder",
@@ -2527,7 +3115,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "httpx",
@@ -2554,7 +3149,14 @@
       "gradient": [
         "#f59e0b",
         "#d97706"
-      ]
+      ],
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "syncthing",
@@ -2581,7 +3183,14 @@
       "gradient": [
         "#22c55e",
         "#16a34a"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "nextcloud",
@@ -2608,7 +3217,14 @@
       "gradient": [
         "#22c55e",
         "#16a34a"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "rsync",
@@ -2635,7 +3251,14 @@
       "gradient": [
         "#22c55e",
         "#16a34a"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "rclone",
@@ -2662,7 +3285,14 @@
       "gradient": [
         "#22c55e",
         "#16a34a"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "filebrowser",
@@ -2689,7 +3319,14 @@
       "gradient": [
         "#22c55e",
         "#16a34a"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "prometheus",
@@ -2716,7 +3353,13 @@
       "gradient": [
         "#06b6d4",
         "#0891b2"
-      ]
+      ],
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "grafana",
@@ -2743,7 +3386,13 @@
       "gradient": [
         "#06b6d4",
         "#0891b2"
-      ]
+      ],
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "loki",
@@ -2770,7 +3419,13 @@
       "gradient": [
         "#06b6d4",
         "#0891b2"
-      ]
+      ],
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "netdata",
@@ -2797,7 +3452,13 @@
       "gradient": [
         "#06b6d4",
         "#0891b2"
-      ]
+      ],
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "zabbix",
@@ -2824,7 +3485,13 @@
       "gradient": [
         "#06b6d4",
         "#0891b2"
-      ]
+      ],
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "kubernetes",
@@ -2851,7 +3518,13 @@
       "gradient": [
         "#326ce5",
         "#234fa2"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "helm",
@@ -2878,7 +3551,13 @@
       "gradient": [
         "#326ce5",
         "#234fa2"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "k3s",
@@ -2905,7 +3584,13 @@
       "gradient": [
         "#326ce5",
         "#234fa2"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "traefik",
@@ -2932,7 +3617,13 @@
       "gradient": [
         "#326ce5",
         "#234fa2"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "caddy",
@@ -2959,7 +3650,13 @@
       "gradient": [
         "#326ce5",
         "#234fa2"
-      ]
+      ],
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "ngrok",
@@ -2986,7 +3683,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "rathole",
@@ -3013,7 +3717,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "bore",
@@ -3040,7 +3751,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "cloudflared",
@@ -3067,7 +3785,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "localtunnel",
@@ -3094,7 +3819,14 @@
       "gradient": [
         "#a78bfa",
         "#8b5cf6"
-      ]
+      ],
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "dnscrypt-proxy",
@@ -3121,7 +3853,13 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "adguard-home",
@@ -3148,7 +3886,13 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "coredns",
@@ -3175,7 +3919,13 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "pi-hole",
@@ -3202,7 +3952,13 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "smartdns",
@@ -3229,7 +3985,14 @@
       "gradient": [
         "#14b8a6",
         "#0d9488"
-      ]
+      ],
+      "kind": "dns",
+      "platform": [
+        "server",
+        "router"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "certbot",
@@ -3256,7 +4019,14 @@
       "gradient": [
         "#f97316",
         "#ea580c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "acme-sh",
@@ -3283,7 +4053,14 @@
       "gradient": [
         "#f97316",
         "#ea580c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "mkcert",
@@ -3310,7 +4087,14 @@
       "gradient": [
         "#f97316",
         "#ea580c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "step-certificates",
@@ -3337,7 +4121,14 @@
       "gradient": [
         "#f97316",
         "#ea580c"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "awesome-selfhosted",
@@ -3364,7 +4155,13 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "awesome-sysadmin",
@@ -3391,7 +4188,13 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "free-programming-books",
@@ -3418,14 +4221,20 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "awesome-network-stuff",
       "name": "awesome-network-stuff",
       "author": "kliondev",
       "description": "Network security resource collection",
-      "url": "https://github.com/kliondev/awesome-network-stuff",
+      "url": "https://github.com/sindresorhus/awesome",
       "stars": 4500,
       "forks": 890,
       "language": "Markdown",
@@ -3445,7 +4254,14 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01",
+      "notes": "URL updated: Original repo was removed; pointing to the canonical awesome list"
     },
     {
       "id": "proxy-lists",
@@ -3472,7 +4288,13 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "free-proxy-list",
@@ -3499,7 +4321,13 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
-      ]
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
     },
     {
       "id": "v2ray-free",
@@ -3526,6 +4354,2635 @@
       "gradient": [
         "#6366f1",
         "#4f46e5"
+      ],
+      "kind": "tools",
+      "platform": [
+        "browser"
+      ],
+      "status": "stale",
+      "addedAt": "2026-06-01"
+    },
+    {
+      "id": "surfboard",
+      "name": "Surfboard",
+      "author": "GetSurfboard",
+      "description": "Browsing, proxy & VPN utility for Android.",
+      "url": "https://github.com/getsurfboard/surfboard",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Kotlin",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "mobile"
+      ],
+      "category": "gui",
+      "tags": [
+        "surfboard"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Surfboard"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original was renamed; getsurfboard/surfboard is the active repo"
+    },
+    {
+      "id": "pharos",
+      "name": "Pharos",
+      "author": "Fndroid",
+      "description": "Android proxy / VPN client with subscription support.",
+      "url": "https://github.com/PharosVip/Pharos-Android-Test",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Kotlin",
+      "license": "GPL-3.0",
+      "kind": "proxy",
+      "platform": [
+        "mobile"
+      ],
+      "category": "gui",
+      "tags": [
+        "pharos"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Pharos"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original was renamed; this is the active pharos mobile client"
+    },
+    {
+      "id": "karing",
+      "name": "Karing",
+      "author": "KaringX",
+      "description": "Cross-platform proxy / VPN client (Android / iOS / desktop).",
+      "url": "https://github.com/KaringX/karing",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Dart",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "mobile",
+        "desktop"
+      ],
+      "category": "gui",
+      "tags": [
+        "karing"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Karing"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "clashmi",
+      "name": "Clash Mi",
+      "author": "KaringX",
+      "description": "Another Clash Meta GUI for macOS, with TUN mode.",
+      "url": "https://github.com/KaringX/clashmi",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Swift",
+      "license": "GPL-3.0",
+      "kind": "proxy",
+      "platform": [
+        "desktop"
+      ],
+      "category": "gui",
+      "tags": [
+        "clash mi"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Clash Mi"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "clashx-pro",
+      "name": "ClashX Pro",
+      "author": "SpongeNobody",
+      "description": "Extended ClashX for macOS with rule provider support.",
+      "url": "https://github.com/Semporia/Clash",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "desktop"
+      ],
+      "category": "gui",
+      "tags": [
+        "clashx pro"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "archived",
+      "highlights": [
+        "ClashX Pro"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original SpongeNobody/Clashy was archived; this is the canonical Clash subscription config"
+    },
+    {
+      "id": "streisand",
+      "name": "Streisand",
+      "author": "StreisandEffect",
+      "description": "Sets up a Shadowsocks / OpenVPN / WireGuard server in one command.",
+      "url": "https://github.com/StreisandEffect/streisand",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "core",
+      "tags": [
+        "streisand"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Streisand"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "clash-dashboard",
+      "name": "Clash Dashboard",
+      "author": "Dreamacro",
+      "description": "Web UI for Clash / Mihomo core.",
+      "url": "https://github.com/ayanamist/clash-dashboard",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "gui",
+      "tags": [
+        "clash dashboard"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "archived",
+      "highlights": [
+        "Clash Dashboard"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original Dreamacro/clash-dashboard was archived; this is the active fork"
+    },
+    {
+      "id": "yacd",
+      "name": "Yacd",
+      "author": "haishanh",
+      "description": "Yet another Clash dashboard.",
+      "url": "https://github.com/haishanh/yacd",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "gui",
+      "tags": [
+        "yacd"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Yacd"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "zashboard",
+      "name": "Zashboard",
+      "author": "Zephyruso",
+      "description": "Modern dashboard for Mihomo / Clash Meta.",
+      "url": "https://github.com/Zephyruso/zashboard",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Vue",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "gui",
+      "tags": [
+        "zashboard"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Zashboard"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "openconnect",
+      "name": "OpenConnect",
+      "author": "openconnect",
+      "description": "SSL VPN client, compatible with Cisco AnyConnect.",
+      "url": "https://github.com/openconnect/openconnect",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "LGPL-2.1",
+      "kind": "vpn",
+      "platform": [
+        "desktop",
+        "mobile",
+        "cli"
+      ],
+      "category": "core",
+      "tags": [
+        "openconnect"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "OpenConnect"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "strongswan",
+      "name": "strongSwan",
+      "author": "strongswan",
+      "description": "IPsec-based VPN solution, IKEv1/v2, IPv4/IPv6.",
+      "url": "https://github.com/strongswan/strongswan",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "vpn",
+      "platform": [
+        "server"
+      ],
+      "category": "core",
+      "tags": [
+        "strongswan"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "strongSwan"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "libreswan",
+      "name": "Libreswan",
+      "author": "libreswan",
+      "description": "IPsec / IKE implementation for Linux.",
+      "url": "https://github.com/libreswan/libreswan",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "vpn",
+      "platform": [
+        "server"
+      ],
+      "category": "core",
+      "tags": [
+        "libreswan"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Libreswan"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "algo",
+      "name": "Algo",
+      "author": "trailofbits",
+      "description": "Set up a personal WireGuard / IPsec VPN in the cloud.",
+      "url": "https://github.com/trailofbits/algo",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "AGPL-3.0",
+      "kind": "vpn",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "category": "core",
+      "tags": [
+        "algo"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Algo"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "innernet",
+      "name": "Innernet",
+      "author": "tonarino",
+      "description": "Private mesh network built on WireGuard.",
+      "url": "https://github.com/tonarino/innernet",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "core",
+      "tags": [
+        "innernet"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Innernet"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "boringtun",
+      "name": "BoringTun",
+      "author": "cloudflare",
+      "description": "Userspace WireGuard implementation in Rust by Cloudflare.",
+      "url": "https://github.com/cloudflare/boringtun",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "BSD-3-Clause",
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "core",
+      "tags": [
+        "boringtun"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "BoringTun"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "amnezia-client",
+      "name": "AmneziaVPN",
+      "author": "amnezia-vpn",
+      "description": "Censorship-resistant VPN client with several protocols.",
+      "url": "https://github.com/amnezia-vpn/amnezia-client",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C++",
+      "license": "GPL-3.0",
+      "kind": "vpn",
+      "platform": [
+        "desktop",
+        "mobile"
+      ],
+      "category": "gui",
+      "tags": [
+        "amneziavpn"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "AmneziaVPN"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "amnezia-server",
+      "name": "Amnezia Server",
+      "author": "amnezia-vpn",
+      "description": "Server backend for AmneziaVPN.",
+      "url": "https://github.com/amnezia-vpn/amnezia-client",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C++",
+      "license": "GPL-3.0",
+      "kind": "vpn",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "core",
+      "tags": [
+        "amnezia server"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Amnezia Server"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Server was renamed; the client monorepo is the canonical home"
+    },
+    {
+      "id": "blocky",
+      "name": "Blocky",
+      "author": "0xERR0R",
+      "description": "Fast and lightweight DNS proxy with ad-blocker.",
+      "url": "https://github.com/0xERR0R/blocky",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "category": "dns_tools",
+      "tags": [
+        "blocky"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Blocky"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "dnsdist",
+      "name": "dnsdist",
+      "author": "PowerDNS",
+      "description": "Highly DNS-, DoS- and abuse-aware loadbalancer.",
+      "url": "https://github.com/PowerDNS/pdns",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C++",
+      "license": "GPL-2.0",
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "category": "dns_tools",
+      "tags": [
+        "dnsdist"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "dnsdist"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "powerdns-recursor",
+      "name": "PowerDNS Recursor",
+      "author": "PowerDNS",
+      "description": "High-performance resolving DNS server.",
+      "url": "https://github.com/PowerDNS/pdns",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C++",
+      "license": "GPL-2.0",
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "category": "dns_tools",
+      "tags": [
+        "powerdns recursor"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "PowerDNS Recursor"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "knot",
+      "name": "Knot DNS",
+      "author": "CZ-NIC",
+      "description": "Authoritative-only DNS server from CZ.NIC.",
+      "url": "https://github.com/CZ-NIC/knot",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-3.0",
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "category": "dns_tools",
+      "tags": [
+        "knot dns"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Knot DNS"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "deadwood",
+      "name": "Deadwood",
+      "author": "samboy",
+      "description": "MaraDNS recursive resolver.",
+      "url": "https://github.com/samboy/MaraDNS",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "dns",
+      "platform": [
+        "server"
+      ],
+      "category": "dns_tools",
+      "tags": [
+        "deadwood"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Deadwood"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "doggo",
+      "name": "doggo",
+      "author": "mr-karan",
+      "description": "Modern command-line DNS client (like dig).",
+      "url": "https://github.com/mr-karan/doggo",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "dns",
+      "platform": [
+        "cli"
+      ],
+      "category": "network_test",
+      "tags": [
+        "doggo"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "doggo"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "dog",
+      "name": "dog",
+      "author": "ogham",
+      "description": "Command-line DNS client, written in Rust.",
+      "url": "https://github.com/ogham/dog",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "EUPL-1.2",
+      "kind": "dns",
+      "platform": [
+        "cli"
+      ],
+      "category": "network_test",
+      "tags": [
+        "dog"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "dog"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "q",
+      "name": "q",
+      "author": "natesales",
+      "description": "A tiny command-line DNS query tool.",
+      "url": "https://github.com/natesales/q",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "dns",
+      "platform": [
+        "cli"
+      ],
+      "category": "network_test",
+      "tags": [
+        "q"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "q"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "crowdsec",
+      "name": "CrowdSec",
+      "author": "crowdsecurity",
+      "description": "Collaborative security engine, behaviour-based detection.",
+      "url": "https://github.com/crowdsecurity/crowdsec",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "crowdsec"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "CrowdSec"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "suricata",
+      "name": "Suricata",
+      "author": "OISF",
+      "description": "High-performance IDS / IPS / NSM engine.",
+      "url": "https://github.com/OISF/suricata",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "suricata"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Suricata"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "modsecurity",
+      "name": "ModSecurity",
+      "author": "owasp-modsecurity",
+      "description": "Web application firewall engine.",
+      "url": "https://github.com/owasp-modsecurity/ModSecurity",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "Apache-2.0",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "modsecurity"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "ModSecurity"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "coraza",
+      "name": "Coraza",
+      "author": "corazawaf",
+      "description": "Next-gen WAF, OWASP CRS compatible, written in Go.",
+      "url": "https://github.com/corazawaf/coraza",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "security",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "coraza"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Coraza"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "fail2ban",
+      "name": "Fail2ban",
+      "author": "fail2ban",
+      "description": "Ban hosts that cause many authentication failures.",
+      "url": "https://github.com/fail2ban/fail2ban",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "GPL-2.0",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "fail2ban"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Fail2ban"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "sshguard",
+      "name": "sshguard",
+      "author": "sshguard",
+      "description": "Brute-force attack blocker for SSH and more.",
+      "url": "https://github.com/sshguard/sshguard",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "sshguard"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "sshguard"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "cowrie",
+      "name": "Cowrie",
+      "author": "cowrie",
+      "description": "SSH / Telnet honeypot.",
+      "url": "https://github.com/cowrie/cowrie",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "BSD-3-Clause",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "cowrie"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Cowrie"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "dionaea",
+      "name": "Dionaea",
+      "author": "DinoTools",
+      "description": "Low-interaction honeypot that emulates services.",
+      "url": "https://github.com/DinoTools/dionaea",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "GPL-2.0",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "dionaea"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Dionaea"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "tpotce",
+      "name": "T-Pot",
+      "author": "telekom-security",
+      "description": "All-in-one multi honeypot platform.",
+      "url": "https://github.com/telekom-security/tpotce",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Dockerfile",
+      "license": "MIT",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "t-pot"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "T-Pot"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "authentik",
+      "name": "Authentik",
+      "author": "goauthentik",
+      "description": "Identity provider, SSO, with OIDC / SAML / LDAP.",
+      "url": "https://github.com/goauthentik/authentik",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "MIT",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "authentik"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Authentik"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "crowdsec-bouncer-traefik",
+      "name": "CrowdSec Traefik Bouncer",
+      "author": "maxlandon",
+      "description": "CrowdSec remediation component for Traefik.",
+      "url": "https://github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "security",
+      "platform": [
+        "server"
+      ],
+      "category": "security_tools",
+      "tags": [
+        "crowdsec traefik bouncer"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "CrowdSec Traefik Bouncer"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Repo was moved to a new owner"
+    },
+    {
+      "id": "gh-proxy-go",
+      "name": "gh-proxy-go",
+      "author": "justloginru",
+      "description": "High-performance GitHub proxy written in Go.",
+      "url": "https://github.com/hunshcn/gh-proxy",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "category": "github_tools",
+      "tags": [
+        "gh-proxy-go"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "archived",
+      "highlights": [
+        "gh-proxy-go"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original was removed; hunshcn/gh-proxy is the canonical gh-proxy"
+    },
+    {
+      "id": "watt-toolkit",
+      "name": "Watt Toolkit",
+      "author": "Blinue",
+      "description": "Steam / GitHub / Discord accelerator.",
+      "url": "https://github.com/BeyondDimension/SteamTools",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C#",
+      "license": "MIT",
+      "kind": "acceleration",
+      "platform": [
+        "desktop"
+      ],
+      "category": "github_tools",
+      "tags": [
+        "watt toolkit"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Watt Toolkit"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original Blinue/WattToolkit was merged into SteamTools"
+    },
+    {
+      "id": "cf-worker-dir",
+      "name": "CF-Worker-Dir",
+      "author": "sleepybear1113",
+      "description": "Cloudflare Workers-based directory / file share.",
+      "url": "https://github.com/yonggekkk/Cloudflare-vless-trojan",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "category": "mirrors",
+      "tags": [
+        "cf-worker-dir"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "archived",
+      "highlights": [
+        "CF-Worker-Dir"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original repo was removed; pointing to the closest working Cloudflare worker for proxy"
+    },
+    {
+      "id": "chisel",
+      "name": "chisel",
+      "author": "jpillora",
+      "description": "Fast TCP/UDP tunnel, transported over HTTP, secured via SSH.",
+      "url": "https://github.com/jpillora/chisel",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "acceleration",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "category": "tunnel_tools",
+      "tags": [
+        "chisel"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "chisel"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "haproxy",
+      "name": "HAProxy",
+      "author": "haproxy",
+      "description": "High availability load balancer / proxy server.",
+      "url": "https://github.com/haproxy/haproxy",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "category": "tunnel_tools",
+      "tags": [
+        "haproxy"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "HAProxy"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "nginx",
+      "name": "nginx",
+      "author": "nginx",
+      "description": "The classic HTTP server / reverse proxy.",
+      "url": "https://github.com/nginx/nginx",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "BSD-2-Clause",
+      "kind": "acceleration",
+      "platform": [
+        "server"
+      ],
+      "category": "tunnel_tools",
+      "tags": [
+        "nginx"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "nginx"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "nagios-core",
+      "name": "Nagios Core",
+      "author": "NagiosEnterprises",
+      "description": "Industry-standard network monitoring engine.",
+      "url": "https://github.com/NagiosEnterprises/nagioscore",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "category": "monitoring",
+      "tags": [
+        "nagios core"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Nagios Core"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "checkmk",
+      "name": "Checkmk",
+      "author": "Checkmk",
+      "description": "IT monitoring for infrastructures & apps.",
+      "url": "https://github.com/Checkmk/checkmk",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "GPL-2.0",
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "category": "monitoring",
+      "tags": [
+        "checkmk"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Checkmk"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "victoria-metrics",
+      "name": "VictoriaMetrics",
+      "author": "VictoriaMetrics",
+      "description": "Fast, cost-effective monitoring solution.",
+      "url": "https://github.com/VictoriaMetrics/VictoriaMetrics",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "category": "monitoring",
+      "tags": [
+        "victoriametrics"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "VictoriaMetrics"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "thanos",
+      "name": "Thanos",
+      "author": "thanos-io",
+      "description": "Highly available Prometheus setup with long-term storage.",
+      "url": "https://github.com/thanos-io/thanos",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "category": "monitoring",
+      "tags": [
+        "thanos"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Thanos"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "vector",
+      "name": "Vector",
+      "author": "vectordotdev",
+      "description": "High-performance observability data pipeline.",
+      "url": "https://github.com/vectordotdev/vector",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MPL-2.0",
+      "kind": "monitoring",
+      "platform": [
+        "server"
+      ],
+      "category": "monitoring",
+      "tags": [
+        "vector"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Vector"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "yacht",
+      "name": "Yacht",
+      "author": "SelfhostedPro",
+      "description": "Lightweight Docker web UI.",
+      "url": "https://github.com/SelfhostedPro/Yacht",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "MIT",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "yacht"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Yacht"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "casaos",
+      "name": "CasaOS",
+      "author": "IceWhaleTech",
+      "description": "Simple home cloud OS for the family.",
+      "url": "https://github.com/IceWhaleTech/CasaOS",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "casaos"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "CasaOS"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "umbrel",
+      "name": "Umbrel",
+      "author": "getumbrel",
+      "description": "Personal home server OS for self-hosting.",
+      "url": "https://github.com/getumbrel/umbrel",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "AGPL-3.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "umbrel"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Umbrel"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "yunohost",
+      "name": "YunoHost",
+      "author": "YunoHost",
+      "description": "Self-hosting server distribution.",
+      "url": "https://github.com/YunoHost/yunohost",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "AGPL-3.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "yunohost"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "YunoHost"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "k0s",
+      "name": "k0s",
+      "author": "k0sproject",
+      "description": "Zero-friction Kubernetes by Mirantis.",
+      "url": "https://github.com/k0sproject/k0s",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "container",
+      "tags": [
+        "k0s"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "k0s"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "microk8s",
+      "name": "MicroK8s",
+      "author": "canonical",
+      "description": "Small, fast, single-package Kubernetes by Canonical.",
+      "url": "https://github.com/canonical/microk8s",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "cli"
+      ],
+      "category": "container",
+      "tags": [
+        "microk8s"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "MicroK8s"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "kompose",
+      "name": "Kompose",
+      "author": "kubernetes",
+      "description": "Convert docker-compose to Kubernetes manifests.",
+      "url": "https://github.com/kubernetes/kompose",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "cli"
+      ],
+      "category": "container",
+      "tags": [
+        "kompose"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Kompose"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "rancher",
+      "name": "Rancher",
+      "author": "rancher",
+      "description": "Complete container management platform.",
+      "url": "https://github.com/rancher/rancher",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "container",
+      "tags": [
+        "rancher"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Rancher"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "headlamp",
+      "name": "Headlamp",
+      "author": "headlamp-k8s",
+      "description": "Kubernetes dashboard focused on extensibility.",
+      "url": "https://github.com/headlamp-k8s/headlamp",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "container",
+      "tags": [
+        "headlamp"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Headlamp"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "lens",
+      "name": "Lens",
+      "author": "lensapp",
+      "description": "The Kubernetes IDE (desktop app).",
+      "url": "https://github.com/lensapp/lens",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "TypeScript",
+      "license": "MIT",
+      "kind": "ops",
+      "platform": [
+        "desktop"
+      ],
+      "category": "container",
+      "tags": [
+        "lens"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Lens"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "forgejo",
+      "name": "Forgejo",
+      "author": "forgejo",
+      "description": "Self-hostable Git forge, soft-fork of Gitea.",
+      "url": "https://codeberg.org/forgejo/forgejo",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "forgejo"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Forgejo"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original GitHub org is no longer publishing; moved to Codeberg"
+    },
+    {
+      "id": "gitea",
+      "name": "Gitea",
+      "author": "go-gitea",
+      "description": "Lightweight self-hosted Git service.",
+      "url": "https://github.com/go-gitea/gitea",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "ops",
+      "platform": [
+        "server",
+        "browser"
+      ],
+      "category": "server_mgmt",
+      "tags": [
+        "gitea"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Gitea"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "woodpecker-ci",
+      "name": "Woodpecker CI",
+      "author": "woodpecker-ci",
+      "description": "Community fork of Drone, container-native CI.",
+      "url": "https://github.com/woodpecker-ci/woodpecker",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "category": "node_tools",
+      "tags": [
+        "woodpecker ci"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Woodpecker CI"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "drone",
+      "name": "Drone",
+      "author": "harness",
+      "description": "Container-native continuous delivery platform.",
+      "url": "https://github.com/harness/drone",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "Apache-2.0",
+      "kind": "ops",
+      "platform": [
+        "server"
+      ],
+      "category": "node_tools",
+      "tags": [
+        "drone"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "Drone"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "bat",
+      "name": "bat",
+      "author": "sharkdp",
+      "description": "cat clone with syntax highlighting and Git integration.",
+      "url": "https://github.com/sharkdp/bat",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "bat"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "bat"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "eza",
+      "name": "eza",
+      "author": "eza-community",
+      "description": "Modern, maintained replacement for `ls`.",
+      "url": "https://github.com/eza-community/eza",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "eza"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "eza"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "zoxide",
+      "name": "zoxide",
+      "author": "ajeetdsouza",
+      "description": "Smarter `cd` that learns your habits.",
+      "url": "https://github.com/ajeetdsouza/zoxide",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "zoxide"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "zoxide"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "fzf",
+      "name": "fzf",
+      "author": "junegunn",
+      "description": "Command-line fuzzy finder.",
+      "url": "https://github.com/junegunn/fzf",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "fzf"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "fzf"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "lazygit",
+      "name": "lazygit",
+      "author": "jesseduffield",
+      "description": "Simple terminal UI for git commands.",
+      "url": "https://github.com/jesseduffield/lazygit",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "lazygit"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "lazygit"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "htop",
+      "name": "htop",
+      "author": "htop-dev",
+      "description": "Interactive process viewer.",
+      "url": "https://github.com/htop-dev/htop",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "htop"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "htop"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "bottom",
+      "name": "bottom",
+      "author": "ClementTsang",
+      "description": "Graphical process / system monitor.",
+      "url": "https://github.com/ClementTsang/bottom",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "bottom"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "bottom"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "duf",
+      "name": "duf",
+      "author": "muesli",
+      "description": "Better `df` alternative.",
+      "url": "https://github.com/muesli/duf",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "duf"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "duf"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "dust",
+      "name": "dust",
+      "author": "bootandy",
+      "description": "More intuitive version of `du`.",
+      "url": "https://github.com/bootandy/dust",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "dust"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "dust"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "delta",
+      "name": "delta",
+      "author": "dandavison",
+      "description": "Syntax-highlighting pager for git/diff.",
+      "url": "https://github.com/dandavison/delta",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "delta"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "delta"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "httpie",
+      "name": "HTTPie",
+      "author": "httpie",
+      "description": "User-friendly cURL replacement.",
+      "url": "https://github.com/httpie/cli",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "BSD-3-Clause",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "httpie"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "HTTPie"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "xh",
+      "name": "xh",
+      "author": "ducaale",
+      "description": "Fast, friendly HTTP tool in Rust.",
+      "url": "https://github.com/ducaale/xh",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Rust",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "xh"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "xh"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "curlie",
+      "name": "curlie",
+      "author": "rs",
+      "description": "Frontend to `curl` that adds the ease of `httpie`.",
+      "url": "https://github.com/rs/curlie",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "curlie"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "curlie"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "mitmproxy",
+      "name": "mitmproxy",
+      "author": "mitmproxy",
+      "description": "Interactive HTTPS proxy for pentesters.",
+      "url": "https://github.com/mitmproxy/mitmproxy",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "mitmproxy"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "mitmproxy"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "clash-cli",
+      "name": "clash-cli",
+      "author": "SukkaW",
+      "description": "Tiny CLI for Clash (PuerTee variant).",
+      "url": "https://github.com/Molechain/Proxy-client-collection",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "proxy",
+      "platform": [
+        "cli"
+      ],
+      "category": "protocol_tools",
+      "tags": [
+        "clash-cli"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "archived",
+      "highlights": [
+        "clash-cli"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original repo was removed; the collection is the closest maintainable replacement"
+    },
+    {
+      "id": "proxychains-ng",
+      "name": "proxychains-ng",
+      "author": "rofl0r",
+      "description": "Hook libc network APIs to route through a SOCKS/HTTP proxy.",
+      "url": "https://github.com/rofl0r/proxychains-ng",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "proxychains-ng"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "proxychains-ng"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "tun2socks",
+      "name": "tun2socks",
+      "author": "xjasonlyu",
+      "description": "Convert a TUN device input to a SOCKS proxy.",
+      "url": "https://github.com/xjasonlyu/tun2socks",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "server"
+      ],
+      "category": "tunnel_tools",
+      "tags": [
+        "tun2socks"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "tun2socks"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "heirloom-ng",
+      "name": "heirloom-ng",
+      "author": "gheift",
+      "description": "Fork of the Heirloom Project's utilities (telnet, netcat, etc).",
+      "url": "https://github.com/Projeto-Pindorama/heirloom-ng",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli"
+      ],
+      "category": "utilities",
+      "tags": [
+        "heirloom-ng"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "heirloom-ng"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ],
+      "notes": "URL updated: Original was moved to a new org"
+    },
+    {
+      "id": "magic-wormhole",
+      "name": "magic-wormhole",
+      "author": "magic-wormhole",
+      "description": "Securely transfer data between computers.",
+      "url": "https://github.com/magic-wormhole/magic-wormhole",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Python",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "magic-wormhole"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "magic-wormhole"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "scrcpy",
+      "name": "scrcpy",
+      "author": "Genymobile",
+      "description": "Display and control Android devices from the desktop.",
+      "url": "https://github.com/Genymobile/scrcpy",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "Apache-2.0",
+      "kind": "tools",
+      "platform": [
+        "desktop"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "scrcpy"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "scrcpy"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "croc",
+      "name": "croc",
+      "author": "schollz",
+      "description": "Securely send things between computers, end-to-end encrypted.",
+      "url": "https://github.com/schollz/croc",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Go",
+      "license": "MIT",
+      "kind": "tools",
+      "platform": [
+        "cli",
+        "desktop"
+      ],
+      "category": "data_transfer",
+      "tags": [
+        "croc"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "croc"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "homeproxy",
+      "name": "HomeProxy",
+      "author": "immortalwrt",
+      "description": "Transparent proxy on OpenWrt, based on sing-box.",
+      "url": "https://github.com/immortalwrt/homeproxy",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Lua",
+      "license": "GPL-3.0",
+      "kind": "proxy",
+      "platform": [
+        "router"
+      ],
+      "category": "router",
+      "tags": [
+        "homeproxy"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "HomeProxy"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "openwrt-actions",
+      "name": "OpenWrt Actions",
+      "author": "ophub",
+      "description": "Build OpenWrt firmware in GitHub Actions.",
+      "url": "https://github.com/ophub/amlogic-s9xxx-openwrt",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Shell",
+      "license": "MIT",
+      "kind": "ops",
+      "platform": [
+        "cli",
+        "router"
+      ],
+      "category": "router",
+      "tags": [
+        "openwrt actions"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "OpenWrt Actions"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "immortalwrt",
+      "name": "ImmortalWrt",
+      "author": "immortalwrt",
+      "description": "OpenWrt fork with more packages and newer kernels.",
+      "url": "https://github.com/immortalwrt/immortalwrt",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "C",
+      "license": "GPL-2.0",
+      "kind": "ops",
+      "platform": [
+        "router"
+      ],
+      "category": "router",
+      "tags": [
+        "immortalwrt"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "ImmortalWrt"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
+      ]
+    },
+    {
+      "id": "luci-app-ssr-plus",
+      "name": "luci-app-ssr-plus",
+      "author": "fw876",
+      "description": "SSR / SS / V2Ray / Xray / Trojan / Brook GUI on OpenWrt.",
+      "url": "https://github.com/fw876/helloworld",
+      "homepage": "",
+      "stars": 1000,
+      "forks": 100,
+      "language": "Lua",
+      "license": "GPL-3.0",
+      "kind": "proxy",
+      "platform": [
+        "router"
+      ],
+      "category": "router",
+      "tags": [
+        "luci-app-ssr-plus"
+      ],
+      "lastCommit": "2026-06-11",
+      "addedAt": "2026-06-11",
+      "status": "active",
+      "highlights": [
+        "luci-app-ssr-plus"
+      ],
+      "gradient": [
+        "#888",
+        "#444"
       ]
     }
   ]

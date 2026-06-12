@@ -1,241 +1,141 @@
 @import "tailwindcss";
 
 /* ============================================================
- * NetTools Hub — Editorial Atlas design system
+ * NetTools Hub — Field Manual design system
  * ============================================================
  *
- * Aesthetic direction: editorial reference book for the modern
- * network admin. Warm dark palette, Fraunces serif headlines,
- * monospace metadata, hairline rules, generous whitespace.
+ * Design intent: a *technical field manual* for network tools.
+ * Reference points: ArchWiki, RFC 791, awesome-* READMEs,
+ * `man iptables`, the OpenWrt Table of Contents.
  *
  * Distinctive choices (anti-AI defaults):
- *   - No Inter, no Space Grotesk, no Tailwind defaults.
- *   - No pure black; warm deep brown #0e0c0a.
- *   - No purple-blue gradients.
- *   - No glassmorphism.
- *   - Selection colour is terracotta, not the universal blue.
- *   - Custom focus ring (no blue glow).
- *   - Custom scrollbar with hairline track.
- *   - Editorial detail: small-caps kickers, numbered sections,
- *     hairline rules instead of card borders.
+ *   - No serif of any kind; body and headings are the same
+ *     geometric sans. The only "personality" is in the spacing
+ *     and the hairline rules.
+ *   - No warm tone, no glass, no purple-blue gradient.
+ *   - Tables for listings, not cards. The eye scans a column
+ *     of "name | stars | last-commit | license" faster than
+ *     it scans a grid of "card with gradient rail".
+ *   - The only colour in the page is the syntax-highlight
+ *     accent (steel blue for links, dimmed amber for warnings).
+ *   - Square corners everywhere. 0 px radius.
+ *   - No hover-fx other than colour and a 1 px hairline.
+ *   - Sidebar is a real tree, with monospace indentation.
+ *   - The site's "character" comes from the data, not the
+ *     chrome.
  * ============================================================ */
 
 @theme {
-  /* Type families. The actual webfonts are loaded via next/font in
-   * src/app/layout.tsx and exposed as CSS variables; @theme maps
-   * those variables into Tailwind's --font-* tokens. */
-  --font-display: var(--font-fraunces), ui-serif, Georgia, Cambria,
-    "Times New Roman", Times, serif;
-  --font-sans: var(--font-instrument), ui-sans-serif, system-ui,
+  /* One sans family for the whole UI — IBM Plex Sans, paired
+   * with its monospace sibling. The next/font loader exposes
+   * the variable as `--font-plex-sans` / `--font-plex-mono`;
+   * we map them into Tailwind tokens here. */
+  --font-sans: var(--font-plex-sans), "Inter", ui-sans-serif, system-ui,
     -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
-    sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular,
-    Menlo, Consolas, "Liberation Mono", monospace;
+    "Noto Sans CJK SC", "Noto Sans CJK JP", sans-serif;
+  --font-display: var(--font-sans);
+  --font-mono: var(--font-plex-mono), ui-monospace,
+    SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* Warm dark palette. Each variable has an explicit comment naming
-   * its role so a future maintainer can tweak without consulting a
-   * style guide. The hex values are the same ones used in the
-   * @layer base rule below; the duplication is intentional because
-   * Tailwind v4 prefers @theme tokens but raw CSS prefers :root. */
-  --color-bg: #0e0c0a;        /* page background — deep warm black */
-  --color-bg-elev: #161310;   /* card / panel surface, one step up */
-  --color-bg-sunk: #08070a;   /* inset, code blocks, kbd */
-  --color-fg: #f0e9dd;        /* primary text — warm cream */
-  --color-fg-2: #c8bfae;      /* secondary text */
-  --color-muted: #7a716a;     /* tertiary, meta, labels */
-  --color-dim: #3d362e;       /* hairlines, dividers, borders */
-  --color-line: #1f1a15;      /* heavier dividers on bg */
-  --color-accent: #d97a3a;    /* terracotta — links, active state */
-  --color-accent-hover: #e88c4e;
-  --color-accent-2: #5a8a6e;  /* moss green — secondary accent */
-  --color-accent-3: #c89a5b;  /* parchment gold — third accent */
-  --color-danger: #c2563e;    /* error / deletion */
+  /* Cool neutral palette. Every value has a comment so a future
+   * maintainer can tweak without re-deriving the role. */
+  --color-bg:        #0b0d10;  /* page */
+  --color-bg-elev:   #11151a;  /* sidebar, sticky header */
+  --color-bg-sunk:   #07090c;  /* code, table-stripe */
+  --color-fg:        #e6edf3;  /* primary text */
+  --color-fg-2:      #b8c1cc;  /* secondary text */
+  --color-muted:     #7d8590;  /* meta, labels */
+  --color-dim:       #3a424b;  /* hairlines */
+  --color-line:      #1a1f25;  /* borders */
+  --color-accent:    #6ea8fe;  /* link, active state */
+  --color-accent-2:  #4fd1a1;  /* active tree node */
+  --color-accent-3:  #f0b86e;  /* caution badge */
+  --color-accent-4:  #f47272;  /* danger / avoid badge */
 
-  /* Animation tokens. The single ease curve "editorial" is used for
-   * almost all reveals and transitions to keep the feel cohesive. */
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-snap: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @layer base {
-  *,
-  ::before,
-  ::after {
-    min-width: 0;
-  }
-
-  html {
-    scroll-behavior: smooth;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-    /* The deep warm black, set on html so that any browser default
-     * surface (e.g. PDF print, dialog backdrops) inherits it. */
-    background-color: var(--color-bg);
-    color: var(--color-fg);
-  }
+  html, body { background-color: var(--color-bg); color: var(--color-fg); }
 
   body {
-    background-color: var(--color-bg);
-    color: var(--color-fg);
-    line-height: 1.6;
-    overflow-x: hidden;
     font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.55;
     font-feature-settings: "ss01", "cv11";
-    /* Subtle paper-grain texture overlay. The SVG is a tiny inline
-     * data URI of an 8x8 noise tile at very low opacity — it gives
-     * the page a printed feel without an HTTP request, and adapts
-     * to the warm background. */
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.94  0 0 0 0 0.91  0 0 0 0 0.87  0 0 0 0.025 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 160px 160px;
+    /* Tabular numerals for all sizes by default; the editorial
+     * look of "right-aligned columns of stars/dates" depends on
+     * every digit being the same width. */
+    font-variant-numeric: tabular-nums;
   }
 
-  /* Selection: warm terracotta, not the OS default. */
-  ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
-  ::-moz-selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
+  ::selection { background-color: var(--color-accent); color: var(--color-bg); }
+  ::-moz-selection { background-color: var(--color-accent); color: var(--color-bg); }
 
-  /* Scrollbar: hairline, monochrome, no thumb-gradient. The track
-   * matches the page background so it visually disappears until the
-   * user needs it. */
-  ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  ::-webkit-scrollbar-track {
-    background: var(--color-bg);
-  }
-  ::-webkit-scrollbar-thumb {
-    background: var(--color-dim);
-    border-radius: 0;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: var(--color-muted);
-  }
-  * {
-    scrollbar-color: var(--color-dim) var(--color-bg);
-    scrollbar-width: thin;
-  }
+  /* Hairline scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--color-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--color-dim); }
+  * { scrollbar-color: var(--color-dim) var(--color-bg); scrollbar-width: thin; }
 
-  /* Focus ring: terracotta outline, square corners, 2px offset.
-   * Keyboard-only via :focus-visible. */
   :focus-visible {
     outline: 2px solid var(--color-accent);
-    outline-offset: 2px;
+    outline-offset: 1px;
   }
-  a:focus:not(:focus-visible),
-  button:focus:not(:focus-visible) {
-    outline: none;
+  a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
   }
 
-  /* Headings default to the display serif unless overridden. */
-  h1, h2, h3, h4 {
-    font-family: var(--font-display);
-    font-weight: 400;
-    letter-spacing: -0.015em;
-    line-height: 1.1;
-  }
+  /* Hairline divider: 1px line in --color-dim. Used for the
+   * bottom of the header, between rows in the project table,
+   * and to separate sidebar sections. */
+  .hairline { border-color: var(--color-line); }
+  .hairline-bright { border-color: var(--color-dim); }
 
-  /* Editorial kicker utility — small caps mono label that sits
-   * above a section heading. Used to label each major section. */
+  /* "Mono small caps" — replaces the editorial "kicker". A
+   * monospace, slightly-tracked label that identifies a
+   * section without the literary feel of a small-caps
+   * Georgia initial. */
   .kicker {
     font-family: var(--font-mono);
     font-size: 0.6875rem;
-    letter-spacing: 0.18em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--color-muted);
-    font-weight: 500;
-  }
-
-  /* Editorial hairline — a 1px solid line in the warm-dim colour.
-   * Used to separate sections, mark table rows, etc. */
-  .hairline {
-    border-color: var(--color-line);
-  }
-  .hairline-bright {
-    border-color: var(--color-dim);
   }
 }
 
-/* Editorial reveal animation: gentle translateY + fade. Used on
- * page load via staggered animation-delay. The cubic-bezier matches
- * --ease-editorial and the duration is tuned for "deliberate, not
- * flashy". Reduced-motion users get an instant cut. */
-@keyframes editorial-reveal {
-  from {
-    opacity: 0;
-    transform: translateY(0.5rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .reveal {
-    animation: editorial-reveal 600ms var(--ease-editorial) both;
-  }
-  .reveal-1 { animation-delay: 60ms; }
-  .reveal-2 { animation-delay: 120ms; }
-  .reveal-3 { animation-delay: 180ms; }
-  .reveal-4 { animation-delay: 240ms; }
-  .reveal-5 { animation-delay: 300ms; }
-  .reveal-6 { animation-delay: 360ms; }
-  .reveal-7 { animation-delay: 420ms; }
-  .reveal-8 { animation-delay: 480ms; }
-}
-
-/* Editorial link style: warm terracotta with a custom underline
- * that has a slight negative offset to look hand-set, not pixel-
- * perfect CSS. Underline grows on hover via transform, not width,
- * for smoother performance. */
+/* Field-manual link style: underline on hover via a 1 px line,
+ * not a soft glow. The colour shift is the only animation. */
 .link-editorial {
   color: var(--color-accent);
   text-decoration: none;
-  background-image: linear-gradient(
-    to right,
-    var(--color-accent) 0%,
-    var(--color-accent) 100%
-  );
-  background-size: 0% 1px;
-  background-repeat: no-repeat;
-  background-position: 0 100%;
-  transition: background-size 250ms var(--ease-editorial),
-    color 150ms var(--ease-snap);
-  padding-bottom: 1px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 120ms var(--ease-editorial),
+    color 120ms var(--ease-editorial);
 }
-.link-editorial:hover {
-  color: var(--color-accent-hover);
-  background-size: 100% 1px;
-}
-.link-editorial:active {
-  color: var(--color-accent-2);
-}
+.link-editorial:hover { border-bottom-color: var(--color-accent); color: #a7c4ff; }
 
-/* Numbered editorial marker. Used for "01" / "02" / "03" section
- * indices in the editorial atlas style. The number is monospace,
- * the rest of the line is a hairline rule. */
-.editorial-index {
+/* Numbered section marker: `01 ───────────────────`. The number
+ * is mono, the rule is a flex-grow 1px line in --color-dim. */
+.manual-index {
   display: flex;
   align-items: baseline;
-  gap: 1rem;
+  gap: 0.75rem;
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.6875rem;
   color: var(--color-muted);
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
-.editorial-index::before {
-  content: attr(data-index);
-  flex-shrink: 0;
-  font-variant-numeric: tabular-nums;
-}
-.editorial-index::after {
+.manual-index::before { content: attr(data-index); flex-shrink: 0; }
+.manual-index::after {
   content: "";
   flex: 1;
   height: 1px;
@@ -243,63 +143,181 @@
   margin-left: 0.5rem;
 }
 
-/* Line clamp utilities preserved from previous globals. */
-@utility line-clamp-1 {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+/* Tree-view indentation lines. The sidebar is rendered as a
+ * series of `<a>` / `<button>` rows; each row gets a `--depth`
+ * CSS variable that drives the indent and the optional
+ * vertical line. The line is drawn with a 1 px border on the
+ * row's left, so it does not shift on hover. */
+.tree-row {
+  --depth: 0;
+  position: relative;
+  padding-left: calc(0.5rem + var(--depth) * 1rem);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
 }
-@utility line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+.tree-row::before {
+  content: "";
+  position: absolute;
+  left: calc(0.5rem + var(--depth) * 1rem - 0.5rem);
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--color-line);
 }
+.tree-row[data-current="true"] { color: var(--color-accent-2); }
 
-/* Skip-to-content link. Visually hidden until focused (keyboard
- * Tab), at which point it slides into the top-left of the viewport
- * and announces itself. Critical a11y primitive: keyboard users
- * should be one Tab away from the main content, not twenty. */
+/* Skip link: hidden until focused. */
 .skip-link {
   position: absolute;
-  left: 0.75rem;
-  top: 0.75rem;
+  left: 0.5rem;
+  top: 0.5rem;
   z-index: 100;
   transform: translateY(-200%);
-  padding: 0.5rem 0.875rem;
+  padding: 0.375rem 0.625rem;
   border: 1px solid var(--color-accent);
-  background-color: var(--color-bg-elev);
+  background: var(--color-bg-elev);
   color: var(--color-accent);
   font-family: var(--font-mono);
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
   text-decoration: none;
-  transition: transform 150ms var(--ease-snap);
+  transition: transform 120ms;
 }
-.skip-link:focus,
-.skip-link:focus-visible {
-  transform: translateY(0);
-  outline: 2px solid var(--color-accent);
-  outline-offset: 2px;
+.skip-link:focus { transform: translateY(0); }
+
+/* Project table styling. The table is the primary surface of
+ * the /explore page; every other visual choice on that page
+ * serves to keep the table readable. */
+.proj-table { width: 100%; border-collapse: collapse; }
+.proj-table th, .proj-table td {
+  text-align: left;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--color-line);
+  vertical-align: top;
+}
+.proj-table th {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-dim);
+  background: var(--color-bg-elev);
 }
 
-/* `content-visibility: auto` + an intrinsic-size hint. The browser
- * skips layout and paint of off-screen sections until they scroll
- * into the viewport (or near it), which is a massive win on the
- * /explore page where 120+ project cards would otherwise be
- * rendered up-front. The `contain-intrinsic-size` value is the
- * last-known rendered height; when the browser is forced to
- * re-measure (e.g. on first load), the page keeps its scroll-bar
- * geometry instead of jumping. The reduced-motion media query is
- * not used here: `content-visibility` has no motion, and the
- * `contain-intrinsic-size` placeholder is invisible to ATs. */
-.cv-auto {
-  content-visibility: auto;
-  /* The intrinsic height is a conservative upper bound for a single
-   * editorial group (a heading + 1–4 rows of cards). The browser
-   * will replace it with the real height once the section has
-   * been measured. */
-  contain-intrinsic-size: auto 600px;
+/* ------------------------------------------------------------
+ * Clickable project row
+ * ------------------------------------------------------------
+ * The whole row is the click target. We use `cursor: pointer`
+ * + a left-rail accent line that fades in on hover and pulses
+ * brighter on press. The "↗" icon to the right of the project
+ * name starts hidden, slides in on hover, and slides further
+ * on press to give the user visible feedback that the click
+ * registered before the new tab opens. The 240 ms transition
+ * acts as a buffer between pointerup and the actual
+ * `window.open` so the animation has time to play.
+ * ------------------------------------------------------------ */
+.proj-row {
+  position: relative;
+  cursor: pointer;
+  transition:
+    background-color 160ms var(--ease-editorial),
+    box-shadow 160ms var(--ease-editorial);
+}
+/* Left rail: a 2 px hairline that fades in on hover, snaps to
+ * the accent colour on press. */
+.proj-row > td:first-child::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  transform: scaleY(0);
+  transform-origin: center;
+  transition: transform 160ms var(--ease-editorial);
+  pointer-events: none;
+}
+.proj-row:hover > td:first-child::before { transform: scaleY(0.55); }
+.proj-row:hover { background: var(--color-bg-sunk); }
+.proj-row[data-pressing="true"] {
+  background: color-mix(in oklab, var(--color-accent) 12%, var(--color-bg-sunk));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 35%, transparent);
+}
+.proj-row[data-pressing="true"] > td:first-child::before { transform: scaleY(1); }
+.proj-row:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -2px;
+}
+
+/* "Link broken" state — set by the row's runtime pre-flight
+ * HEAD check when the upstream repo 404s. We dim the row and
+ * turn the name link red so the user sees the failure without
+ * having to wait for a failed navigation. */
+.proj-row[data-link="broken"] { opacity: 0.55; }
+.proj-row[data-link="broken"] .name a {
+  color: var(--color-accent-4);
+  border-bottom-color: var(--color-accent-4);
+}
+
+/* External-link indicator. Hidden by default, slides in on
+ * hover, slides further + colour-shifts on press. */
+.proj-row .name { display: flex; align-items: baseline; }
+.proj-row .ext-icon {
+  display: inline-block;
+  margin-left: 0.375rem;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1;
+  color: var(--color-muted);
+  opacity: 0;
+  transform: translateX(-4px);
+  transition:
+    opacity 160ms var(--ease-editorial),
+    transform 200ms var(--ease-editorial),
+    color 160ms var(--ease-editorial);
+}
+.proj-row:hover .ext-icon { opacity: 0.7; transform: translateX(0); color: var(--color-accent); }
+.proj-row[data-pressing="true"] .ext-icon {
+  opacity: 1;
+  transform: translateX(3px);
+  color: var(--color-accent);
+}
+
+.proj-table td a {
+  color: var(--color-fg);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--color-dim);
+  transition: color 120ms var(--ease-editorial), border-color 120ms var(--ease-editorial);
+}
+.proj-table td a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
+.proj-table .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.proj-table .name { font-weight: 500; }
+.proj-table .desc { color: var(--color-fg-2); font-size: 0.8125rem; }
+.proj-table .tag { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-muted); }
+
+/* Verdict / status badges. The four values are colour-coded
+ * but not in a way that screams "warning!" — the colour is
+ * a muted accent, not a saturated red/green. */
+.badge {
+  display: inline-block;
+  padding: 0.0625rem 0.375rem;
+  border: 1px solid var(--color-line);
+  font-family: var(--font-mono);
+  font-size: 0.625rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+.badge--recommended { color: var(--color-accent-2); border-color: var(--color-accent-2); }
+.badge--caution     { color: var(--color-accent-3); border-color: var(--color-accent-3); }
+.badge--avoid       { color: var(--color-accent-4); border-color: var(--color-accent-4); }
+.badge--stale       { color: var(--color-accent-3); }
+.badge--archived    { color: var(--color-accent-4); }
+
+/* utility: hide-on-small */
+@media (max-width: 768px) {
+  .hide-md { display: none; }
 }

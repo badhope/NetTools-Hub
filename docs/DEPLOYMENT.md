@@ -8,8 +8,9 @@ Forking and deploying your own instance of **NetTools Hub** takes about 5 minute
 
 ## 1. Prerequisites
 
-- A **GitHub** account
-- **Node 22+** and **pnpm 10+** installed locally (only needed if you want to test the build)
+- A **GitHub** account.
+- **Node 22+** and **pnpm 10+** installed locally (only needed if
+  you want to test the build).
 
 ---
 
@@ -65,9 +66,10 @@ That's it. The next push to `main` (or the Actions tab on this very fork) will t
 
 1. Sets up Node 22 + pnpm 10
 2. Installs deps with `pnpm install --frozen-lockfile`
-3. Builds with `next build`
-4. Uploads the artifact
-5. Deploys via `actions/deploy-pages@v4`
+3. Audits production dependencies (`pnpm audit --prod --audit-level=high`)
+4. Builds with `next build` (static export, ~63 pre-rendered pages)
+5. Uploads the artifact
+6. Deploys via `actions/deploy-pages@v4`
 
 Your site will be live at `https://<your-username>.github.io/NetTools-Hub/` within a couple of minutes.
 
@@ -95,13 +97,59 @@ Your site will be live at `https://<your-username>.github.io/NetTools-Hub/` with
 
 ## 6. Customising the data
 
-The entire directory is one file: [`data/projects.json`](../data/projects.json).
+The entire directory is one file: [`data/projects.json`](../data/projects.json)
+(210 curated projects, schema v2). See
+[`docs/DATA-MODEL.md`](./DATA-MODEL.md) for the field-by-field
+reference.
 
-- To **add** a project, see [`CONTRIBUTING.md`](../CONTRIBUTING.md) → "Adding or editing a project".
+- To **add** a project, append an entry to the `projects` array.
+  The kinds and platforms are closed enums; stick to the allowed
+  values.
 - To **remove** a project, delete its entry.
-- To **edit** a project, change any field — the TypeScript types in [`src/types/project.ts`](../src/types/project.ts) are the source of truth.
+- To **edit** a project, change any field — the TypeScript types
+  in [`src/types/project.ts`](../src/types/project.ts) are the
+  source of truth.
 
-After pushing your changes, the deploy workflow will publish the new list within minutes.
+After pushing your changes, the deploy workflow will publish the
+new list within minutes.
+
+### 6.1. Validate the data locally
+
+```bash
+pnpm run validate
+```
+
+Runs `scripts/validate-projects.mjs` against your local data file
+and exits 0 / 1 / 2 for clean / validation-error / fatal. The
+CI runs the same script in a separate `validate-data` job before
+the build job, so a typo in the JSON fails the PR fast.
+
+### 6.2. Refresh metadata from GitHub
+
+The repo includes an automatic metadata refresher
+([`scripts/refresh-projects.mjs`](../scripts/refresh-projects.mjs))
+that hits the GitHub REST API and updates `stars` / `forks` /
+`license` / `lastCommit` for every project. A scheduled
+GitHub Action runs it every Sunday 03:00 UTC and auto-commits
+the changes.
+
+To run it locally with a higher rate limit, set `GITHUB_TOKEN`:
+
+```bash
+GITHUB_TOKEN=ghp_xxx pnpm run refresh
+```
+
+### 6.3. Mine new candidates from `awesome-*` lists
+
+```bash
+pnpm run scan
+```
+
+Reads 7 hand-picked `awesome-*` repos, filters by an
+`IN_SCOPE_KEYWORDS` list, and writes
+[`data/candidates.json`](../data/candidates.json) for the
+maintainer to review. **It does not edit `data/projects.json`**
+— it is a one-shot miner, not an auto-importer.
 
 ---
 
@@ -123,13 +171,39 @@ pnpm start               # http://localhost:8080
 
 ---
 
-## 8. Troubleshooting
+## 8. URL tree (the new navigation)
+
+The `/explore` surface is a 2-level hierarchy driven by the
+data layer's two orthogonal taxonomies. Each level is its own
+static page:
+
+| URL | What it shows |
+|---|---|
+| `/explore` | All 210 projects, sorted by `kind` then by stars |
+| `/explore/k/<kind>` | Projects filtered to one of the 8 kinds (proxy / vpn / dns / acceleration / security / monitoring / ops / tools) |
+| `/explore/k/<kind>/p/<platform>` | That kind, further filtered to one of the 6 platforms (desktop / mobile / cli / server / browser / router) |
+
+The sidebar on every `/explore` page is a real tree of `<a>`
+links — it is the URL hierarchy, not a stateful facet panel.
+Drill-down, back/forward, deep links and share-by-link all work
+for free.
+
+`generateStaticParams` is wired into both dynamic pages, so the
+build emits a complete set of static HTML (1 root + 8 kind + 48
+kind+platform = 57 pre-rendered pages).
+
+---
+
+## 9. Troubleshooting
 
 | Symptom | Fix |
 |---|---|
 | `404` on every `_next/*` asset | `basePath` in `next.config.ts` doesn't match the repo name |
 | Sub-pages (`/explore`) give 404 | Make sure `trailingSlash: true` is set in `next.config.ts` |
-| Action tab shows the run but Pages is still empty | Wait 1–2 minutes — `actions/deploy-pages@v4` has a small post-deploy delay |
+| Action tab shows the run but Pages is still empty | Wait 1–2 minutes — `actions/deploy-pages` has a small post-deploy delay |
 | Want to undo a deploy | Use **Actions → Deploy to GitHub Pages → Re-run jobs from failed**, or roll back the commit and push |
+| `pnpm run validate` exits 1 | The error is on stdout — read the `ERROR <project>` lines and fix the JSON |
+| `pnpm run refresh` hits rate limits | Set `GITHUB_TOKEN` in the env; anonymous calls are capped at 60/h |
+| A project shows as `archived` after refresh | The repo was either deleted (404) or has no commit in the last 2 years — re-evaluate the inclusion |
 
 For more, see [`CONTRIBUTING.md`](../CONTRIBUTING.md) and [`ARCHITECTURE.md`](./ARCHITECTURE.md).
