@@ -32,9 +32,9 @@ auto-refreshed weekly by a GitHub Action.
 ## What is this?
 
 Every time I re-install a system, I find myself re-asking the same
-questions on GitHub: *which Clash core is still alive, how does
+questions on GitHub: _which Clash core is still alive, how does
 sing-box differ from Xray, is there a lighter V2Ray implementation,
-what's the cleanest WireGuard UI*. This site is my personal cheat
+what's the cleanest WireGuard UI_. This site is my personal cheat
 sheet, made public.
 
 It is **not** a VPN service. It is **not** a proxy provider. It is
@@ -49,16 +49,16 @@ repo. See [DISCLAIMER.md](./DISCLAIMER.md).
 The directory is built on two orthogonal taxonomies, which become
 the URL hierarchy:
 
-| `kind` (URL: `/explore/k/<kind>/`) | count | `platform` (URL: `.../p/<platform>/`) | count |
-|---|---:|---|---:|
-| `proxy` — proxy cores & clients | 78 | `desktop` | 102 |
-| `vpn` — VPN servers & clients | 19 | `mobile` | 56 |
-| `dns` — recursive, authoritative, filtering | 18 | `cli` | 81 |
-| `acceleration` — GitHub acceleration, mirror tools, tunnels | 31 | `server` | 134 |
-| `security` — WAF, IDS, IPS, honeypots | 21 | `browser` | 38 |
-| `monitoring` — uptime, metrics, observability | 14 | `router` | 23 |
-| `ops` — deploy, orchestration, management | 12 | | |
-| `tools` — utility scripts, port scanners, debuggers | 17 | | |
+| `kind` (URL: `/explore/k/<kind>/`)                          | count | `platform` (URL: `.../p/<platform>/`) | count |
+| ----------------------------------------------------------- | ----: | ------------------------------------- | ----: |
+| `proxy` — proxy cores & clients                             |    78 | `desktop`                             |   102 |
+| `vpn` — VPN servers & clients                               |    19 | `mobile`                              |    56 |
+| `dns` — recursive, authoritative, filtering                 |    18 | `cli`                                 |    81 |
+| `acceleration` — GitHub acceleration, mirror tools, tunnels |    31 | `server`                              |   134 |
+| `security` — WAF, IDS, IPS, honeypots                       |    21 | `browser`                             |    38 |
+| `monitoring` — uptime, metrics, observability               |    14 | `router`                              |    23 |
+| `ops` — deploy, orchestration, management                   |    12 |                                       |       |
+| `tools` — utility scripts, port scanners, debuggers         |    17 |                                       |       |
 
 A project can be tagged with multiple `platform` values (e.g. a
 proxy might be both `desktop` and `cli`); the URL hierarchy is
@@ -243,17 +243,17 @@ NetTools-Hub/
 
 ## Tech stack
 
-| Layer | Choice | Why |
-|---|---|---|
-| Framework | **Next.js 16** (App Router) | Static export, RSC, file-based routing |
-| UI | **React 19** | Latest stable |
-| Styling | **Tailwind CSS v4** | `@import "tailwindcss"` + `@theme` tokens |
-| Language | **TypeScript 5.9** | Strict mode |
-| Package manager | **pnpm 10** | Fast, disk-efficient |
-| Hosting | **GitHub Pages** | Free, fast CDN, no vendor lock-in |
-| CI/CD | **GitHub Actions** | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
-| i18n | Hand-rolled trilingual table | Zero JS bundle overhead, runtime switch |
-| Type | **IBM Plex Sans + Mono** | Cool, engineering feel; numerals tabular |
+| Layer           | Choice                       | Why                                                                        |
+| --------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| Framework       | **Next.js 16** (App Router)  | Static export, RSC, file-based routing                                     |
+| UI              | **React 19**                 | Latest stable                                                              |
+| Styling         | **Tailwind CSS v4**          | `@import "tailwindcss"` + `@theme` tokens                                  |
+| Language        | **TypeScript 5.9**           | Strict mode                                                                |
+| Package manager | **pnpm 10**                  | Fast, disk-efficient                                                       |
+| Hosting         | **GitHub Pages**             | Free, fast CDN, no vendor lock-in                                          |
+| CI/CD           | **GitHub Actions**           | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
+| i18n            | Hand-rolled trilingual table | Zero JS bundle overhead, runtime switch                                    |
+| Type            | **IBM Plex Sans + Mono**     | Cool, engineering feel; numerals tabular                                   |
 
 ---
 
@@ -292,13 +292,13 @@ OSI-approved license, real-world use case. See
 
 ## The automation pipeline
 
-| Trigger | Script | Output |
-|---|---|---|
-| Cron (Sun 03:00 UTC) | `scripts/refresh-projects.mjs` | Updates `stars` / `forks` / `license` / `lastCommit` / `status`; auto-commits if dirty |
-| Manual `workflow_dispatch` | same | same |
-| Push to `data/projects.json` | same (via `paths:` filter) | same |
-| `pnpm run scan` (local) | `scripts/scan-awesome.mjs` | Writes `data/candidates.json` for maintainer review |
-| `pnpm run validate` (CI) | `scripts/validate-projects.mjs` | Exits 0/1/2; fails the PR if validation fails |
+| Trigger                      | Script                          | Output                                                                                 |
+| ---------------------------- | ------------------------------- | -------------------------------------------------------------------------------------- |
+| Cron (Sun 03:00 UTC)         | `scripts/refresh-projects.mjs`  | Updates `stars` / `forks` / `license` / `lastCommit` / `status`; auto-commits if dirty |
+| Manual `workflow_dispatch`   | same                            | same                                                                                   |
+| Push to `data/projects.json` | same (via `paths:` filter)      | same                                                                                   |
+| `pnpm run scan` (local)      | `scripts/scan-awesome.mjs`      | Writes `data/candidates.json` for maintainer review                                    |
+| `pnpm run validate` (CI)     | `scripts/validate-projects.mjs` | Exits 0/1/2; fails the PR if validation fails                                          |
 
 The refresh workflow uses `git diff --exit-code` to decide whether
 to commit. Partial GitHub API failures on a single project are
@@ -309,11 +309,11 @@ run.
 
 ## Internationalisation (i18n)
 
-| Language | Code | UI | Docs |
-|---|---|---|---|
-| 🇬🇧 English (default) | `en` | ✅ | [`README.md`](./README.md) |
-| 🇨🇳 简体中文 | `zh` | ✅ | [`README.zh.md`](./README.zh.md) |
-| 🇯🇵 日本語 | `ja` | ✅ | [`README.ja.md`](./README.ja.md) |
+| Language             | Code | UI  | Docs                             |
+| -------------------- | ---- | --- | -------------------------------- |
+| 🇬🇧 English (default) | `en` | ✅  | [`README.md`](./README.md)       |
+| 🇨🇳 简体中文          | `zh` | ✅  | [`README.zh.md`](./README.zh.md) |
+| 🇯🇵 日本語            | `ja` | ✅  | [`README.ja.md`](./README.ja.md) |
 
 UI strings live in [`src/lib/i18n.ts`](./src/lib/i18n.ts) (a
 3-column table of ~36 keys). The current language is read from

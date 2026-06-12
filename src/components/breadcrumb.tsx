@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { Lang, withLang, t } from "@/lib/i18n";
-import { kindLabel, platformLabel } from "@/lib/taxonomy";
+import Link from 'next/link';
+import { Lang, withLang, t } from '@/lib/i18n';
+import { kindLabel, platformLabel } from '@/lib/taxonomy';
 
 interface Crumb {
   label: string;
@@ -36,10 +36,7 @@ export function Breadcrumb({ trail, lang }: BreadcrumbProps) {
           <span key={i} className="flex items-baseline gap-1.5">
             <span className="text-muted">/</span>
             {c.href ? (
-              <Link
-                href={withLang(lang, c.href)}
-                className="text-fg-2 hover:text-accent"
-              >
+              <Link href={withLang(lang, c.href)} className="text-fg-2 hover:text-accent">
                 {c.label}
               </Link>
             ) : (
@@ -54,7 +51,7 @@ export function Breadcrumb({ trail, lang }: BreadcrumbProps) {
 
 /** Convenience constructor: the `explore` root crumb. */
 export function rootCrumb(lang: Lang): Crumb {
-  return { label: t(lang, "breadcrumb.root"), href: "/explore" };
+  return { label: t(lang, 'breadcrumb.root'), href: '/explore' };
 }
 
 /** Convenience: kind crumb. */

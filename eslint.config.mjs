@@ -32,24 +32,19 @@
 //   - `import/recommended` — not currently used by the project;
 //     bring it back when we add module-resolution concerns.
 
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextPlugin from "@next/eslint-plugin-next";
-import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
-import tseslint from "typescript-eslint";
-import globals from "globals";
+import { defineConfig, globalIgnores } from 'eslint/config';
+import nextPlugin from '@next/eslint-plugin-next';
+import reactHooks from 'eslint-plugin-react-hooks';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import tseslint from 'typescript-eslint';
+import globals from 'globals';
+import prettier from 'eslint-plugin-prettier';
 
 const eslintConfig = defineConfig([
   // Global ignores — out/ is the static export, .next/ is the
   // build cache, scripts/ are Node-only tools that don't need
   // JSX/React rules, generated.d.ts is generated.
-  globalIgnores([
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-    "scripts/**",
-  ]),
+  globalIgnores(['.next/**', 'out/**', 'build/**', 'next-env.d.ts', 'scripts/**']),
 
   // Browser + Node modules. We use a couple of Node-only
   // modules in scripts/, but those are already ignored above.
@@ -62,13 +57,14 @@ const eslintConfig = defineConfig([
   // TypeScript everywhere: tsconfig.json drives the parser.
   ...tseslint.configs.recommended,
 
-  // @next/eslint-plugin-next, the rules-of-hooks, and jsx-a11y.
+  // @next/eslint-plugin-next, the rules-of-hooks, jsx-a11y, and prettier.
   {
-    files: ["**/*.{ts,tsx,js,jsx,mjs,cjs}"],
+    files: ['**/*.{ts,tsx,js,jsx,mjs,cjs}'],
     plugins: {
-      "@next/next": nextPlugin,
-      "react-hooks": reactHooks,
-      "jsx-a11y": jsxA11y,
+      '@next/next': nextPlugin,
+      'react-hooks': reactHooks,
+      'jsx-a11y': jsxA11y,
+      prettier,
     },
     rules: {
       // Next.js recommended
@@ -82,23 +78,26 @@ const eslintConfig = defineConfig([
       // We don't need every rule; the ones below catch the common
       // regressions we actually see in PRs (missing alt, missing
       // aria-label, wrong role).
-      "jsx-a11y/alt-text": "warn",
-      "jsx-a11y/aria-props": "warn",
-      "jsx-a11y/aria-proptypes": "warn",
-      "jsx-a11y/aria-unsupported-elements": "warn",
-      "jsx-a11y/role-has-required-aria-props": "warn",
-      "jsx-a11y/role-supports-aria-props": "warn",
+      'jsx-a11y/alt-text': 'warn',
+      'jsx-a11y/aria-props': 'warn',
+      'jsx-a11y/aria-proptypes': 'warn',
+      'jsx-a11y/aria-unsupported-elements': 'warn',
+      'jsx-a11y/role-has-required-aria-props': 'warn',
+      'jsx-a11y/role-supports-aria-props': 'warn',
+
+      // Prettier — enforce formatting as ESLint errors
+      'prettier/prettier': 'error',
 
       // TypeScript: keep the recommended set, but loosen two
       // rules that fire too often in a Next.js codebase where
       // untyped JSX is the norm.
-      "@typescript-eslint/no-explicit-any": "warn",
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
         {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          caughtErrorsIgnorePattern: "^_",
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
         },
       ],
     },
@@ -106,7 +105,7 @@ const eslintConfig = defineConfig([
       next: {
         // Tells the Next plugin we are on Next 16, so the few
         // version-gated rules pick the right codepath.
-        rootDir: ".",
+        rootDir: '.',
       },
     },
   },

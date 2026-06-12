@@ -5,170 +5,107 @@
     "core": {
       "name": "Proxy Cores",
       "description": "Core implementations of various proxy protocols",
-      "color": [
-        "#667eea",
-        "#764ba2"
-      ]
+      "color": ["#667eea", "#764ba2"]
     },
     "gui": {
       "name": "GUI Clients",
       "description": "Visual operation interface clients",
-      "color": [
-        "#4facfe",
-        "#00f2fe"
-      ]
+      "color": ["#4facfe", "#00f2fe"]
     },
     "subscription": {
       "name": "Subscription Management",
       "description": "Subscription conversion, aggregation, and management tools",
-      "color": [
-        "#f093fb",
-        "#f5576c"
-      ]
+      "color": ["#f093fb", "#f5576c"]
     },
     "github_tools": {
       "name": "GitHub Acceleration",
       "description": "GitHub access and download acceleration tools",
-      "color": [
-        "#fa709a",
-        "#fee140"
-      ]
+      "color": ["#fa709a", "#fee140"]
     },
     "router": {
       "name": "Router Plugins",
       "description": "OpenWrt and router firmware plugins",
-      "color": [
-        "#43e97b",
-        "#38f9d7"
-      ]
+      "color": ["#43e97b", "#38f9d7"]
     },
     "docker": {
       "name": "Docker Deployment",
       "description": "Containerized deployment solutions",
-      "color": [
-        "#2496ed",
-        "#1b83d4"
-      ]
+      "color": ["#2496ed", "#1b83d4"]
     },
     "rules": {
       "name": "Rule Collections",
       "description": "Routing rules and subscription sharing",
-      "color": [
-        "#a18cd1",
-        "#fbc2eb"
-      ]
+      "color": ["#a18cd1", "#fbc2eb"]
     },
     "utilities": {
       "name": "Utilities",
       "description": "Network-related utility tools",
-      "color": [
-        "#f092fb",
-        "#f5576c"
-      ]
+      "color": ["#f092fb", "#f5576c"]
     },
     "mirrors": {
       "name": "Mirror Acceleration",
       "description": "Various mirror sources and acceleration services",
-      "color": [
-        "#667eea",
-        "#764ba2"
-      ]
+      "color": ["#667eea", "#764ba2"]
     },
     "network_test": {
       "name": "Network Testing",
       "description": "Network speed test and latency testing tools",
-      "color": [
-        "#10b981",
-        "#059669"
-      ]
+      "color": ["#10b981", "#059669"]
     },
     "node_tools": {
       "name": "Node Tools",
       "description": "Node management, testing, and sharing tools",
-      "color": [
-        "#f59e0b",
-        "#d97706"
-      ]
+      "color": ["#f59e0b", "#d97706"]
     },
     "protocol_tools": {
       "name": "Protocol Tools",
       "description": "Tools and libraries for specific protocols",
-      "color": [
-        "#ec4899",
-        "#db2777"
-      ]
+      "color": ["#ec4899", "#db2777"]
     },
     "server_mgmt": {
       "name": "Server Management",
       "description": "Server operations and management tools",
-      "color": [
-        "#8b5cf6",
-        "#7c3aed"
-      ]
+      "color": ["#8b5cf6", "#7c3aed"]
     },
     "security_tools": {
       "name": "Security Tools",
       "description": "Network security, audit, and testing tools",
-      "color": [
-        "#f59e0b",
-        "#d97706"
-      ]
+      "color": ["#f59e0b", "#d97706"]
     },
     "data_transfer": {
       "name": "Data Transfer",
       "description": "File transfer, sync, and backup tools",
-      "color": [
-        "#22c55e",
-        "#16a34a"
-      ]
+      "color": ["#22c55e", "#16a34a"]
     },
     "monitoring": {
       "name": "Monitoring Tools",
       "description": "System monitoring, logging, and analytics tools",
-      "color": [
-        "#06b6d4",
-        "#0891b2"
-      ]
+      "color": ["#06b6d4", "#0891b2"]
     },
     "container": {
       "name": "Container Orchestration",
       "description": "Kubernetes and container orchestration tools",
-      "color": [
-        "#326ce5",
-        "#234fa2"
-      ]
+      "color": ["#326ce5", "#234fa2"]
     },
     "tunnel_tools": {
       "name": "Tunnel Tools",
       "description": "NAT traversal and tunneling tools",
-      "color": [
-        "#a78bfa",
-        "#8b5cf6"
-      ]
+      "color": ["#a78bfa", "#8b5cf6"]
     },
     "dns_tools": {
       "name": "DNS Tools",
       "description": "DNS services, encryption, and optimization tools",
-      "color": [
-        "#14b8a6",
-        "#0d9488"
-      ]
+      "color": ["#14b8a6", "#0d9488"]
     },
     "cert_tools": {
       "name": "Certificate Tools",
       "description": "SSL/TLS certificate management tools",
-      "color": [
-        "#f97316",
-        "#ea580c"
-      ]
+      "color": ["#f97316", "#ea580c"]
     },
     "collection": {
       "name": "Project Collections",
       "description": "Various project collections and summary repositories",
-      "color": [
-        "#6366f1",
-        "#4f46e5"
-      ]
+      "color": ["#6366f1", "#4f46e5"]
     }
   },
   "projects": [
@@ -183,27 +120,13 @@
       "forks": 3200,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "VMess",
-        "VLESS",
-        "Trojan",
-        "Proxy"
-      ],
+      "tags": ["VMess", "VLESS", "Trojan", "Proxy"],
       "category": "core",
       "lastCommit": "2025-01-10",
-      "highlights": [
-        "Full Protocol Support",
-        "High Performance",
-        "Stable & Reliable"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Full Protocol Support", "High Performance", "Stable & Reliable"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -218,27 +141,13 @@
       "forks": 1100,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Xray",
-        "VLESS",
-        "XTLS",
-        "Reality"
-      ],
+      "tags": ["Xray", "VLESS", "XTLS", "Reality"],
       "category": "core",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "XTLS Protocol",
-        "Reality Support",
-        "High Performance"
-      ],
-      "gradient": [
-        "#a18cd1",
-        "#fbc2eb"
-      ],
+      "highlights": ["XTLS Protocol", "Reality Support", "High Performance"],
+      "gradient": ["#a18cd1", "#fbc2eb"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -253,29 +162,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Proxy",
-        "TUN",
-        "Multi-protocol",
-        "SingBox"
-      ],
+      "tags": ["Proxy", "TUN", "Multi-protocol", "SingBox"],
       "category": "core",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Latest Protocol Support",
-        "Active Updates",
-        "Cross-platform"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Latest Protocol Support", "Active Updates", "Cross-platform"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "server",
-        "mobile",
-        "desktop"
-      ],
+      "platform": ["server", "mobile", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -289,26 +182,13 @@
       "forks": 1500,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "Rule Routing",
-        "Go"
-      ],
+      "tags": ["Clash", "Rule Routing", "Go"],
       "category": "core",
       "lastCommit": "2024-12-20",
-      "highlights": [
-        "Rule Engine",
-        "Lightweight & Efficient",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Rule Engine", "Lightweight & Efficient", "Widely Used"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original Dreamacro/clash was archived in 2022; Clash.Meta is the active successor"
@@ -323,28 +203,13 @@
       "forks": 892,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Clash",
-        "Enhanced",
-        "MetaCubeX"
-      ],
+      "tags": ["Clash", "Enhanced", "MetaCubeX"],
       "category": "core",
       "lastCommit": "2025-01-15",
-      "highlights": [
-        "TUIC Support",
-        "WireGuard",
-        "Continuous Updates"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["TUIC Support", "WireGuard", "Continuous Updates"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "server",
-        "desktop",
-        "router"
-      ],
+      "platform": ["server", "desktop", "router"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -358,26 +223,13 @@
       "forks": 890,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Clash",
-        "mihomo",
-        "High Performance"
-      ],
+      "tags": ["Clash", "mihomo", "High Performance"],
       "category": "core",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Latest Core",
-        "High Performance",
-        "Active Development"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Latest Core", "High Performance", "Active Development"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -391,27 +243,13 @@
       "forks": 1200,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "Proxy",
-        "SOCKS5",
-        "Encryption",
-        "Rust"
-      ],
+      "tags": ["Proxy", "SOCKS5", "Encryption", "Rust"],
       "category": "core",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Rust Implementation",
-        "High Performance",
-        "Lightweight"
-      ],
-      "gradient": [
-        "#f093fb",
-        "#f5576c"
-      ],
+      "highlights": ["Rust Implementation", "High Performance", "Lightweight"],
+      "gradient": ["#f093fb", "#f5576c"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -425,26 +263,13 @@
       "forks": 1300,
       "language": "C++",
       "license": "GPL-3.0",
-      "tags": [
-        "Trojan",
-        "TLS",
-        "Obfuscation"
-      ],
+      "tags": ["Trojan", "TLS", "Obfuscation"],
       "category": "core",
       "lastCommit": "2024-11-15",
-      "highlights": [
-        "TLS Disguise",
-        "Anti-censorship",
-        "Stable"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["TLS Disguise", "Anti-censorship", "Stable"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -458,26 +283,13 @@
       "forks": 678,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "QUIC",
-        "High Speed",
-        "Packet Loss Resistant"
-      ],
+      "tags": ["QUIC", "High Speed", "Packet Loss Resistant"],
       "category": "core",
       "lastCommit": "2025-01-10",
-      "highlights": [
-        "QUIC Protocol",
-        "Aggressive Acceleration",
-        "Low Latency"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["QUIC Protocol", "Aggressive Acceleration", "Low Latency"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -491,26 +303,13 @@
       "forks": 680,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Hysteria2",
-        "QUIC",
-        "High Speed"
-      ],
+      "tags": ["Hysteria2", "QUIC", "High Speed"],
       "category": "core",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "New Version",
-        "Simpler",
-        "Stronger Performance"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["New Version", "Simpler", "Stronger Performance"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -524,26 +323,13 @@
       "forks": 345,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "TUIC",
-        "QUIC",
-        "Low Latency"
-      ],
+      "tags": ["TUIC", "QUIC", "Low Latency"],
       "category": "core",
       "lastCommit": "2025-05-27",
-      "highlights": [
-        "Rust Implementation",
-        "QUIC v5",
-        "High Performance"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Rust Implementation", "QUIC v5", "High Performance"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -557,26 +343,13 @@
       "forks": 1100,
       "language": "C++",
       "license": "BSD-3-Clause",
-      "tags": [
-        "Obfuscation",
-        "Chrome",
-        "Anti-censorship"
-      ],
+      "tags": ["Obfuscation", "Chrome", "Anti-censorship"],
       "category": "core",
       "lastCommit": "2025-05-26",
-      "highlights": [
-        "Chrome Disguise",
-        "Anti-detection",
-        "Stable"
-      ],
-      "gradient": [
-        "#f093fb",
-        "#f5576c"
-      ],
+      "highlights": ["Chrome Disguise", "Anti-detection", "Stable"],
+      "gradient": ["#f093fb", "#f5576c"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -590,28 +363,13 @@
       "forks": 3100,
       "language": "C",
       "license": "GPL-2.0",
-      "tags": [
-        "WireGuard",
-        "VPN",
-        "Kernel"
-      ],
+      "tags": ["WireGuard", "VPN", "Kernel"],
       "category": "core",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Kernel Integration",
-        "Ultimate Security",
-        "High Performance"
-      ],
-      "gradient": [
-        "#43e97b",
-        "#38f9d7"
-      ],
+      "highlights": ["Kernel Integration", "Ultimate Security", "High Performance"],
+      "gradient": ["#43e97b", "#38f9d7"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "mobile",
-        "desktop"
-      ],
+      "platform": ["server", "mobile", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -625,26 +383,13 @@
       "forks": 892,
       "language": "TypeScript",
       "license": "Apache-2.0",
-      "tags": [
-        "Outline",
-        "Easy to Use",
-        "Google"
-      ],
+      "tags": ["Outline", "Easy to Use", "Google"],
       "category": "core",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Official Support",
-        "Easy to Use",
-        "Secure"
-      ],
-      "gradient": [
-        "#43e97b",
-        "#38f9d7"
-      ],
+      "highlights": ["Official Support", "Easy to Use", "Secure"],
+      "gradient": ["#43e97b", "#38f9d7"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -658,26 +403,13 @@
       "forks": 156,
       "language": "Go",
       "license": "AGPL-3.0",
-      "tags": [
-        "QUIC",
-        "Lightweight",
-        "High Performance"
-      ],
+      "tags": ["QUIC", "Lightweight", "High Performance"],
       "category": "core",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Lightweight",
-        "Quick Deploy",
-        "Low Latency"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#6d28d9"
-      ],
+      "highlights": ["Lightweight", "Quick Deploy", "Low Latency"],
+      "gradient": ["#8b5cf6", "#6d28d9"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -691,26 +423,13 @@
       "forks": 89,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Tunnel",
-        "Protocol Conversion",
-        "Xray"
-      ],
+      "tags": ["Tunnel", "Protocol Conversion", "Xray"],
       "category": "core",
       "lastCommit": "2025-05-25",
-      "highlights": [
-        "Protocol Conversion",
-        "Xray Ecosystem",
-        "Flexible Configuration"
-      ],
-      "gradient": [
-        "#a18cd1",
-        "#fbc2eb"
-      ],
+      "highlights": ["Protocol Conversion", "Xray Ecosystem", "Flexible Configuration"],
+      "gradient": ["#a18cd1", "#fbc2eb"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was deprecated; the Xray documentation monorepo is the canonical home"
@@ -725,26 +444,13 @@
       "forks": 2850,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "GUI",
-        "Windows",
-        "macOS"
-      ],
+      "tags": ["GUI", "Windows", "macOS"],
       "category": "gui",
       "lastCommit": "2024-10-20",
-      "highlights": [
-        "Classic Client",
-        "Feature Complete",
-        "Wide Community"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Classic Client", "Feature Complete", "Wide Community"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original Fndroid/clash_for_windows_pkg was taken down; clash-verge-rev is the active community successor"
@@ -759,26 +465,13 @@
       "forks": 1200,
       "language": "Swift",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "macOS",
-        "GUI"
-      ],
+      "tags": ["Clash", "macOS", "GUI"],
       "category": "gui",
       "lastCommit": "2024-09-15",
-      "highlights": [
-        "macOS Exclusive",
-        "Minimalist",
-        "Lightweight"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["macOS Exclusive", "Minimalist", "Lightweight"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original yichengchen/clashX was taken down; this is the most-starred community mirror"
@@ -793,26 +486,13 @@
       "forks": 567,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "Tauri",
-        "Modern"
-      ],
+      "tags": ["Clash", "Tauri", "Modern"],
       "category": "gui",
       "lastCommit": "2025-01-05",
-      "highlights": [
-        "Tauri Architecture",
-        "Lightweight & Fast",
-        "Beautiful UI"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Tauri Architecture", "Lightweight & Fast", "Beautiful UI"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -826,27 +506,13 @@
       "forks": 780,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "Tauri",
-        "Rev Edition"
-      ],
+      "tags": ["Clash", "Tauri", "Rev Edition"],
       "category": "gui",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Continuous Updates",
-        "mihomo Support",
-        "Active Maintenance"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Continuous Updates", "mihomo Support", "Active Maintenance"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -861,27 +527,13 @@
       "forks": 450,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "mihomo",
-        "Cross-platform"
-      ],
+      "tags": ["Clash", "mihomo", "Cross-platform"],
       "category": "gui",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "mihomo Core",
-        "Modern UI",
-        "Active Updates"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["mihomo Core", "Modern UI", "Active Updates"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -895,27 +547,13 @@
       "forks": 890,
       "language": "C++",
       "license": "GPL-3.0",
-      "tags": [
-        "V2Ray",
-        "GUI",
-        "Cross-platform"
-      ],
+      "tags": ["V2Ray", "GUI", "Cross-platform"],
       "category": "gui",
       "lastCommit": "2024-11-20",
-      "highlights": [
-        "Plugin System",
-        "Highly Customizable",
-        "Feature Rich"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Plugin System", "Highly Customizable", "Feature Rich"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -930,27 +568,13 @@
       "forks": 567,
       "language": "Go",
       "license": "AGPL-3.0",
-      "tags": [
-        "V2Ray",
-        "Web UI",
-        "Transparent Proxy"
-      ],
+      "tags": ["V2Ray", "Web UI", "Transparent Proxy"],
       "category": "gui",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Web Interface",
-        "Transparent Proxy",
-        "Easy Deployment"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Web Interface", "Transparent Proxy", "Easy Deployment"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -964,27 +588,13 @@
       "forks": 456,
       "language": "Kotlin",
       "license": "GPL-3.0",
-      "tags": [
-        "Android",
-        "Proxy",
-        "Mobile"
-      ],
+      "tags": ["Android", "Proxy", "Mobile"],
       "category": "gui",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Android Native",
-        "Multi-protocol",
-        "Lightweight"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Android Native", "Multi-protocol", "Lightweight"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -998,27 +608,13 @@
       "forks": 560,
       "language": "Kotlin",
       "license": "GPL-3.0",
-      "tags": [
-        "Android",
-        "sing-box",
-        "Mobile"
-      ],
+      "tags": ["Android", "sing-box", "Mobile"],
       "category": "gui",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "sing-box Core",
-        "Beautiful UI",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#f472b6",
-        "#ec4899"
-      ],
+      "highlights": ["sing-box Core", "Beautiful UI", "Multi-protocol"],
+      "gradient": ["#f472b6", "#ec4899"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original MatsuriDayo/NekoBox was archived; Matsuri is the active cross-platform successor"
@@ -1033,26 +629,13 @@
       "forks": 4200,
       "language": "Kotlin",
       "license": "GPL-3.0",
-      "tags": [
-        "Android",
-        "V2Ray",
-        "Mobile"
-      ],
+      "tags": ["Android", "V2Ray", "Mobile"],
       "category": "gui",
       "lastCommit": "2025-05-27",
-      "highlights": [
-        "Most Popular",
-        "Stable & Reliable",
-        "Easy to Use"
-      ],
-      "gradient": [
-        "#60a5fa",
-        "#3b82f6"
-      ],
+      "highlights": ["Most Popular", "Stable & Reliable", "Easy to Use"],
+      "gradient": ["#60a5fa", "#3b82f6"],
       "kind": "proxy",
-      "platform": [
-        "mobile"
-      ],
+      "platform": ["mobile"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1066,27 +649,13 @@
       "forks": 345,
       "language": "Dart",
       "license": "MIT",
-      "tags": [
-        "Flutter",
-        "Cross-platform",
-        "Clash"
-      ],
+      "tags": ["Flutter", "Cross-platform", "Clash"],
       "category": "gui",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Flutter Framework",
-        "Cross-platform",
-        "Beautiful"
-      ],
-      "gradient": [
-        "#38bdf8",
-        "#0ea5e9"
-      ],
+      "highlights": ["Flutter Framework", "Cross-platform", "Beautiful"],
+      "gradient": ["#38bdf8", "#0ea5e9"],
       "kind": "proxy",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; FlClash is the active Flutter-based Clash client"
@@ -1101,27 +670,13 @@
       "forks": 620,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "Subscription Management",
-        "Subscription Conversion",
-        "Aggregation"
-      ],
+      "tags": ["Subscription Management", "Subscription Conversion", "Aggregation"],
       "category": "subscription",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Subscription Merging",
-        "Format Conversion",
-        "Node Filtering"
-      ],
-      "gradient": [
-        "#f093fb",
-        "#f5576c"
-      ],
+      "highlights": ["Subscription Merging", "Format Conversion", "Node Filtering"],
+      "gradient": ["#f093fb", "#f5576c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1135,27 +690,13 @@
       "forks": 512,
       "language": "C++",
       "license": "GPL-3.0",
-      "tags": [
-        "Subscription Conversion",
-        "Format Conversion",
-        "Tool"
-      ],
+      "tags": ["Subscription Conversion", "Format Conversion", "Tool"],
       "category": "subscription",
       "lastCommit": "2025-05-26",
-      "highlights": [
-        "Multi-format Support",
-        "High Performance",
-        "Easy Deployment"
-      ],
-      "gradient": [
-        "#f093fb",
-        "#f5576c"
-      ],
+      "highlights": ["Multi-format Support", "High Performance", "Easy Deployment"],
+      "gradient": ["#f093fb", "#f5576c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1169,27 +710,13 @@
       "forks": 1230,
       "language": "Python",
       "license": "MIT",
-      "tags": [
-        "Proxy Pool",
-        "Crawler",
-        "Free Proxy"
-      ],
+      "tags": ["Proxy Pool", "Crawler", "Free Proxy"],
       "category": "subscription",
       "lastCommit": "2025-05-25",
-      "highlights": [
-        "Auto Collection",
-        "Availability Testing",
-        "API Interface"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Auto Collection", "Availability Testing", "API Interface"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1203,27 +730,13 @@
       "forks": 345,
       "language": "Vue",
       "license": "MIT",
-      "tags": [
-        "Subscription Conversion",
-        "Web Interface",
-        "Frontend"
-      ],
+      "tags": ["Subscription Conversion", "Web Interface", "Frontend"],
       "category": "subscription",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Web Interface",
-        "No Backend Required",
-        "Easy to Use"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Web Interface", "No Backend Required", "Easy to Use"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; CareyWang/sub-web is the active community successor"
@@ -1238,27 +751,13 @@
       "forks": 230,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Node Testing",
-        "Speedtest",
-        "Batch"
-      ],
+      "tags": ["Node Testing", "Speedtest", "Batch"],
       "category": "subscription",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Batch Testing",
-        "Multi-protocol",
-        "Fast"
-      ],
-      "gradient": [
-        "#4ade80",
-        "#22c55e"
-      ],
+      "highlights": ["Batch Testing", "Multi-protocol", "Fast"],
+      "gradient": ["#4ade80", "#22c55e"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; librespeed/speedtest is the canonical self-hosted speed test"
@@ -1273,27 +772,13 @@
       "forks": 124,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Docker Acceleration",
-        "GitHub Acceleration",
-        "Self-hosted"
-      ],
+      "tags": ["Docker Acceleration", "GitHub Acceleration", "Self-hosted"],
       "category": "github_tools",
       "lastCommit": "2025-01-14",
-      "highlights": [
-        "Lightweight",
-        "Multi-scenario Acceleration",
-        "Self-hosted Service"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Lightweight", "Multi-scenario Acceleration", "Self-hosted Service"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1307,27 +792,13 @@
       "forks": 2100,
       "language": "C#",
       "license": "MIT",
-      "tags": [
-        "GitHub Acceleration",
-        "Download Acceleration",
-        "Transparent Proxy"
-      ],
+      "tags": ["GitHub Acceleration", "Download Acceleration", "Transparent Proxy"],
       "category": "github_tools",
       "lastCommit": "2024-08-20",
-      "highlights": [
-        "Full Acceleration",
-        "Transparent Proxy",
-        "Easy to Use"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Full Acceleration", "Transparent Proxy", "Easy to Use"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original whutzfk/FastGithub was taken down; dev-sidecar is the active successor"
@@ -1342,27 +813,13 @@
       "forks": 2340,
       "language": "C#",
       "license": "MIT",
-      "tags": [
-        "GitHub Acceleration",
-        "Steam Acceleration",
-        "Toolbox"
-      ],
+      "tags": ["GitHub Acceleration", "Steam Acceleration", "Toolbox"],
       "category": "github_tools",
       "lastCommit": "2025-01-12",
-      "highlights": [
-        "Multi-functional",
-        "GitHub/Steam Acceleration",
-        "Active Updates"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Multi-functional", "GitHub/Steam Acceleration", "Active Updates"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was renamed; SteamTools is the active successor (also known as Watt Toolkit)"
@@ -1377,27 +834,13 @@
       "forks": 1120,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "GitHub Acceleration",
-        "Git Acceleration",
-        "Dev Tool"
-      ],
+      "tags": ["GitHub Acceleration", "Git Acceleration", "Dev Tool"],
       "category": "github_tools",
       "lastCommit": "2025-01-05",
-      "highlights": [
-        "Git Acceleration",
-        "DNS Optimization",
-        "Out of the Box"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Git Acceleration", "DNS Optimization", "Out of the Box"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1411,27 +854,13 @@
       "forks": 178,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "Cloudflare",
-        "Workers",
-        "Proxy"
-      ],
+      "tags": ["Cloudflare", "Workers", "Proxy"],
       "category": "github_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Free Deployment",
-        "Serverless",
-        "Multi-functional"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Free Deployment", "Serverless", "Multi-functional"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1445,27 +874,13 @@
       "forks": 2340,
       "language": "Python",
       "license": "MIT",
-      "tags": [
-        "Hosts",
-        "GitHub Acceleration",
-        "DNS"
-      ],
+      "tags": ["Hosts", "GitHub Acceleration", "DNS"],
       "category": "github_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Hosts Solution",
-        "Auto Update",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Hosts Solution", "Auto Update", "Widely Used"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1479,27 +894,13 @@
       "forks": 890,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Proxy",
-        "GitHub Acceleration",
-        "File Proxy"
-      ],
+      "tags": ["Proxy", "GitHub Acceleration", "File Proxy"],
       "category": "github_tools",
       "lastCommit": "2024-12-28",
-      "highlights": [
-        "Self-hosted Service",
-        "Simple Deployment",
-        "File Acceleration"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Self-hosted Service", "Simple Deployment", "File Acceleration"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1513,27 +914,13 @@
       "forks": 280,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Repo Mirror",
-        "Auto Sync",
-        "GitHub"
-      ],
+      "tags": ["Repo Mirror", "Auto Sync", "GitHub"],
       "category": "github_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Auto Sync",
-        "Repo Mirror",
-        "Simple Deployment"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Auto Sync", "Repo Mirror", "Simple Deployment"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "acceleration",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; OpenWrt is the canonical git mirror example"
@@ -1548,26 +935,13 @@
       "forks": 1500,
       "language": "Lua",
       "license": "GPL-3.0",
-      "tags": [
-        "OpenWrt",
-        "Clash",
-        "Router"
-      ],
+      "tags": ["OpenWrt", "Clash", "Router"],
       "category": "router",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Full Features",
-        "Rule Support",
-        "Active Updates"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Full Features", "Rule Support", "Active Updates"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1581,26 +955,13 @@
       "forks": 456,
       "language": "Lua",
       "license": "GPL-3.0",
-      "tags": [
-        "OpenWrt",
-        "LUCI",
-        "Graphical"
-      ],
+      "tags": ["OpenWrt", "LUCI", "Graphical"],
       "category": "router",
       "lastCommit": "2025-01-10",
-      "highlights": [
-        "Web Interface",
-        "Multi-protocol",
-        "Easy Configuration"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Web Interface", "Multi-protocol", "Easy Configuration"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; passwall2 is the active community fork"
@@ -1615,26 +976,13 @@
       "forks": 345,
       "language": "Lua",
       "license": "GPL-3.0",
-      "tags": [
-        "OpenWrt",
-        "PassWall",
-        "Upgraded"
-      ],
+      "tags": ["OpenWrt", "PassWall", "Upgraded"],
       "category": "router",
       "lastCommit": "2025-01-12",
-      "highlights": [
-        "New Version",
-        "More Protocols",
-        "Continuous Updates"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["New Version", "More Protocols", "Continuous Updates"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1648,26 +996,13 @@
       "forks": 112,
       "language": "Lua",
       "license": "GPL-3.0",
-      "tags": [
-        "OpenWrt",
-        "mihomo",
-        "LuCI"
-      ],
+      "tags": ["OpenWrt", "mihomo", "LuCI"],
       "category": "router",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "mihomo Support",
-        "OpenWrt Exclusive",
-        "Latest Core"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["mihomo Support", "OpenWrt Exclusive", "Latest Core"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; OpenWrt-nikki is the canonical mihomo client for OpenWrt"
@@ -1682,26 +1017,13 @@
       "forks": 678,
       "language": "Shell",
       "license": "GPL-3.0",
-      "tags": [
-        "Merlin",
-        "ASUS",
-        "Firmware Plugin"
-      ],
+      "tags": ["Merlin", "ASUS", "Firmware Plugin"],
       "category": "router",
       "lastCommit": "2025-01-10",
-      "highlights": [
-        "Merlin Support",
-        "Graphical Interface",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#43e97b",
-        "#38f9d7"
-      ],
+      "highlights": ["Merlin Support", "Graphical Interface", "Multi-protocol"],
+      "gradient": ["#43e97b", "#38f9d7"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original hxdd/fancyss was archived; this is the active fork"
@@ -1716,26 +1038,13 @@
       "forks": 234,
       "language": "Shell",
       "license": "MIT",
-      "tags": [
-        "OpenWrt",
-        "Simple",
-        "Proxy Management"
-      ],
+      "tags": ["OpenWrt", "Simple", "Proxy Management"],
       "category": "router",
       "lastCommit": "2024-12-20",
-      "highlights": [
-        "Lightweight",
-        "Easy to Use",
-        "Web Interface"
-      ],
-      "gradient": [
-        "#43e97b",
-        "#38f9d7"
-      ],
+      "highlights": ["Lightweight", "Easy to Use", "Web Interface"],
+      "gradient": ["#43e97b", "#38f9d7"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; this is the most-starred community fork"
@@ -1750,26 +1059,13 @@
       "forks": 280,
       "language": "Lua",
       "license": "MIT",
-      "tags": [
-        "OpenWrt",
-        "immortalwrt",
-        "Multi-protocol"
-      ],
+      "tags": ["OpenWrt", "immortalwrt", "Multi-protocol"],
       "category": "router",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Official Plugin",
-        "Beautiful UI",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#4ade80",
-        "#22c55e"
-      ],
+      "highlights": ["Official Plugin", "Beautiful UI", "Multi-protocol"],
+      "gradient": ["#4ade80", "#22c55e"],
       "kind": "vpn",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was archived; the new homeproxy repo is the canonical home"
@@ -1784,26 +1080,13 @@
       "forks": 20200,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Docker",
-        "Container",
-        "Deployment"
-      ],
+      "tags": ["Docker", "Container", "Deployment"],
       "category": "docker",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Containerization Standard",
-        "Widely Used",
-        "Rich Ecosystem"
-      ],
-      "gradient": [
-        "#2496ed",
-        "#1b83d4"
-      ],
+      "highlights": ["Containerization Standard", "Widely Used", "Rich Ecosystem"],
+      "gradient": ["#2496ed", "#1b83d4"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1817,11 +1100,7 @@
       "forks": 5800,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Docker",
-        "Compose",
-        "Orchestration"
-      ],
+      "tags": ["Docker", "Compose", "Orchestration"],
       "category": "docker",
       "lastCommit": "2025-05-31",
       "highlights": [
@@ -1829,14 +1108,9 @@
         "YAML Configuration",
         "Convenient Deployment"
       ],
-      "gradient": [
-        "#2496ed",
-        "#1b83d4"
-      ],
+      "gradient": ["#2496ed", "#1b83d4"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1850,26 +1124,13 @@
       "forks": 560,
       "language": "Dockerfile",
       "license": "MIT",
-      "tags": [
-        "Docker",
-        "Proxy",
-        "One-click Deploy"
-      ],
+      "tags": ["Docker", "Proxy", "One-click Deploy"],
       "category": "docker",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Image Collection",
-        "One-click Deploy",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#2496ed",
-        "#1b83d4"
-      ],
+      "highlights": ["Image Collection", "One-click Deploy", "Multi-protocol"],
+      "gradient": ["#2496ed", "#1b83d4"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original teddysun/docker-proxy was removed; frp is the canonical TCP/HTTP proxy"
@@ -1884,26 +1145,13 @@
       "forks": 3200,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Docker",
-        "Visual",
-        "Management"
-      ],
+      "tags": ["Docker", "Visual", "Management"],
       "category": "docker",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Visual",
-        "Web Interface",
-        "Easy Management"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["Visual", "Web Interface", "Easy Management"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1917,27 +1165,13 @@
       "forks": 5200,
       "language": "Go",
       "license": "AGPL-3.0",
-      "tags": [
-        "Cloud Drive",
-        "Aggregation",
-        "File Management"
-      ],
+      "tags": ["Cloud Drive", "Aggregation", "File Management"],
       "category": "utilities",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Multi-cloud Support",
-        "WebDAV",
-        "File Preview"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Multi-cloud Support", "WebDAV", "File Preview"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1951,27 +1185,13 @@
       "forks": 4800,
       "language": "C++",
       "license": "GPL-2.0",
-      "tags": [
-        "Download",
-        "BT",
-        "P2P"
-      ],
+      "tags": ["Download", "BT", "P2P"],
       "category": "utilities",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Feature Complete",
-        "Cross-platform",
-        "RSS Support"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Feature Complete", "Cross-platform", "RSS Support"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -1985,27 +1205,13 @@
       "forks": 9500,
       "language": "Ruby",
       "license": "BSD-2-Clause",
-      "tags": [
-        "Package Manager",
-        "macOS",
-        "Linux"
-      ],
+      "tags": ["Package Manager", "macOS", "Linux"],
       "category": "utilities",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Package Management",
-        "Active Community",
-        "Easy to Use"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Package Management", "Active Community", "Easy to Use"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2019,27 +1225,13 @@
       "forks": 4100,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "Monitoring",
-        "Self-hosted",
-        "Availability"
-      ],
+      "tags": ["Monitoring", "Self-hosted", "Availability"],
       "category": "utilities",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Self-hosted",
-        "Web Interface",
-        "Alert Notifications"
-      ],
-      "gradient": [
-        "#43e97b",
-        "#38f9d7"
-      ],
+      "highlights": ["Self-hosted", "Web Interface", "Alert Notifications"],
+      "gradient": ["#43e97b", "#38f9d7"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2053,27 +1245,13 @@
       "forks": 456,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "File Sharing",
-        "Rust",
-        "Lightweight"
-      ],
+      "tags": ["File Sharing", "Rust", "Lightweight"],
       "category": "utilities",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Single Binary",
-        "Cross-platform",
-        "Quick Sharing"
-      ],
-      "gradient": [
-        "#fa709a",
-        "#fee140"
-      ],
+      "highlights": ["Single Binary", "Cross-platform", "Quick Sharing"],
+      "gradient": ["#fa709a", "#fee140"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2087,27 +1265,13 @@
       "forks": 230,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "WARP",
-        "Cloudflare",
-        "Security"
-      ],
+      "tags": ["WARP", "Cloudflare", "Security"],
       "category": "utilities",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "WARP Protocol",
-        "Cloudflare",
-        "Security"
-      ],
-      "gradient": [
-        "#f97316",
-        "#ea580c"
-      ],
+      "highlights": ["WARP Protocol", "Cloudflare", "Security"],
+      "gradient": ["#f97316", "#ea580c"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original ViRb3/warp-plus was taken down by Cloudflare; wgcf is the same author’s active WARP tool"
@@ -2122,27 +1286,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Tunnel",
-        "Go",
-        "Multi-functional"
-      ],
+      "tags": ["Tunnel", "Go", "Multi-functional"],
       "category": "utilities",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Multi-functional",
-        "Multi-protocol",
-        "Tunnel"
-      ],
-      "gradient": [
-        "#38bdf8",
-        "#0ea5e9"
-      ],
+      "highlights": ["Multi-functional", "Multi-protocol", "Tunnel"],
+      "gradient": ["#38bdf8", "#0ea5e9"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2156,27 +1306,13 @@
       "forks": 11500,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Reverse Proxy",
-        "NAT Traversal",
-        "Public Network"
-      ],
+      "tags": ["Reverse Proxy", "NAT Traversal", "Public Network"],
       "category": "utilities",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Most Popular",
-        "Stable",
-        "Powerful"
-      ],
-      "gradient": [
-        "#60a5fa",
-        "#3b82f6"
-      ],
+      "highlights": ["Most Popular", "Stable", "Powerful"],
+      "gradient": ["#60a5fa", "#3b82f6"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2190,27 +1326,13 @@
       "forks": 1100,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Trojan",
-        "Go",
-        "High Performance"
-      ],
+      "tags": ["Trojan", "Go", "High Performance"],
       "category": "utilities",
       "lastCommit": "2025-05-27",
-      "highlights": [
-        "Go Implementation",
-        "High Performance",
-        "Multi-platform"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Go Implementation", "High Performance", "Multi-platform"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2224,26 +1346,13 @@
       "forks": 890,
       "language": "YAML",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "Rules",
-        "Routing"
-      ],
+      "tags": ["Clash", "Rules", "Routing"],
       "category": "rules",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Comprehensive Rules",
-        "Regular Updates",
-        "Precise Routing"
-      ],
-      "gradient": [
-        "#a18cd1",
-        "#fbc2eb"
-      ],
+      "highlights": ["Comprehensive Rules", "Regular Updates", "Precise Routing"],
+      "gradient": ["#a18cd1", "#fbc2eb"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2257,26 +1366,13 @@
       "forks": 567,
       "language": "YAML",
       "license": "MIT",
-      "tags": [
-        "GeoIP",
-        "Routing",
-        "Rules"
-      ],
+      "tags": ["GeoIP", "Routing", "Rules"],
       "category": "rules",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "GeoIP Rules",
-        "Precise Routing",
-        "Regular Updates"
-      ],
-      "gradient": [
-        "#a18cd1",
-        "#fbc2eb"
-      ],
+      "highlights": ["GeoIP Rules", "Precise Routing", "Regular Updates"],
+      "gradient": ["#a18cd1", "#fbc2eb"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2290,26 +1386,13 @@
       "forks": 89,
       "language": "JSON",
       "license": "MIT",
-      "tags": [
-        "sing-box",
-        "Configuration",
-        "Tutorial"
-      ],
+      "tags": ["sing-box", "Configuration", "Tutorial"],
       "category": "rules",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Config Sharing",
-        "Multi-protocol",
-        "Continuous Updates"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Config Sharing", "Multi-protocol", "Continuous Updates"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; this is the canonical sing-box worker panel"
@@ -2324,26 +1407,13 @@
       "forks": 123,
       "language": "YAML",
       "license": "MIT",
-      "tags": [
-        "Clash",
-        "Configuration",
-        "Sharing"
-      ],
+      "tags": ["Clash", "Configuration", "Sharing"],
       "category": "rules",
       "lastCommit": "2025-01-12",
-      "highlights": [
-        "Config Templates",
-        "Rule Sets",
-        "Practical Sharing"
-      ],
-      "gradient": [
-        "#4facfe",
-        "#00f2fe"
-      ],
+      "highlights": ["Config Templates", "Rule Sets", "Practical Sharing"],
+      "gradient": ["#4facfe", "#00f2fe"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; subconverter is the canonical subscription converter by the same author"
@@ -2358,26 +1428,13 @@
       "forks": 890,
       "language": "YAML",
       "license": "MIT",
-      "tags": [
-        "Rule Provider",
-        "Clash",
-        "Rules"
-      ],
+      "tags": ["Rule Provider", "Clash", "Rules"],
       "category": "rules",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Remote Rules",
-        "Auto Update",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#a18cd1",
-        "#fbc2eb"
-      ],
+      "highlights": ["Remote Rules", "Auto Update", "Widely Used"],
+      "gradient": ["#a18cd1", "#fbc2eb"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original ConnersHua/Rule was removed; OpenClash is the canonical rule provider for OpenWrt"
@@ -2392,26 +1449,13 @@
       "forks": 1200,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "Rule Sets",
-        "Multi-client",
-        "Routing"
-      ],
+      "tags": ["Rule Sets", "Multi-client", "Routing"],
       "category": "rules",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Rich Rules",
-        "Multi-client",
-        "Auto Update"
-      ],
-      "gradient": [
-        "#60a5fa",
-        "#3b82f6"
-      ],
+      "highlights": ["Rich Rules", "Multi-client", "Auto Update"],
+      "gradient": ["#60a5fa", "#3b82f6"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2425,26 +1469,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "GeoSite",
-        "Routing",
-        "Rules"
-      ],
+      "tags": ["GeoSite", "Routing", "Rules"],
       "category": "rules",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Comprehensive Rules",
-        "Regular Updates",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#4ade80",
-        "#22c55e"
-      ],
+      "highlights": ["Comprehensive Rules", "Regular Updates", "Widely Used"],
+      "gradient": ["#4ade80", "#22c55e"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2458,26 +1489,13 @@
       "forks": 145,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Mirror",
-        "Git Clone",
-        "Acceleration"
-      ],
+      "tags": ["Mirror", "Git Clone", "Acceleration"],
       "category": "mirrors",
       "lastCommit": "2024-11-25",
-      "highlights": [
-        "Clone Acceleration",
-        "Mirror Service",
-        "Self-hosted Solution"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Clone Acceleration", "Mirror Service", "Self-hosted Solution"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; pointing to the canonical Chinese mirror list"
@@ -2492,26 +1510,13 @@
       "forks": 345,
       "language": "Markdown",
       "license": "MIT",
-      "tags": [
-        "Mirror List",
-        "GitHub",
-        "Acceleration"
-      ],
+      "tags": ["Mirror List", "GitHub", "Acceleration"],
       "category": "mirrors",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Mirror Summary",
-        "Continuous Updates",
-        "Usage Guide"
-      ],
-      "gradient": [
-        "#667eea",
-        "#764ba2"
-      ],
+      "highlights": ["Mirror Summary", "Continuous Updates", "Usage Guide"],
+      "gradient": ["#667eea", "#764ba2"],
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; this is the active GitHub mirror list"
@@ -2526,26 +1531,13 @@
       "forks": 890,
       "language": "Markdown",
       "license": "CC0",
-      "tags": [
-        "Mirror Sources",
-        "China",
-        "Acceleration"
-      ],
+      "tags": ["Mirror Sources", "China", "Acceleration"],
       "category": "mirrors",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Complete Mirrors",
-        "Available in China",
-        "Regular Updates"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Complete Mirrors", "Available in China", "Regular Updates"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; Thanks-Mirror is the canonical Chinese mirror list"
@@ -2560,26 +1552,13 @@
       "forks": 7800,
       "language": "Markdown",
       "license": "CC-BY-SA-4.0",
-      "tags": [
-        "Docker",
-        "Mirror Acceleration",
-        "Tutorial"
-      ],
+      "tags": ["Docker", "Mirror Acceleration", "Tutorial"],
       "category": "mirrors",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Detailed Tutorial",
-        "Configuration Guide",
-        "Mirror Sources"
-      ],
-      "gradient": [
-        "#2496ed",
-        "#1b83d4"
-      ],
+      "highlights": ["Detailed Tutorial", "Configuration Guide", "Mirror Sources"],
+      "gradient": ["#2496ed", "#1b83d4"],
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2593,26 +1572,13 @@
       "forks": 156,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Node",
-        "Subscription",
-        "Conversion"
-      ],
+      "tags": ["Node", "Subscription", "Conversion"],
       "category": "node_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Subscription Management",
-        "Format Conversion",
-        "Batch Processing"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Subscription Management", "Format Conversion", "Batch Processing"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "ops",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; pointing to the canonical subscription mirror list"
@@ -2627,27 +1593,13 @@
       "forks": 2100,
       "language": "Python",
       "license": "Apache-2.0",
-      "tags": [
-        "Speedtest",
-        "CLI",
-        "Network"
-      ],
+      "tags": ["Speedtest", "CLI", "Network"],
       "category": "network_test",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "CLI",
-        "Cross-platform",
-        "Accurate"
-      ],
-      "gradient": [
-        "#10b981",
-        "#059669"
-      ],
+      "highlights": ["CLI", "Cross-platform", "Accurate"],
+      "gradient": ["#10b981", "#059669"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2661,26 +1613,13 @@
       "forks": 1100,
       "language": "C",
       "license": "BSD-3-Clause",
-      "tags": [
-        "Network Test",
-        "Bandwidth",
-        "Latency"
-      ],
+      "tags": ["Network Test", "Bandwidth", "Latency"],
       "category": "network_test",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Professional Tool",
-        "Accurate",
-        "Powerful"
-      ],
-      "gradient": [
-        "#10b981",
-        "#059669"
-      ],
+      "highlights": ["Professional Tool", "Accurate", "Powerful"],
+      "gradient": ["#10b981", "#059669"],
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2694,26 +1633,13 @@
       "forks": 950,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "REALITY",
-        "XTLS",
-        "Anti-censorship"
-      ],
+      "tags": ["REALITY", "XTLS", "Anti-censorship"],
       "category": "protocol_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Strong Anti-censorship",
-        "No Domain Required",
-        "No Certificate Required"
-      ],
-      "gradient": [
-        "#ec4899",
-        "#db2777"
-      ],
+      "highlights": ["Strong Anti-censorship", "No Domain Required", "No Certificate Required"],
+      "gradient": ["#ec4899", "#db2777"],
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2727,27 +1653,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Proxy",
-        "Cross-platform",
-        "Multi-protocol"
-      ],
+      "tags": ["Proxy", "Cross-platform", "Multi-protocol"],
       "category": "protocol_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Cross-platform",
-        "Multi-protocol",
-        "Lightweight"
-      ],
-      "gradient": [
-        "#ec4899",
-        "#db2777"
-      ],
+      "highlights": ["Cross-platform", "Multi-protocol", "Lightweight"],
+      "gradient": ["#ec4899", "#db2777"],
       "kind": "proxy",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2761,26 +1673,13 @@
       "forks": 120,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Snell",
-        "Lightweight",
-        "Proxy"
-      ],
+      "tags": ["Snell", "Lightweight", "Proxy"],
       "category": "protocol_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Lightweight",
-        "Efficient",
-        "Simple"
-      ],
-      "gradient": [
-        "#ec4899",
-        "#db2777"
-      ],
+      "highlights": ["Lightweight", "Efficient", "Simple"],
+      "gradient": ["#ec4899", "#db2777"],
       "kind": "proxy",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "archived",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original was removed; snell.sh is the canonical snell install script"
@@ -2795,26 +1694,13 @@
       "forks": 1200,
       "language": "C",
       "license": "GPL-3.0",
-      "tags": [
-        "Shadowsocks",
-        "C",
-        "Lightweight"
-      ],
+      "tags": ["Shadowsocks", "C", "Lightweight"],
       "category": "protocol_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "C Implementation",
-        "Lightweight & Efficient",
-        "Stable"
-      ],
-      "gradient": [
-        "#ec4899",
-        "#db2777"
-      ],
+      "highlights": ["C Implementation", "Lightweight & Efficient", "Stable"],
+      "gradient": ["#ec4899", "#db2777"],
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2828,27 +1714,13 @@
       "forks": 1500,
       "language": "C",
       "license": "LGPL-2.1",
-      "tags": [
-        "Server Management",
-        "Web Interface",
-        "Linux"
-      ],
+      "tags": ["Server Management", "Web Interface", "Linux"],
       "category": "server_mgmt",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Web Interface",
-        "Easy to Use",
-        "Full Features"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#7c3aed"
-      ],
+      "highlights": ["Web Interface", "Easy to Use", "Full Features"],
+      "gradient": ["#8b5cf6", "#7c3aed"],
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2862,27 +1734,13 @@
       "forks": 18500,
       "language": "Python",
       "license": "GPL-3.0",
-      "tags": [
-        "Automation",
-        "Ops",
-        "Configuration Management"
-      ],
+      "tags": ["Automation", "Ops", "Configuration Management"],
       "category": "server_mgmt",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Automation",
-        "Agentless",
-        "Powerful"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#7c3aed"
-      ],
+      "highlights": ["Automation", "Agentless", "Powerful"],
+      "gradient": ["#8b5cf6", "#7c3aed"],
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2896,27 +1754,13 @@
       "forks": 3200,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Panel",
-        "Ops",
-        "Modern"
-      ],
+      "tags": ["Panel", "Ops", "Modern"],
       "category": "server_mgmt",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Modern UI",
-        "Easy to Use",
-        "Feature Rich"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#7c3aed"
-      ],
+      "highlights": ["Modern UI", "Easy to Use", "Feature Rich"],
+      "gradient": ["#8b5cf6", "#7c3aed"],
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2930,27 +1774,13 @@
       "forks": 890,
       "language": "Python",
       "license": "BSD-3-Clause",
-      "tags": [
-        "BT Panel",
-        "Panel",
-        "Server Management"
-      ],
+      "tags": ["BT Panel", "Panel", "Server Management"],
       "category": "server_mgmt",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "User Friendly",
-        "Full Features",
-        "One-click Deploy"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#7c3aed"
-      ],
+      "highlights": ["User Friendly", "Full Features", "One-click Deploy"],
+      "gradient": ["#8b5cf6", "#7c3aed"],
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Renamed to aaPanel"
@@ -2965,27 +1795,13 @@
       "forks": 680,
       "language": "Perl",
       "license": "BSD-3-Clause",
-      "tags": [
-        "Web Management",
-        "Unix",
-        "System Management"
-      ],
+      "tags": ["Web Management", "Unix", "System Management"],
       "category": "server_mgmt",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Web Interface",
-        "Long History",
-        "Full Features"
-      ],
-      "gradient": [
-        "#8b5cf6",
-        "#7c3aed"
-      ],
+      "highlights": ["Web Interface", "Long History", "Full Features"],
+      "gradient": ["#8b5cf6", "#7c3aed"],
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -2999,26 +1815,13 @@
       "forks": 1800,
       "language": "C",
       "license": "Nmap-PSL",
-      "tags": [
-        "Scanning",
-        "Security Audit",
-        "Network"
-      ],
+      "tags": ["Scanning", "Security Audit", "Network"],
       "category": "security_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Professional Scanning",
-        "Powerful",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Professional Scanning", "Powerful", "Widely Used"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3032,27 +1835,13 @@
       "forks": 1200,
       "language": "C",
       "license": "GPL-2.0",
-      "tags": [
-        "Protocol Analysis",
-        "Packet Capture",
-        "Network"
-      ],
+      "tags": ["Protocol Analysis", "Packet Capture", "Network"],
       "category": "security_tools",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Protocol Analysis",
-        "Visualization",
-        "Industry Standard"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Protocol Analysis", "Visualization", "Industry Standard"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "tools",
-      "platform": [
-        "desktop",
-        "cli"
-      ],
+      "platform": ["desktop", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3066,27 +1855,13 @@
       "forks": 2300,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Vulnerability Scanning",
-        "Template",
-        "Security"
-      ],
+      "tags": ["Vulnerability Scanning", "Template", "Security"],
       "category": "security_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Template Driven",
-        "Fast Scanning",
-        "Active Community"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Template Driven", "Fast Scanning", "Active Community"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3100,27 +1875,13 @@
       "forks": 1200,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Subdomain",
-        "Reconnaissance",
-        "Security"
-      ],
+      "tags": ["Subdomain", "Reconnaissance", "Security"],
       "category": "security_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Passive Discovery",
-        "Fast",
-        "Multiple Data Sources"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Passive Discovery", "Fast", "Multiple Data Sources"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3134,27 +1895,13 @@
       "forks": 890,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "HTTP",
-        "Toolkit",
-        "Security"
-      ],
+      "tags": ["HTTP", "Toolkit", "Security"],
       "category": "security_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Fast",
-        "Multi-purpose",
-        "Easy Integration"
-      ],
-      "gradient": [
-        "#f59e0b",
-        "#d97706"
-      ],
+      "highlights": ["Fast", "Multi-purpose", "Easy Integration"],
+      "gradient": ["#f59e0b", "#d97706"],
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3168,27 +1915,13 @@
       "forks": 4200,
       "language": "Go",
       "license": "MPL-2.0",
-      "tags": [
-        "File Sync",
-        "P2P",
-        "Open Source"
-      ],
+      "tags": ["File Sync", "P2P", "Open Source"],
       "category": "data_transfer",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "P2P Sync",
-        "Encrypted Transfer",
-        "Cross-platform"
-      ],
-      "gradient": [
-        "#22c55e",
-        "#16a34a"
-      ],
+      "highlights": ["P2P Sync", "Encrypted Transfer", "Cross-platform"],
+      "gradient": ["#22c55e", "#16a34a"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3202,27 +1935,13 @@
       "forks": 4500,
       "language": "PHP",
       "license": "AGPL-3.0",
-      "tags": [
-        "Cloud Storage",
-        "Self-hosted",
-        "Collaboration"
-      ],
+      "tags": ["Cloud Storage", "Self-hosted", "Collaboration"],
       "category": "data_transfer",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Self-hosted",
-        "Feature Rich",
-        "Plugin Ecosystem"
-      ],
-      "gradient": [
-        "#22c55e",
-        "#16a34a"
-      ],
+      "highlights": ["Self-hosted", "Feature Rich", "Plugin Ecosystem"],
+      "gradient": ["#22c55e", "#16a34a"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3236,27 +1955,13 @@
       "forks": 1500,
       "language": "C",
       "license": "GPL-3.0",
-      "tags": [
-        "File Sync",
-        "Incremental",
-        "Efficient"
-      ],
+      "tags": ["File Sync", "Incremental", "Efficient"],
       "category": "data_transfer",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Incremental Sync",
-        "Efficient",
-        "Classic Tool"
-      ],
-      "gradient": [
-        "#22c55e",
-        "#16a34a"
-      ],
+      "highlights": ["Incremental Sync", "Efficient", "Classic Tool"],
+      "gradient": ["#22c55e", "#16a34a"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3270,27 +1975,13 @@
       "forks": 4200,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Cloud Storage",
-        "Sync",
-        "CLI"
-      ],
+      "tags": ["Cloud Storage", "Sync", "CLI"],
       "category": "data_transfer",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Multi-cloud Support",
-        "Encryption",
-        "Powerful"
-      ],
-      "gradient": [
-        "#22c55e",
-        "#16a34a"
-      ],
+      "highlights": ["Multi-cloud Support", "Encryption", "Powerful"],
+      "gradient": ["#22c55e", "#16a34a"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3304,27 +1995,13 @@
       "forks": 3200,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "File Management",
-        "Web",
-        "Lightweight"
-      ],
+      "tags": ["File Management", "Web", "Lightweight"],
       "category": "data_transfer",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Web Interface",
-        "Lightweight",
-        "Easy Deployment"
-      ],
-      "gradient": [
-        "#22c55e",
-        "#16a34a"
-      ],
+      "highlights": ["Web Interface", "Lightweight", "Easy Deployment"],
+      "gradient": ["#22c55e", "#16a34a"],
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3338,26 +2015,13 @@
       "forks": 9500,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Monitoring",
-        "Alerting",
-        "Time Series"
-      ],
+      "tags": ["Monitoring", "Alerting", "Time Series"],
       "category": "monitoring",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Time Series DB",
-        "Alerting System",
-        "Rich Ecosystem"
-      ],
-      "gradient": [
-        "#06b6d4",
-        "#0891b2"
-      ],
+      "highlights": ["Time Series DB", "Alerting System", "Rich Ecosystem"],
+      "gradient": ["#06b6d4", "#0891b2"],
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3371,26 +2035,13 @@
       "forks": 11500,
       "language": "TypeScript",
       "license": "AGPL-3.0",
-      "tags": [
-        "Visualization",
-        "Dashboard",
-        "Monitoring"
-      ],
+      "tags": ["Visualization", "Dashboard", "Monitoring"],
       "category": "monitoring",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Visualization",
-        "Multi-data Source",
-        "Rich Plugins"
-      ],
-      "gradient": [
-        "#06b6d4",
-        "#0891b2"
-      ],
+      "highlights": ["Visualization", "Multi-data Source", "Rich Plugins"],
+      "gradient": ["#06b6d4", "#0891b2"],
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3404,26 +2055,13 @@
       "forks": 3200,
       "language": "Go",
       "license": "AGPL-3.0",
-      "tags": [
-        "Logging",
-        "Aggregation",
-        "Monitoring"
-      ],
+      "tags": ["Logging", "Aggregation", "Monitoring"],
       "category": "monitoring",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Lightweight",
-        "Log Aggregation",
-        "Grafana Integration"
-      ],
-      "gradient": [
-        "#06b6d4",
-        "#0891b2"
-      ],
+      "highlights": ["Lightweight", "Log Aggregation", "Grafana Integration"],
+      "gradient": ["#06b6d4", "#0891b2"],
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3437,26 +2075,13 @@
       "forks": 5800,
       "language": "C",
       "license": "GPL-3.0",
-      "tags": [
-        "Real-time Monitoring",
-        "System",
-        "Performance"
-      ],
+      "tags": ["Real-time Monitoring", "System", "Performance"],
       "category": "monitoring",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Real-time Monitoring",
-        "Zero Config",
-        "Visualization"
-      ],
-      "gradient": [
-        "#06b6d4",
-        "#0891b2"
-      ],
+      "highlights": ["Real-time Monitoring", "Zero Config", "Visualization"],
+      "gradient": ["#06b6d4", "#0891b2"],
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3470,26 +2095,13 @@
       "forks": 890,
       "language": "C",
       "license": "GPL-2.0",
-      "tags": [
-        "Enterprise",
-        "Monitoring",
-        "Alerting"
-      ],
+      "tags": ["Enterprise", "Monitoring", "Alerting"],
       "category": "monitoring",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Enterprise",
-        "Full Features",
-        "Stable & Reliable"
-      ],
-      "gradient": [
-        "#06b6d4",
-        "#0891b2"
-      ],
+      "highlights": ["Enterprise", "Full Features", "Stable & Reliable"],
+      "gradient": ["#06b6d4", "#0891b2"],
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3503,26 +2115,13 @@
       "forks": 38500,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Container Orchestration",
-        "K8s",
-        "Cloud Native"
-      ],
+      "tags": ["Container Orchestration", "K8s", "Cloud Native"],
       "category": "container",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Industry Standard",
-        "Powerful",
-        "Rich Ecosystem"
-      ],
-      "gradient": [
-        "#326ce5",
-        "#234fa2"
-      ],
+      "highlights": ["Industry Standard", "Powerful", "Rich Ecosystem"],
+      "gradient": ["#326ce5", "#234fa2"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3536,26 +2135,13 @@
       "forks": 7200,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Helm",
-        "Package Management",
-        "K8s"
-      ],
+      "tags": ["Helm", "Package Management", "K8s"],
       "category": "container",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Package Management",
-        "Templating",
-        "Easy Deployment"
-      ],
-      "gradient": [
-        "#326ce5",
-        "#234fa2"
-      ],
+      "highlights": ["Package Management", "Templating", "Easy Deployment"],
+      "gradient": ["#326ce5", "#234fa2"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3569,26 +2155,13 @@
       "forks": 2200,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Lightweight",
-        "K8s",
-        "Edge Computing"
-      ],
+      "tags": ["Lightweight", "K8s", "Edge Computing"],
       "category": "container",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Lightweight",
-        "Single Binary",
-        "Easy Installation"
-      ],
-      "gradient": [
-        "#326ce5",
-        "#234fa2"
-      ],
+      "highlights": ["Lightweight", "Single Binary", "Easy Installation"],
+      "gradient": ["#326ce5", "#234fa2"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3602,26 +2175,13 @@
       "forks": 5800,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "Reverse Proxy",
-        "Load Balancing",
-        "Cloud Native"
-      ],
+      "tags": ["Reverse Proxy", "Load Balancing", "Cloud Native"],
       "category": "container",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Auto Discovery",
-        "Cloud Native",
-        "High Performance"
-      ],
-      "gradient": [
-        "#326ce5",
-        "#234fa2"
-      ],
+      "highlights": ["Auto Discovery", "Cloud Native", "High Performance"],
+      "gradient": ["#326ce5", "#234fa2"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3635,26 +2195,13 @@
       "forks": 4200,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Web Server",
-        "Auto HTTPS",
-        "Reverse Proxy"
-      ],
+      "tags": ["Web Server", "Auto HTTPS", "Reverse Proxy"],
       "category": "container",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Auto HTTPS",
-        "Simple Configuration",
-        "High Performance"
-      ],
-      "gradient": [
-        "#326ce5",
-        "#234fa2"
-      ],
+      "highlights": ["Auto HTTPS", "Simple Configuration", "High Performance"],
+      "gradient": ["#326ce5", "#234fa2"],
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3668,27 +2215,13 @@
       "forks": 4200,
       "language": "Go",
       "license": "MIT",
-      "tags": [
-        "NAT Traversal",
-        "Tunnel",
-        "Public Network"
-      ],
+      "tags": ["NAT Traversal", "Tunnel", "Public Network"],
       "category": "tunnel_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Easy to Use",
-        "Fast",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Easy to Use", "Fast", "Widely Used"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3702,27 +2235,13 @@
       "forks": 560,
       "language": "Rust",
       "license": "Apache-2.0",
-      "tags": [
-        "NAT Traversal",
-        "Rust",
-        "Lightweight"
-      ],
+      "tags": ["NAT Traversal", "Rust", "Lightweight"],
       "category": "tunnel_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Rust Implementation",
-        "High Performance",
-        "Lightweight"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Rust Implementation", "High Performance", "Lightweight"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3736,27 +2255,13 @@
       "forks": 420,
       "language": "Rust",
       "license": "MIT",
-      "tags": [
-        "Tunnel",
-        "Simple",
-        "Rust"
-      ],
+      "tags": ["Tunnel", "Simple", "Rust"],
       "category": "tunnel_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Minimalist",
-        "Rust Implementation",
-        "Fast"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Minimalist", "Rust Implementation", "Fast"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3770,27 +2275,13 @@
       "forks": 890,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Cloudflare",
-        "Tunnel",
-        "NAT Traversal"
-      ],
+      "tags": ["Cloudflare", "Tunnel", "NAT Traversal"],
       "category": "tunnel_tools",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Cloudflare",
-        "Free Tier",
-        "Stable"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Cloudflare", "Free Tier", "Stable"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3804,27 +2295,13 @@
       "forks": 1500,
       "language": "JavaScript",
       "license": "MIT",
-      "tags": [
-        "NAT Traversal",
-        "Local",
-        "Public Network"
-      ],
+      "tags": ["NAT Traversal", "Local", "Public Network"],
       "category": "tunnel_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Easy to Use",
-        "Node.js",
-        "Quick Deploy"
-      ],
-      "gradient": [
-        "#a78bfa",
-        "#8b5cf6"
-      ],
+      "highlights": ["Easy to Use", "Node.js", "Quick Deploy"],
+      "gradient": ["#a78bfa", "#8b5cf6"],
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3838,26 +2315,13 @@
       "forks": 1100,
       "language": "Go",
       "license": "ISC",
-      "tags": [
-        "DNS Encryption",
-        "DNSCrypt",
-        "Privacy"
-      ],
+      "tags": ["DNS Encryption", "DNSCrypt", "Privacy"],
       "category": "dns_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "DNS Encryption",
-        "Ad Blocking",
-        "Privacy Protection"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["DNS Encryption", "Ad Blocking", "Privacy Protection"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3871,26 +2335,13 @@
       "forks": 1800,
       "language": "Go",
       "license": "GPL-3.0",
-      "tags": [
-        "Ad Blocking",
-        "DNS",
-        "Privacy"
-      ],
+      "tags": ["Ad Blocking", "DNS", "Privacy"],
       "category": "dns_tools",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Ad Blocking",
-        "DNS Server",
-        "Web Interface"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["Ad Blocking", "DNS Server", "Web Interface"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3904,26 +2355,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "DNS",
-        "Server",
-        "Plugin"
-      ],
+      "tags": ["DNS", "Server", "Plugin"],
       "category": "dns_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Plugin-based",
-        "K8s Integration",
-        "Flexible"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["Plugin-based", "K8s Integration", "Flexible"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3937,26 +2375,13 @@
       "forks": 3200,
       "language": "Shell",
       "license": "EUPL-1.2",
-      "tags": [
-        "Ad Blocking",
-        "DNS",
-        "Raspberry Pi"
-      ],
+      "tags": ["Ad Blocking", "DNS", "Raspberry Pi"],
       "category": "dns_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Ad Blocking",
-        "Lightweight",
-        "Easy Deployment"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["Ad Blocking", "Lightweight", "Easy Deployment"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -3970,27 +2395,13 @@
       "forks": 1200,
       "language": "C",
       "license": "GPL-3.0",
-      "tags": [
-        "DNS",
-        "Local",
-        "Acceleration"
-      ],
+      "tags": ["DNS", "Local", "Acceleration"],
       "category": "dns_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "DNS Acceleration",
-        "Anti-pollution",
-        "High Performance"
-      ],
-      "gradient": [
-        "#14b8a6",
-        "#0d9488"
-      ],
+      "highlights": ["DNS Acceleration", "Anti-pollution", "High Performance"],
+      "gradient": ["#14b8a6", "#0d9488"],
       "kind": "dns",
-      "platform": [
-        "server",
-        "router"
-      ],
+      "platform": ["server", "router"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4004,27 +2415,13 @@
       "forks": 3800,
       "language": "Python",
       "license": "Apache-2.0",
-      "tags": [
-        "Certificate",
-        "Let's Encrypt",
-        "Automation"
-      ],
+      "tags": ["Certificate", "Let's Encrypt", "Automation"],
       "category": "cert_tools",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Auto Renewal",
-        "Let's Encrypt",
-        "Widely Used"
-      ],
-      "gradient": [
-        "#f97316",
-        "#ea580c"
-      ],
+      "highlights": ["Auto Renewal", "Let's Encrypt", "Widely Used"],
+      "gradient": ["#f97316", "#ea580c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4038,27 +2435,13 @@
       "forks": 5200,
       "language": "Shell",
       "license": "GPL-3.0",
-      "tags": [
-        "ACME",
-        "Certificate",
-        "Shell"
-      ],
+      "tags": ["ACME", "Certificate", "Shell"],
       "category": "cert_tools",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Pure Shell",
-        "Lightweight",
-        "Multi-CA Support"
-      ],
-      "gradient": [
-        "#f97316",
-        "#ea580c"
-      ],
+      "highlights": ["Pure Shell", "Lightweight", "Multi-CA Support"],
+      "gradient": ["#f97316", "#ea580c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4072,27 +2455,13 @@
       "forks": 2100,
       "language": "Go",
       "license": "BSD-3-Clause",
-      "tags": [
-        "Local Certificate",
-        "HTTPS",
-        "Development"
-      ],
+      "tags": ["Local Certificate", "HTTPS", "Development"],
       "category": "cert_tools",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Zero Config",
-        "Local Development",
-        "Easy to Use"
-      ],
-      "gradient": [
-        "#f97316",
-        "#ea580c"
-      ],
+      "highlights": ["Zero Config", "Local Development", "Easy to Use"],
+      "gradient": ["#f97316", "#ea580c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4106,27 +2475,13 @@
       "forks": 560,
       "language": "Go",
       "license": "Apache-2.0",
-      "tags": [
-        "Private CA",
-        "Certificate",
-        "Security"
-      ],
+      "tags": ["Private CA", "Certificate", "Security"],
       "category": "cert_tools",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Private CA",
-        "Automation",
-        "Enterprise"
-      ],
-      "gradient": [
-        "#f97316",
-        "#ea580c"
-      ],
+      "highlights": ["Private CA", "Automation", "Enterprise"],
+      "gradient": ["#f97316", "#ea580c"],
       "kind": "tools",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4140,26 +2495,13 @@
       "forks": 12500,
       "language": "Markdown",
       "license": "CC-BY-SA-4.0",
-      "tags": [
-        "Self-hosted",
-        "List",
-        "Resources"
-      ],
+      "tags": ["Self-hosted", "List", "Resources"],
       "category": "collection",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Most Comprehensive",
-        "Community Maintained",
-        "Well Categorized"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Most Comprehensive", "Community Maintained", "Well Categorized"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4173,26 +2515,13 @@
       "forks": 1500,
       "language": "Markdown",
       "license": "CC0",
-      "tags": [
-        "System Administration",
-        "Tool List",
-        "Ops"
-      ],
+      "tags": ["System Administration", "Tool List", "Ops"],
       "category": "collection",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Ops Tools",
-        "Well Categorized",
-        "Continuous Updates"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Ops Tools", "Well Categorized", "Continuous Updates"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4206,26 +2535,13 @@
       "forks": 62000,
       "language": "Markdown",
       "license": "CC-BY-4.0",
-      "tags": [
-        "Programming Books",
-        "Free",
-        "Learning"
-      ],
+      "tags": ["Programming Books", "Free", "Learning"],
       "category": "collection",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Most Popular",
-        "Multi-language",
-        "Community Maintained"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Most Popular", "Multi-language", "Community Maintained"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4239,26 +2555,13 @@
       "forks": 890,
       "language": "Markdown",
       "license": "MIT",
-      "tags": [
-        "Network Security",
-        "Resources",
-        "Collection"
-      ],
+      "tags": ["Network Security", "Resources", "Collection"],
       "category": "collection",
       "lastCommit": "2025-05-29",
-      "highlights": [
-        "Security Resources",
-        "Detailed Categories",
-        "Practical"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Security Resources", "Detailed Categories", "Practical"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01",
       "notes": "URL updated: Original repo was removed; pointing to the canonical awesome list"
@@ -4273,26 +2576,13 @@
       "forks": 1200,
       "language": "Markdown",
       "license": "MIT",
-      "tags": [
-        "Proxy List",
-        "Free",
-        "Collection"
-      ],
+      "tags": ["Proxy List", "Free", "Collection"],
       "category": "collection",
       "lastCommit": "2025-05-30",
-      "highlights": [
-        "Proxy List",
-        "Regular Updates",
-        "Multiple Types"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Proxy List", "Regular Updates", "Multiple Types"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4306,26 +2596,13 @@
       "forks": 780,
       "language": "Markdown",
       "license": "MIT",
-      "tags": [
-        "Proxy List",
-        "Free",
-        "Updated"
-      ],
+      "tags": ["Proxy List", "Free", "Updated"],
       "category": "collection",
       "lastCommit": "2025-05-28",
-      "highlights": [
-        "Free Proxy",
-        "Regular Updates",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Free Proxy", "Regular Updates", "Multi-protocol"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4339,26 +2616,13 @@
       "forks": 2300,
       "language": "Markdown",
       "license": "MIT",
-      "tags": [
-        "Free Nodes",
-        "Sharing",
-        "V2Ray"
-      ],
+      "tags": ["Free Nodes", "Sharing", "V2Ray"],
       "category": "collection",
       "lastCommit": "2025-05-31",
-      "highlights": [
-        "Free Nodes",
-        "Continuous Updates",
-        "Multi-protocol"
-      ],
-      "gradient": [
-        "#6366f1",
-        "#4f46e5"
-      ],
+      "highlights": ["Free Nodes", "Continuous Updates", "Multi-protocol"],
+      "gradient": ["#6366f1", "#4f46e5"],
       "kind": "tools",
-      "platform": [
-        "browser"
-      ],
+      "platform": ["browser"],
       "status": "stale",
       "addedAt": "2026-06-01"
     },
@@ -4374,23 +2638,14 @@
       "language": "Kotlin",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "mobile"
-      ],
+      "platform": ["mobile"],
       "category": "gui",
-      "tags": [
-        "surfboard"
-      ],
+      "tags": ["surfboard"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Surfboard"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Surfboard"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original was renamed; getsurfboard/surfboard is the active repo"
     },
     {
@@ -4405,23 +2660,14 @@
       "language": "Kotlin",
       "license": "GPL-3.0",
       "kind": "proxy",
-      "platform": [
-        "mobile"
-      ],
+      "platform": ["mobile"],
       "category": "gui",
-      "tags": [
-        "pharos"
-      ],
+      "tags": ["pharos"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Pharos"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Pharos"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original was renamed; this is the active pharos mobile client"
     },
     {
@@ -4436,24 +2682,14 @@
       "language": "Dart",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "mobile",
-        "desktop"
-      ],
+      "platform": ["mobile", "desktop"],
       "category": "gui",
-      "tags": [
-        "karing"
-      ],
+      "tags": ["karing"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Karing"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Karing"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "clashmi",
@@ -4467,23 +2703,14 @@
       "language": "Swift",
       "license": "GPL-3.0",
       "kind": "proxy",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "category": "gui",
-      "tags": [
-        "clash mi"
-      ],
+      "tags": ["clash mi"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Clash Mi"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Clash Mi"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "clashx-pro",
@@ -4497,23 +2724,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "category": "gui",
-      "tags": [
-        "clashx pro"
-      ],
+      "tags": ["clashx pro"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "archived",
-      "highlights": [
-        "ClashX Pro"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["ClashX Pro"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original SpongeNobody/Clashy was archived; this is the canonical Clash subscription config"
     },
     {
@@ -4528,24 +2746,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "core",
-      "tags": [
-        "streisand"
-      ],
+      "tags": ["streisand"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Streisand"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Streisand"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "clash-dashboard",
@@ -4559,24 +2767,14 @@
       "language": "TypeScript",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "gui",
-      "tags": [
-        "clash dashboard"
-      ],
+      "tags": ["clash dashboard"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "archived",
-      "highlights": [
-        "Clash Dashboard"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Clash Dashboard"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original Dreamacro/clash-dashboard was archived; this is the active fork"
     },
     {
@@ -4591,24 +2789,14 @@
       "language": "TypeScript",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "gui",
-      "tags": [
-        "yacd"
-      ],
+      "tags": ["yacd"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Yacd"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Yacd"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "zashboard",
@@ -4622,24 +2810,14 @@
       "language": "Vue",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "gui",
-      "tags": [
-        "zashboard"
-      ],
+      "tags": ["zashboard"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Zashboard"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Zashboard"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "openconnect",
@@ -4653,25 +2831,14 @@
       "language": "C",
       "license": "LGPL-2.1",
       "kind": "vpn",
-      "platform": [
-        "desktop",
-        "mobile",
-        "cli"
-      ],
+      "platform": ["desktop", "mobile", "cli"],
       "category": "core",
-      "tags": [
-        "openconnect"
-      ],
+      "tags": ["openconnect"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "OpenConnect"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["OpenConnect"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "strongswan",
@@ -4685,23 +2852,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "vpn",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "core",
-      "tags": [
-        "strongswan"
-      ],
+      "tags": ["strongswan"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "strongSwan"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["strongSwan"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "libreswan",
@@ -4715,23 +2873,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "vpn",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "core",
-      "tags": [
-        "libreswan"
-      ],
+      "tags": ["libreswan"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Libreswan"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Libreswan"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "algo",
@@ -4745,24 +2894,14 @@
       "language": "Python",
       "license": "AGPL-3.0",
       "kind": "vpn",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "category": "core",
-      "tags": [
-        "algo"
-      ],
+      "tags": ["algo"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Algo"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Algo"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "innernet",
@@ -4776,24 +2915,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "core",
-      "tags": [
-        "innernet"
-      ],
+      "tags": ["innernet"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Innernet"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Innernet"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "boringtun",
@@ -4807,24 +2936,14 @@
       "language": "Rust",
       "license": "BSD-3-Clause",
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "core",
-      "tags": [
-        "boringtun"
-      ],
+      "tags": ["boringtun"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "BoringTun"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["BoringTun"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "amnezia-client",
@@ -4838,24 +2957,14 @@
       "language": "C++",
       "license": "GPL-3.0",
       "kind": "vpn",
-      "platform": [
-        "desktop",
-        "mobile"
-      ],
+      "platform": ["desktop", "mobile"],
       "category": "gui",
-      "tags": [
-        "amneziavpn"
-      ],
+      "tags": ["amneziavpn"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "AmneziaVPN"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["AmneziaVPN"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "amnezia-server",
@@ -4869,24 +2978,14 @@
       "language": "C++",
       "license": "GPL-3.0",
       "kind": "vpn",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "core",
-      "tags": [
-        "amnezia server"
-      ],
+      "tags": ["amnezia server"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Amnezia Server"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Amnezia Server"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Server was renamed; the client monorepo is the canonical home"
     },
     {
@@ -4901,23 +3000,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "dns_tools",
-      "tags": [
-        "blocky"
-      ],
+      "tags": ["blocky"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Blocky"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Blocky"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "dnsdist",
@@ -4931,23 +3021,14 @@
       "language": "C++",
       "license": "GPL-2.0",
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "dns_tools",
-      "tags": [
-        "dnsdist"
-      ],
+      "tags": ["dnsdist"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "dnsdist"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["dnsdist"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "powerdns-recursor",
@@ -4961,23 +3042,14 @@
       "language": "C++",
       "license": "GPL-2.0",
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "dns_tools",
-      "tags": [
-        "powerdns recursor"
-      ],
+      "tags": ["powerdns recursor"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "PowerDNS Recursor"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["PowerDNS Recursor"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "knot",
@@ -4991,23 +3063,14 @@
       "language": "C",
       "license": "GPL-3.0",
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "dns_tools",
-      "tags": [
-        "knot dns"
-      ],
+      "tags": ["knot dns"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Knot DNS"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Knot DNS"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "deadwood",
@@ -5021,23 +3084,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "dns",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "dns_tools",
-      "tags": [
-        "deadwood"
-      ],
+      "tags": ["deadwood"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Deadwood"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Deadwood"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "doggo",
@@ -5051,23 +3105,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "dns",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "network_test",
-      "tags": [
-        "doggo"
-      ],
+      "tags": ["doggo"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "doggo"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["doggo"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "dog",
@@ -5081,23 +3126,14 @@
       "language": "Rust",
       "license": "EUPL-1.2",
       "kind": "dns",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "network_test",
-      "tags": [
-        "dog"
-      ],
+      "tags": ["dog"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "dog"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["dog"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "q",
@@ -5111,23 +3147,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "dns",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "network_test",
-      "tags": [
-        "q"
-      ],
+      "tags": ["q"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "q"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["q"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "crowdsec",
@@ -5141,24 +3168,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "security_tools",
-      "tags": [
-        "crowdsec"
-      ],
+      "tags": ["crowdsec"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "CrowdSec"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["CrowdSec"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "suricata",
@@ -5172,24 +3189,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "security_tools",
-      "tags": [
-        "suricata"
-      ],
+      "tags": ["suricata"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Suricata"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Suricata"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "modsecurity",
@@ -5203,23 +3210,14 @@
       "language": "C",
       "license": "Apache-2.0",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "modsecurity"
-      ],
+      "tags": ["modsecurity"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "ModSecurity"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["ModSecurity"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "coraza",
@@ -5233,24 +3231,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "security",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "security_tools",
-      "tags": [
-        "coraza"
-      ],
+      "tags": ["coraza"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Coraza"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Coraza"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "fail2ban",
@@ -5264,23 +3252,14 @@
       "language": "Python",
       "license": "GPL-2.0",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "fail2ban"
-      ],
+      "tags": ["fail2ban"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Fail2ban"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Fail2ban"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "sshguard",
@@ -5294,23 +3273,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "sshguard"
-      ],
+      "tags": ["sshguard"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "sshguard"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["sshguard"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "cowrie",
@@ -5324,23 +3294,14 @@
       "language": "Python",
       "license": "BSD-3-Clause",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "cowrie"
-      ],
+      "tags": ["cowrie"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Cowrie"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Cowrie"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "dionaea",
@@ -5354,23 +3315,14 @@
       "language": "Python",
       "license": "GPL-2.0",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "dionaea"
-      ],
+      "tags": ["dionaea"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Dionaea"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Dionaea"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "tpotce",
@@ -5384,23 +3336,14 @@
       "language": "Dockerfile",
       "license": "MIT",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "t-pot"
-      ],
+      "tags": ["t-pot"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "T-Pot"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["T-Pot"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "authentik",
@@ -5414,23 +3357,14 @@
       "language": "Python",
       "license": "MIT",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "authentik"
-      ],
+      "tags": ["authentik"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Authentik"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Authentik"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "crowdsec-bouncer-traefik",
@@ -5444,23 +3378,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "security",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "security_tools",
-      "tags": [
-        "crowdsec traefik bouncer"
-      ],
+      "tags": ["crowdsec traefik bouncer"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "CrowdSec Traefik Bouncer"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["CrowdSec Traefik Bouncer"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Repo was moved to a new owner"
     },
     {
@@ -5475,23 +3400,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "github_tools",
-      "tags": [
-        "gh-proxy-go"
-      ],
+      "tags": ["gh-proxy-go"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "archived",
-      "highlights": [
-        "gh-proxy-go"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["gh-proxy-go"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original was removed; hunshcn/gh-proxy is the canonical gh-proxy"
     },
     {
@@ -5506,23 +3422,14 @@
       "language": "C#",
       "license": "MIT",
       "kind": "acceleration",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "category": "github_tools",
-      "tags": [
-        "watt toolkit"
-      ],
+      "tags": ["watt toolkit"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Watt Toolkit"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Watt Toolkit"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original Blinue/WattToolkit was merged into SteamTools"
     },
     {
@@ -5537,23 +3444,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "mirrors",
-      "tags": [
-        "cf-worker-dir"
-      ],
+      "tags": ["cf-worker-dir"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "archived",
-      "highlights": [
-        "CF-Worker-Dir"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["CF-Worker-Dir"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original repo was removed; pointing to the closest working Cloudflare worker for proxy"
     },
     {
@@ -5568,24 +3466,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "acceleration",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "category": "tunnel_tools",
-      "tags": [
-        "chisel"
-      ],
+      "tags": ["chisel"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "chisel"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["chisel"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "haproxy",
@@ -5599,23 +3487,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "tunnel_tools",
-      "tags": [
-        "haproxy"
-      ],
+      "tags": ["haproxy"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "HAProxy"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["HAProxy"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "nginx",
@@ -5629,23 +3508,14 @@
       "language": "C",
       "license": "BSD-2-Clause",
       "kind": "acceleration",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "tunnel_tools",
-      "tags": [
-        "nginx"
-      ],
+      "tags": ["nginx"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "nginx"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["nginx"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "nagios-core",
@@ -5659,23 +3529,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "monitoring",
-      "tags": [
-        "nagios core"
-      ],
+      "tags": ["nagios core"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Nagios Core"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Nagios Core"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "checkmk",
@@ -5689,23 +3550,14 @@
       "language": "Python",
       "license": "GPL-2.0",
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "monitoring",
-      "tags": [
-        "checkmk"
-      ],
+      "tags": ["checkmk"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Checkmk"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Checkmk"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "victoria-metrics",
@@ -5719,23 +3571,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "monitoring",
-      "tags": [
-        "victoriametrics"
-      ],
+      "tags": ["victoriametrics"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "VictoriaMetrics"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["VictoriaMetrics"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "thanos",
@@ -5749,23 +3592,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "monitoring",
-      "tags": [
-        "thanos"
-      ],
+      "tags": ["thanos"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Thanos"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Thanos"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "vector",
@@ -5779,23 +3613,14 @@
       "language": "Rust",
       "license": "MPL-2.0",
       "kind": "monitoring",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "monitoring",
-      "tags": [
-        "vector"
-      ],
+      "tags": ["vector"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Vector"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Vector"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "yacht",
@@ -5809,24 +3634,14 @@
       "language": "TypeScript",
       "license": "MIT",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "yacht"
-      ],
+      "tags": ["yacht"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Yacht"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Yacht"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "casaos",
@@ -5840,24 +3655,14 @@
       "language": "TypeScript",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "casaos"
-      ],
+      "tags": ["casaos"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "CasaOS"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["CasaOS"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "umbrel",
@@ -5871,24 +3676,14 @@
       "language": "TypeScript",
       "license": "AGPL-3.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "umbrel"
-      ],
+      "tags": ["umbrel"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Umbrel"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Umbrel"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "yunohost",
@@ -5902,24 +3697,14 @@
       "language": "Python",
       "license": "AGPL-3.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "yunohost"
-      ],
+      "tags": ["yunohost"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "YunoHost"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["YunoHost"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "k0s",
@@ -5933,24 +3718,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "container",
-      "tags": [
-        "k0s"
-      ],
+      "tags": ["k0s"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "k0s"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["k0s"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "microk8s",
@@ -5964,24 +3739,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "cli"
-      ],
+      "platform": ["server", "cli"],
       "category": "container",
-      "tags": [
-        "microk8s"
-      ],
+      "tags": ["microk8s"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "MicroK8s"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["MicroK8s"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "kompose",
@@ -5995,23 +3760,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "container",
-      "tags": [
-        "kompose"
-      ],
+      "tags": ["kompose"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Kompose"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Kompose"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "rancher",
@@ -6025,24 +3781,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "container",
-      "tags": [
-        "rancher"
-      ],
+      "tags": ["rancher"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Rancher"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Rancher"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "headlamp",
@@ -6056,24 +3802,14 @@
       "language": "TypeScript",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "container",
-      "tags": [
-        "headlamp"
-      ],
+      "tags": ["headlamp"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Headlamp"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Headlamp"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "lens",
@@ -6087,23 +3823,14 @@
       "language": "TypeScript",
       "license": "MIT",
       "kind": "ops",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "category": "container",
-      "tags": [
-        "lens"
-      ],
+      "tags": ["lens"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Lens"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Lens"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "forgejo",
@@ -6117,24 +3844,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "forgejo"
-      ],
+      "tags": ["forgejo"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Forgejo"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["Forgejo"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original GitHub org is no longer publishing; moved to Codeberg"
     },
     {
@@ -6149,24 +3866,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "ops",
-      "platform": [
-        "server",
-        "browser"
-      ],
+      "platform": ["server", "browser"],
       "category": "server_mgmt",
-      "tags": [
-        "gitea"
-      ],
+      "tags": ["gitea"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Gitea"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Gitea"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "woodpecker-ci",
@@ -6180,23 +3887,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "node_tools",
-      "tags": [
-        "woodpecker ci"
-      ],
+      "tags": ["woodpecker ci"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Woodpecker CI"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Woodpecker CI"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "drone",
@@ -6210,23 +3908,14 @@
       "language": "Go",
       "license": "Apache-2.0",
       "kind": "ops",
-      "platform": [
-        "server"
-      ],
+      "platform": ["server"],
       "category": "node_tools",
-      "tags": [
-        "drone"
-      ],
+      "tags": ["drone"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "Drone"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["Drone"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "bat",
@@ -6240,23 +3929,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "bat"
-      ],
+      "tags": ["bat"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "bat"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["bat"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "eza",
@@ -6270,23 +3950,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "eza"
-      ],
+      "tags": ["eza"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "eza"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["eza"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "zoxide",
@@ -6300,23 +3971,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "zoxide"
-      ],
+      "tags": ["zoxide"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "zoxide"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["zoxide"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "fzf",
@@ -6330,23 +3992,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "fzf"
-      ],
+      "tags": ["fzf"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "fzf"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["fzf"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "lazygit",
@@ -6360,23 +4013,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "lazygit"
-      ],
+      "tags": ["lazygit"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "lazygit"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["lazygit"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "htop",
@@ -6390,23 +4034,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "htop"
-      ],
+      "tags": ["htop"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "htop"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["htop"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "bottom",
@@ -6420,23 +4055,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "bottom"
-      ],
+      "tags": ["bottom"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "bottom"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["bottom"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "duf",
@@ -6450,23 +4076,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "duf"
-      ],
+      "tags": ["duf"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "duf"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["duf"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "dust",
@@ -6480,23 +4097,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "dust"
-      ],
+      "tags": ["dust"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "dust"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["dust"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "delta",
@@ -6510,23 +4118,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "delta"
-      ],
+      "tags": ["delta"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "delta"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["delta"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "httpie",
@@ -6540,23 +4139,14 @@
       "language": "Python",
       "license": "BSD-3-Clause",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "data_transfer",
-      "tags": [
-        "httpie"
-      ],
+      "tags": ["httpie"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "HTTPie"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["HTTPie"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "xh",
@@ -6570,23 +4160,14 @@
       "language": "Rust",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "data_transfer",
-      "tags": [
-        "xh"
-      ],
+      "tags": ["xh"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "xh"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["xh"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "curlie",
@@ -6600,23 +4181,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "data_transfer",
-      "tags": [
-        "curlie"
-      ],
+      "tags": ["curlie"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "curlie"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["curlie"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "mitmproxy",
@@ -6630,24 +4202,14 @@
       "language": "Python",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "category": "data_transfer",
-      "tags": [
-        "mitmproxy"
-      ],
+      "tags": ["mitmproxy"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "mitmproxy"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["mitmproxy"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "clash-cli",
@@ -6661,23 +4223,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "proxy",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "protocol_tools",
-      "tags": [
-        "clash-cli"
-      ],
+      "tags": ["clash-cli"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "archived",
-      "highlights": [
-        "clash-cli"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["clash-cli"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original repo was removed; the collection is the closest maintainable replacement"
     },
     {
@@ -6692,23 +4245,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "proxychains-ng"
-      ],
+      "tags": ["proxychains-ng"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "proxychains-ng"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["proxychains-ng"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "tun2socks",
@@ -6722,24 +4266,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli",
-        "server"
-      ],
+      "platform": ["cli", "server"],
       "category": "tunnel_tools",
-      "tags": [
-        "tun2socks"
-      ],
+      "tags": ["tun2socks"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "tun2socks"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["tun2socks"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "heirloom-ng",
@@ -6753,23 +4287,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli"
-      ],
+      "platform": ["cli"],
       "category": "utilities",
-      "tags": [
-        "heirloom-ng"
-      ],
+      "tags": ["heirloom-ng"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "heirloom-ng"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ],
+      "highlights": ["heirloom-ng"],
+      "gradient": ["#888", "#444"],
       "notes": "URL updated: Original was moved to a new org"
     },
     {
@@ -6784,24 +4309,14 @@
       "language": "Python",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "category": "data_transfer",
-      "tags": [
-        "magic-wormhole"
-      ],
+      "tags": ["magic-wormhole"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "magic-wormhole"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["magic-wormhole"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "scrcpy",
@@ -6815,23 +4330,14 @@
       "language": "C",
       "license": "Apache-2.0",
       "kind": "tools",
-      "platform": [
-        "desktop"
-      ],
+      "platform": ["desktop"],
       "category": "data_transfer",
-      "tags": [
-        "scrcpy"
-      ],
+      "tags": ["scrcpy"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "scrcpy"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["scrcpy"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "croc",
@@ -6845,24 +4351,14 @@
       "language": "Go",
       "license": "MIT",
       "kind": "tools",
-      "platform": [
-        "cli",
-        "desktop"
-      ],
+      "platform": ["cli", "desktop"],
       "category": "data_transfer",
-      "tags": [
-        "croc"
-      ],
+      "tags": ["croc"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "croc"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["croc"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "homeproxy",
@@ -6876,23 +4372,14 @@
       "language": "Lua",
       "license": "GPL-3.0",
       "kind": "proxy",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "category": "router",
-      "tags": [
-        "homeproxy"
-      ],
+      "tags": ["homeproxy"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "HomeProxy"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["HomeProxy"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "openwrt-actions",
@@ -6906,24 +4393,14 @@
       "language": "Shell",
       "license": "MIT",
       "kind": "ops",
-      "platform": [
-        "cli",
-        "router"
-      ],
+      "platform": ["cli", "router"],
       "category": "router",
-      "tags": [
-        "openwrt actions"
-      ],
+      "tags": ["openwrt actions"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "OpenWrt Actions"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["OpenWrt Actions"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "immortalwrt",
@@ -6937,23 +4414,14 @@
       "language": "C",
       "license": "GPL-2.0",
       "kind": "ops",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "category": "router",
-      "tags": [
-        "immortalwrt"
-      ],
+      "tags": ["immortalwrt"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "ImmortalWrt"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["ImmortalWrt"],
+      "gradient": ["#888", "#444"]
     },
     {
       "id": "luci-app-ssr-plus",
@@ -6967,23 +4435,14 @@
       "language": "Lua",
       "license": "GPL-3.0",
       "kind": "proxy",
-      "platform": [
-        "router"
-      ],
+      "platform": ["router"],
       "category": "router",
-      "tags": [
-        "luci-app-ssr-plus"
-      ],
+      "tags": ["luci-app-ssr-plus"],
       "lastCommit": "2026-06-11",
       "addedAt": "2026-06-11",
       "status": "active",
-      "highlights": [
-        "luci-app-ssr-plus"
-      ],
-      "gradient": [
-        "#888",
-        "#444"
-      ]
+      "highlights": ["luci-app-ssr-plus"],
+      "gradient": ["#888", "#444"]
     }
   ]
 }

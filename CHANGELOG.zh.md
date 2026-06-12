@@ -12,6 +12,7 @@
 ## [未发布]
 
 ### 计划中
+
 - 搜索历史与已保存搜索（基于浏览器 localStorage）
 - 模糊搜索"你是不是想找…"建议
 - 新增项目的 RSS / Atom 订阅
@@ -22,6 +23,7 @@
 ## [0.3.0] – 2026-06-02
 
 ### 变更（UI 细节打磨 - 第三轮）
+
 - **顶栏精简**：移除重复的 `Categories` 下拉菜单，只保留最右边的 hamburger 抽屉。explore 页面移除 `← Home` 边框按钮。主 CTA 在 landing 是 `Explore`，在 explore 是 `Home`。
 - **语言切换器重写**：3 个内联按钮（EN/中文/日本語）→ 单个 Globe 图标 + 下拉菜单（点击外部关闭）。移动端抽屉底部也提供语言切换器，方便在抽屉内直接切换。
 - **侧边栏瘦身**：`w-64` (256 px) → `w-[232px]`。移除底部那一行单薄的 footer 文字。
@@ -34,12 +36,14 @@
 ## [0.2.0] – 2026-06-02
 
 ### 新增
+
 - **顶栏组件** (`src/components/top-nav.tsx`)，landing 和 explore 共享。
 - **分组定义** (`src/lib/category-groups.ts`)：6 个逻辑集群，合计 21 个子分类。
 - 新增 i18n 键 `group.*` 与 `nav.*`（en / zh / ja 三语）。
 - 顶栏**多级下拉菜单**：桌面悬停，移动端 hamburger 抽屉；支持点击外部关闭、ARIA 标签。
 
 ### 变更
+
 - **项目列表** 按分组集群重新组织，区块间距加大。
 - **项目卡片**：p-6 padding、2 个标签 + `+N` 溢出指示、左侧渐变边条、移除冗余 forks、`line-clamp` 限制标题/描述、底部分隔线分隔 meta 区。
 
@@ -48,6 +52,7 @@
 ## [0.1.1] – 2026-06-02
 
 ### 修复
+
 - `next.config.ts`：启用 `trailingSlash: true`，使 Next.js 生成 `explore/index.html` 而非 `explore.html`，子路径路由在 GitHub Pages 上正常生效。
 - CSS 资源在 `/NetTools-Hub/_next/...` 下正确解析。
 
@@ -56,6 +61,7 @@
 ## [0.1.0] – 2026-06-01
 
 ### 新增
+
 - 首次公开发布。
 - 120+ 个精选网络工具，覆盖 21 个分类，全部存放在 `data/projects.json`。
 - 首页（hero、特性、分类网格、行动召唤、footer）。

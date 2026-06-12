@@ -33,25 +33,27 @@
 //   2  -> file could not be read / parsed
 // ============================================================================
 
-import { readFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
-const DATA_FILE = resolve(ROOT, "data/projects.json");
+const ROOT = resolve(__dirname, '..');
+const DATA_FILE = resolve(ROOT, 'data/projects.json');
 
 const ALLOWED_KINDS = new Set([
-  "proxy", "vpn", "dns", "acceleration",
-  "security", "monitoring", "ops", "tools",
+  'proxy',
+  'vpn',
+  'dns',
+  'acceleration',
+  'security',
+  'monitoring',
+  'ops',
+  'tools',
 ]);
-const ALLOWED_PLATFORMS = new Set([
-  "desktop", "mobile", "cli", "server", "browser", "router",
-]);
-const ALLOWED_VERDICTS = new Set([
-  "recommended", "neutral", "caution", "avoid",
-]);
-const ALLOWED_STATUSES = new Set(["active", "stale", "archived"]);
+const ALLOWED_PLATFORMS = new Set(['desktop', 'mobile', 'cli', 'server', 'browser', 'router']);
+const ALLOWED_VERDICTS = new Set(['recommended', 'neutral', 'caution', 'avoid']);
+const ALLOWED_STATUSES = new Set(['active', 'stale', 'archived']);
 
 const ACTIVE_DAYS = 180;
 const STALE_DAYS = 730;
@@ -60,11 +62,17 @@ const STALE_DAYS = 730;
 
 let errors = 0;
 let warnings = 0;
-const fail = (msg) => { errors += 1; process.stderr.write(`  ERROR  ${msg}\n`); };
-const warn = (msg) => { warnings += 1; process.stderr.write(`  WARN   ${msg}\n`); };
+const fail = (msg) => {
+  errors += 1;
+  process.stderr.write(`  ERROR  ${msg}\n`);
+};
+const warn = (msg) => {
+  warnings += 1;
+  process.stderr.write(`  WARN   ${msg}\n`);
+};
 
 function isIsoDate(s) {
-  if (typeof s !== "string") return false;
+  if (typeof s !== 'string') return false;
   if (!/^\d{4}-\d{2}-\d{2}/.test(s)) return false;
   const d = new Date(s);
   return !Number.isNaN(d.getTime());
@@ -72,9 +80,9 @@ function isIsoDate(s) {
 
 function deriveStatus(lastCommit) {
   const d = (Date.now() - new Date(lastCommit).getTime()) / 86_400_000;
-  if (d < ACTIVE_DAYS) return "active";
-  if (d < STALE_DAYS) return "stale";
-  return "archived";
+  if (d < ACTIVE_DAYS) return 'active';
+  if (d < STALE_DAYS) return 'stale';
+  return 'archived';
 }
 
 // ---------------------------------------------------------------------------
@@ -82,7 +90,7 @@ function deriveStatus(lastCommit) {
 async function main() {
   let raw;
   try {
-    raw = await readFile(DATA_FILE, "utf8");
+    raw = await readFile(DATA_FILE, 'utf8');
   } catch (e) {
     process.stderr.write(`fatal: cannot read ${DATA_FILE}: ${e.message}\n`);
     process.exit(2);
@@ -96,13 +104,13 @@ async function main() {
   }
 
   // Top-level shape -------------------------------------------------------
-  if (typeof data.lastUpdated !== "string" || !isIsoDate(data.lastUpdated)) {
+  if (typeof data.lastUpdated !== 'string' || !isIsoDate(data.lastUpdated)) {
     fail(`top-level "lastUpdated" must be an ISO-8601 date string`);
   }
-  if (typeof data.schemaVersion !== "number") {
+  if (typeof data.schemaVersion !== 'number') {
     warn(`top-level "schemaVersion" missing or not a number; defaulting to 2`);
   }
-  if (!data.categories || typeof data.categories !== "object") {
+  if (!data.categories || typeof data.categories !== 'object') {
     fail(`top-level "categories" must be an object`);
   }
   if (!Array.isArray(data.projects)) {
@@ -118,17 +126,20 @@ async function main() {
   const seenPaths = new Map();
   for (let i = 0; i < projects.length; i += 1) {
     const p = projects[i];
-    const where = `#${i} (id=${p?.id ?? "<missing>"})`;
+    const where = `#${i} (id=${p?.id ?? '<missing>'})`;
 
-    if (!p || typeof p !== "object") { fail(`${where} is not an object`); continue; }
+    if (!p || typeof p !== 'object') {
+      fail(`${where} is not an object`);
+      continue;
+    }
 
     // -- identity --
-    for (const k of ["id", "name", "author", "description", "url"]) {
-      if (typeof p[k] !== "string" || p[k].length === 0) {
+    for (const k of ['id', 'name', 'author', 'description', 'url']) {
+      if (typeof p[k] !== 'string' || p[k].length === 0) {
         fail(`${where}.${k} must be a non-empty string`);
       }
     }
-    if (typeof p.id === "string" && !/^[a-z0-9][a-z0-9_-]*$/.test(p.id)) {
+    if (typeof p.id === 'string' && !/^[a-z0-9][a-z0-9_-]*$/.test(p.id)) {
       fail(`${where}.id "${p.id}" must be lowercase, URL-safe (a-z, 0-9, -, _)`);
     }
     if (seenIds.has(p.id)) {
@@ -144,38 +155,39 @@ async function main() {
     // elsewhere. We accept any well-known code forge so the
     // validator does not block legitimate non-GH mirrors.
     const ALLOWED_HOSTS = new Set([
-      "github.com",
-      "codeberg.org",
-      "gitlab.com",
-      "git.sr.ht",
-      "gitea.com",
+      'github.com',
+      'codeberg.org',
+      'gitlab.com',
+      'git.sr.ht',
+      'gitea.com',
     ]);
     let urlObj;
-    try { urlObj = new URL(p.url); } catch { /* caught below */ }
+    try {
+      urlObj = new URL(p.url);
+    } catch {
+      /* caught below */
+    }
     if (!urlObj) {
       fail(`${where}.url "${p.url}" is not a valid URL`);
     } else if (!ALLOWED_HOSTS.has(urlObj.hostname)) {
-      fail(
-        `${where}.url host "${urlObj.hostname}" is not in ` +
-          `${[...ALLOWED_HOSTS].join("|")}`,
-      );
+      fail(`${where}.url host "${urlObj.hostname}" is not in ` + `${[...ALLOWED_HOSTS].join('|')}`);
     }
 
     // -- metrics --
-    for (const k of ["stars", "forks"]) {
-      if (typeof p[k] !== "number" || p[k] < 0) {
+    for (const k of ['stars', 'forks']) {
+      if (typeof p[k] !== 'number' || p[k] < 0) {
         fail(`${where}.${k} must be a non-negative number`);
       }
     }
-    for (const k of ["language", "license"]) {
-      if (typeof p[k] !== "string" || p[k].length === 0) {
+    for (const k of ['language', 'license']) {
+      if (typeof p[k] !== 'string' || p[k].length === 0) {
         fail(`${where}.${k} must be a non-empty string`);
       }
     }
 
     // -- taxonomies --
     if (!ALLOWED_KINDS.has(p.kind)) {
-      fail(`${where}.kind "${p.kind}" not in ${[...ALLOWED_KINDS].join("|")}`);
+      fail(`${where}.kind "${p.kind}" not in ${[...ALLOWED_KINDS].join('|')}`);
     }
     if (!Array.isArray(p.platform) || p.platform.length === 0) {
       fail(`${where}.platform must be a non-empty array`);
@@ -186,7 +198,7 @@ async function main() {
         }
       }
     }
-    if (typeof p.category !== "string" || p.category.length === 0) {
+    if (typeof p.category !== 'string' || p.category.length === 0) {
       fail(`${where}.category must be a non-empty string`);
     } else if (categories[p.category] === undefined) {
       fail(`${where}.category "${p.category}" is not defined in data.categories`);
@@ -197,28 +209,30 @@ async function main() {
 
     // -- editorial --
     if (p.verdict !== undefined && !ALLOWED_VERDICTS.has(p.verdict)) {
-      fail(`${where}.verdict "${p.verdict}" not in ${[...ALLOWED_VERDICTS].join("|")}`);
+      fail(`${where}.verdict "${p.verdict}" not in ${[...ALLOWED_VERDICTS].join('|')}`);
     }
-    if (p.notes !== undefined && typeof p.notes !== "string") {
+    if (p.notes !== undefined && typeof p.notes !== 'string') {
       fail(`${where}.notes must be a string if present`);
     }
 
     // -- lifecycle --
-    for (const k of ["lastCommit", "addedAt"]) {
+    for (const k of ['lastCommit', 'addedAt']) {
       if (!isIsoDate(p[k])) fail(`${where}.${k} must be an ISO-8601 date string`);
     }
     if (!ALLOWED_STATUSES.has(p.status)) {
-      fail(`${where}.status "${p.status}" not in ${[...ALLOWED_STATUSES].join("|")}`);
+      fail(`${where}.status "${p.status}" not in ${[...ALLOWED_STATUSES].join('|')}`);
     } else if (isIsoDate(p.lastCommit)) {
       const derived = deriveStatus(p.lastCommit);
       if (derived !== p.status) {
         // Allow: stale -> archived (more permissive than the formula),
         // and any -> active (maintainer override). Flag the rest.
         const manualOverride =
-          (derived === "active" && p.status !== "active") ||
-          (derived === "stale" && p.status === "archived");
+          (derived === 'active' && p.status !== 'active') ||
+          (derived === 'stale' && p.status === 'archived');
         if (!manualOverride) {
-          warn(`${where}.status is "${p.status}" but lastCommit ${p.lastCommit} suggests "${derived}"`);
+          warn(
+            `${where}.status is "${p.status}" but lastCommit ${p.lastCommit} suggests "${derived}"`,
+          );
         }
       }
     }
@@ -241,17 +255,20 @@ async function main() {
   // adds 2-3 minutes to the validator run, and (c) the canonical
   // `pnpm run refresh` already does this weekly. Opt in for
   // pre-commit or PR review runs.
-  if (process.argv.includes("--check-urls")) {
+  if (process.argv.includes('--check-urls')) {
     process.stdout.write(`\n--check-urls: HEAD-sweeping ${projects.length} URLs ...\n`);
     const reachable = [];
     const broken = [];
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
     for (let i = 0; i < projects.length; i += 1) {
       const p = projects[i];
-      const where = `#${i} (id=${p?.id ?? "<missing>"})`;
-      if (!p?.url) { broken.push([where, "(no url)"]); continue; }
+      const where = `#${i} (id=${p?.id ?? '<missing>'})`;
+      if (!p?.url) {
+        broken.push([where, '(no url)']);
+        continue;
+      }
       try {
-        const res = await fetch(p.url, { method: "HEAD", redirect: "follow" });
+        const res = await fetch(p.url, { method: 'HEAD', redirect: 'follow' });
         if (res.status >= 200 && res.status < 400) {
           reachable.push(where);
         } else {

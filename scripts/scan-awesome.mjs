@@ -31,14 +31,14 @@
 //     continue. The script never aborts on a single source.
 // ============================================================================
 
-import { readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
-const DATA_FILE = resolve(ROOT, "data/projects.json");
-const CANDIDATES_FILE = resolve(ROOT, "data/candidates.json");
+const ROOT = resolve(__dirname, '..');
+const DATA_FILE = resolve(ROOT, 'data/projects.json');
+const CANDIDATES_FILE = resolve(ROOT, 'data/candidates.json');
 
 // ----------------------------------------------------------------------------
 // Configuration: the awesome-* repos we mine.
@@ -51,31 +51,76 @@ const CANDIDATES_FILE = resolve(ROOT, "data/candidates.json");
 // maintainer, has been checked at least once, and is unlikely to
 // drift away from the network-tools topic.
 const SOURCES = [
-  { repo: "awesome-selfhosted/awesome-selfhosted", topic: "selfhost" },
-  { repo: "kitian616/awesome-vpn",                  topic: "vpn" },
-  { repo: "rtfmk/awesome-network",                  topic: "network" },
-  { repo: "caesar0301/awesome-pcaptools",           topic: "pcap" },
-  { repo: "fabacab/awesome-cybersecurity-blueteam", topic: "security" },
-  { repo: "mqyqingfeng/awesome-github",             topic: "github-accel" },
-  { repo: "yuliskov/SmartTVDNS",                    topic: "dns" }, // example
+  { repo: 'awesome-selfhosted/awesome-selfhosted', topic: 'selfhost' },
+  { repo: 'kitian616/awesome-vpn', topic: 'vpn' },
+  { repo: 'rtfmk/awesome-network', topic: 'network' },
+  { repo: 'caesar0301/awesome-pcaptools', topic: 'pcap' },
+  { repo: 'fabacab/awesome-cybersecurity-blueteam', topic: 'security' },
+  { repo: 'mqyqingfeng/awesome-github', topic: 'github-accel' },
+  { repo: 'yuliskov/SmartTVDNS', topic: 'dns' }, // example
 ];
 
 // Keywords that suggest the project is in scope for the index.
 // Match is case-insensitive and runs against the project name +
 // description text (if extractable). Empty array = accept all.
 const IN_SCOPE_KEYWORDS = [
-  "proxy", "vpn", "wireguard", "clash", "v2ray", "xray",
-  "shadowsocks", "trojan", "hysteria", "tuic", "ssr",
-  "dns", "smartdns", "adguard", "coredns",
-  "wire", "packet", "tcp", "udp", "nat", "ipv6", "bgp", "ospf",
-  "load balancer", "reverse proxy", "nginx", "caddy", "traefik",
-  "waf", "ids", "ips", "firewall", "honeypot",
-  "monitoring", "uptime", "prometheus", "smokeping", "mtr", "iperf",
-  "github", "mirror", "accelerat",
-  "router", "openwrt", "lede",
-  "docker", "kubernetes", "k3s",
-  "subscription", "ssr-sub", "clash-sub", "v2ray-sub",
-  "sniff", "capture", "pcap", "tcpdump", "wireshark",
+  'proxy',
+  'vpn',
+  'wireguard',
+  'clash',
+  'v2ray',
+  'xray',
+  'shadowsocks',
+  'trojan',
+  'hysteria',
+  'tuic',
+  'ssr',
+  'dns',
+  'smartdns',
+  'adguard',
+  'coredns',
+  'wire',
+  'packet',
+  'tcp',
+  'udp',
+  'nat',
+  'ipv6',
+  'bgp',
+  'ospf',
+  'load balancer',
+  'reverse proxy',
+  'nginx',
+  'caddy',
+  'traefik',
+  'waf',
+  'ids',
+  'ips',
+  'firewall',
+  'honeypot',
+  'monitoring',
+  'uptime',
+  'prometheus',
+  'smokeping',
+  'mtr',
+  'iperf',
+  'github',
+  'mirror',
+  'accelerat',
+  'router',
+  'openwrt',
+  'lede',
+  'docker',
+  'kubernetes',
+  'k3s',
+  'subscription',
+  'ssr-sub',
+  'clash-sub',
+  'v2ray-sub',
+  'sniff',
+  'capture',
+  'pcap',
+  'tcpdump',
+  'wireshark',
 ];
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -88,7 +133,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function fetchReadme(ownerRepo) {
   const url = `https://raw.githubusercontent.com/${ownerRepo}/HEAD/README.md`;
   const res = await fetch(url, {
-    headers: { "User-Agent": "nettools-hub-scanner" },
+    headers: { 'User-Agent': 'nettools-hub-scanner' },
   });
   if (!res.ok) throw new Error(`HTTP ${res.status} on ${ownerRepo}`);
   return res.text();
@@ -109,15 +154,11 @@ function extractGithubRepos(markdown) {
   let m;
   while ((m = re.exec(markdown)) !== null) {
     const owner = m[1];
-    const repo = m[2].replace(/\.git$/, "");
+    const repo = m[2].replace(/\.git$/, '');
     // Skip non-canonical entries: orgs, topics, "sponsors", etc.
-    if (
-      owner === "sponsors" ||
-      owner === "orgs" ||
-      owner === "settings" ||
-      owner === "topics"
-    ) continue;
-    if (repo === "") continue;
+    if (owner === 'sponsors' || owner === 'orgs' || owner === 'settings' || owner === 'topics')
+      continue;
+    if (repo === '') continue;
     const key = `${owner}/${repo}`;
     if (seen.has(key)) continue;
     seen.add(key);
@@ -141,14 +182,11 @@ function inScope(ownerRepo) {
 
 async function main() {
   const startedAt = new Date().toISOString();
-  const data = JSON.parse(await readFile(DATA_FILE, "utf8"));
+  const data = JSON.parse(await readFile(DATA_FILE, 'utf8'));
   const known = new Set(
     data.projects.map((p) => {
       const u = new URL(p.url);
-      return `${u.pathname.split("/")[1]}/${u.pathname.split("/")[2]}`.replace(
-        /\.git$/,
-        "",
-      );
+      return `${u.pathname.split('/')[1]}/${u.pathname.split('/')[2]}`.replace(/\.git$/, '');
     }),
   );
 
@@ -174,8 +212,8 @@ async function main() {
 
   const candidates = [];
   for (const [ownerRepo, meta] of allFound) {
-    if (known.has(ownerRepo)) continue;        // already indexed
-    if (!inScope(ownerRepo)) continue;         // off-topic
+    if (known.has(ownerRepo)) continue; // already indexed
+    if (!inScope(ownerRepo)) continue; // off-topic
     candidates.push({
       ownerRepo,
       url: `https://github.com/${ownerRepo}`,
@@ -193,7 +231,7 @@ async function main() {
     candidatesCount: candidates.length,
     candidates,
   };
-  await writeFile(CANDIDATES_FILE, JSON.stringify(out, null, 2) + "\n", "utf8");
+  await writeFile(CANDIDATES_FILE, JSON.stringify(out, null, 2) + '\n', 'utf8');
 
   // Human summary
   process.stdout.write(

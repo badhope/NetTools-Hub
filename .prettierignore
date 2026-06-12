@@ -1,0 +1,7 @@
+.next/
+out/
+node_modules/
+pnpm-lock.yaml
+*.min.js
+.pnpm-store/
+pnpm-store/

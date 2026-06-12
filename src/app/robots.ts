@@ -1,7 +1,7 @@
-import type { MetadataRoute } from "next";
-import { SITE_CANONICAL, SITE_ORIGIN } from "@/lib/site";
+import type { MetadataRoute } from 'next';
+import { SITE_CANONICAL, SITE_ORIGIN } from '@/lib/site';
 
-export const dynamic = "force-static";
+export const dynamic = 'force-static';
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -11,8 +11,8 @@ export default function robots(): MetadataRoute.Robots {
     // what Google and Bing actually consume to discover URLs.
     rules: [
       {
-        userAgent: "*",
-        allow: "/",
+        userAgent: '*',
+        allow: '/',
       },
     ],
     // `SITE_CANONICAL` has no trailing slash (see `lib/site.ts`

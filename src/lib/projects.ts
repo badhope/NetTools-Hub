@@ -1,14 +1,30 @@
-import { ProjectsData, Project, ProjectKind, ProjectPlatform } from "@/types/project";
+import { ProjectsData, Project, ProjectKind, ProjectPlatform } from '@/types/project';
 // data/projects.json lives at the repository root (kept outside src/ so
 // that future tooling — e.g. a separate data-validation script — can
 // read it without going through the Next.js import graph). Resolve
 // with a relative path; the @/ alias only covers src/.
-import rawData from "../../data/projects.json";
-import { formatNumber, formatTotalStars } from "@/lib/utils";
+import rawData from '../../data/projects.json';
+import { formatNumber, formatTotalStars } from '@/lib/utils';
 
 export { formatNumber, formatTotalStars };
 
 const data = rawData as ProjectsData;
+
+// ============================================================================
+// Schema version check
+// ============================================================================
+//
+// Warn if the data schema version doesn't match what the code expects.
+// This helps catch mismatches when the data refresh script updates the
+// schema but the frontend hasn't been updated yet.
+
+const CURRENT_SCHEMA_VERSION = 2;
+
+if (data.schemaVersion !== CURRENT_SCHEMA_VERSION) {
+  console.warn(
+    `[projects] Schema version mismatch: expected ${CURRENT_SCHEMA_VERSION}, got ${data.schemaVersion}. Some features may not work correctly.`
+  );
+}
 
 // ============================================================================
 // Pre-computed indexes
@@ -81,14 +97,10 @@ const BY_ID: ReadonlyMap<string, Project> = (() => {
 // accidentally mutate the cached values.
 // ---------------------------------------------------------------------------
 const KIND_COUNTS: Readonly<Record<string, number>> = Object.freeze(
-  Object.fromEntries(
-    Array.from(BY_KIND.entries()).map(([k, v]) => [k, v.length]),
-  ),
+  Object.fromEntries(Array.from(BY_KIND.entries()).map(([k, v]) => [k, v.length])),
 );
 const KIND_PLATFORM_COUNTS: Readonly<Record<string, number>> = Object.freeze(
-  Object.fromEntries(
-    Array.from(BY_KIND_PLATFORM.entries()).map(([k, v]) => [k, v.length]),
-  ),
+  Object.fromEntries(Array.from(BY_KIND_PLATFORM.entries()).map(([k, v]) => [k, v.length])),
 );
 
 // ---------------------------------------------------------------------------
@@ -97,10 +109,22 @@ const KIND_PLATFORM_COUNTS: Readonly<Record<string, number>> = Object.freeze(
 // here is what the validator and sitemap agree on.
 // ---------------------------------------------------------------------------
 const ALL_KINDS: readonly ProjectKind[] = Object.freeze([
-  "proxy", "vpn", "dns", "acceleration", "security", "monitoring", "ops", "tools",
+  'proxy',
+  'vpn',
+  'dns',
+  'acceleration',
+  'security',
+  'monitoring',
+  'ops',
+  'tools',
 ]);
 const ALL_PLATFORMS: readonly ProjectPlatform[] = Object.freeze([
-  "desktop", "mobile", "cli", "server", "browser", "router",
+  'desktop',
+  'mobile',
+  'cli',
+  'server',
+  'browser',
+  'router',
 ]);
 
 // ============================================================================
@@ -158,4 +182,59 @@ export function isValidKind(s: string): s is ProjectKind {
 
 export function isValidPlatform(s: string): s is ProjectPlatform {
   return (ALL_PLATFORMS as readonly string[]).includes(s);
+}
+
+// ---------------------------------------------------------------------------
+// Related projects. Score every other project against the given one using
+// weighted overlap on kind, platform, tags and category. Returns the top N
+// sorted by descending score. The weights are tuned so that same-kind is
+// the strongest signal, shared platforms are secondary, and tag overlap
+// provides fine-grained ranking within the same kind.
+// ---------------------------------------------------------------------------
+
+const WEIGHT_KIND = 10;
+const WEIGHT_PLATFORM = 3;
+const WEIGHT_TAG = 2;
+const WEIGHT_CATEGORY = 1;
+
+export function getRelatedProjects(id: string, limit = 4): readonly Project[] {
+  const target = BY_ID.get(id);
+  if (!target) return EMPTY_BUCKET;
+
+  const targetPlatforms = new Set(target.platform);
+  const targetTags = new Set(target.tags);
+
+  const scored: { project: Project; score: number }[] = [];
+
+  for (const p of PROJECTS) {
+    if (p.id === id) continue;
+
+    let score = 0;
+
+    // Kind match — strongest signal
+    if (p.kind === target.kind) score += WEIGHT_KIND;
+
+    // Platform overlap
+    for (const plat of p.platform) {
+      if (targetPlatforms.has(plat)) score += WEIGHT_PLATFORM;
+    }
+
+    // Tag overlap
+    for (const tag of p.tags) {
+      if (targetTags.has(tag)) score += WEIGHT_TAG;
+    }
+
+    // Category match
+    if (p.category === target.category) score += WEIGHT_CATEGORY;
+
+    if (score > 0) scored.push({ project: p, score });
+  }
+
+  scored.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    // Tiebreak by stars descending
+    return b.project.stars - a.project.stars;
+  });
+
+  return Object.freeze(scored.slice(0, limit).map((s) => s.project));
 }

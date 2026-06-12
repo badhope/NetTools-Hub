@@ -1,7 +1,7 @@
 name: Bug Report
 description: Something is broken or behaving wrong.
-title: "[bug]: "
-labels: ["bug", "triage"]
+title: '[bug]: '
+labels: ['bug', 'triage']
 assignees: []
 
 body:
@@ -16,7 +16,7 @@ body:
     attributes:
       label: What happened?
       description: Clear, short description of the bug.
-      placeholder: "When I run `...`, I get `...` instead of `...`."
+      placeholder: 'When I run `...`, I get `...` instead of `...`.'
     validations:
       required: true
 
@@ -50,7 +50,7 @@ body:
     id: version
     attributes:
       label: Version / commit
-      placeholder: "v1.2.3 or abcdef0"
+      placeholder: 'v1.2.3 or abcdef0'
     validations:
       required: true
 

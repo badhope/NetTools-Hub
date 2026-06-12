@@ -106,12 +106,12 @@ pnpm dev
 
 ### 可用脚本
 
-| 命令 | 说明 |
-| --- | --- |
-| `pnpm dev` | 在 8080 端口启动本地开发服务器 |
-| `pnpm build` | 在 `./out` 目录生成静态产物 |
-| `pnpm start` | 在 8080 端口服务已构建的 `./out` 目录 |
-| `pnpm lint` | 使用 Next.js + TypeScript 规则运行 ESLint |
+| 命令         | 说明                                      |
+| ------------ | ----------------------------------------- |
+| `pnpm dev`   | 在 8080 端口启动本地开发服务器            |
+| `pnpm build` | 在 `./out` 目录生成静态产物               |
+| `pnpm start` | 在 8080 端口服务已构建的 `./out` 目录     |
+| `pnpm lint`  | 使用 Next.js + TypeScript 规则运行 ESLint |
 
 > **说明**：本项目使用 `output: "export"` 以静态方式部署到 GitHub Pages。开发服务器正常工作，只有生产构建是完全静态的。
 
@@ -158,37 +158,37 @@ pnpm dev
 
 ```ts
 interface Project {
-  id: string;              // URL 安全的 slug，例如 "sing-box"
-  name: string;            // 显示名称，例如 "sing-box"
-  author: string;          // 作者或组织名，例如 "SagerNet"
-  description: string;     // 一句话简介（英文）
-  url: string;             // 官方主页或仓库 URL
-  homepage?: string;       // 可选的项目主页（非 GitHub）
-  
+  id: string; // URL 安全的 slug，例如 "sing-box"
+  name: string; // 显示名称，例如 "sing-box"
+  author: string; // 作者或组织名，例如 "SagerNet"
+  description: string; // 一句话简介（英文）
+  url: string; // 官方主页或仓库 URL
+  homepage?: string; // 可选的项目主页（非 GitHub）
+
   // 指标（由 scripts/refresh-projects.mjs 自动刷新）
-  stars: number;           // GitHub star 数
-  forks: number;           // GitHub fork 数
-  language: string;        // 主要语言，例如 "Go"
-  license: string;         // SPDX 标识符，例如 "MIT"
-  
+  stars: number; // GitHub star 数
+  forks: number; // GitHub fork 数
+  language: string; // 主要语言，例如 "Go"
+  license: string; // SPDX 标识符，例如 "MIT"
+
   // 分类维度
-  kind: ProjectKind;       // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
-  platform: ProjectPlatform[];  // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
-  category: string;        // 编辑分类，例如 "proxy-core"
-  tags: string[];          // 自由形式，小写、连字符
-  
+  kind: ProjectKind; // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
+  platform: ProjectPlatform[]; // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
+  category: string; // 编辑分类，例如 "proxy-core"
+  tags: string[]; // 自由形式，小写、连字符
+
   // 编辑内容
-  notes?: string;          // 可选的维护者备注
+  notes?: string; // 可选的维护者备注
   verdict?: ProjectVerdict; // "recommended" | "neutral" | "caution" | "avoid"
-  
+
   // 生命周期
-  lastCommit: string;      // ISO 8601 日期，例如 "2026-05-01"
-  addedAt: string;         // 首次加入日期
-  status: ProjectStatus;   // "active" | "stale" | "archived"
-  
+  lastCommit: string; // ISO 8601 日期，例如 "2026-05-01"
+  addedAt: string; // 首次加入日期
+  status: ProjectStatus; // "active" | "stale" | "archived"
+
   // 视觉
-  highlights: string[];    // 项目亮点
-  gradient: string[];      // 卡片渐变色
+  highlights: string[]; // 项目亮点
+  gradient: string[]; // 卡片渐变色
 }
 ```
 
@@ -256,17 +256,17 @@ pnpm build
 
 常用 type：
 
-| Type | 用途 |
-| --- | --- |
-| `feat` | 新增面向用户的功能 |
-| `fix` | 修复 Bug |
-| `docs` | 仅文档变更（README、CONTRIBUTING 等） |
-| `style` | 格式调整、缺失分号等无代码变更 |
-| `refactor` | 既不修复 Bug 也不新增功能的代码变更 |
-| `perf` | 性能优化 |
-| `test` | 新增或修改测试 |
-| `chore` | 工具、依赖、CI 等非代码变更 |
-| `data` | 更新 `data/projects.json` |
+| Type       | 用途                                  |
+| ---------- | ------------------------------------- |
+| `feat`     | 新增面向用户的功能                    |
+| `fix`      | 修复 Bug                              |
+| `docs`     | 仅文档变更（README、CONTRIBUTING 等） |
+| `style`    | 格式调整、缺失分号等无代码变更        |
+| `refactor` | 既不修复 Bug 也不新增功能的代码变更   |
+| `perf`     | 性能优化                              |
+| `test`     | 新增或修改测试                        |
+| `chore`    | 工具、依赖、CI 等非代码变更           |
+| `data`     | 更新 `data/projects.json`             |
 
 示例：
 

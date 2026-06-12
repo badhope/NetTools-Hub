@@ -1,4 +1,4 @@
-import type { MetadataRoute } from "next";
+import type { MetadataRoute } from 'next';
 import {
   getAllKinds,
   getAllPlatforms,
@@ -6,26 +6,23 @@ import {
   getLastUpdated,
   isValidKind,
   isValidPlatform,
-} from "@/lib/projects";
-import { LANG_HTML_LANG, Lang } from "@/lib/i18n";
-import { SITE_CANONICAL } from "@/lib/site";
+} from '@/lib/projects';
+import { LANG_HTML_LANG, Lang } from '@/lib/i18n';
+import { SITE_CANONICAL } from '@/lib/site';
 
 // Required for `output: "export"`: the sitemap is generated at
 // build time and never revalidated at runtime.
-export const dynamic = "force-static";
+export const dynamic = 'force-static';
 
-const LANGS: readonly Lang[] = ["en", "zh", "ja"];
+const LANGS: readonly Lang[] = ['en', 'zh', 'ja'];
 
 /** Build hreflang alternates for a given path. */
 function alternates(path: string) {
   return LANGS.map((lang) => ({
     hreflang: LANG_HTML_LANG[lang],
-    href:
-      lang === "en"
-        ? `${SITE_CANONICAL}${path}`
-        : `${SITE_CANONICAL}${path}?lang=${lang}`,
+    href: lang === 'en' ? `${SITE_CANONICAL}${path}` : `${SITE_CANONICAL}${path}?lang=${lang}`,
   })).concat({
-    hreflang: "x-default",
+    hreflang: 'x-default',
     href: `${SITE_CANONICAL}${path}`,
   });
 }
@@ -41,11 +38,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const kindEntries: MetadataRoute.Sitemap = kinds.flatMap((k) =>
     LANGS.map((lang) => ({
       url:
-        lang === "en"
+        lang === 'en'
           ? `${SITE_CANONICAL}/explore/k/${k}`
           : `${SITE_CANONICAL}/explore/k/${k}?lang=${lang}`,
       lastModified: lastUpdated,
-      changeFrequency: "weekly" as const,
+      changeFrequency: 'weekly' as const,
       priority: 0.7,
       alternates: {
         languages: Object.fromEntries(
@@ -65,11 +62,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       if (!isValidKind(k) || !isValidPlatform(p)) return [];
       return LANGS.map((lang) => ({
         url:
-          lang === "en"
+          lang === 'en'
             ? `${SITE_CANONICAL}/explore/k/${k}/p/${p}`
             : `${SITE_CANONICAL}/explore/k/${k}/p/${p}?lang=${lang}`,
         lastModified: lastUpdated,
-        changeFrequency: "weekly" as const,
+        changeFrequency: 'weekly' as const,
         priority: 0.5,
         alternates: {
           languages: Object.fromEntries(
@@ -84,34 +81,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${SITE_CANONICAL}/`,
       lastModified: lastUpdated,
-      changeFrequency: "weekly",
+      changeFrequency: 'weekly',
       priority: 1.0,
       alternates: {
-        languages: Object.fromEntries(
-          alternates("/").map((a) => [a.hreflang, a.href]),
-        ),
+        languages: Object.fromEntries(alternates('/').map((a) => [a.hreflang, a.href])),
       },
     },
-    ...LANGS.filter((l) => l !== "en").map((lang) => ({
+    ...LANGS.filter((l) => l !== 'en').map((lang) => ({
       url: `${SITE_CANONICAL}/?lang=${lang}`,
       lastModified: lastUpdated,
-      changeFrequency: "weekly" as const,
+      changeFrequency: 'weekly' as const,
       priority: 0.8,
       alternates: {
-        languages: Object.fromEntries(
-          alternates("/").map((a) => [a.hreflang, a.href]),
-        ),
+        languages: Object.fromEntries(alternates('/').map((a) => [a.hreflang, a.href])),
       },
     })),
     {
       url: `${SITE_CANONICAL}/explore`,
       lastModified: lastUpdated,
-      changeFrequency: "daily",
+      changeFrequency: 'daily',
       priority: 0.9,
       alternates: {
-        languages: Object.fromEntries(
-          alternates("/explore").map((a) => [a.hreflang, a.href]),
-        ),
+        languages: Object.fromEntries(alternates('/explore').map((a) => [a.hreflang, a.href])),
       },
     },
     ...kindEntries,

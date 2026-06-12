@@ -9,12 +9,14 @@
 ## 执行摘要
 
 本次审计发现 **38 个问题**，按严重程度分类：
+
 - **Critical（严重）**: 0 个
 - **High（高）**: 5 个
 - **Medium（中）**: 15 个
 - **Low（低）**: 18 个
 
 主要发现：
+
 1. **测试覆盖率极低** — 仅有 `utils.test.ts` 一个测试文件
 2. **组件职责过重** — `ProjectRow` 组件 200+ 行，处理多个关注点
 3. **代码重复** — `formatStars` 和 `KIND_ORDER` 在多处重复定义
@@ -47,6 +49,7 @@ src/app/
 ```
 
 **问题 1.1.1: 静态生成笛卡尔积爆炸**
+
 - **严重程度**: medium
 - **位置**: `src/app/explore/k/[kind]/p/[platform]/page.tsx:31-38`
 - **描述**: `generateStaticParams()` 生成 8×6=48 个组合页面，但实际有效的 kind+platform 组合远少于此。这导致生成大量空页面（显示 "No entries match this filter."），增加构建时间和部署体积。
@@ -54,6 +57,7 @@ src/app/
 - **优先级**: P2
 
 **问题 1.1.2: 缺少 explore 特定的 404 页面**
+
 - **严重程度**: low
 - **位置**: `src/app/explore/` 目录
 - **描述**: 当 `kind` 或 `platform` 无效时，页面调用 `notFound()`，但没有 `src/app/explore/not-found.tsx`。Next.js 会使用全局的 404 页面，这是合理的，但缺少上下文相关的 404 页面。
@@ -63,6 +67,7 @@ src/app/
 ### 1.2 组件职责划分
 
 **问题 1.2.1: `ProjectRow` 组件过于庞大**
+
 - **严重程度**: medium
 - **位置**: `src/components/project-row.tsx`
 - **描述**: `ProjectRow` 组件包含 205 行代码，负责：
@@ -71,7 +76,7 @@ src/app/
   - 执行链接预检（HEAD 请求）
   - 管理缓存状态
   - 处理键盘导航
-  违反了单一职责原则。
+    违反了单一职责原则。
 - **建议**: 拆分为：
   - `ProjectRow` — 布局和状态管理
   - `useLinkPrefetch` — 链接预检逻辑（hook）
@@ -79,6 +84,7 @@ src/app/
 - **优先级**: P2
 
 **问题 1.2.2: `TopNav` 组件职责过重**
+
 - **严重程度**: low
 - **位置**: `src/components/top-nav.tsx`
 - **描述**: `TopNav` 同时处理桌面导航、移动导航抽屉、语言切换、焦点陷阱。虽然通过条件渲染避免了重复，但逻辑复杂（260 行）。
@@ -86,6 +92,7 @@ src/app/
 - **优先级**: P3
 
 **问题 1.2.3: 缺少通用的 `EmptyState` 组件**
+
 - **严重程度**: low
 - **位置**: 多个文件
 - **描述**: 空状态处理分散在多个组件中：
@@ -98,6 +105,7 @@ src/app/
 ### 1.3 重复代码
 
 **问题 1.3.1: `formatStars` 函数重复**
+
 - **严重程度**: low
 - **位置**: `src/app/page.tsx:80-83` 和 `src/app/explore/page.tsx:80-83`
 - **描述**: `formatStars` 函数在两个页面文件中重复定义，逻辑完全相同。
@@ -105,8 +113,9 @@ src/app/
 - **优先级**: P3
 
 **问题 1.3.2: `KIND_ORDER` 常量重复**
+
 - **严重程度**: low
-- **位置**: 
+- **位置**:
   - `src/app/page.tsx:18-20`
   - `src/components/top-nav.tsx:34-36`
   - `src/components/tree-sidebar.tsx:57-59`
@@ -121,6 +130,7 @@ src/app/
 ### 2.1 数据模型 (`src/types/project.ts`)
 
 **问题 2.1.1: 缺少 `homepage` 字段**
+
 - **严重程度**: low
 - **位置**: `src/types/project.ts`
 - **描述**: 项目类型定义中没有 `homepage` 字段，但 `data/projects.json` 中的某些项目可能有官方网站。这限制了 UI 展示项目官网链接的能力。
@@ -128,6 +138,7 @@ src/app/
 - **优先级**: P3
 
 **问题 2.1.2: `tags` 字段未使用**
+
 - **严重程度**: low
 - **位置**: `src/types/project.ts:13`
 - **描述**: `tags: string[]` 字段在数据模型中定义，但在 UI 中未使用（未显示在表格中，未用于筛选）。
@@ -135,6 +146,7 @@ src/app/
 - **优先级**: P3
 
 **问题 2.1.3: 数据版本检查缺失**
+
 - **严重程度**: low
 - **位置**: `src/lib/projects.ts`
 - **描述**: 数据层没有检查 `projects.json` 的 `schemaVersion` 字段。如果数据格式发生变化，旧版本的代码可能会静默失败。
@@ -149,6 +161,7 @@ src/app/
 ### 2.2 数据刷新脚本 (`scripts/refresh-projects.mjs`)
 
 **问题 2.2.1: 错误恢复机制不完善**
+
 - **严重程度**: medium
 - **位置**: `scripts/refresh-projects.mjs`
 - **描述**: 如果脚本在更新过程中失败（例如网络中断），已更新的数据会丢失，下次需要从头开始。脚本虽然对单个项目失败有容错（继续处理其他项目），但没有增量更新机制。
@@ -156,6 +169,7 @@ src/app/
 - **优先级**: P2
 
 **问题 2.2.2: 速率限制处理可改进**
+
 - **严重程度**: low
 - **位置**: `scripts/refresh-projects.mjs:162-170`
 - **描述**: 脚本已经处理了 403/429 响应（速率限制），使用指数退避重试。但对于大规模数据集（200+ 项目），80ms 的间隔可能不足以避免触发二级速率限制。
@@ -169,6 +183,7 @@ src/app/
 ### 3.1 CSS 架构
 
 **问题 3.1.1: 全局 CSS 文件较大**
+
 - **严重程度**: low
 - **位置**: `src/app/globals.css`
 - **描述**: `globals.css` 包含 323 行代码，涵盖设计系统、组件样式、动画、响应式断点。虽然使用了清晰的注释分节，但文件较大，难以快速定位。
@@ -179,6 +194,7 @@ src/app/
 - **优先级**: P3
 
 **问题 3.1.2: 响应式断点混合使用**
+
 - **严重程度**: low
 - **位置**: `src/app/globals.css` 和组件
 - **描述**: 响应式断点分散在 CSS 和 Tailwind 类中：
@@ -190,12 +206,13 @@ src/app/
 ### 3.2 设计系统
 
 **问题 3.2.1: 仅支持暗色模式**
+
 - **严重程度**: low
 - **位置**: `src/app/globals.css`
 - **描述**: 设计系统只定义了暗色主题的颜色变量，没有亮色模式支持。这是有意的设计选择（注释中说明），但限制了用户选择。
 - **建议**: 如果未来需要亮色模式，添加 CSS 变量覆盖：
   ```css
-  :root[data-theme="light"] {
+  :root[data-theme='light'] {
     --color-bg: #ffffff;
     --color-fg: #000000;
     /* ... */
@@ -204,6 +221,7 @@ src/app/
 - **优先级**: P3（当前无影响）
 
 **问题 3.2.2: 移动导航动画未优化**
+
 - **严重程度**: low
 - **位置**: `src/components/top-nav.tsx`
 - **描述**: 移动导航抽屉使用 CSS transform 实现滑入效果，但没有使用 `will-change` 或 `translate3d` 来启用 GPU 加速。
@@ -217,6 +235,7 @@ src/app/
 ### 4.1 i18n 实现
 
 **问题 4.1.1: 翻译完整性由 CI 保证**
+
 - **严重程度**: info
 - **位置**: `scripts/i18n-audit.mjs`
 - **描述**: 项目有专门的 `i18n-audit.mjs` 脚本检查三种语言的键是否一致，并在 CI 中运行。这是良好的实践。
@@ -224,6 +243,7 @@ src/app/
 - **优先级**: N/A
 
 **问题 4.1.2: 翻译键命名一致**
+
 - **严重程度**: info
 - **位置**: `src/lib/i18n.ts`
 - **描述**: 翻译键命名统一使用点分隔（`nav.home`、`table.col.name`），风格一致。
@@ -237,6 +257,7 @@ src/app/
 ### 5.1 SEO
 
 **问题 5.1.1: 结构化数据完整**
+
 - **严重程度**: info
 - **位置**: `src/app/page.tsx`、`src/app/explore/page.tsx`
 - **描述**: 页面包含 JSON-LD 结构化数据（WebSite、ItemList），有助于搜索引擎理解内容。
@@ -244,6 +265,7 @@ src/app/
 - **优先级**: N/A
 
 **问题 5.1.2: Sitemap 已生成**
+
 - **严重程度**: info
 - **位置**: `src/app/sitemap.ts`
 - **描述**: 站点有动态生成的 sitemap.xml，包含所有页面的多语言版本。
@@ -253,6 +275,7 @@ src/app/
 ### 5.2 PWA
 
 **问题 5.2.1: PWA manifest 存在**
+
 - **严重程度**: info
 - **位置**: `public/manifest.webmanifest`
 - **描述**: 站点有 PWA manifest 文件，支持安装为 PWA。
@@ -260,6 +283,7 @@ src/app/
 - **优先级**: N/A
 
 **问题 5.2.2: 缺少 service worker**
+
 - **严重程度**: low
 - **位置**: 整个应用
 - **描述**: 站点没有 service worker，无法实现离线访问。对于静态站点，service worker 可以缓存所有资源，提升加载速度。
@@ -273,6 +297,7 @@ src/app/
 ### 6.1 CSP 配置
 
 **问题 6.1.1: CSP 策略使用 unsafe-inline**
+
 - **严重程度**: medium
 - **位置**: `src/app/layout.tsx:48-59`
 - **描述**: CSP 配置允许 `unsafe-inline` 用于脚本和样式：
@@ -281,13 +306,14 @@ src/app/
   style-src 'self' 'unsafe-inline';
   ```
   注释中说明这是静态导出的必要妥协（Next.js 需要内联脚本进行水合）。
-- **建议**: 
+- **建议**:
   - 当前实现是合理的妥协
   - 考虑使用 nonce 替代 unsafe-inline（需要 Next.js 支持）
   - 添加 `report-uri` 或 `report-to` 接收违规报告
 - **优先级**: P2
 
 **问题 6.1.2: 缺少 frame-ancestors 指令**
+
 - **严重程度**: low
 - **位置**: `src/app/layout.tsx:48-59`
 - **描述**: CSP 缺少 `frame-ancestors` 指令，无法防止点击劫持攻击。但注释中说明 `<meta>` 标签中的 frame-ancestors 会被浏览器忽略，需要作为 HTTP 头发送。
@@ -297,6 +323,7 @@ src/app/
 ### 6.2 依赖安全性
 
 **问题 6.2.1: CI 工作流缺少依赖审计**
+
 - **严重程度**: high
 - **位置**: `.github/workflows/ci.yml`
 - **描述**: CI 工作流没有运行 `pnpm audit`，无法在 PR 阶段检测已知漏洞。仅在 `deploy.yml` 中有审计步骤。
@@ -308,6 +335,7 @@ src/app/
 - **优先级**: P1
 
 **问题 6.2.2: 依赖版本固定**
+
 - **严重程度**: low
 - **位置**: `package.json`
 - **描述**: 所有依赖使用精确版本（例如 `"next": "16.2.9"`），无法自动接收安全补丁。但项目使用 Dependabot 自动更新。
@@ -321,6 +349,7 @@ src/app/
 ### 7.1 ESLint 配置
 
 **问题 7.1.1: 部分规则设置为 warn**
+
 - **严重程度**: low
 - **位置**: `eslint.config.mjs:95-103`
 - **描述**: ESLint 配置将多个规则设置为 "warn" 而非 "error"：
@@ -331,6 +360,7 @@ src/app/
 - **优先级**: P3
 
 **问题 7.1.2: 缺少 Prettier 集成**
+
 - **严重程度**: low
 - **位置**: 整个项目
 - **描述**: 项目没有使用 Prettier，代码格式依赖开发者手动维护。虽然 ESLint 包含部分格式规则，但覆盖不全。
@@ -340,6 +370,7 @@ src/app/
 ### 7.2 TypeScript 严格程度
 
 **问题 7.2.1: TypeScript 严格模式未完全启用**
+
 - **严重程度**: high
 - **位置**: `tsconfig.json`
 - **描述**: `tsconfig.json` 缺少以下严格选项：
@@ -349,6 +380,7 @@ src/app/
 - **优先级**: P1
 
 **问题 7.2.2: 缺少类型导出**
+
 - **严重程度**: low
 - **位置**: `src/types/project.ts`
 - **描述**: 类型定义文件导出了主要类型（`Project`、`ProjectKind`、`ProjectPlatform`），但部分辅助类型未导出（如 `ProjectCategory`）。
@@ -358,16 +390,18 @@ src/app/
 ### 7.3 代码风格一致性
 
 **问题 7.3.1: 组件导出方式混合**
+
 - **严重程度**: low
 - **位置**: `src/components/`
 - **描述**: 组件导出方式混合：
   - 命名导出：`export function TopNav()`（大多数组件）
   - 默认导出：`export default function Page()`（页面组件）
-  这是 Next.js 的约定，页面组件使用默认导出是合理的。
+    这是 Next.js 的约定，页面组件使用默认导出是合理的。
 - **建议**: 无需改进，当前实现符合 Next.js 约定。
 - **优先级**: N/A
 
 **问题 7.3.2: 注释风格一致**
+
 - **严重程度**: info
 - **位置**: 整个代码库
 - **描述**: 注释风格统一使用 JSDoc 注释用于公共 API，单行注释用于内部逻辑。注释质量高，解释了设计决策。
@@ -381,6 +415,7 @@ src/app/
 ### 8.1 构建优化
 
 **问题 8.1.1: 缺少代码分割策略**
+
 - **严重程度**: low
 - **位置**: `next.config.ts`
 - **描述**: Next.js 默认进行代码分割，但没有配置 `optimizePackageImports` 来优化第三方库的打包。
@@ -388,13 +423,14 @@ src/app/
   ```typescript
   const nextConfig = {
     experimental: {
-      optimizePackageImports: ["react", "react-dom"],
+      optimizePackageImports: ['react', 'react-dom'],
     },
   };
   ```
 - **优先级**: P3
 
 **问题 8.1.2: 缺少 bundle 分析**
+
 - **严重程度**: medium
 - **位置**: CI/CD 工作流
 - **描述**: CI/CD 工作流没有运行 bundle 分析，无法检测 bundle 大小回归。
@@ -404,6 +440,7 @@ src/app/
 ### 8.2 运行时优化
 
 **问题 8.2.1: 图片未优化**
+
 - **严重程度**: high
 - **位置**: `next.config.ts:18-20`
 - **描述**: Next.js 配置中 `images.unoptimized: true`，禁用了图片优化。虽然当前站点没有使用图片，但如果未来添加图片，将不会自动优化。
@@ -411,6 +448,7 @@ src/app/
 - **优先级**: P1
 
 **问题 8.2.2: 缺少资源预加载**
+
 - **严重程度**: medium
 - **位置**: `src/app/layout.tsx`
 - **描述**: 关键资源（字体）没有使用 `<link rel="preload">` 预加载。Next.js 的 `next/font` 会自动处理字体优化，但可以考虑预加载关键 CSS。
@@ -418,6 +456,7 @@ src/app/
 - **优先级**: P3
 
 **问题 8.2.3: 缺少路由预取**
+
 - **严重程度**: low
 - **位置**: `src/components/top-nav.tsx`、`src/components/tree-sidebar.tsx`
 - **描述**: 导航链接没有使用 Next.js 的 `prefetch` 属性，用户悬停时不会预取目标页面。
@@ -434,8 +473,9 @@ src/app/
 ### 9.1 ARIA 标签
 
 **问题 9.1.1: 部分组件缺少 ARIA 标签**
+
 - **严重程度**: medium
-- **位置**: 
+- **位置**:
   - `src/components/project-row.tsx:132`
   - `src/components/top-nav.tsx:165-166`
 - **描述**: 部分交互元素缺少 ARIA 标签：
@@ -446,6 +486,7 @@ src/app/
 - **优先级**: P2
 
 **问题 9.1.2: 键盘导航不完整**
+
 - **严重程度**: medium
 - **位置**: `src/components/top-nav.tsx:52-92`
 - **描述**: 移动导航抽屉支持 Esc 关闭和焦点陷阱，但实现复杂（40+ 行）。可以考虑使用 `@headlessui/react` 或 `radix-ui` 简化。
@@ -455,6 +496,7 @@ src/app/
 ### 9.2 颜色对比度
 
 **问题 9.2.1: 颜色对比度符合标准**
+
 - **严重程度**: info
 - **位置**: `src/app/globals.css:42-53`
 - **描述**: 设计系统的颜色对比度经过仔细选择：
@@ -471,6 +513,7 @@ src/app/
 ### 10.1 测试覆盖
 
 **问题 10.1.1: 测试覆盖率极低**
+
 - **严重程度**: high
 - **位置**: 整个应用
 - **描述**: 项目仅有 `src/lib/utils.test.ts` 一个测试文件，测试了 `formatNumber` 函数。关键逻辑未测试：
@@ -486,6 +529,7 @@ src/app/
 - **优先级**: P1
 
 **问题 10.1.2: 缺少 E2E 测试**
+
 - **严重程度**: medium
 - **位置**: 整个应用
 - **描述**: 项目没有端到端测试。关键用户流程（导航、语言切换、项目筛选）未测试。
@@ -499,17 +543,19 @@ src/app/
 ### 11.1 GitHub Actions 工作流
 
 **问题 11.1.1: CI 工作流结构合理**
+
 - **严重程度**: info
 - **位置**: `.github/workflows/ci.yml`
 - **描述**: CI 工作流包含三个并行作业：
   - `lint` — ESLint 检查
   - `test` — 测试和构建
   - `validate-data` — 数据验证
-  结构清晰，反馈快速。
+    结构清晰，反馈快速。
 - **建议**: 无需改进。
 - **优先级**: N/A
 
 **问题 11.1.2: 部署工作流包含依赖审计**
+
 - **严重程度**: info
 - **位置**: `.github/workflows/deploy.yml:60-61`
 - **描述**: 部署工作流在构建前运行 `pnpm audit --prod --audit-level=high`，确保不部署有已知漏洞的依赖。
@@ -517,6 +563,7 @@ src/app/
 - **优先级**: N/A
 
 **问题 11.1.3: 数据刷新工作流设计合理**
+
 - **严重程度**: info
 - **位置**: `.github/workflows/refresh-projects.yml`
 - **描述**: 数据刷新工作流设计合理：
@@ -529,6 +576,7 @@ src/app/
 - **优先级**: N/A
 
 **问题 11.1.4: 缺少缓存优化**
+
 - **严重程度**: low
 - **位置**: `.github/workflows/ci.yml`
 - **描述**: CI 工作流使用 `actions/cache` 缓存 `node_modules` 和 pnpm store，但缓存键基于 lockfile hash，这是合理的。

@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* ============================================================
  * NetTools Hub — Field Manual design system
@@ -30,62 +30,91 @@
    * with its monospace sibling. The next/font loader exposes
    * the variable as `--font-plex-sans` / `--font-plex-mono`;
    * we map them into Tailwind tokens here. */
-  --font-sans: var(--font-plex-sans), "Inter", ui-sans-serif, system-ui,
-    -apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei",
-    "Noto Sans CJK SC", "Noto Sans CJK JP", sans-serif;
+  --font-sans:
+    var(--font-plex-sans), 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Noto Sans CJK JP', sans-serif;
   --font-display: var(--font-sans);
-  --font-mono: var(--font-plex-mono), ui-monospace,
-    SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --font-mono:
+    var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono',
+    monospace;
 
   /* Cool neutral palette. Every value has a comment so a future
    * maintainer can tweak without re-deriving the role. */
-  --color-bg:        #0b0d10;  /* page */
-  --color-bg-elev:   #11151a;  /* sidebar, sticky header */
-  --color-bg-sunk:   #07090c;  /* code, table-stripe */
-  --color-fg:        #e6edf3;  /* primary text */
-  --color-fg-2:      #b8c1cc;  /* secondary text */
-  --color-muted:     #7d8590;  /* meta, labels */
-  --color-dim:       #3a424b;  /* hairlines */
-  --color-line:      #1a1f25;  /* borders */
-  --color-accent:    #6ea8fe;  /* link, active state */
-  --color-accent-2:  #4fd1a1;  /* active tree node */
-  --color-accent-3:  #f0b86e;  /* caution badge */
-  --color-accent-4:  #f47272;  /* danger / avoid badge */
+  --color-bg: #0b0d10; /* page */
+  --color-bg-elev: #11151a; /* sidebar, sticky header */
+  --color-bg-sunk: #07090c; /* code, table-stripe */
+  --color-fg: #e6edf3; /* primary text */
+  --color-fg-2: #b8c1cc; /* secondary text */
+  --color-muted: #7d8590; /* meta, labels */
+  --color-dim: #3a424b; /* hairlines */
+  --color-line: #1a1f25; /* borders */
+  --color-accent: #6ea8fe; /* link, active state */
+  --color-accent-2: #4fd1a1; /* active tree node */
+  --color-accent-3: #f0b86e; /* caution badge */
+  --color-accent-4: #f47272; /* danger / avoid badge */
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
-  html, body { background-color: var(--color-bg); color: var(--color-fg); }
+  html,
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+  }
 
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.55;
-    font-feature-settings: "ss01", "cv11";
+    font-feature-settings: 'ss01', 'cv11';
     /* Tabular numerals for all sizes by default; the editorial
      * look of "right-aligned columns of stars/dates" depends on
      * every digit being the same width. */
     font-variant-numeric: tabular-nums;
   }
 
-  ::selection { background-color: var(--color-accent); color: var(--color-bg); }
-  ::-moz-selection { background-color: var(--color-accent); color: var(--color-bg); }
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
+  ::-moz-selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg);
+  }
 
   /* Hairline scrollbar */
-  ::-webkit-scrollbar { width: 10px; height: 10px; }
-  ::-webkit-scrollbar-track { background: var(--color-bg); }
-  ::-webkit-scrollbar-thumb { background: var(--color-dim); }
-  * { scrollbar-color: var(--color-dim) var(--color-bg); scrollbar-width: thin; }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-dim);
+  }
+  * {
+    scrollbar-color: var(--color-dim) var(--color-bg);
+    scrollbar-width: thin;
+  }
 
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 1px;
   }
-  a:focus:not(:focus-visible), button:focus:not(:focus-visible) { outline: none; }
+  a:focus:not(:focus-visible),
+  button:focus:not(:focus-visible) {
+    outline: none;
+  }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-sans);
     font-weight: 600;
     letter-spacing: -0.01em;
@@ -95,8 +124,12 @@
   /* Hairline divider: 1px line in --color-dim. Used for the
    * bottom of the header, between rows in the project table,
    * and to separate sidebar sections. */
-  .hairline { border-color: var(--color-line); }
-  .hairline-bright { border-color: var(--color-dim); }
+  .hairline {
+    border-color: var(--color-line);
+  }
+  .hairline-bright {
+    border-color: var(--color-dim);
+  }
 
   /* "Mono small caps" — replaces the editorial "kicker". A
    * monospace, slightly-tracked label that identifies a
@@ -117,10 +150,14 @@
   color: var(--color-accent);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: border-color 120ms var(--ease-editorial),
+  transition:
+    border-color 120ms var(--ease-editorial),
     color 120ms var(--ease-editorial);
 }
-.link-editorial:hover { border-bottom-color: var(--color-accent); color: #a7c4ff; }
+.link-editorial:hover {
+  border-bottom-color: var(--color-accent);
+  color: #a7c4ff;
+}
 
 /* Numbered section marker: `01 ───────────────────`. The number
  * is mono, the rule is a flex-grow 1px line in --color-dim. */
@@ -134,9 +171,12 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.manual-index::before { content: attr(data-index); flex-shrink: 0; }
+.manual-index::before {
+  content: attr(data-index);
+  flex-shrink: 0;
+}
 .manual-index::after {
-  content: "";
+  content: '';
   flex: 1;
   height: 1px;
   background: var(--color-dim);
@@ -157,7 +197,7 @@
   line-height: 1.4;
 }
 .tree-row::before {
-  content: "";
+  content: '';
   position: absolute;
   left: calc(0.5rem + var(--depth) * 1rem - 0.5rem);
   top: 0;
@@ -165,7 +205,9 @@
   width: 1px;
   background: var(--color-line);
 }
-.tree-row[data-current="true"] { color: var(--color-accent-2); }
+.tree-row[data-current='true'] {
+  color: var(--color-accent-2);
+}
 
 /* Skip link: hidden until focused. */
 .skip-link {
@@ -183,13 +225,19 @@
   text-decoration: none;
   transition: transform 120ms;
 }
-.skip-link:focus { transform: translateY(0); }
+.skip-link:focus {
+  transform: translateY(0);
+}
 
 /* Project table styling. The table is the primary surface of
  * the /explore page; every other visual choice on that page
  * serves to keep the table readable. */
-.proj-table { width: 100%; border-collapse: collapse; }
-.proj-table th, .proj-table td {
+.proj-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.proj-table th,
+.proj-table td {
   text-align: left;
   padding: 0.625rem 0.875rem;
   border-bottom: 1px solid var(--color-line);
@@ -228,7 +276,7 @@
 /* Left rail: a 2 px hairline that fades in on hover, snaps to
  * the accent colour on press. */
 .proj-row > td:first-child::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 0;
   top: 0;
@@ -240,13 +288,19 @@
   transition: transform 160ms var(--ease-editorial);
   pointer-events: none;
 }
-.proj-row:hover > td:first-child::before { transform: scaleY(0.55); }
-.proj-row:hover { background: var(--color-bg-sunk); }
-.proj-row[data-pressing="true"] {
+.proj-row:hover > td:first-child::before {
+  transform: scaleY(0.55);
+}
+.proj-row:hover {
+  background: var(--color-bg-sunk);
+}
+.proj-row[data-pressing='true'] {
   background: color-mix(in oklab, var(--color-accent) 12%, var(--color-bg-sunk));
   box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 35%, transparent);
 }
-.proj-row[data-pressing="true"] > td:first-child::before { transform: scaleY(1); }
+.proj-row[data-pressing='true'] > td:first-child::before {
+  transform: scaleY(1);
+}
 .proj-row:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: -2px;
@@ -256,15 +310,20 @@
  * HEAD check when the upstream repo 404s. We dim the row and
  * turn the name link red so the user sees the failure without
  * having to wait for a failed navigation. */
-.proj-row[data-link="broken"] { opacity: 0.55; }
-.proj-row[data-link="broken"] .name a {
+.proj-row[data-link='broken'] {
+  opacity: 0.55;
+}
+.proj-row[data-link='broken'] .name a {
   color: var(--color-accent-4);
   border-bottom-color: var(--color-accent-4);
 }
 
 /* External-link indicator. Hidden by default, slides in on
  * hover, slides further + colour-shifts on press. */
-.proj-row .name { display: flex; align-items: baseline; }
+.proj-row .name {
+  display: flex;
+  align-items: baseline;
+}
 .proj-row .ext-icon {
   display: inline-block;
   margin-left: 0.375rem;
@@ -279,8 +338,12 @@
     transform 200ms var(--ease-editorial),
     color 160ms var(--ease-editorial);
 }
-.proj-row:hover .ext-icon { opacity: 0.7; transform: translateX(0); color: var(--color-accent); }
-.proj-row[data-pressing="true"] .ext-icon {
+.proj-row:hover .ext-icon {
+  opacity: 0.7;
+  transform: translateX(0);
+  color: var(--color-accent);
+}
+.proj-row[data-pressing='true'] .ext-icon {
   opacity: 1;
   transform: translateX(3px);
   color: var(--color-accent);
@@ -290,13 +353,31 @@
   color: var(--color-fg);
   text-decoration: none;
   border-bottom: 1px dotted var(--color-dim);
-  transition: color 120ms var(--ease-editorial), border-color 120ms var(--ease-editorial);
+  transition:
+    color 120ms var(--ease-editorial),
+    border-color 120ms var(--ease-editorial);
 }
-.proj-table td a:hover { color: var(--color-accent); border-bottom-color: var(--color-accent); }
-.proj-table .num { font-family: var(--font-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-.proj-table .name { font-weight: 500; }
-.proj-table .desc { color: var(--color-fg-2); font-size: 0.8125rem; }
-.proj-table .tag { font-family: var(--font-mono); font-size: 0.6875rem; color: var(--color-muted); }
+.proj-table td a:hover {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+.proj-table .num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.proj-table .name {
+  font-weight: 500;
+}
+.proj-table .desc {
+  color: var(--color-fg-2);
+  font-size: 0.8125rem;
+}
+.proj-table .tag {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  color: var(--color-muted);
+}
 
 /* Verdict / status badges. The four values are colour-coded
  * but not in a way that screams "warning!" — the colour is
@@ -311,13 +392,216 @@
   text-transform: uppercase;
   color: var(--color-muted);
 }
-.badge--recommended { color: var(--color-accent-2); border-color: var(--color-accent-2); }
-.badge--caution     { color: var(--color-accent-3); border-color: var(--color-accent-3); }
-.badge--avoid       { color: var(--color-accent-4); border-color: var(--color-accent-4); }
-.badge--stale       { color: var(--color-accent-3); }
-.badge--archived    { color: var(--color-accent-4); }
+.badge--recommended {
+  color: var(--color-accent-2);
+  border-color: var(--color-accent-2);
+}
+.badge--caution {
+  color: var(--color-accent-3);
+  border-color: var(--color-accent-3);
+}
+.badge--avoid {
+  color: var(--color-accent-4);
+  border-color: var(--color-accent-4);
+}
+.badge--stale {
+  color: var(--color-accent-3);
+}
+.badge--archived {
+  color: var(--color-accent-4);
+}
 
 /* utility: hide-on-small */
 @media (max-width: 768px) {
-  .hide-md { display: none; }
+  .hide-md {
+    display: none;
+  }
+}
+
+/* ============================================================
+ * Micro-interactions & polish
+ * ============================================================
+ * Subtle animations that make the UI feel alive without being
+ * distracting. All animations respect prefers-reduced-motion.
+ * ============================================================ */
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Smooth page transitions */
+  .page-transition-enter {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  .page-transition-enter-active {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 200ms ease-out, transform 200ms ease-out;
+  }
+
+  /* Card hover lift */
+  .card-lift {
+    transition: transform 200ms var(--ease-editorial), box-shadow 200ms var(--ease-editorial);
+  }
+  .card-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Icon rotation on hover */
+  .icon-rotate {
+    transition: transform 300ms var(--ease-editorial);
+  }
+  .icon-rotate:hover {
+    transform: rotate(90deg);
+  }
+
+  /* Fade in on scroll */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .fade-in-up {
+    animation: fadeInUp 400ms var(--ease-editorial) both;
+  }
+}
+
+/* ============================================================
+ * Table enhancements
+ * ============================================================
+ * Better visual hierarchy and hover states for the project table.
+ * ============================================================ */
+
+.proj-table tbody tr {
+  transition: background-color 150ms ease-out;
+}
+
+/* Subtle row hover indicator */
+.proj-table tbody tr:hover {
+  background-color: var(--color-bg-elev);
+}
+
+/* Improve badge contrast in light mode */
+:root[data-theme='light'] .badge {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme='light'] .badge--recommended {
+  background-color: rgba(5, 150, 105, 0.1);
+}
+
+:root[data-theme='light'] .badge--caution {
+  background-color: rgba(217, 119, 6, 0.1);
+}
+
+:root[data-theme='light'] .badge--avoid {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* ============================================================
+ * Responsive improvements
+ * ============================================================
+ * Better mobile experience with fluid typography and spacing.
+ * ============================================================ */
+
+/* Fluid typography for headings */
+h1 {
+  font-size: clamp(1.75rem, 4vw + 1rem, 2.5rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw + 0.75rem, 2rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2vw + 0.5rem, 1.5rem);
+}
+
+/* Mobile-friendly touch targets */
+@media (max-width: 768px) {
+  .proj-table td,
+  .proj-table th {
+    padding: 0.75rem 0.5rem;
+  }
+
+  /* Stack table cells vertically on very small screens */
+  @media (max-width: 480px) {
+    .proj-table,
+    .proj-table thead,
+    .proj-table tbody,
+    .proj-table th,
+    .proj-table td,
+    .proj-table tr {
+      display: block;
+    }
+
+    .proj-table thead {
+      display: none;
+    }
+
+    .proj-table tr {
+      margin-bottom: 1rem;
+      border: 1px solid var(--color-line);
+      padding: 0.5rem;
+    }
+
+    .proj-table td {
+      text-align: right;
+      padding: 0.5rem;
+      position: relative;
+      padding-left: 50%;
+      border-bottom: 1px solid var(--color-line);
+    }
+
+    .proj-table td:last-child {
+      border-bottom: none;
+    }
+
+    .proj-table td::before {
+      content: attr(data-label);
+      position: absolute;
+      left: 0.5rem;
+      width: 45%;
+      padding-right: 0.5rem;
+      text-align: left;
+      font-weight: 500;
+      color: var(--color-muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+/* ============================================================
+ * Light mode
+ * ============================================================
+ * Activated by adding data-theme="light" to <html>.
+ * The dark palette above remains the default.
+ * ============================================================ */
+:root[data-theme='light'] {
+  --color-bg: #ffffff;
+  --color-bg-elev: #f8f9fa;
+  --color-bg-sunk: #f0f2f5;
+  --color-fg: #1a1a1a;
+  --color-fg-2: #4a4a4a;
+  --color-muted: #8a8a8a;
+  --color-dim: #d0d0d0;
+  --color-line: #e5e7eb;
+  --color-accent: #2563eb;
+  --color-accent-2: #059669;
+  --color-accent-3: #d97706;
+  --color-accent-4: #dc2626;
+}
+
+:root[data-theme='light'] .link-editorial:hover {
+  color: #1d4ed8;
+}
+
+:root[data-theme='light'] .proj-row[data-pressing='true'] {
+  background: color-mix(in oklab, var(--color-accent) 8%, var(--color-bg-elev));
 }

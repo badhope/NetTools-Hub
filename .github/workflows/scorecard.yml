@@ -3,7 +3,7 @@ name: OSSF Scorecard
 on:
   # Scheduled weekly + on push to main for up-to-date score
   schedule:
-    - cron: "17 6 * * 1"
+    - cron: '17 6 * * 1'
   push:
     branches: [main, master]
   workflow_dispatch:

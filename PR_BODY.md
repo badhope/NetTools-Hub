@@ -7,7 +7,7 @@ same component (`<ProjectRow>`):
 
 1. **Clickable project rows** — the whole row in `/explore` is now a click
    target, with a 280 ms press animation (left-rail pulse, accent background,
-   slide-out ↗ icon) so the click is *seen* before the new tab opens. Before
+   slide-out ↗ icon) so the click is _seen_ before the new tab opens. Before
    navigation, a HEAD pre-flight confirms the URL still resolves; results are
    memoised per-session. Links that 404 show an inline "link broken" badge and
    do not navigate.
@@ -97,7 +97,7 @@ src/lib/{category-groups,projects,site,taxonomy,i18n}.ts        |  1002 +-
 src/types/project.ts                           |  107 +-
 ```
 
-## What this is *not*
+## What this is _not_
 
 - Not a refactor of the data model — `Project` type is unchanged.
 - Not a redesign of `/explore` — the table is the same shape, just more

@@ -21,23 +21,23 @@
 
 /** The "what" — the primary kind of network tool. */
 export type ProjectKind =
-  | "proxy"        // proxy cores (clash, v2ray, sing-box, ...)
-  | "vpn"          // VPN wire protocols (wireguard, openvpn, ...)
-  | "dns"          // DNS resolvers / filters / smartdns
-  | "acceleration" // GitHub acceleration / mirror / CDN
-  | "security"     // WAF / IDS / honeypot / firewall
-  | "monitoring"   // smokeping / prometheus exporters / uptime
-  | "ops"          // docker / orchestration / server mgmt
-  | "tools";       // utilities / network test / data transfer
+  | 'proxy' // proxy cores (clash, v2ray, sing-box, ...)
+  | 'vpn' // VPN wire protocols (wireguard, openvpn, ...)
+  | 'dns' // DNS resolvers / filters / smartdns
+  | 'acceleration' // GitHub acceleration / mirror / CDN
+  | 'security' // WAF / IDS / honeypot / firewall
+  | 'monitoring' // smokeping / prometheus exporters / uptime
+  | 'ops' // docker / orchestration / server mgmt
+  | 'tools'; // utilities / network test / data transfer
 
 /** The "where" — runtime platform(s) a project supports. */
 export type ProjectPlatform =
-  | "desktop"   // Windows / macOS / Linux native GUI or service
-  | "mobile"    // iOS / Android app
-  | "cli"       // command-line / TUI tool
-  | "server"    // server / daemon
-  | "browser"   // browser extension
-  | "router";   // OpenWrt / router firmware
+  | 'desktop' // Windows / macOS / Linux native GUI or service
+  | 'mobile' // iOS / Android app
+  | 'cli' // command-line / TUI tool
+  | 'server' // server / daemon
+  | 'browser' // browser extension
+  | 'router'; // OpenWrt / router firmware
 
 /**
  * Editorial verdict — the maintainer's personal take. Calibrated
@@ -45,10 +45,10 @@ export type ProjectPlatform =
  * signal, not a guarantee, and the project page makes that clear.
  */
 export type ProjectVerdict =
-  | "recommended" // actively used and worth picking up
-  | "neutral"     // known to work, no strong opinion
-  | "caution"     // works but has caveats; see `notes`
-  | "avoid";      // known unmaintained, broken, or harmful
+  | 'recommended' // actively used and worth picking up
+  | 'neutral' // known to work, no strong opinion
+  | 'caution' // works but has caveats; see `notes`
+  | 'avoid'; // known unmaintained, broken, or harmful
 
 /**
  * Activity status — derived from `lastCommit` by the validator
@@ -57,7 +57,7 @@ export type ProjectVerdict =
  * render, and so a manual override (e.g. "the repo is stale but
  * the project is still the standard") is possible.
  */
-export type ProjectStatus = "active" | "stale" | "archived";
+export type ProjectStatus = 'active' | 'stale' | 'archived';
 
 export interface ProjectCategory {
   name: string;
@@ -131,4 +131,4 @@ export interface ProjectsData {
   projects: Project[];
 }
 
-export type SortOption = "default" | "stars" | "name" | "updated" | "kind";
+export type SortOption = 'default' | 'stars' | 'name' | 'updated' | 'kind';

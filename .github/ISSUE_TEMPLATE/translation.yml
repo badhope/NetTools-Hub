@@ -1,7 +1,7 @@
 name: 🌍 Translation / i18n
 description: Propose a new language, fix a typo in an existing translation, or improve wording.
-title: "[i18n] "
-labels: ["i18n", "documentation"]
+title: '[i18n] '
+labels: ['i18n', 'documentation']
 assignees: []
 body:
   - type: markdown
@@ -32,7 +32,7 @@ body:
     id: surface
     attributes:
       label: Affected surface
-      description: "Which file(s) does this change touch?"
+      description: 'Which file(s) does this change touch?'
       options:
         - UI strings (`src/lib/i18n.ts`)
         - README.md / README.zh.md / README.ja.md
@@ -46,7 +46,7 @@ body:
     id: source
     attributes:
       label: Source text (English, if applicable)
-      description: "The original English text, copied verbatim from the repo."
+      description: 'The original English text, copied verbatim from the repo.'
     validations:
       required: true
 
@@ -54,7 +54,7 @@ body:
     id: translation
     attributes:
       label: Proposed translation
-      description: "Your translation. For UI strings, paste the exact string(s)."
+      description: 'Your translation. For UI strings, paste the exact string(s).'
     validations:
       required: true
 

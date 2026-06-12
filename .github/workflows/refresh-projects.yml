@@ -32,13 +32,13 @@ on:
   schedule:
     # Sundays 03:00 UTC. Spread out from `deploy.yml` so a stalled
     # refresh cannot delay a deploy, and vice-versa.
-    - cron: "0 3 * * 0"
+    - cron: '0 3 * * 0'
   workflow_dispatch:
   push:
     branches: [main]
     paths:
-      - "data/projects.json"
-      - "scripts/refresh-projects.mjs"
+      - 'data/projects.json'
+      - 'scripts/refresh-projects.mjs'
     # Don't loop: when this very workflow pushes a refresh commit,
     # the actor is github-actions[bot], and we should not trigger
     # another refresh immediately. Five minutes of cooldown is
@@ -56,7 +56,7 @@ concurrency:
   cancel-in-progress: false
 
 permissions:
-  contents: write   # need to push the refreshed data file back
+  contents: write # need to push the refreshed data file back
 
 jobs:
   refresh:
@@ -74,8 +74,8 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "22"
-          cache: "pnpm"
+          node-version: '22'
+          cache: 'pnpm'
 
       - name: Install pnpm
         run: corepack enable

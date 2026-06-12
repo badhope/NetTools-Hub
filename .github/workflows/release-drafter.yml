@@ -7,7 +7,7 @@ name: Release Drafter
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request_target:
     types: [opened, reopened, synchronize, edited]
     # Hardening: do not waste secrets+CI on bot PRs. The release-drafter
@@ -15,8 +15,8 @@ on:
     # workflow is not a pwn vector, but limiting the trigger surface still
     # reduces noise and the worst-case blast radius.
     branches-ignore:
-      - "dependabot/**"
-      - "renovate/**"
+      - 'dependabot/**'
+      - 'renovate/**'
   workflow_dispatch:
 
 permissions:

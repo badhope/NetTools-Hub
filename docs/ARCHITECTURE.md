@@ -47,11 +47,11 @@ HTML on disk before a request ever arrives.
 The exploration surface is a strict 2-level hierarchy derived from
 the two orthogonal taxonomies on each project:
 
-| Path | Filter |
-|---|---|
-| `/explore` | no filter (all 210) |
-| `/explore/k/<kind>` | one of `proxy / vpn / dns / acceleration / security / monitoring / ops / tools` |
-| `/explore/k/<kind>/p/<platform>` | kind + one of `desktop / mobile / cli / server / browser / router` |
+| Path                             | Filter                                                                          |
+| -------------------------------- | ------------------------------------------------------------------------------- |
+| `/explore`                       | no filter (all 210)                                                             |
+| `/explore/k/<kind>`              | one of `proxy / vpn / dns / acceleration / security / monitoring / ops / tools` |
+| `/explore/k/<kind>/p/<platform>` | kind + one of `desktop / mobile / cli / server / browser / router`              |
 
 `generateStaticParams` is wired into both dynamic pages, so the
 build emits a complete set of static HTML:
@@ -98,9 +98,9 @@ reference.
 
 The two orthogonal taxonomies are:
 
-- **`kind`** — the *what* (proxy / VPN / DNS / acceleration / …).
+- **`kind`** — the _what_ (proxy / VPN / DNS / acceleration / …).
   Single-valued, drives the first URL segment.
-- **`platform`** — the *where* (desktop / mobile / CLI / server /
+- **`platform`** — the _where_ (desktop / mobile / CLI / server /
   browser / router). Multi-valued, drives the second URL segment.
 
 A `category` string is kept as a flat third axis (the editorial
@@ -138,13 +138,13 @@ is module-level frozen arrays — see `src/lib/projects.ts`.
 
 ## 8. Automation pipeline
 
-| Trigger | Script | What it does |
-|---|---|---|
-| Cron (Sun 03:00 UTC) | `scripts/refresh-projects.mjs` | Hits the GitHub REST API for every project, updates `stars` / `forks` / `license` / `lastCommit`, derives `status` from `lastCommit`, auto-commits & pushes if the file is dirty |
-| Manual (`workflow_dispatch`) | `scripts/refresh-projects.mjs` | Same as above, on demand |
-| Push to `data/projects.json` | `scripts/refresh-projects.mjs` | Same as above, fires within minutes to clean up new entries |
-| `pnpm run scan` | `scripts/scan-awesome.mjs` | Mines 7 hand-picked `awesome-*` repos and emits `data/candidates.json` for the maintainer to review |
-| `pnpm run validate` | `scripts/validate-projects.mjs` | Pure-Node schema validator; runs in CI as a separate `validate-data` job; idempotent, exit 0/1/2 |
+| Trigger                      | Script                          | What it does                                                                                                                                                                     |
+| ---------------------------- | ------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Cron (Sun 03:00 UTC)         | `scripts/refresh-projects.mjs`  | Hits the GitHub REST API for every project, updates `stars` / `forks` / `license` / `lastCommit`, derives `status` from `lastCommit`, auto-commits & pushes if the file is dirty |
+| Manual (`workflow_dispatch`) | `scripts/refresh-projects.mjs`  | Same as above, on demand                                                                                                                                                         |
+| Push to `data/projects.json` | `scripts/refresh-projects.mjs`  | Same as above, fires within minutes to clean up new entries                                                                                                                      |
+| `pnpm run scan`              | `scripts/scan-awesome.mjs`      | Mines 7 hand-picked `awesome-*` repos and emits `data/candidates.json` for the maintainer to review                                                                              |
+| `pnpm run validate`          | `scripts/validate-projects.mjs` | Pure-Node schema validator; runs in CI as a separate `validate-data` job; idempotent, exit 0/1/2                                                                                 |
 
 The refresh workflow uses `git diff --exit-code` to decide whether
 to commit; partial GitHub API failures on a single project are
@@ -153,16 +153,16 @@ untouched), so a single 404 cannot poison the whole run.
 
 ## 9. Folder layout
 
-| Path | Purpose |
-|---|---|
-| `src/app/` | Next.js App Router pages: `/`, `/explore`, `/explore/k/[kind]`, `/explore/k/[kind]/p/[platform]`, `/not-found`, `/error`, `/explore/error`, `/robots.ts`, `/sitemap.ts` |
-| `src/components/` | Reusable UI: `top-nav`, `tree-sidebar`, `project-table`, `explore-layout`, `landing-content`, `breadcrumb`, `language-switcher`, `set-html-lang`, `site-footer`, `site-mark` |
-| `src/lib/` | Pure modules: `projects.ts` (data access + frozen indexes), `i18n.ts` (trilingual table), `taxonomy.ts` (kind/platform label table), `site.ts` (identity constants), `utils.ts`, `use-client-lang.ts` |
-| `src/types/` | TypeScript types: `project.ts` (the single source of truth for the data shape) |
-| `data/projects.json` | 210 curated projects (the content) |
-| `public/` | Static assets: `favicon.ico`, `og-image.png`, `icon-192/512.png`, `manifest.webmanifest` |
-| `scripts/` | Node + Python utilities: `validate-projects.mjs`, `refresh-projects.mjs`, `scan-awesome.mjs`, `migrate-schema.mjs`, `add-batch.mjs`, plus optional `smoke.py` / `snap.py` / `pageshot.py` (require `playwright`) |
-| `docs/` | User-facing documentation |
+| Path                 | Purpose                                                                                                                                                                                                          |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `src/app/`           | Next.js App Router pages: `/`, `/explore`, `/explore/k/[kind]`, `/explore/k/[kind]/p/[platform]`, `/not-found`, `/error`, `/explore/error`, `/robots.ts`, `/sitemap.ts`                                          |
+| `src/components/`    | Reusable UI: `top-nav`, `tree-sidebar`, `project-table`, `explore-layout`, `landing-content`, `breadcrumb`, `language-switcher`, `set-html-lang`, `site-footer`, `site-mark`                                     |
+| `src/lib/`           | Pure modules: `projects.ts` (data access + frozen indexes), `i18n.ts` (trilingual table), `taxonomy.ts` (kind/platform label table), `site.ts` (identity constants), `utils.ts`, `use-client-lang.ts`            |
+| `src/types/`         | TypeScript types: `project.ts` (the single source of truth for the data shape)                                                                                                                                   |
+| `data/projects.json` | 210 curated projects (the content)                                                                                                                                                                               |
+| `public/`            | Static assets: `favicon.ico`, `og-image.png`, `icon-192/512.png`, `manifest.webmanifest`                                                                                                                         |
+| `scripts/`           | Node + Python utilities: `validate-projects.mjs`, `refresh-projects.mjs`, `scan-awesome.mjs`, `migrate-schema.mjs`, `add-batch.mjs`, plus optional `smoke.py` / `snap.py` / `pageshot.py` (require `playwright`) |
+| `docs/`              | User-facing documentation                                                                                                                                                                                        |
 
 ## 10. Disclaimer placement
 

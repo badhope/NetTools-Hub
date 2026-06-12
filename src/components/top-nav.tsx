@@ -1,17 +1,18 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
-import { Lang, langParam, t, withLang } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { SiteMark } from "@/components/site-mark";
-import { COPYRIGHT_YEAR } from "@/lib/site";
-import { kindLabel } from "@/lib/taxonomy";
-import type { ProjectKind } from "@/types/project";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { Lang, langParam, t, withLang } from '@/lib/i18n';
+import { LanguageSwitcher } from '@/components/language-switcher';
+import { SiteMark } from '@/components/site-mark';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { COPYRIGHT_YEAR } from '@/lib/site';
+import { kindLabel } from '@/lib/taxonomy';
+import { KIND_ORDER } from '@/lib/constants';
 
 interface TopNavProps {
   lang: Lang;
-  onLangChange?: (lang: Lang) => void;
+  onLangChange?: ((lang: Lang) => void) | undefined;
   /**
    * Per-kind counts, used by the mobile drawer to render a kind
    * list with project totals. Optional — when absent (e.g. on a
@@ -20,7 +21,7 @@ interface TopNavProps {
    */
   kindCounts?: Readonly<Record<string, number>>;
   total?: number;
-  variant: "landing" | "explore";
+  variant: 'landing' | 'explore';
   /**
    * Whether the `<header>` should attach itself to the viewport
    * edge via `position: sticky`. The new explore layout never
@@ -30,10 +31,6 @@ interface TopNavProps {
    */
   sticky?: boolean;
 }
-
-const KIND_ORDER: ProjectKind[] = [
-  "proxy", "vpn", "dns", "acceleration", "security", "monitoring", "ops", "tools",
-];
 
 export function TopNav({
   lang,
@@ -61,16 +58,16 @@ export function TopNav({
             ),
           )
         : [];
-    const closeBtn = panel?.querySelector<HTMLElement>("[data-drawer-close]");
+    const closeBtn = panel?.querySelector<HTMLElement>('[data-drawer-close]');
     closeBtn?.focus();
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         e.preventDefault();
         setMobileOpen(false);
         return;
       }
-      if (e.key !== "Tab") return;
+      if (e.key !== 'Tab') return;
       const items = focusables();
       if (items.length === 0) return;
       const first = items[0]!;
@@ -84,9 +81,9 @@ export function TopNav({
         first.focus();
       }
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener('keydown', onKey);
       trigger?.focus();
     };
   }, [mobileOpen]);
@@ -99,43 +96,38 @@ export function TopNav({
     [onLangChange],
   );
 
-  const homeHref = langParam(lang, "/");
-  const exploreHref = langParam(lang, "/explore");
-  const primaryCta = variant === "landing" ? t(lang, "editorial.open_atlas") : t(lang, "nav.home");
-  const primaryHref = variant === "landing" ? exploreHref : homeHref;
+  const homeHref = langParam(lang, '/');
+  const exploreHref = langParam(lang, '/explore');
+  const primaryCta = variant === 'landing' ? t(lang, 'editorial.open_atlas') : t(lang, 'nav.home');
+  const primaryHref = variant === 'landing' ? exploreHref : homeHref;
 
   return (
     <>
       <header
         className={`z-40 border-b border-line bg-bg/85 backdrop-blur-md ${
-          sticky ? "sticky top-0" : "relative"
+          sticky ? 'sticky top-0' : 'relative'
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
-          <Link
-            href={homeHref}
-            className="group flex shrink-0 items-center gap-2.5 text-fg"
-          >
+          <Link href={homeHref} className="group flex shrink-0 items-center gap-2.5 text-fg">
             <SiteMark
               size={22}
               className="text-accent transition-transform duration-500 group-hover:rotate-45"
             />
             <span className="hidden font-display text-[1.05rem] font-medium leading-none tracking-tight sm:inline">
-              {t(lang, "site.title")}
+              {t(lang, 'site.title')}
             </span>
           </Link>
 
-          <span
-            aria-hidden
-            className="hidden h-5 w-px shrink-0 bg-dim md:inline-block"
-          />
+          <span aria-hidden className="hidden h-5 w-px shrink-0 bg-dim md:inline-block" />
 
           <span className="kicker hidden md:inline-block">
-            {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
+            {t(lang, 'editorial.edition', { date: String(COPYRIGHT_YEAR) })}
           </span>
 
           <div className="flex-1" />
 
+          <ThemeToggle />
           <LanguageSwitcher lang={lang} onChange={onLangChange} />
 
           <Link
@@ -150,10 +142,7 @@ export function TopNav({
               stroke="currentColor"
               strokeWidth={1.5}
             >
-              <path
-                strokeLinecap="square"
-                d="M5 12h14M13 6l6 6-6 6"
-              />
+              <path strokeLinecap="square" d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </Link>
 
@@ -161,7 +150,7 @@ export function TopNav({
             ref={triggerRef}
             onClick={() => setMobileOpen(true)}
             className="inline-flex h-9 w-9 items-center justify-center border border-dim text-fg-2 transition-colors hover:border-accent hover:text-accent lg:hidden"
-            aria-label={t(lang, "nav.menu")}
+            aria-label={t(lang, 'nav.menu')}
             aria-expanded={mobileOpen}
             aria-controls="mobile-drawer"
           >
@@ -180,25 +169,22 @@ export function TopNav({
 
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-bg/80"
-            onClick={() => setMobileOpen(false)}
-          />
+          <div className="absolute inset-0 bg-bg/80" onClick={() => setMobileOpen(false)} />
           <div
             id="mobile-drawer"
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label={t(lang, "nav.index")}
+            aria-label={t(lang, 'nav.index')}
             className="absolute inset-y-0 right-0 flex w-[min(88vw,360px)] flex-col border-l border-line bg-bg-elev"
           >
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
-              <span className="kicker">{t(lang, "taxonomy.index")}</span>
+              <span className="kicker">{t(lang, 'taxonomy.index')}</span>
               <button
                 data-drawer-close
                 onClick={() => setMobileOpen(false)}
                 className="text-fg-2 hover:text-accent"
-                aria-label={t(lang, "nav.close")}
+                aria-label={t(lang, 'nav.close')}
               >
                 <svg
                   className="h-5 w-5"
@@ -214,17 +200,15 @@ export function TopNav({
             <nav className="flex-1 overflow-y-auto px-4 py-5 font-mono text-[12.5px]">
               {/* All projects — root */}
               <Link
-                href={withLang(lang, "/explore")}
+                href={withLang(lang, '/explore')}
                 onClick={() => setMobileOpen(false)}
                 className="flex items-center justify-between border-b border-line py-2 text-fg-2 hover:text-accent"
               >
                 <span>
-                  <span className="text-muted">/</span> {t(lang, "taxonomy.all")}
+                  <span className="text-muted">/</span> {t(lang, 'taxonomy.all')}
                 </span>
                 {total !== undefined && (
-                  <span className="text-[10px] text-muted">
-                    {String(total).padStart(3, "0")}
-                  </span>
+                  <span className="text-[10px] text-muted">{String(total).padStart(3, '0')}</span>
                 )}
               </Link>
               {/* Kinds */}
@@ -239,12 +223,10 @@ export function TopNav({
                     className="flex items-center justify-between border-b border-line py-2 text-fg-2 hover:text-accent"
                   >
                     <span>
-                      <span className="text-muted">/</span> {kindLabel(k, lang)}{" "}
+                      <span className="text-muted">/</span> {kindLabel(k, lang)}{' '}
                       <span className="text-[10px] text-muted">/{k}</span>
                     </span>
-                    <span className="text-[10px] text-muted">
-                      {String(count).padStart(3, "0")}
-                    </span>
+                    <span className="text-[10px] text-muted">{String(count).padStart(3, '0')}</span>
                   </Link>
                 );
               })}

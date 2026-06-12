@@ -1,4 +1,4 @@
-import type { Lang } from "@/lib/i18n";
+import type { Lang } from '@/lib/i18n';
 
 /**
  * Serialise a JSON-LD payload for inline `<script type="application/ld+json">`
@@ -19,9 +19,9 @@ import type { Lang } from "@/lib/i18n";
  */
 export function safeJsonLd(payload: unknown): string {
   return JSON.stringify(payload)
-    .replace(/</g, "\\u003c")
-    .replace(/>/g, "\\u003e")
-    .replace(/&/g, "\\u0026");
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/&/g, '\\u0026');
 }
 
 /**
@@ -32,10 +32,10 @@ export function safeJsonLd(payload: unknown): string {
  * `k`/`M` thresholds are picked by the platform's own CLDR data
  * (no hand-rolled rounding bug at the `999.5k` boundary).
  */
-export function formatNumber(num: number, lang: Lang = "en"): string {
+export function formatNumber(num: number, lang: Lang = 'en'): string {
   try {
     return new Intl.NumberFormat(lang, {
-      notation: "compact",
+      notation: 'compact',
       maximumFractionDigits: 1,
     }).format(num);
   } catch {
@@ -59,8 +59,8 @@ export function formatNumber(num: number, lang: Lang = "en"): string {
  * the East-Asian variant in the locale-specific script to keep the
  * editorial tone consistent across languages.
  */
-export function formatTotalStars(num: number, lang: Lang = "en"): string {
-  if (lang === "zh" || lang === "ja") {
+export function formatTotalStars(num: number, lang: Lang = 'en'): string {
+  if (lang === 'zh' || lang === 'ja') {
     // 1_000_000 → 100万 (one million, in the CJK unit convention).
     // We render an integer when the division is exact and one
     // decimal otherwise (e.g. 1.4万 for 14_000).
@@ -77,4 +77,14 @@ export function formatTotalStars(num: number, lang: Lang = "en"): string {
     return num.toString();
   }
   return formatNumber(num, lang);
+}
+
+/**
+ * Format star count for display: 999 → "999", 1_500 → "1.5K",
+ * 1_500_000 → "1.5M".
+ */
+export function formatStars(n: number): string {
+  if (n >= 1_000_000) return `${(n / 1_000_000).toFixed(1)}M`;
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)}K`;
+  return String(n);
 }

@@ -33,9 +33,9 @@
 ## これは何？
 
 システムを再インストールするたびに、私は毎回 GitHub で同じ問いを投げ
-かけています。*Clash のどのコアがまだ生きているか、sing-box と Xray
+かけています。_Clash のどのコアがまだ生きているか、sing-box と Xray
 の違い、もっと軽い V2Ray 実装はあるか、WireGuard の UI で一番きれい
-なのはどれか*。このサイトは私の個人的なチートシートを公開したものです。
+なのはどれか_。このサイトは私の個人的なチートシートを公開したものです。
 
 これは **VPN サービスではありません**。**プロキシ提供元ではありま
 せん**。**掲載ツールのホスティングプラットフォームでもありません**。
@@ -50,16 +50,16 @@
 ディレクトリは 2 つの**直交する分類軸**で構成されており、それがそのま
 ま URL 階層になります：
 
-| `kind`（URL: `/explore/k/<kind>/`） | 件数 | `platform`（URL: `.../p/<platform>/`） | 件数 |
-|---|---:|---|---:|
-| `proxy` プロキシコアとクライアント | 78 | `desktop` | 102 |
-| `vpn` VPN サーバーとクライアント | 19 | `mobile` | 56 |
-| `dns` 再帰・権威・フィルタリング | 18 | `cli` | 81 |
-| `acceleration` GitHub 高速化、ミラー、トンネル | 31 | `server` | 134 |
-| `security` WAF、IDS、IPS、ハニーポット | 21 | `browser` | 38 |
-| `monitoring` 稼働率、指標、可観測性 | 14 | `router` | 23 |
-| `ops` デプロイ、オーケストレーション、管理 | 12 | | |
-| `tools` ユーティリティスクリプト、ポートスキャナ、デバッガ | 17 | | |
+| `kind`（URL: `/explore/k/<kind>/`）                        | 件数 | `platform`（URL: `.../p/<platform>/`） | 件数 |
+| ---------------------------------------------------------- | ---: | -------------------------------------- | ---: |
+| `proxy` プロキシコアとクライアント                         |   78 | `desktop`                              |  102 |
+| `vpn` VPN サーバーとクライアント                           |   19 | `mobile`                               |   56 |
+| `dns` 再帰・権威・フィルタリング                           |   18 | `cli`                                  |   81 |
+| `acceleration` GitHub 高速化、ミラー、トンネル             |   31 | `server`                               |  134 |
+| `security` WAF、IDS、IPS、ハニーポット                     |   21 | `browser`                              |   38 |
+| `monitoring` 稼働率、指標、可観測性                        |   14 | `router`                               |   23 |
+| `ops` デプロイ、オーケストレーション、管理                 |   12 |                                        |      |
+| `tools` ユーティリティスクリプト、ポートスキャナ、デバッガ |   17 |                                        |      |
 
 1 つのプロジェクトに複数の `platform` タグを付けることができます
 （例：プロキシが `desktop` と `cli` の両方）。URL 階層はこの 2 軸の
@@ -245,17 +245,17 @@ NetTools-Hub/
 
 ## 技術スタック
 
-| レイヤ | 採用 | 理由 |
-|---|---|---|
-| フレームワーク | **Next.js 16**（App Router） | 静的エクスポート、RSC、ファイルベースルーティング |
-| UI | **React 19** | 最新安定版 |
-| スタイリング | **Tailwind CSS v4** | `@import "tailwindcss"` + `@theme` トークン |
-| 言語 | **TypeScript 5.9** | strict モード |
-| パッケージマネージャ | **pnpm 10** | 高速、ディスク効率 |
-| ホスティング | **GitHub Pages** | 無料、高速 CDN、ベンダーロックインなし |
-| CI/CD | **GitHub Actions** | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
-| i18n | 手書き 3 言語対応表 | JS バンドルゼロ、ランタイム切替 |
-| フォント | **IBM Plex Sans + Mono** | クールで工学的；数字は等幅 |
+| レイヤ               | 採用                         | 理由                                                                       |
+| -------------------- | ---------------------------- | -------------------------------------------------------------------------- |
+| フレームワーク       | **Next.js 16**（App Router） | 静的エクスポート、RSC、ファイルベースルーティング                          |
+| UI                   | **React 19**                 | 最新安定版                                                                 |
+| スタイリング         | **Tailwind CSS v4**          | `@import "tailwindcss"` + `@theme` トークン                                |
+| 言語                 | **TypeScript 5.9**           | strict モード                                                              |
+| パッケージマネージャ | **pnpm 10**                  | 高速、ディスク効率                                                         |
+| ホスティング         | **GitHub Pages**             | 無料、高速 CDN、ベンダーロックインなし                                     |
+| CI/CD                | **GitHub Actions**           | `actions/checkout@v4` + `pnpm/action-setup@v4` + `actions/deploy-pages@v4` |
+| i18n                 | 手書き 3 言語対応表          | JS バンドルゼロ、ランタイム切替                                            |
+| フォント             | **IBM Plex Sans + Mono**     | クールで工学的；数字は等幅                                                 |
 
 ---
 
@@ -294,13 +294,13 @@ NetTools-Hub/
 
 ## 自動化パイプライン
 
-| トリガ | スクリプト | 出力 |
-|---|---|---|
-| cron（日曜 03:00 UTC） | `scripts/refresh-projects.mjs` | `stars` / `forks` / `license` / `lastCommit` / `status` を更新、差分があれば自動コミット |
-| 手動 `workflow_dispatch` | 同上 | 同上 |
-| `data/projects.json` への push | 同上（`paths:` フィルタで） | 同上 |
-| `pnpm run scan`（ローカル） | `scripts/scan-awesome.mjs` | `data/candidates.json` に書き出し（メンテナが確認） |
-| `pnpm run validate`（CI） | `scripts/validate-projects.mjs` | 終了コード 0/1/2；不合格なら PR を落とす |
+| トリガ                         | スクリプト                      | 出力                                                                                     |
+| ------------------------------ | ------------------------------- | ---------------------------------------------------------------------------------------- |
+| cron（日曜 03:00 UTC）         | `scripts/refresh-projects.mjs`  | `stars` / `forks` / `license` / `lastCommit` / `status` を更新、差分があれば自動コミット |
+| 手動 `workflow_dispatch`       | 同上                            | 同上                                                                                     |
+| `data/projects.json` への push | 同上（`paths:` フィルタで）     | 同上                                                                                     |
+| `pnpm run scan`（ローカル）    | `scripts/scan-awesome.mjs`      | `data/candidates.json` に書き出し（メンテナが確認）                                      |
+| `pnpm run validate`（CI）      | `scripts/validate-projects.mjs` | 終了コード 0/1/2；不合格なら PR を落とす                                                 |
 
 リフレッシュワークフローは `git diff --exit-code` でコミット要否を判定
 します。単一プロジェクトの GitHub API 呼び出し失敗はログしてスキップ
@@ -310,11 +310,11 @@ NetTools-Hub/
 
 ## 国際化（i18n）
 
-| 言語 | コード | UI | ドキュメント |
-|---|---|---|---|
-| 🇬🇧 English（デフォルト） | `en` | ✅ | [`README.md`](./README.md) |
-| 🇨🇳 简体中文 | `zh` | ✅ | [`README.zh.md`](./README.zh.md) |
-| 🇯🇵 日本語 | `ja` | ✅ | [`README.ja.md`](./README.ja.md) |
+| 言語                     | コード | UI  | ドキュメント                     |
+| ------------------------ | ------ | --- | -------------------------------- |
+| 🇬🇧 English（デフォルト） | `en`   | ✅  | [`README.md`](./README.md)       |
+| 🇨🇳 简体中文              | `zh`   | ✅  | [`README.zh.md`](./README.zh.md) |
+| 🇯🇵 日本語                | `ja`   | ✅  | [`README.ja.md`](./README.ja.md) |
 
 UI 文字列は [`src/lib/i18n.ts`](./src/lib/i18n.ts) に集約（約 36 キー
 の 3 列表）。現在の言語は `?lang=` URL パラメータから読み取られ、

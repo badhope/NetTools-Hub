@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { LANG_HTML_LANG } from "@/lib/i18n";
-import { useClientLang } from "@/lib/use-client-lang";
+import { useEffect } from 'react';
+import { LANG_HTML_LANG } from '@/lib/i18n';
+import { useClientLang } from '@/lib/use-client-lang';
 
 /**
  * Keeps `<html lang>` in sync with the client-side language state.

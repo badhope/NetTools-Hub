@@ -1,7 +1,7 @@
 name: ➕ Add a Project
 description: Suggest a new project to be listed in `data/projects.json`.
-title: "[Project] "
-labels: ["project", "data"]
+title: '[Project] '
+labels: ['project', 'data']
 assignees: []
 body:
   - type: markdown
@@ -19,7 +19,7 @@ body:
     id: name
     attributes:
       label: Project name
-      placeholder: "e.g. sing-box"
+      placeholder: 'e.g. sing-box'
     validations:
       required: true
 
@@ -27,7 +27,7 @@ body:
     id: url
     attributes:
       label: GitHub URL
-      placeholder: "https://github.com/SagerNet/sing-box"
+      placeholder: 'https://github.com/SagerNet/sing-box'
     validations:
       required: true
 
@@ -35,7 +35,7 @@ body:
     id: category
     attributes:
       label: Category
-      description: "Pick the most appropriate one. The 6 themed groups are listed first, sub-categories underneath."
+      description: 'Pick the most appropriate one. The 6 themed groups are listed first, sub-categories underneath.'
       options:
         - 🔌 Proxy Core — proxy cores
         - 🔌 Proxy Core — GUI clients
@@ -66,7 +66,7 @@ body:
     id: description
     attributes:
       label: Short description (1 line, English)
-      placeholder: "Universal proxy platform."
+      placeholder: 'Universal proxy platform.'
     validations:
       required: true
 
@@ -74,7 +74,7 @@ body:
     id: language
     attributes:
       label: Primary language
-      placeholder: "Go, Rust, TypeScript, …"
+      placeholder: 'Go, Rust, TypeScript, …'
     validations:
       required: true
 
@@ -82,7 +82,7 @@ body:
     id: license
     attributes:
       label: License
-      placeholder: "MIT, Apache-2.0, GPL-3.0, …"
+      placeholder: 'MIT, Apache-2.0, GPL-3.0, …'
     validations:
       required: true
 
@@ -90,7 +90,7 @@ body:
     id: tags
     attributes:
       label: Tags (comma-separated, max 5)
-      placeholder: "proxy, shadowsocks, trojan"
+      placeholder: 'proxy, shadowsocks, trojan'
     validations:
       required: false
 
@@ -98,7 +98,7 @@ body:
     id: notes
     attributes:
       label: Why should this be listed?
-      description: "1-3 sentences. Mention any features that are unique or notable."
+      description: '1-3 sentences. Mention any features that are unique or notable.'
     validations:
       required: false
 

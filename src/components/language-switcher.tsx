@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState, useCallback } from "react";
-import { Lang, LANG_OPTIONS, t } from "@/lib/i18n";
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { Lang, LANG_OPTIONS, t } from '@/lib/i18n';
 
 /**
  * Look up the listbox index of a given language. The two callers
@@ -21,7 +21,7 @@ function highlightForLang(target: Lang): number {
 
 interface LanguageSwitcherProps {
   lang: Lang;
-  onChange?: (lang: Lang) => void;
+  onChange?: ((lang: Lang) => void) | undefined;
 }
 
 /**
@@ -97,8 +97,8 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
         setOpen(false);
       }
     };
-    document.addEventListener("pointerdown", onPointer);
-    return () => document.removeEventListener("pointerdown", onPointer);
+    document.addEventListener('pointerdown', onPointer);
+    return () => document.removeEventListener('pointerdown', onPointer);
   }, [open]);
 
   // Whenever the listbox opens, focus the highlighted option. The
@@ -115,7 +115,7 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
   }, [open]);
 
   const onTriggerKey = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (e.key === "ArrowDown" || e.key === "Enter" || e.key === " ") {
+    if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       setHighlight(highlightForLang(lang));
       setOpen(true);
@@ -131,23 +131,23 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
       optionRefs.current[wrapped]?.focus();
     };
     switch (e.key) {
-      case "ArrowDown":
+      case 'ArrowDown':
         move(highlight + 1);
         return;
-      case "ArrowUp":
+      case 'ArrowUp':
         move(highlight - 1);
         return;
-      case "Home":
+      case 'Home':
         move(0);
         return;
-      case "End":
+      case 'End':
         move(last);
         return;
-      case "Escape":
+      case 'Escape':
         e.preventDefault();
         close(true);
         return;
-      case "Tab":
+      case 'Tab':
         // Tabbing away from the menu closes it but does NOT return
         // focus to the trigger — the user is moving on, and the
         // browser is already taking focus wherever they intended.
@@ -166,33 +166,27 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onTriggerKey}
         className="inline-flex h-9 items-center gap-1.5 border border-dim px-3 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-2 transition-colors hover:border-accent hover:text-accent"
-        aria-label={t(lang, "nav.switch_language")}
+        aria-label={t(lang, 'nav.switch_language')}
         aria-haspopup="listbox"
         aria-expanded={open}
       >
         <span>{current.label}</span>
         <svg
-          className={`h-3 w-3 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
+          className={`h-3 w-3 transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
           strokeWidth={1.5}
           aria-hidden
         >
-          <path
-            strokeLinecap="square"
-            strokeLinejoin="miter"
-            d="M6 9l6 6 6-6"
-          />
+          <path strokeLinecap="square" strokeLinejoin="miter" d="M6 9l6 6 6-6" />
         </svg>
       </button>
 
       {open && (
         <div
           role="listbox"
-          aria-label={t(lang, "nav.switch_language")}
+          aria-label={t(lang, 'nav.switch_language')}
           // `LANG_OPTIONS[highlight]!` — the invariant that
           // `0 <= highlight < LANG_OPTIONS.length` is maintained
           // by the `move()` and `highlightForLang()` helpers, and
@@ -223,17 +217,17 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
                 onMouseEnter={() => setHighlight(idx)}
                 onClick={() => select(opt.value)}
                 onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
+                  if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     select(opt.value);
                   }
                 }}
                 className={`flex w-full items-center justify-between gap-3 px-3 py-2 text-left font-mono text-[11px] uppercase tracking-[0.18em] transition-colors ${
                   active
-                    ? "text-accent"
+                    ? 'text-accent'
                     : focused
-                      ? "bg-bg-sunk text-fg"
-                      : "text-fg-2 hover:bg-bg-sunk hover:text-fg"
+                      ? 'bg-bg-sunk text-fg'
+                      : 'text-fg-2 hover:bg-bg-sunk hover:text-fg'
                 }`}
               >
                 <span>{opt.label}</span>
@@ -246,10 +240,7 @@ export function LanguageSwitcher({ lang, onChange }: LanguageSwitcherProps) {
                     strokeWidth={2}
                     aria-hidden
                   >
-                    <path
-                      strokeLinecap="square"
-                      d="M5 13l4 4L19 7"
-                    />
+                    <path strokeLinecap="square" d="M5 13l4 4L19 7" />
                   </svg>
                 )}
               </button>

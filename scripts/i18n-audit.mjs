@@ -15,24 +15,24 @@
 // it reaches production.
 // ============================================================================
 
-import { readFileSync } from "node:fs";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { readFileSync } from 'node:fs';
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const i18nPath = resolve(__dirname, "../src/lib/i18n.ts");
+const i18nPath = resolve(__dirname, '../src/lib/i18n.ts');
 
 // Extract the translations object from the TypeScript source.
 // We parse it as a JS object by stripping the type annotations.
-const source = readFileSync(i18nPath, "utf-8");
+const source = readFileSync(i18nPath, 'utf-8');
 
 // Match each language block: `en: { ... }, zh: { ... }, ja: { ... }`
-const langBlocks = ["en", "zh", "ja"];
+const langBlocks = ['en', 'zh', 'ja'];
 const keysByLang = {};
 
 for (const lang of langBlocks) {
   // Find the block for this language
-  const blockRegex = new RegExp(`${lang}:\\s*\\{([^}]+)\\}`, "s");
+  const blockRegex = new RegExp(`${lang}:\\s*\\{([^}]+)\\}`, 's');
   const match = source.match(blockRegex);
   if (!match) {
     console.error(`❌ Could not find ${lang} block in i18n.ts`);
@@ -54,7 +54,7 @@ for (const lang of langBlocks) {
 const enKeys = keysByLang.en;
 let errors = 0;
 
-for (const lang of ["zh", "ja"]) {
+for (const lang of ['zh', 'ja']) {
   const langKeys = keysByLang[lang];
 
   // Keys in English but missing in this language

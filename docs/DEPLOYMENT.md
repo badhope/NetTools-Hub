@@ -37,8 +37,8 @@ This is set by `basePath: "/NetTools-Hub"` in [`next.config.ts`](../next.config.
 ```ts
 // next.config.ts
 const nextConfig: NextConfig = {
-  output: "export",
-  basePath: "/proxy-hub",          // ← match your new repo name
+  output: 'export',
+  basePath: '/proxy-hub', // ← match your new repo name
   trailingSlash: true,
   images: { unoptimized: true },
 };
@@ -177,11 +177,11 @@ The `/explore` surface is a 2-level hierarchy driven by the
 data layer's two orthogonal taxonomies. Each level is its own
 static page:
 
-| URL | What it shows |
-|---|---|
-| `/explore` | All 210 projects, sorted by `kind` then by stars |
-| `/explore/k/<kind>` | Projects filtered to one of the 8 kinds (proxy / vpn / dns / acceleration / security / monitoring / ops / tools) |
-| `/explore/k/<kind>/p/<platform>` | That kind, further filtered to one of the 6 platforms (desktop / mobile / cli / server / browser / router) |
+| URL                              | What it shows                                                                                                    |
+| -------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `/explore`                       | All 210 projects, sorted by `kind` then by stars                                                                 |
+| `/explore/k/<kind>`              | Projects filtered to one of the 8 kinds (proxy / vpn / dns / acceleration / security / monitoring / ops / tools) |
+| `/explore/k/<kind>/p/<platform>` | That kind, further filtered to one of the 6 platforms (desktop / mobile / cli / server / browser / router)       |
 
 The sidebar on every `/explore` page is a real tree of `<a>`
 links — it is the URL hierarchy, not a stateful facet panel.
@@ -196,14 +196,14 @@ kind+platform = 57 pre-rendered pages).
 
 ## 9. Troubleshooting
 
-| Symptom | Fix |
-|---|---|
-| `404` on every `_next/*` asset | `basePath` in `next.config.ts` doesn't match the repo name |
-| Sub-pages (`/explore`) give 404 | Make sure `trailingSlash: true` is set in `next.config.ts` |
-| Action tab shows the run but Pages is still empty | Wait 1–2 minutes — `actions/deploy-pages` has a small post-deploy delay |
-| Want to undo a deploy | Use **Actions → Deploy to GitHub Pages → Re-run jobs from failed**, or roll back the commit and push |
-| `pnpm run validate` exits 1 | The error is on stdout — read the `ERROR <project>` lines and fix the JSON |
-| `pnpm run refresh` hits rate limits | Set `GITHUB_TOKEN` in the env; anonymous calls are capped at 60/h |
-| A project shows as `archived` after refresh | The repo was either deleted (404) or has no commit in the last 2 years — re-evaluate the inclusion |
+| Symptom                                           | Fix                                                                                                  |
+| ------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| `404` on every `_next/*` asset                    | `basePath` in `next.config.ts` doesn't match the repo name                                           |
+| Sub-pages (`/explore`) give 404                   | Make sure `trailingSlash: true` is set in `next.config.ts`                                           |
+| Action tab shows the run but Pages is still empty | Wait 1–2 minutes — `actions/deploy-pages` has a small post-deploy delay                              |
+| Want to undo a deploy                             | Use **Actions → Deploy to GitHub Pages → Re-run jobs from failed**, or roll back the commit and push |
+| `pnpm run validate` exits 1                       | The error is on stdout — read the `ERROR <project>` lines and fix the JSON                           |
+| `pnpm run refresh` hits rate limits               | Set `GITHUB_TOKEN` in the env; anonymous calls are capped at 60/h                                    |
+| A project shows as `archived` after refresh       | The repo was either deleted (404) or has no commit in the last 2 years — re-evaluate the inclusion   |
 
 For more, see [`CONTRIBUTING.md`](../CONTRIBUTING.md) and [`ARCHITECTURE.md`](./ARCHITECTURE.md).

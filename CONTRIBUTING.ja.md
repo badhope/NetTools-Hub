@@ -106,12 +106,12 @@ pnpm dev
 
 ### 利用可能なスクリプト
 
-| コマンド | 説明 |
-| --- | --- |
-| `pnpm dev` | ポート 8080 でローカル開発サーバーを起動 |
+| コマンド     | 説明                                         |
+| ------------ | -------------------------------------------- |
+| `pnpm dev`   | ポート 8080 でローカル開発サーバーを起動     |
 | `pnpm build` | `./out` ディレクトリに静的エクスポートを生成 |
-| `pnpm start` | ビルド済みの `./out` をポート 8080 で配信 |
-| `pnpm lint` | Next.js + TypeScript ルールで ESLint を実行 |
+| `pnpm start` | ビルド済みの `./out` をポート 8080 で配信    |
+| `pnpm lint`  | Next.js + TypeScript ルールで ESLint を実行  |
 
 > **注意**：このプロジェクトは GitHub Pages へ静的デプロイするため `output: "export"` を使用しています。開発サーバーは通常通り動作し、本番ビルドのみ完全静的です。
 
@@ -158,37 +158,37 @@ pnpm dev
 
 ```ts
 interface Project {
-  id: string;              // URL セーフなスラッグ（例 "sing-box"）
-  name: string;            // 表示名（例 "sing-box"）
-  author: string;          // 著者または組織名（例 "SagerNet"）
-  description: string;     // 1 行の説明（英語）
-  url: string;             // 公式ホームページまたはリポジトリ URL
-  homepage?: string;       // オプションのプロジェクトホームページ（GitHub 以外）
-  
+  id: string; // URL セーフなスラッグ（例 "sing-box"）
+  name: string; // 表示名（例 "sing-box"）
+  author: string; // 著者または組織名（例 "SagerNet"）
+  description: string; // 1 行の説明（英語）
+  url: string; // 公式ホームページまたはリポジトリ URL
+  homepage?: string; // オプションのプロジェクトホームページ（GitHub 以外）
+
   // メトリクス（scripts/refresh-projects.mjs によって自動更新）
-  stars: number;           // GitHub スター数
-  forks: number;           // GitHub フォーク数
-  language: string;        // 主要言語（例 "Go"）
-  license: string;         // SPDX 識別子（例 "MIT"）
-  
+  stars: number; // GitHub スター数
+  forks: number; // GitHub フォーク数
+  language: string; // 主要言語（例 "Go"）
+  license: string; // SPDX 識別子（例 "MIT"）
+
   // 分類軸
-  kind: ProjectKind;       // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
-  platform: ProjectPlatform[];  // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
-  category: string;        // 編集分類（例 "proxy-core"）
-  tags: string[];          // 自由形式、小文字、ハイフン区切り
-  
+  kind: ProjectKind; // "proxy" | "vpn" | "dns" | "acceleration" | "security" | "monitoring" | "ops" | "tools"
+  platform: ProjectPlatform[]; // "desktop" | "mobile" | "cli" | "server" | "browser" | "router"
+  category: string; // 編集分類（例 "proxy-core"）
+  tags: string[]; // 自由形式、小文字、ハイフン区切り
+
   // 編集内容
-  notes?: string;          // オプションのメンテナーメモ
+  notes?: string; // オプションのメンテナーメモ
   verdict?: ProjectVerdict; // "recommended" | "neutral" | "caution" | "avoid"
-  
+
   // ライフサイクル
-  lastCommit: string;      // ISO 8601 日付（例 "2026-05-01"）
-  addedAt: string;         // 初回追加日
-  status: ProjectStatus;   // "active" | "stale" | "archived"
-  
+  lastCommit: string; // ISO 8601 日付（例 "2026-05-01"）
+  addedAt: string; // 初回追加日
+  status: ProjectStatus; // "active" | "stale" | "archived"
+
   // ビジュアル
-  highlights: string[];    // プロジェクトのハイライト
-  gradient: string[];      // カードのグラデーション色
+  highlights: string[]; // プロジェクトのハイライト
+  gradient: string[]; // カードのグラデーション色
 }
 ```
 
@@ -256,17 +256,17 @@ pnpm build
 
 よく使う type：
 
-| Type | 用途 |
-| --- | --- |
-| `feat` | ユーザー向け新機能 |
-| `fix` | バグ修正 |
-| `docs` | ドキュメントのみの変更（README、CONTRIBUTING など） |
-| `style` | フォーマット、セミコロン漏れなどコード変更を含まない調整 |
-| `refactor` | バグ修正や機能追加を伴わないコード変更 |
-| `perf` | パフォーマンス改善 |
-| `test` | テストの追加・修正 |
-| `chore` | ツール、依存、CI などの非コード変更 |
-| `data` | `data/projects.json` の更新 |
+| Type       | 用途                                                     |
+| ---------- | -------------------------------------------------------- |
+| `feat`     | ユーザー向け新機能                                       |
+| `fix`      | バグ修正                                                 |
+| `docs`     | ドキュメントのみの変更（README、CONTRIBUTING など）      |
+| `style`    | フォーマット、セミコロン漏れなどコード変更を含まない調整 |
+| `refactor` | バグ修正や機能追加を伴わないコード変更                   |
+| `perf`     | パフォーマンス改善                                       |
+| `test`     | テストの追加・修正                                       |
+| `chore`    | ツール、依存、CI などの非コード変更                      |
+| `data`     | `data/projects.json` の更新                              |
 
 例：
 

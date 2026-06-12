@@ -15,7 +15,7 @@
  * centred dot is the indexer.
  */
 
-import * as React from "react";
+import * as React from 'react';
 
 interface SiteMarkProps {
   size?: number;
@@ -23,11 +23,7 @@ interface SiteMarkProps {
   strokeWidth?: number;
 }
 
-export function SiteMark({
-  size = 22,
-  className,
-  strokeWidth = 1.5,
-}: SiteMarkProps) {
+export function SiteMark({ size = 22, className, strokeWidth = 1.5 }: SiteMarkProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"

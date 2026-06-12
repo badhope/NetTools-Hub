@@ -1,6 +1,6 @@
-import { Project } from "@/types/project";
-import { Lang, t } from "@/lib/i18n";
-import { ProjectRow } from "@/components/project-row";
+import { Project } from '@/types/project';
+import { Lang, t } from '@/lib/i18n';
+import { ProjectRow } from '@/components/project-row';
 
 interface ProjectTableProps {
   projects: readonly Project[];
@@ -25,21 +25,21 @@ export function ProjectTable({ projects, lang }: ProjectTableProps) {
   if (projects.length === 0) {
     return (
       <p className="border border-dashed border-dim p-6 text-center text-[13px] text-muted">
-        {t(lang, "table.empty")}
+        {t(lang, 'table.empty')}
       </p>
     );
   }
   return (
-    <table className="proj-table">
+    <table className="proj-table" aria-label={t(lang, 'table.col.name')} role="table">
       <thead>
         <tr>
-          <th>{t(lang, "table.col.name")}</th>
-          <th className="hide-md">{t(lang, "table.col.platforms")}</th>
-          <th className="num text-right">{t(lang, "table.col.stars")}</th>
-          <th className="hide-md">{t(lang, "table.col.last_commit")}</th>
-          <th className="hide-md">{t(lang, "table.col.license")}</th>
-          <th className="hide-md">{t(lang, "table.col.status")}</th>
-          <th className="hide-md">{t(lang, "table.col.verdict")}</th>
+          <th scope="col">{t(lang, 'table.col.name')}</th>
+          <th scope="col" className="hide-md">{t(lang, 'table.col.platforms')}</th>
+          <th scope="col" className="num text-right">{t(lang, 'table.col.stars')}</th>
+          <th scope="col" className="hide-md">{t(lang, 'table.col.last_commit')}</th>
+          <th scope="col" className="hide-md">{t(lang, 'table.col.license')}</th>
+          <th scope="col" className="hide-md">{t(lang, 'table.col.status')}</th>
+          <th scope="col" className="hide-md">{t(lang, 'table.col.verdict')}</th>
         </tr>
       </thead>
       <tbody>

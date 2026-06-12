@@ -27,105 +27,105 @@
 //     editorial one).
 // ============================================================================
 
-import { readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
-const DATA_FILE = resolve(ROOT, "data/projects.json");
+const ROOT = resolve(__dirname, '..');
+const DATA_FILE = resolve(ROOT, 'data/projects.json');
 
 // slug -> { kind, platform, verdict? }
 // Verdict defaults to "neutral"; the migration does not pretend to
 // have an opinion on every project.
 const SLUG_RULES = {
-  core:               { kind: "proxy", platform: ["server"] },
-  gui:                { kind: "proxy", platform: ["desktop", "mobile"] },
-  subscription:       { kind: "tools", platform: ["server", "cli"] },
-  github_tools:       { kind: "acceleration", platform: ["server", "cli"] },
-  router:             { kind: "vpn",  platform: ["router"] },
-  docker:             { kind: "ops",  platform: ["server"] },
-  rules:              { kind: "proxy", platform: ["server"] },
-  utilities:          { kind: "tools", platform: ["cli", "desktop"] },
-  mirrors:            { kind: "acceleration", platform: ["server"] },
-  network_test:       { kind: "tools", platform: ["cli", "desktop"] },
-  container:          { kind: "ops",  platform: ["server"] },
-  server_mgmt:        { kind: "ops",  platform: ["server", "cli"] },
-  node_tools:         { kind: "ops",  platform: ["cli"] },
-  monitoring:         { kind: "monitoring", platform: ["server"] },
-  dns_tools:          { kind: "dns",  platform: ["server"] },
-  cert_tools:         { kind: "tools", platform: ["server", "cli"] },
-  security_tools:     { kind: "security", platform: ["server", "cli"] },
-  collection:         { kind: "tools", platform: ["browser"] },
-  protocol_tools:     { kind: "tools", platform: ["cli"] },
-  tunnel_tools:       { kind: "vpn",  platform: ["server", "cli"] },
-  data_transfer:      { kind: "tools", platform: ["cli", "server"] },
+  core: { kind: 'proxy', platform: ['server'] },
+  gui: { kind: 'proxy', platform: ['desktop', 'mobile'] },
+  subscription: { kind: 'tools', platform: ['server', 'cli'] },
+  github_tools: { kind: 'acceleration', platform: ['server', 'cli'] },
+  router: { kind: 'vpn', platform: ['router'] },
+  docker: { kind: 'ops', platform: ['server'] },
+  rules: { kind: 'proxy', platform: ['server'] },
+  utilities: { kind: 'tools', platform: ['cli', 'desktop'] },
+  mirrors: { kind: 'acceleration', platform: ['server'] },
+  network_test: { kind: 'tools', platform: ['cli', 'desktop'] },
+  container: { kind: 'ops', platform: ['server'] },
+  server_mgmt: { kind: 'ops', platform: ['server', 'cli'] },
+  node_tools: { kind: 'ops', platform: ['cli'] },
+  monitoring: { kind: 'monitoring', platform: ['server'] },
+  dns_tools: { kind: 'dns', platform: ['server'] },
+  cert_tools: { kind: 'tools', platform: ['server', 'cli'] },
+  security_tools: { kind: 'security', platform: ['server', 'cli'] },
+  collection: { kind: 'tools', platform: ['browser'] },
+  protocol_tools: { kind: 'tools', platform: ['cli'] },
+  tunnel_tools: { kind: 'vpn', platform: ['server', 'cli'] },
+  data_transfer: { kind: 'tools', platform: ['cli', 'server'] },
 };
 
 // Per-project overrides: projects whose default slug mapping is
 // wrong (e.g. a "gui" project that's really mobile-only, or a
 // "monitoring" project that runs on the desktop).
 const PROJECT_OVERRIDES = {
-  "sing-box":         { kind: "proxy", platform: ["server", "mobile", "desktop"] },
-  "clash-meta":       { kind: "proxy", platform: ["server", "desktop", "router"] },
-  "clash-for-windows":{ kind: "proxy", platform: ["desktop"] },
-  "clashx":           { kind: "proxy", platform: ["desktop"] },
-  "clash-verge":      { kind: "proxy", platform: ["desktop"] },
-  "shadowrocket":     { kind: "proxy", platform: ["mobile"] },
-  "quantumult-x":     { kind: "proxy", platform: ["mobile"] },
-  "surge":            { kind: "proxy", platform: ["mobile", "desktop"] },
-  "loon":             { kind: "proxy", platform: ["mobile"] },
-  "passwall2":        { kind: "proxy", platform: ["router"] },
-  "openclash":        { kind: "proxy", platform: ["router"] },
-  "nekobox":          { kind: "proxy", platform: ["desktop", "mobile"] },
-  "hiddify":          { kind: "proxy", platform: ["desktop", "mobile"] },
-  "v2rayn":           { kind: "proxy", platform: ["desktop"] },
-  "v2rayng":          { kind: "proxy", platform: ["mobile"] },
-  "nekoray":          { kind: "proxy", platform: ["desktop"] },
-  "wireguard":        { kind: "vpn",   platform: ["server", "mobile", "desktop"] },
-  "tailscale":        { kind: "vpn",   platform: ["server", "mobile", "desktop", "cli"] },
-  "headscale":        { kind: "vpn",   platform: ["server"] },
-  "netmaker":         { kind: "vpn",   platform: ["server"] },
-  "zerotier":         { kind: "vpn",   platform: ["server", "mobile", "desktop"] },
-  "nebula":           { kind: "vpn",   platform: ["server", "cli"] },
-  "warp-plus":        { kind: "vpn",   platform: ["cli", "server"] },
-  "speedtest-cli":    { kind: "tools", platform: ["cli"] },
-  "iperf3":           { kind: "tools", platform: ["cli"] },
-  "fast-cli":         { kind: "tools", platform: ["cli"] },
-  "smartdns":         { kind: "dns",   platform: ["server", "router"] },
-  "adguardhome":      { kind: "dns",   platform: ["server"] },
-  "coredns":          { kind: "dns",   platform: ["server"] },
-  "mosdns":           { kind: "dns",   platform: ["server"] },
-  "nextdns-cli":      { kind: "dns",   platform: ["cli", "server"] },
-  "dnsproxy":         { kind: "dns",   platform: ["server"] },
-  "bind9":            { kind: "dns",   platform: ["server"] },
-  "unbound":          { kind: "dns",   platform: ["server"] },
-  "knot-resolver":    { kind: "dns",   platform: ["server"] },
-  "technitium":       { kind: "dns",   platform: ["server"] },
-  "wireshark":        { kind: "tools", platform: ["desktop", "cli"] },
-  "tcpdump":          { kind: "tools", platform: ["cli"] },
-  "nmap":             { kind: "tools", platform: ["cli"] },
-  "masscan":          { kind: "tools", platform: ["cli"] },
-  "mtr":              { kind: "tools", platform: ["cli"] },
-  "bandwhich":        { kind: "tools", platform: ["cli"] },
-  "gping":            { kind: "tools", platform: ["cli"] },
-  "snell":            { kind: "proxy", platform: ["server"] },
-  "brook":            { kind: "proxy", platform: ["server", "cli"] },
-  "naiveproxy":       { kind: "proxy", platform: ["server"] },
-  "mieru":            { kind: "proxy", platform: ["server", "desktop", "mobile"] },
+  'sing-box': { kind: 'proxy', platform: ['server', 'mobile', 'desktop'] },
+  'clash-meta': { kind: 'proxy', platform: ['server', 'desktop', 'router'] },
+  'clash-for-windows': { kind: 'proxy', platform: ['desktop'] },
+  clashx: { kind: 'proxy', platform: ['desktop'] },
+  'clash-verge': { kind: 'proxy', platform: ['desktop'] },
+  shadowrocket: { kind: 'proxy', platform: ['mobile'] },
+  'quantumult-x': { kind: 'proxy', platform: ['mobile'] },
+  surge: { kind: 'proxy', platform: ['mobile', 'desktop'] },
+  loon: { kind: 'proxy', platform: ['mobile'] },
+  passwall2: { kind: 'proxy', platform: ['router'] },
+  openclash: { kind: 'proxy', platform: ['router'] },
+  nekobox: { kind: 'proxy', platform: ['desktop', 'mobile'] },
+  hiddify: { kind: 'proxy', platform: ['desktop', 'mobile'] },
+  v2rayn: { kind: 'proxy', platform: ['desktop'] },
+  v2rayng: { kind: 'proxy', platform: ['mobile'] },
+  nekoray: { kind: 'proxy', platform: ['desktop'] },
+  wireguard: { kind: 'vpn', platform: ['server', 'mobile', 'desktop'] },
+  tailscale: { kind: 'vpn', platform: ['server', 'mobile', 'desktop', 'cli'] },
+  headscale: { kind: 'vpn', platform: ['server'] },
+  netmaker: { kind: 'vpn', platform: ['server'] },
+  zerotier: { kind: 'vpn', platform: ['server', 'mobile', 'desktop'] },
+  nebula: { kind: 'vpn', platform: ['server', 'cli'] },
+  'warp-plus': { kind: 'vpn', platform: ['cli', 'server'] },
+  'speedtest-cli': { kind: 'tools', platform: ['cli'] },
+  iperf3: { kind: 'tools', platform: ['cli'] },
+  'fast-cli': { kind: 'tools', platform: ['cli'] },
+  smartdns: { kind: 'dns', platform: ['server', 'router'] },
+  adguardhome: { kind: 'dns', platform: ['server'] },
+  coredns: { kind: 'dns', platform: ['server'] },
+  mosdns: { kind: 'dns', platform: ['server'] },
+  'nextdns-cli': { kind: 'dns', platform: ['cli', 'server'] },
+  dnsproxy: { kind: 'dns', platform: ['server'] },
+  bind9: { kind: 'dns', platform: ['server'] },
+  unbound: { kind: 'dns', platform: ['server'] },
+  'knot-resolver': { kind: 'dns', platform: ['server'] },
+  technitium: { kind: 'dns', platform: ['server'] },
+  wireshark: { kind: 'tools', platform: ['desktop', 'cli'] },
+  tcpdump: { kind: 'tools', platform: ['cli'] },
+  nmap: { kind: 'tools', platform: ['cli'] },
+  masscan: { kind: 'tools', platform: ['cli'] },
+  mtr: { kind: 'tools', platform: ['cli'] },
+  bandwhich: { kind: 'tools', platform: ['cli'] },
+  gping: { kind: 'tools', platform: ['cli'] },
+  snell: { kind: 'proxy', platform: ['server'] },
+  brook: { kind: 'proxy', platform: ['server', 'cli'] },
+  naiveproxy: { kind: 'proxy', platform: ['server'] },
+  mieru: { kind: 'proxy', platform: ['server', 'desktop', 'mobile'] },
 };
 
 const ACTIVE_DAYS = 180;
 const STALE_DAYS = 730;
 function deriveStatus(lastCommit) {
   const d = (Date.now() - new Date(lastCommit).getTime()) / 86_400_000;
-  if (d < ACTIVE_DAYS) return "active";
-  if (d < STALE_DAYS) return "stale";
-  return "archived";
+  if (d < ACTIVE_DAYS) return 'active';
+  if (d < STALE_DAYS) return 'stale';
+  return 'archived';
 }
 
 async function main() {
-  const raw = await readFile(DATA_FILE, "utf8");
+  const raw = await readFile(DATA_FILE, 'utf8');
   const data = JSON.parse(raw);
   const addedAt = (data.lastUpdated || new Date().toISOString()).slice(0, 10);
 
@@ -159,7 +159,7 @@ async function main() {
     categories: data.categories,
     projects: data.projects,
   };
-  await writeFile(DATA_FILE, JSON.stringify(ordered, null, 2) + "\n", "utf8");
+  await writeFile(DATA_FILE, JSON.stringify(ordered, null, 2) + '\n', 'utf8');
   process.stdout.write(
     `Migrated ${data.projects.length} projects (${touched} touched) to schema v2.\n` +
       `Default addedAt = ${addedAt}\n`,

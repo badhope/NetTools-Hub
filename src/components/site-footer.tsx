@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { COPYRIGHT_YEAR, SITE_OWNER } from "@/lib/site";
-import { getLastUpdated } from "@/lib/projects";
+import Link from 'next/link';
+import { COPYRIGHT_YEAR, SITE_OWNER } from '@/lib/site';
+import { getLastUpdated } from '@/lib/projects';
 
 /**
  * 站点底栏
@@ -30,10 +30,8 @@ export function SiteFooter() {
             <strong className="text-fg">个人维护的链接索引</strong>，
             仅收录第三方开源项目的仓库地址与一段编辑性说明。
             <strong className="text-fg">本站不托管、不分发、不背书、不运营</strong>
-            任何被链接的软件；收录即非推荐。
-            使用任何通过本站跳转到的项目，
-            <strong className="text-fg">风险由使用者自行承担</strong>。
-            完整条款见{" "}
+            任何被链接的软件；收录即非推荐。 使用任何通过本站跳转到的项目，
+            <strong className="text-fg">风险由使用者自行承担</strong>。 完整条款见{' '}
             <Link
               href="https://github.com/badhope/NetTools-Hub/blob/main/DISCLAIMER.md"
               className="link-editorial"
@@ -60,9 +58,7 @@ export function SiteFooter() {
                 @{SITE_OWNER}
               </Link>
             </p>
-            <p className="mt-1 text-[11.5px] text-muted">
-              Single-maintainer, non-commercial
-            </p>
+            <p className="mt-1 text-[11.5px] text-muted">Single-maintainer, non-commercial</p>
           </div>
           <div>
             <p className="kicker mb-2">Source</p>
@@ -76,16 +72,12 @@ export function SiteFooter() {
                 badhope/NetTools-Hub
               </Link>
             </p>
-            <p className="mt-1 text-[11.5px] text-muted">
-              Static · MIT · No tracking
-            </p>
+            <p className="mt-1 text-[11.5px] text-muted">Static · MIT · No tracking</p>
           </div>
           <div>
             <p className="kicker mb-2">Last indexed</p>
             <p className="font-mono text-[12.5px] text-fg">{lastUpdated}</p>
-            <p className="mt-1 text-[11.5px] text-muted">
-              Auto-refreshed via GitHub Actions
-            </p>
+            <p className="mt-1 text-[11.5px] text-muted">Auto-refreshed via GitHub Actions</p>
           </div>
           <div>
             <p className="kicker mb-2">License</p>

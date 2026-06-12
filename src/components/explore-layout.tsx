@@ -1,14 +1,14 @@
-import { TreeSidebar } from "@/components/tree-sidebar";
-import { TopNav } from "@/components/top-nav";
-import { ReactNode } from "react";
-import type { ProjectKind, ProjectPlatform } from "@/types/project";
+import { TreeSidebar } from '@/components/tree-sidebar';
+import { TopNav } from '@/components/top-nav';
+import { ReactNode } from 'react';
+import type { ProjectKind, ProjectPlatform } from '@/types/project';
 
 interface ExploreLayoutProps {
   current: { kind?: ProjectKind; platform?: ProjectPlatform };
   kindCounts: Record<string, number>;
   kindPlatformCounts: Record<string, number>;
   total: number;
-  lang: "en" | "zh" | "ja";
+  lang: 'en' | 'zh' | 'ja';
   title: string;
   meta?: ReactNode;
   breadcrumb?: ReactNode;
@@ -49,19 +49,11 @@ export function ExploreLayout({
 }: ExploreLayoutProps) {
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <TopNav
-        lang={lang}
-        kindCounts={kindCounts}
-        total={total}
-        variant="explore"
-        sticky
-      />
+      <TopNav lang={lang} kindCounts={kindCounts} total={total} variant="explore" sticky />
       <main id="main" className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
         <header className="mb-5 border-b border-line pb-4">
           {breadcrumb}
-          <h1 className="mt-2 text-[1.5rem] font-semibold leading-tight text-fg">
-            {title}
-          </h1>
+          <h1 className="mt-2 text-[1.5rem] font-semibold leading-tight text-fg">{title}</h1>
           {meta && <div className="mt-1">{meta}</div>}
         </header>
         <div className="flex flex-col gap-6 lg:flex-row">

@@ -2,7 +2,7 @@ name: Stale
 
 on:
   schedule:
-    - cron: "23 4 * * *"
+    - cron: '23 4 * * *'
   workflow_dispatch:
   issues:
     types: [opened, labeled, reopened]

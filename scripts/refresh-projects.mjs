@@ -36,19 +36,37 @@
 //     cannot be read or written.
 // ============================================================================
 
-import { readFile, writeFile } from "node:fs/promises";
-import { fileURLToPath } from "node:url";
-import { dirname, resolve } from "node:path";
+import { readFile, writeFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
+import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const ROOT = resolve(__dirname, "..");
-const DATA_FILE = resolve(ROOT, "data/projects.json");
+const ROOT = resolve(__dirname, '..');
+const DATA_FILE = resolve(ROOT, 'data/projects.json');
+const ETAG_CACHE_FILE = resolve(ROOT, '.refresh-etag-cache.json');
 
 // Activity thresholds (in days since the last observed commit).
-const ACTIVE_DAYS = 180;   // < 6 months  -> "active"
-const STALE_DAYS = 730;    // < 2 years   -> "stale"; older -> "archived"
+const ACTIVE_DAYS = 180; // < 6 months  -> "active"
+const STALE_DAYS = 730; // < 2 years   -> "stale"; older -> "archived"
 
-const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
+const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || '';
+
+// ---------------------------------------------------------------------------
+// ETag cache helpers
+// ---------------------------------------------------------------------------
+
+async function loadEtagCache() {
+  try {
+    const raw = await readFile(ETAG_CACHE_FILE, 'utf8');
+    return JSON.parse(raw);
+  } catch {
+    return {};
+  }
+}
+
+async function saveEtagCache(cache) {
+  await writeFile(ETAG_CACHE_FILE, JSON.stringify(cache, null, 2), 'utf8');
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -57,37 +75,31 @@ const TOKEN = process.env.GITHUB_TOKEN || process.env.GH_TOKEN || "";
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /** Best-effort extraction of `owner/repo` from any supported forge URL. */
-const FORGE_HOSTS = new Set([
-  "github.com",
-  "codeberg.org",
-  "gitlab.com",
-  "git.sr.ht",
-  "gitea.com",
-]);
+const FORGE_HOSTS = new Set(['github.com', 'codeberg.org', 'gitlab.com', 'git.sr.ht', 'gitea.com']);
 
 function parseOwnerRepo(url) {
   try {
     const u = new URL(url);
     if (!FORGE_HOSTS.has(u.hostname)) return null;
-    const parts = u.pathname.split("/").filter(Boolean);
+    const parts = u.pathname.split('/').filter(Boolean);
     if (parts.length < 2) return null;
-    return `${u.hostname}/${parts[0]}/${parts[1]}`.replace(/\.git$/, "");
+    return `${u.hostname}/${parts[0]}/${parts[1]}`.replace(/\.git$/, '');
   } catch {
     return null;
   }
 }
 
 function repoApiUrl(ownerRepo) {
-  const [host, owner, repo] = ownerRepo.split("/");
-  if (host === "github.com") {
+  const [host, owner, repo] = ownerRepo.split('/');
+  if (host === 'github.com') {
     return `https://api.github.com/repos/${owner}/${repo}`;
   }
   // Gitea-family (codeberg, gitea.com): same /repos/:owner/:repo shape.
-  if (host === "codeberg.org" || host === "gitea.com") {
+  if (host === 'codeberg.org' || host === 'gitea.com') {
     return `https://${host}/api/v1/repos/${owner}/${repo}`;
   }
   // GitLab: /api/v4/projects/:namespace%2F:project
-  if (host === "gitlab.com") {
+  if (host === 'gitlab.com') {
     return `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${owner}/${repo}`)}`;
   }
   return null;
@@ -96,8 +108,8 @@ function repoApiUrl(ownerRepo) {
 /** Normalise a forge response into a single shape so the rest
  *  of the script can stay forge-agnostic. */
 function normaliseRepo(r, ownerRepo) {
-  const host = ownerRepo.split("/")[0];
-  if (host === "github.com") {
+  const host = ownerRepo.split('/')[0];
+  if (host === 'github.com') {
     return {
       stars: r.stargazers_count,
       forks: r.forks_count,
@@ -106,7 +118,7 @@ function normaliseRepo(r, ownerRepo) {
       pushed_at: r.pushed_at,
     };
   }
-  if (host === "codeberg.org" || host === "gitea.com") {
+  if (host === 'codeberg.org' || host === 'gitea.com') {
     // Gitea: stars_count, forks_count, language, updated_at
     return {
       stars: r.stars_count,
@@ -116,7 +128,7 @@ function normaliseRepo(r, ownerRepo) {
       pushed_at: r.updated_at || r.pushed_at,
     };
   }
-  if (host === "gitlab.com") {
+  if (host === 'gitlab.com') {
     // GitLab: star_count, forks_count, last_activity_at
     return {
       stars: r.star_count,
@@ -136,32 +148,53 @@ function daysBetween(a, b) {
 
 function deriveStatus(lastCommit, today = new Date().toISOString()) {
   const d = daysBetween(lastCommit, today);
-  if (d < ACTIVE_DAYS) return "active";
-  if (d < STALE_DAYS) return "stale";
-  return "archived";
+  if (d < ACTIVE_DAYS) return 'active';
+  if (d < STALE_DAYS) return 'stale';
+  return 'archived';
 }
 
 /** Fetch a repo's current state from the forge REST API. */
-async function fetchRepo(ownerRepo, { retries = 3 } = {}) {
+async function fetchRepo(ownerRepo, etagCache, { retries = 3 } = {}) {
   const apiUrl = repoApiUrl(ownerRepo);
   if (!apiUrl) throw new Error(`no API for ${ownerRepo}`);
-  const headers = { "User-Agent": "nettools-hub-refresh" };
-  if (apiUrl.includes("api.github.com")) {
-    headers.Accept = "application/vnd.github+json";
-    headers["X-GitHub-Api-Version"] = "2022-11-28";
+  const headers = { 'User-Agent': 'nettools-hub-refresh' };
+  if (apiUrl.includes('api.github.com')) {
+    headers.Accept = 'application/vnd.github+json';
+    headers['X-GitHub-Api-Version'] = '2022-11-28';
     if (TOKEN) headers.Authorization = `Bearer ${TOKEN}`;
-  } else if (apiUrl.includes("codeberg.org") || apiUrl.includes("gitea.com")) {
-    headers.Accept = "application/json";
-  } else if (apiUrl.includes("gitlab.com")) {
-    headers.Accept = "application/json";
-    if (TOKEN) headers["PRIVATE-TOKEN"] = TOKEN;
+  } else if (apiUrl.includes('codeberg.org') || apiUrl.includes('gitea.com')) {
+    headers.Accept = 'application/json';
+  } else if (apiUrl.includes('gitlab.com')) {
+    headers.Accept = 'application/json';
+    if (TOKEN) headers['PRIVATE-TOKEN'] = TOKEN;
   }
+  
+  // Add ETag if we have a cached response
+  if (etagCache[ownerRepo]) {
+    headers['If-None-Match'] = etagCache[ownerRepo];
+  }
+  
   for (let attempt = 0; attempt <= retries; attempt += 1) {
     const res = await fetch(apiUrl, { headers });
-    if (res.status === 200) return await res.json();
+    
+    // 304 Not Modified — use cached data
+    if (res.status === 304) {
+      return { cached: true, data: null };
+    }
+    
+    if (res.status === 200) {
+      const data = await res.json();
+      // Save ETag for future requests
+      const newEtag = res.headers.get('etag');
+      if (newEtag) {
+        etagCache[ownerRepo] = newEtag;
+      }
+      return { cached: false, data };
+    }
+    
     if (res.status === 403 || res.status === 429) {
       // rate limit / secondary rate limit
-      const retryAfter = Number(res.headers.get("retry-after") || 1);
+      const retryAfter = Number(res.headers.get('retry-after') || 1);
       const wait = Math.max(1000, retryAfter * 1000) * Math.min(2 ** attempt, 8);
       process.stderr.write(
         `  rate-limited on ${ownerRepo}, waiting ${(wait / 1000).toFixed(1)}s\n`,
@@ -191,24 +224,28 @@ async function fetchRepo(ownerRepo, { retries = 3 } = {}) {
 
 async function main() {
   const startedAt = new Date().toISOString();
-  const raw = await readFile(DATA_FILE, "utf8");
+  const raw = await readFile(DATA_FILE, 'utf8');
   const data = JSON.parse(raw);
   const projects = data.projects || [];
   if (projects.length === 0) {
-    process.stderr.write("data/projects.json has no projects, nothing to do.\n");
+    process.stderr.write('data/projects.json has no projects, nothing to do.\n');
     process.exit(0);
   }
 
   if (!TOKEN) {
     process.stderr.write(
-      "WARNING: no GITHUB_TOKEN / GH_TOKEN set, using unauthenticated " +
-        "requests (60/h). For 200+ projects this will be heavily throttled.\n",
+      'WARNING: no GITHUB_TOKEN / GH_TOKEN set, using unauthenticated ' +
+        'requests (60/h). For 200+ projects this will be heavily throttled.\n',
     );
   }
+
+  // Load ETag cache for incremental updates
+  const etagCache = await loadEtagCache();
 
   let updated = 0;
   let failed = 0;
   let moved = 0; // entries whose `status` field flipped
+  let cached = 0; // entries that used cached data (304)
 
   for (let i = 0; i < projects.length; i += 1) {
     const p = projects[i];
@@ -218,14 +255,23 @@ async function main() {
       continue;
     }
     try {
-      const r = await fetchRepo(ownerRepo);
+      const result = await fetchRepo(ownerRepo, etagCache);
+      
+      // 304 Not Modified — use cached data
+      if (result.cached) {
+        cached += 1;
+        process.stdout.write(
+          `[${i + 1}/${projects.length}] ${ownerRepo.padEnd(40)} (cached, no changes)\n`,
+        );
+        continue;
+      }
+      
+      const r = result.data;
       // Each forge returns a slightly different shape. Map it
       // to a common {stars, forks, language, license, pushed_at}.
       const norm = normaliseRepo(r, ownerRepo);
       if (!norm.pushed_at) {
-        process.stderr.write(
-          `[${i + 1}/${projects.length}] skip (no pushed_at): ${ownerRepo}\n`,
-        );
+        process.stderr.write(`[${i + 1}/${projects.length}] skip (no pushed_at): ${ownerRepo}\n`);
         continue;
       }
       const newStatus = deriveStatus(norm.pushed_at);
@@ -238,9 +284,7 @@ async function main() {
         lastCommit: (norm.pushed_at || p.lastCommit).slice(0, 10),
         status: newStatus,
       };
-      const changed = Object.entries(newFields).some(
-        ([k, v]) => p[k] !== v,
-      );
+      const changed = Object.entries(newFields).some(([k, v]) => p[k] !== v);
       Object.assign(p, newFields);
       if (oldStatus !== newStatus) moved += 1;
       if (changed) updated += 1;
@@ -249,17 +293,15 @@ async function main() {
           `★${String(newFields.stars).padStart(6)} ` +
           `status=${newFields.status.padEnd(8)} ` +
           `last=${newFields.lastCommit}` +
-          (changed ? " *" : "") +
-          "\n",
+          (changed ? ' *' : '') +
+          '\n',
       );
     } catch (e) {
       failed += 1;
-      process.stderr.write(
-        `[${i + 1}/${projects.length}] FAIL ${ownerRepo}: ${e.message}\n`,
-      );
+      process.stderr.write(`[${i + 1}/${projects.length}] FAIL ${ownerRepo}: ${e.message}\n`);
       // 404: keep the entry but mark it archived so the UI can dim it.
       if (e.permanent) {
-        p.status = "archived";
+        p.status = 'archived';
         moved += 1;
       }
     }
@@ -268,6 +310,9 @@ async function main() {
     // triggers the secondary rate limit on some accounts.
     if (i < projects.length - 1) await sleep(80);
   }
+
+  // Save ETag cache for next run
+  await saveEtagCache(etagCache);
 
   data.lastUpdated = startedAt;
   data.schemaVersion = data.schemaVersion || 2;
@@ -282,11 +327,11 @@ async function main() {
     categories: data.categories,
     projects: data.projects,
   };
-  await writeFile(DATA_FILE, JSON.stringify(ordered, null, 2) + "\n", "utf8");
+  await writeFile(DATA_FILE, JSON.stringify(ordered, null, 2) + '\n', 'utf8');
 
   process.stdout.write(
     `\nRefreshed ${updated}/${projects.length} entries, ` +
-      `${moved} status transitions, ${failed} failures.\n` +
+      `${cached} cached (304), ${moved} status transitions, ${failed} failures.\n` +
       `lastUpdated -> ${data.lastUpdated}\n`,
   );
   // Exit non-zero if every single project failed — that's a real

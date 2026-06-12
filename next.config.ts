@@ -1,5 +1,5 @@
-import type { NextConfig } from "next";
-import { withSentryConfig } from "@sentry/nextjs";
+import type { NextConfig } from 'next';
+import { withSentryConfig } from '@sentry/nextjs';
 
 // `GITHUB_REPOSITORY` is the GitHub Actions env var of the form
 // "owner/repo". On CI we want the site to live at "/<repo>/" so
@@ -8,11 +8,11 @@ import { withSentryConfig } from "@sentry/nextjs";
 // environment without that var) we drop the prefix so the dev
 // server and the static `out/` build can be served from the
 // filesystem root — no manual path rewriting required.
-const repoName = process.env.GITHUB_REPOSITORY?.split("/")[1] ?? "";
-const basePath = repoName ? `/${repoName}` : "";
+const repoName = process.env.GITHUB_REPOSITORY?.split('/')[1] ?? '';
+const basePath = repoName ? `/${repoName}` : '';
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: 'export',
   basePath,
   trailingSlash: true,
   images: {
@@ -20,22 +20,12 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default withSentryConfig(nextConfig, {
+const sentryOptions: Parameters<typeof withSentryConfig>[1] = {
   // For all available options, see:
   // https://github.com/getsentry/sentry-webpack-plugin#options
 
   // Suppresses source map uploading logs during build
   silent: !process.env.CI,
-
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-
-  // Set the release name for source maps
-  // release: {
-  //   create: true,
-  //   finalize: true,
-  //   name: process.env.SENTRY_RELEASE,
-  // },
 
   // Webpack-level Sentry options (the top-level ones are deprecated).
   webpack: {
@@ -61,4 +51,11 @@ export default withSentryConfig(nextConfig, {
 
   // Disable telemetry data collection
   telemetry: false,
-});
+};
+
+// Only set org/project when defined — exactOptionalPropertyTypes
+// disallows passing `undefined` to a property typed as `string`.
+if (process.env.SENTRY_ORG) sentryOptions.org = process.env.SENTRY_ORG;
+if (process.env.SENTRY_PROJECT) sentryOptions.project = process.env.SENTRY_PROJECT;
+
+export default withSentryConfig(nextConfig, sentryOptions);

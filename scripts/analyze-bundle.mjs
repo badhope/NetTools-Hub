@@ -16,11 +16,11 @@
 //   - Suggestions for code splitting
 // ============================================================================
 
-import { readdirSync, statSync } from "node:fs";
-import { join } from "node:path";
+import { readdirSync, statSync } from 'node:fs';
+import { join } from 'node:path';
 
-const BUILD_DIR = ".next";
-const CHUNKS_DIR = join(BUILD_DIR, "static/chunks");
+const BUILD_DIR = '.next';
+const CHUNKS_DIR = join(BUILD_DIR, 'static/chunks');
 
 function getDirSize(dir) {
   let size = 0;
@@ -71,17 +71,17 @@ function formatSize(bytes) {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 }
 
-console.log("📊 Bundle Analysis Report\n");
+console.log('📊 Bundle Analysis Report\n');
 
 // Total size
 const totalSize = getDirSize(BUILD_DIR);
 console.log(`Total build size: ${formatSize(totalSize)}\n`);
 
 // Largest chunks
-console.log("🔍 Top 10 largest files:");
+console.log('🔍 Top 10 largest files:');
 const largest = getLargestFiles(BUILD_DIR);
 for (const file of largest) {
-  const relative = file.path.replace(BUILD_DIR + "/", "");
+  const relative = file.path.replace(BUILD_DIR + '/', '');
   console.log(`  ${formatSize(file.size).padStart(10)}  ${relative}`);
 }
 
@@ -90,13 +90,13 @@ const chunksSize = getDirSize(CHUNKS_DIR);
 console.log(`\n📦 Chunks directory: ${formatSize(chunksSize)}`);
 
 // Suggestions
-console.log("\n💡 Suggestions:");
+console.log('\n💡 Suggestions:');
 if (largest[0] && largest[0].size > 200 * 1024) {
   console.log(`  ⚠️  Largest chunk is ${formatSize(largest[0].size)} - consider code splitting`);
 }
 if (totalSize > 5 * 1024 * 1024) {
   console.log(`  ⚠️  Total build size is ${formatSize(totalSize)} - review dependencies`);
 }
-console.log("  ✓ Run `pnpm run build` to generate fresh build data");
-console.log("  ✓ Use Next.js dynamic imports for large components");
-console.log("  ✓ Enable compression in your hosting provider");
+console.log('  ✓ Run `pnpm run build` to generate fresh build data');
+console.log('  ✓ Use Next.js dynamic imports for large components');
+console.log('  ✓ Enable compression in your hosting provider');

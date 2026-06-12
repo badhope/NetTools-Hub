@@ -9,10 +9,10 @@
  * import from `@/lib/site`, but `site` itself imports nothing.
  */
 
-import { getAllProjects, getTotalStars } from "./projects";
+import { getAllProjects, getTotalStars } from './projects';
 
 /** GitHub owner used everywhere we attribute the work / link the repo. */
-export const SITE_OWNER = "badhope";
+export const SITE_OWNER = 'badhope';
 
 /** GitHub Pages base path (matches next.config.ts `basePath`).
  *  GitHub Pages serves a user/org site at `https://<owner>.github.io`
@@ -24,10 +24,10 @@ export const SITE_OWNER = "badhope";
  *  of this file did and what the sitemap and JSON-LD payloads
  *  immediately picked up. The owner is therefore *not* part of
  *  `SITE_BASE_PATH` here. */
-export const SITE_BASE_PATH = "/NetTools-Hub";
+export const SITE_BASE_PATH = '/NetTools-Hub';
 
 /** Canonical origin (no trailing slash). */
-export const SITE_ORIGIN = "https://badhope.github.io";
+export const SITE_ORIGIN = 'https://badhope.github.io';
 
 /** Fully-qualified canonical URL of the landing page, *without* a
  *  trailing slash. Callers that want to point at a sub-path or at
