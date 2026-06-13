@@ -32,26 +32,34 @@ interface SearchFilterProps {
  * context, so a switch from English to Chinese in the top nav
  * re-renders the search labels, placeholder, and badges
  * immediately without prop drilling.
+ *
+ * ## Hydration safety
+ *
+ * Initial state values are always SSR-safe defaults (empty string,
+ * 'stars'). The real URL params are read in a useEffect after
+ * hydration, preventing any mismatch between server and client
+ * render output.
  */
 export function SearchFilter({ projects }: SearchFilterProps) {
   const { lang } = useLang();
-  // Read initial state from URL via lazy initializers so the
-  // first render already has the correct values. Using
-  // `useState(() => ...)` avoids the `set-state-in-effect`
-  // rule violation: the URL is read synchronously during
-  // state initialization, not inside an effect body.
-  const readUrlParam = useCallback((key: string) => {
-    if (typeof window === 'undefined') return '';
-    return new URLSearchParams(window.location.search).get(key) || '';
-  }, []);
+  // SSR-safe initial state — always empty/default values
+  const [searchTerm, setSearchTerm] = useState('');
+  const [languageFilter, setLanguageFilter] = useState('');
+  const [sortBy, setSortBy] = useState<'stars' | 'name' | 'lastCommit'>('stars');
 
-  const [searchTerm, setSearchTerm] = useState(() => readUrlParam('q'));
-  const [languageFilter, setLanguageFilter] = useState(() => readUrlParam('language'));
-  const [sortBy, setSortBy] = useState<'stars' | 'name' | 'lastCommit'>(() => {
-    const sort = readUrlParam('sort');
-    if (sort === 'stars' || sort === 'name' || sort === 'lastCommit') return sort;
-    return 'stars';
-  });
+  // Read URL params after hydration and update state
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q');
+    const language = params.get('language');
+    const sort = params.get('sort');
+
+    if (q) setSearchTerm(q);
+    if (language) setLanguageFilter(language);
+    if (sort === 'stars' || sort === 'name' || sort === 'lastCommit') {
+      setSortBy(sort);
+    }
+  }, []);
 
   // 防抖：延迟更新实际用于过滤的搜索词
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');

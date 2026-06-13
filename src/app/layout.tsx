@@ -29,6 +29,10 @@ import './globals.css';
 // Tailwind `unsafe-inline` (required for utility class generation),
 // no `object-src`, and a same-origin default for everything else.
 //
+// `unsafe-eval` is required in development mode because React uses
+// eval() for debugging features like reconstructing callstacks.
+// In production builds, this can be removed for better security.
+//
 // `img-src` is tightened to `'self' data:` plus a same-origin
 // `https://badhope.github.io` allowlist; the previous `'self' data:
 // https:` accepted any HTTPS origin, which would have silently
@@ -43,9 +47,10 @@ import './globals.css';
 // `frame-ancestors` is intentionally absent: when delivered via
 // a `<meta>` element browsers ignore it (it must be a header),
 // and keeping it here only produces noisy console warnings.
+const isDev = process.env.NODE_ENV === 'development';
 const CSP =
   "default-src 'self'; " +
-  "script-src 'self' 'unsafe-inline'; " +
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}; ` +
   "style-src 'self' 'unsafe-inline'; " +
   "img-src 'self' data: https://badhope.github.io; " +
   "font-src 'self' data:; " +
@@ -177,9 +182,6 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={LANG_HTML_LANG.en} className={`${plex.variable} ${plexMono.variable}`}>
-      <head>
-        <meta httpEquiv="Content-Security-Policy" content={CSP} />
-      </head>
       <body>
         {/* Skip-to-content link. Rendered outside the normal flow so
          *  it does not contribute to layout; visually hidden until

@@ -2,18 +2,34 @@
 
 import { useEffect, useState, useCallback } from 'react';
 
-function getInitialTheme(): 'dark' | 'light' {
-  if (typeof window === 'undefined') return 'dark';
-  const stored = localStorage.getItem('theme') as 'dark' | 'light' | null;
-  return stored || 'dark';
-}
-
+/**
+ * Theme toggle with proper hydration handling.
+ *
+ * The initial state is always 'dark' (matching the server-rendered HTML),
+ * then we read localStorage in a useEffect and update if needed. This
+ * prevents hydration mismatch errors when the user has previously selected
+ * a different theme.
+ */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<'dark' | 'light'>(getInitialTheme);
+  // Start with 'dark' to match SSR output exactly
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [mounted, setMounted] = useState(false);
 
+  // After hydration, read the real theme from localStorage
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-  }, [theme]);
+    const stored = localStorage.getItem('theme') as 'dark' | 'light' | null;
+    const initial = stored || 'dark';
+    setTheme(initial);
+    document.documentElement.setAttribute('data-theme', initial);
+    setMounted(true);
+  }, []);
+
+  // Update document attribute when theme changes
+  useEffect(() => {
+    if (mounted) {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, [theme, mounted]);
 
   const toggle = useCallback(() => {
     setTheme((prev) => {
