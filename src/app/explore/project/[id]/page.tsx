@@ -21,17 +21,24 @@ export const metadata: Metadata = {
 };
 
 interface ProjectDetailPageProps {
-  params: { id: string };
-  searchParams: { lang?: string };
+  // Next.js 15+: params and searchParams are now async (Promise<>).
+  params: Promise<{ id: string }>;
+  searchParams: Promise<{ lang?: string }>;
 }
 
-export default function ProjectDetailPage({ params, searchParams }: ProjectDetailPageProps) {
-  const lang = (searchParams.lang as Lang) || 'en';
-  const project = getProjectById(params.id);
+export default async function ProjectDetailPage({ params }: ProjectDetailPageProps) {
+  const { id } = await params;
+  const project = getProjectById(id);
 
   if (!project) {
     notFound();
   }
+
+  // The page is statically generated, so we hard-code the
+  // default language. The LanguageSwitcher on the client can
+  // still re-render with a chosen language via its own
+  // localStorage state.
+  const lang: Lang = 'en';
 
   const projects = getAllProjects();
   const kindCounts = getKindCounts();

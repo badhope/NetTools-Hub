@@ -257,14 +257,12 @@
 /* ------------------------------------------------------------
  * Clickable project row
  * ------------------------------------------------------------
- * The whole row is the click target. We use `cursor: pointer`
- * + a left-rail accent line that fades in on hover and pulses
- * brighter on press. The "↗" icon to the right of the project
- * name starts hidden, slides in on hover, and slides further
- * on press to give the user visible feedback that the click
- * registered before the new tab opens. The 240 ms transition
- * acts as a buffer between pointerup and the actual
- * `window.open` so the animation has time to play.
+ * The whole row is the click target. The name cell contains a
+ * real <a> tag that opens the upstream repo in a new tab; the
+ * CSS gives a left-rail accent line that fades in on hover and
+ * pulses brighter when the link itself is active. The "↗" icon
+ * to the right of the project name starts hidden and slides in
+ * on hover for visible feedback.
  * ------------------------------------------------------------ */
 .proj-row {
   position: relative;
@@ -273,8 +271,6 @@
     background-color 160ms var(--ease-editorial),
     box-shadow 160ms var(--ease-editorial);
 }
-/* Left rail: a 2 px hairline that fades in on hover, snaps to
- * the accent colour on press. */
 .proj-row > td:first-child::before {
   content: '';
   position: absolute;
@@ -294,22 +290,26 @@
 .proj-row:hover {
   background: var(--color-bg-sunk);
 }
-.proj-row[data-pressing='true'] {
-  background: color-mix(in oklab, var(--color-accent) 12%, var(--color-bg-sunk));
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--color-accent) 35%, transparent);
+/* The name <a> covers the entire name cell on hover, so the
+ * browser's :active pseudo-class is the cleanest way to detect
+ * "user is pressing this link" without any JS. */
+.proj-row > td:first-child a:active ~ * {
+  /* placeholder for any future pressed-state styles on siblings */
 }
-.proj-row[data-pressing='true'] > td:first-child::before {
-  transform: scaleY(1);
+.proj-row > td:first-child a {
+  display: block;
+  color: var(--color-fg);
+  text-decoration: none;
 }
-.proj-row:focus-visible {
+.proj-row > td:first-child a:focus-visible {
   outline: 2px solid var(--color-accent);
-  outline-offset: -2px;
+  outline-offset: 2px;
 }
 
-/* "Link broken" state — set by the row's runtime pre-flight
- * HEAD check when the upstream repo 404s. We dim the row and
- * turn the name link red so the user sees the failure without
- * having to wait for a failed navigation. */
+/* "Link broken" state — reserved for a future static-analysis
+ * pass that scans for known-removed upstream repos and marks
+ * them at build time. The runtime preflight was removed in
+ * favour of the simpler server-rendered <a> approach. */
 .proj-row[data-link='broken'] {
   opacity: 0.55;
 }

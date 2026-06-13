@@ -1,7 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { Project } from '@/types/project';
 import { ProjectTable } from './project-table';
 import { t, Lang } from '@/lib/i18n';
@@ -11,21 +10,44 @@ interface SearchFilterProps {
   lang: Lang;
 }
 
+/**
+ * Client-side enhancement layer for the /explore table.
+ *
+ * The actual project rows are server-rendered (passed in as
+ * `projects` and rendered by `ProjectTable` immediately), so
+ * users can see and click rows *before* JS hydrates. This
+ * wrapper only adds the search/filter/sort controls on top, and
+ * re-renders the table from the already-rendered list when the
+ * user types.
+ *
+ * URL state is synced via the standard `history.replaceState`
+ * API rather than `useSearchParams` from next/navigation. This
+ * matters because the whole site is statically exported —
+ * `useSearchParams` would force the entire client tree below
+ * the surrounding layout into CSR-only mode, which means users
+ * would see a loading skeleton until JS hydrates. The standard
+ * browser API gives us URL persistence without that cost.
+ */
 export function SearchFilter({ projects, lang }: SearchFilterProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [searchTerm, setSearchTerm] = useState('');
+  const [languageFilter, setLanguageFilter] = useState('');
+  const [sortBy, setSortBy] = useState<'stars' | 'name' | 'lastCommit'>('stars');
 
-  // 从 URL 读取初始状态
-  // 注意：使用 'language' 参数避免与 UI 语言的 'lang' 冲突
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('q') || '');
-  const [languageFilter, setLanguageFilter] = useState(searchParams.get('language') || '');
-  const [sortBy, setSortBy] = useState<'stars' | 'name' | 'lastCommit'>(
-    (searchParams.get('sort') as 'stars' | 'name' | 'lastCommit') || 'stars',
-  );
+  // Read initial state from URL (runs once after mount)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    setSearchTerm(params.get('q') || '');
+    setLanguageFilter(params.get('language') || '');
+    const sort = params.get('sort');
+    if (sort === 'stars' || sort === 'name' || sort === 'lastCommit') {
+      setSortBy(sort);
+    }
+  }, []);
 
   // 防抖：延迟更新实际用于过滤的搜索词
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+  const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (debounceTimerRef.current) {
@@ -42,23 +64,19 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
     };
   }, [searchTerm]);
 
-  // 更新 URL 参数（使用防抖后的搜索词）
+  // 同步到 URL（不触发 Next.js 路由刷新）
   useEffect(() => {
+    if (typeof window === 'undefined') return;
     const params = new URLSearchParams();
-
-    // 保留现有的 UI 语言参数
-    const currentLang = searchParams.get('lang');
-    if (currentLang) params.set('lang', currentLang);
-
-    // 添加搜索和筛选参数
     if (debouncedSearchTerm) params.set('q', debouncedSearchTerm);
     if (languageFilter) params.set('language', languageFilter);
     if (sortBy !== 'stars') params.set('sort', sortBy);
 
-    const newUrl = params.toString() ? `/explore?${params.toString()}` : '/explore';
-
-    router.replace(newUrl, { scroll: false });
-  }, [debouncedSearchTerm, languageFilter, sortBy, router, searchParams]);
+    const newUrl = params.toString()
+      ? `${window.location.pathname}?${params.toString()}`
+      : window.location.pathname;
+    window.history.replaceState(null, '', newUrl);
+  }, [debouncedSearchTerm, languageFilter, sortBy]);
 
   // 提取所有唯一的编程语言
   const availableLanguages = useMemo(() => {
@@ -69,11 +87,10 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
     return Array.from(langs).sort();
   }, [projects]);
 
-  // 过滤和排序项目（使用防抖后的搜索词）
+  // 过滤和排序项目
   const filteredProjects = useMemo(() => {
     let result = [...projects];
 
-    // 搜索过滤
     if (debouncedSearchTerm.trim()) {
       const term = debouncedSearchTerm.toLowerCase();
       result = result.filter(
@@ -84,12 +101,10 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
       );
     }
 
-    // 语言过滤
     if (languageFilter) {
       result = result.filter((p) => p.language === languageFilter);
     }
 
-    // 排序
     result.sort((a, b) => {
       switch (sortBy) {
         case 'stars':
@@ -107,20 +122,17 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
   }, [projects, debouncedSearchTerm, languageFilter, sortBy]);
 
   // 清除所有筛选条件
-  const clearAllFilters = () => {
+  const clearAllFilters = useCallback(() => {
     setSearchTerm('');
     setLanguageFilter('');
     setSortBy('stars');
-  };
+  }, []);
 
-  // 检查是否有活跃的筛选条件
   const hasActiveFilters = searchTerm.trim() || languageFilter || sortBy !== 'stars';
 
   return (
     <div className="space-y-4" role="search" aria-label={t(lang, 'search.placeholder')}>
-      {/* 搜索和筛选控件 */}
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-        {/* 搜索框 */}
         <div className="flex-1 relative">
           <label htmlFor="search-input" className="sr-only">
             {t(lang, 'search.placeholder')}
@@ -160,7 +172,6 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
           )}
         </div>
 
-        {/* 语言筛选 */}
         <div className="sm:w-48">
           <label htmlFor="language-filter" className="sr-only">
             {t(lang, 'filter.all_languages')}
@@ -181,7 +192,6 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
           </select>
         </div>
 
-        {/* 排序选择 */}
         <div className="sm:w-48">
           <label htmlFor="sort-select" className="sr-only">
             {t(lang, 'sort.stars')}
@@ -200,7 +210,6 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
         </div>
       </div>
 
-      {/* 结果计数和清除按钮 */}
       <div className="flex items-center justify-between gap-4">
         <div
           id="search-description"
@@ -222,7 +231,6 @@ export function SearchFilter({ projects, lang }: SearchFilterProps) {
         )}
       </div>
 
-      {/* 项目表格或空状态 */}
       {filteredProjects.length > 0 ? (
         <ProjectTable projects={filteredProjects} lang={lang} />
       ) : (

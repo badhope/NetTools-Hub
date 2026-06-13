@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import { ExploreLayout } from '@/components/explore-layout';
 import { SearchFilter } from '@/components/search-filter';
 import {
@@ -63,9 +62,7 @@ export default function ExploreRootPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }}
       />
-      <Suspense fallback={<div>Loading search...</div>}>
-        <SearchFilter projects={projects} lang="en" />
-      </Suspense>
+      <SearchFilter projects={projects} lang="en" />
     </ExploreLayout>
   );
 }

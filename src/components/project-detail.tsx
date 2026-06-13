@@ -1,5 +1,3 @@
-'use client';
-
 import type { Project } from '@/types/project';
 import { Lang, t } from '@/lib/i18n';
 import { formatStars, formatNumber } from '@/lib/utils';
