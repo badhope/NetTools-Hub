@@ -1,5 +1,5 @@
 import { ExploreLayout } from '@/components/explore-layout';
-import { SearchFilter } from '@/components/search-filter';
+import { ProjectCard } from '@/components/project-card';
 import {
   getAllProjects,
   getKindCounts,
@@ -42,6 +42,8 @@ export default function ExploreRootPage() {
   const totalStars = getTotalStars();
   const kindCounts = getKindCounts();
   const kpCounts = getKindPlatformCounts();
+  // Deterministic order: stars desc, then name asc.
+  const sorted = [...projects].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
   return (
     <ExploreLayout
       current={{}}
@@ -53,7 +55,7 @@ export default function ExploreRootPage() {
         <p className="text-[12.5px] text-fg-2">
           <span className="font-mono text-muted">[ index ]</span> {projects.length} entries ·{' '}
           {formatStars(totalStars)} total stars ·{' '}
-          <span className="font-mono text-muted">search, filter, and sort</span>
+          <span className="font-mono text-muted">sorted by stars</span>
         </p>
       }
       breadcrumb={<Breadcrumb trail={[rootCrumb('en')]} />}
@@ -62,7 +64,11 @@ export default function ExploreRootPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: safeJsonLd(itemListJsonLd) }}
       />
-      <SearchFilter projects={projects} />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {sorted.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
     </ExploreLayout>
   );
 }

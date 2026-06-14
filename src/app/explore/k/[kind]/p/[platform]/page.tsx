@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import { ExploreLayout } from '@/components/explore-layout';
-import { ProjectTable } from '@/components/project-table';
+import { ProjectCard } from '@/components/project-card';
 import {
   getAllProjects,
   getKindCounts,
@@ -95,7 +95,11 @@ export default async function KindPlatformPage({
       }
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
-      <ProjectTable projects={sorted} />
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {sorted.map((project) => (
+          <ProjectCard key={project.id} project={project} />
+        ))}
+      </div>
     </ExploreLayout>
   );
 }
