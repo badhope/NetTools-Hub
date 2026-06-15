@@ -1,43 +1,67 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useSyncExternalStore, useCallback, useEffect } from 'react';
+
+const STORAGE_KEY = 'theme';
+type Theme = 'dark' | 'light';
+
+function getSnapshot(): Theme {
+  return (localStorage.getItem(STORAGE_KEY) as Theme) || 'dark';
+}
+
+/**
+ * The server snapshot always returns 'dark' so the SSR output is
+ * deterministic. After hydration `useSyncExternalStore` swaps to
+ * the real `getSnapshot` and re-renders if the local value differs.
+ */
+function getServerSnapshot(): Theme {
+  return 'dark';
+}
+
+/**
+ * Listen for changes from *other* tabs and from our own toggle.
+ * `useSyncExternalStore` calls `subscribe` once per mount and
+ * invokes the listener whenever the snapshot might have changed.
+ */
+function subscribe(callback: () => void): () => void {
+  const onStorage = (e: StorageEvent) => {
+    if (e.key === STORAGE_KEY) callback();
+  };
+  window.addEventListener('storage', onStorage);
+  return () => window.removeEventListener('storage', onStorage);
+}
 
 /**
  * Theme toggle with proper hydration handling.
  *
- * The initial state is always 'dark' (matching the server-rendered HTML),
- * then we read localStorage in a useEffect and update if needed. This
- * prevents hydration mismatch errors when the user has previously selected
- * a different theme.
+ * `useSyncExternalStore` is the canonical pattern for
+ * "read-from-DOM/localStorage-on-client, deterministic-on-server":
+ * the server snapshot is always 'dark' (matching the SSR markup),
+ * and the client snapshot is the localStorage value. React itself
+ * handles the hydration mismatch, so we never need a setState-in-
+ * effect to bridge the two.
  */
 export function ThemeToggle() {
-  // Start with 'dark' to match SSR output exactly
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
-  const [mounted, setMounted] = useState(false);
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
-  // After hydration, read the real theme from localStorage
+  // Keep <html data-theme=…> in sync. The setter only runs on the
+  // client (this component is gated by `mounted` in the parent
+  // layout, see `top-nav.tsx`) and is a no-op when the attribute
+  // is already correct, so it does not produce cascading renders.
   useEffect(() => {
-    const stored = localStorage.getItem('theme') as 'dark' | 'light' | null;
-    const initial = stored || 'dark';
-    setTheme(initial);
-    document.documentElement.setAttribute('data-theme', initial);
-    setMounted(true);
-  }, []);
-
-  // Update document attribute when theme changes
-  useEffect(() => {
-    if (mounted) {
+    if (document.documentElement.getAttribute('data-theme') !== theme) {
       document.documentElement.setAttribute('data-theme', theme);
     }
-  }, [theme, mounted]);
+  }, [theme]);
 
   const toggle = useCallback(() => {
-    setTheme((prev) => {
-      const next = prev === 'dark' ? 'light' : 'dark';
-      localStorage.setItem('theme', next);
-      return next;
-    });
-  }, []);
+    const next: Theme = theme === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(STORAGE_KEY, next);
+    document.documentElement.setAttribute('data-theme', next);
+    // Notify our own store (storage events don't fire in the
+    // originating tab) so `getSnapshot` re-runs and React re-renders.
+    window.dispatchEvent(new StorageEvent('storage', { key: STORAGE_KEY }));
+  }, [theme]);
 
   return (
     <button

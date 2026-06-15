@@ -20,7 +20,14 @@ export const metadata: Metadata = {
 };
 
 interface ProjectDetailPageProps {
-  // Next.js 15+: params and searchParams are now async (Promise<>).
+  // Next.js 15+: `params` is a Promise<> that has to be awaited.
+  // We intentionally do NOT also accept `searchParams` here —
+  // `output: "export"` cannot statically pre-render a route that
+  // reads query parameters, and the language the user picks via
+  // `?lang=` is already picked up on the client by `LangProvider`
+  // (see `src/components/lang-provider.tsx`). The breadcrumb's
+  // hrefs are re-built with the right lang on every render from
+  // the client-side context.
   params: Promise<{ id: string }>;
 }
 
@@ -31,12 +38,6 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   if (!project) {
     notFound();
   }
-
-  // The page is statically generated, so we hard-code the
-  // default language for the breadcrumb. The client-side
-  // `LangProvider` re-renders the rest of the page (TopNav,
-  // TreeSidebar, badges, status labels) on language change.
-  const lang = 'en';
 
   const projects = getAllProjects();
   const kindCounts = getKindCounts();
@@ -65,8 +66,12 @@ export default async function ProjectDetailPage({ params }: ProjectDetailPagePro
   };
 
   const title = `${project.name} — ${project.kind}`;
+  // The breadcrumb label for "explore" is the same string in all
+  // three languages, so we can pick 'en' for the server render
+  // without losing information; the client component picks the
+  // active language from `useLang()` and re-writes the hrefs.
   const breadcrumbTrail = [
-    rootCrumb(lang),
+    rootCrumb('en'),
     { label: project.kind, href: `/explore/k/${project.kind}` },
     { label: project.name },
   ];

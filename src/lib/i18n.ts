@@ -31,7 +31,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'editorial.edition': 'Edition I · {date}',
     'editorial.open_atlas': 'Open the index',
 
-    // ---- Multi-level navigation (taxonomy + table) -----------------------
+    // ---- Multi-level navigation (taxonomy) -------------------------------
     'taxonomy.kind': 'Kind',
     'taxonomy.platform': 'Platform',
     'taxonomy.all': 'All',
@@ -39,19 +39,13 @@ const translations: Record<Lang, Record<string, string>> = {
     'taxonomy.index': 'Index',
     'taxonomy.tree': 'Browse the tree',
     'breadcrumb.root': 'explore',
-    'table.col.name': 'Name',
-    'table.col.platforms': 'Platforms',
-    'table.col.stars': 'Stars',
-    'table.col.last_commit': 'Last commit',
-    'table.col.license': 'License',
-    'table.col.status': 'Status',
-    'table.col.verdict': 'Verdict',
-    'table.empty': 'No entries match this filter.',
 
-    // ---- Empty state -----------------------------------------------------
-    'empty.title': 'No entries match this filter.',
-    'empty.description': 'Try adjusting your filters or browse all projects.',
-    'empty.back': '← Back to all projects',
+    // ---- Project card / detail metric labels -----------------------------
+    'metric.stars': 'Stars',
+    'metric.forks': 'Forks',
+    'metric.language': 'Language',
+    'metric.license': 'License',
+    'metric.last_commit': 'Last commit',
 
     // ---- Lifecycle / editorial verdicts ----------------------------------
     'status.active': 'active',
@@ -73,16 +67,6 @@ const translations: Record<Lang, Record<string, string>> = {
     'error.explore_folio': 'Explore — error',
     'error.explore_desc': 'Something went wrong while loading the index.',
     'error.explore_retry': 'Retry',
-
-    // ---- Search & Filter -------------------------------------------------
-    'search.placeholder': 'Search projects...',
-    'search.results_count': '{count} results',
-    'search.clear': 'Clear search',
-    'search.clear_all': 'Clear all filters',
-    'filter.all_languages': 'All languages',
-    'sort.stars': 'Sort by stars',
-    'sort.name': 'Sort by name',
-    'sort.last_commit': 'Sort by last commit',
 
     // ---- Related projects ------------------------------------------------
     'related.title': 'Related Projects',
@@ -107,18 +91,12 @@ const translations: Record<Lang, Record<string, string>> = {
     'taxonomy.index': '索引',
     'taxonomy.tree': '浏览树形索引',
     'breadcrumb.root': 'explore',
-    'table.col.name': '名称',
-    'table.col.platforms': '平台',
-    'table.col.stars': '星数',
-    'table.col.last_commit': '最后提交',
-    'table.col.license': '许可证',
-    'table.col.status': '状态',
-    'table.col.verdict': '编辑评',
-    'table.empty': '没有匹配的项目。',
 
-    'empty.title': '没有匹配的项目。',
-    'empty.description': '请尝试调整筛选条件，或浏览全部项目。',
-    'empty.back': '← 返回全部项目',
+    'metric.stars': '星数',
+    'metric.forks': '复刻',
+    'metric.language': '语言',
+    'metric.license': '许可证',
+    'metric.last_commit': '最后提交',
 
     'status.active': '活跃',
     'status.stale': '不活跃',
@@ -138,15 +116,6 @@ const translations: Record<Lang, Record<string, string>> = {
     'error.explore_folio': '探索 — 错误',
     'error.explore_desc': '加载索引时出现问题。',
     'error.explore_retry': '重新尝试',
-
-    'search.placeholder': '搜索项目...',
-    'search.results_count': '{count} 个结果',
-    'search.clear': '清除搜索',
-    'search.clear_all': '清除所有筛选',
-    'filter.all_languages': '所有语言',
-    'sort.stars': '按星标排序',
-    'sort.name': '按名称排序',
-    'sort.last_commit': '按最后提交排序',
 
     'related.title': '相关项目',
 
@@ -169,18 +138,12 @@ const translations: Record<Lang, Record<string, string>> = {
     'taxonomy.index': '索引',
     'taxonomy.tree': 'ツリーを閲覧',
     'breadcrumb.root': 'explore',
-    'table.col.name': '名称',
-    'table.col.platforms': 'プラットフォーム',
-    'table.col.stars': 'スター',
-    'table.col.last_commit': '最終コミット',
-    'table.col.license': 'ライセンス',
-    'table.col.status': '状態',
-    'table.col.verdict': '評価',
-    'table.empty': '一致するエントリはありません。',
 
-    'empty.title': '一致するエントリはありません。',
-    'empty.description': 'フィルター条件を変更するか、すべてのプロジェクトをご覧ください。',
-    'empty.back': '← すべてのプロジェクトに戻る',
+    'metric.stars': 'スター',
+    'metric.forks': 'フォーク',
+    'metric.language': '言語',
+    'metric.license': 'ライセンス',
+    'metric.last_commit': '最終コミット',
 
     'status.active': '稼働中',
     'status.stale': '停滞',
@@ -200,15 +163,6 @@ const translations: Record<Lang, Record<string, string>> = {
     'error.explore_folio': '探索 — エラー',
     'error.explore_desc': '索引の読み込み中に問題が発生しました。',
     'error.explore_retry': '再試行',
-
-    'search.placeholder': 'プロジェクトを検索...',
-    'search.results_count': '{count} 件の結果',
-    'search.clear': '検索をクリア',
-    'search.clear_all': 'すべてのフィルターをクリア',
-    'filter.all_languages': 'すべての言語',
-    'sort.stars': 'スター順',
-    'sort.name': '名前順',
-    'sort.last_commit': '最終コミット順',
 
     'related.title': '関連プロジェクト',
 

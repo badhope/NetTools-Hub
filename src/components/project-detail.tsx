@@ -3,7 +3,7 @@
 import type { Project } from '@/types/project';
 import { t } from '@/lib/i18n';
 import { formatStars, formatNumber } from '@/lib/utils';
-import { PlatformBadges, StatusBadge, VerdictBadge } from './project-row/project-badges';
+import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import Link from 'next/link';
 import { useLang } from '@/components/lang-provider';
 
@@ -65,10 +65,10 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
 
       {/* Key metrics grid */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <MetricCard label={t(lang, 'table.col.stars')} value={formatStars(p.stars)} />
-        <MetricCard label="Forks" value={formatNumber(p.forks)} />
-        <MetricCard label={t(lang, 'table.col.license')} value={p.license} />
-        <MetricCard label="Language" value={p.language} />
+        <MetricCard label={t(lang, 'metric.stars')} value={formatStars(p.stars)} />
+        <MetricCard label={t(lang, 'metric.forks')} value={formatNumber(p.forks)} />
+        <MetricCard label={t(lang, 'metric.license')} value={p.license} />
+        <MetricCard label={t(lang, 'metric.language')} value={p.language} />
       </div>
 
       {/* Platform support */}
@@ -89,7 +89,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
               <dd className="font-mono text-fg-2">{addedDate}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted">{t(lang, 'table.col.last_commit')}</dt>
+              <dt className="text-muted">{t(lang, 'metric.last_commit')}</dt>
               <dd className="font-mono text-fg-2">{lastCommitDate}</dd>
             </div>
           </dl>

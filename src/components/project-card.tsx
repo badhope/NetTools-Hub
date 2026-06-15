@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import type { Project } from '@/types/project';
 import { formatStars, formatNumber } from '@/lib/utils';
-import { PlatformBadges, StatusBadge, VerdictBadge } from './project-row/project-badges';
+import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import { useLang } from '@/components/lang-provider';
 import { t } from '@/lib/i18n';
 
@@ -53,16 +53,14 @@ export function ProjectCard({ project: p }: ProjectCardProps) {
       </div>
 
       {/* Description */}
-      <p className="text-sm text-fg-2 leading-relaxed line-clamp-2 mb-3">
-        {p.description}
-      </p>
+      <p className="text-sm text-fg-2 leading-relaxed line-clamp-2 mb-3">{p.description}</p>
 
       {/* Key metrics */}
       <div className="grid grid-cols-4 gap-2 mb-3 text-xs">
-        <MetricItem label={t(lang, 'table.col.stars')} value={formatStars(p.stars)} />
-        <MetricItem label="Forks" value={formatNumber(p.forks)} />
-        <MetricItem label={t(lang, 'table.col.language')} value={p.language} />
-        <MetricItem label={t(lang, 'table.col.license')} value={p.license} />
+        <MetricItem label={t(lang, 'metric.stars')} value={formatStars(p.stars)} />
+        <MetricItem label={t(lang, 'metric.forks')} value={formatNumber(p.forks)} />
+        <MetricItem label={t(lang, 'metric.language')} value={p.language} />
+        <MetricItem label={t(lang, 'metric.license')} value={p.license} />
       </div>
 
       {/* Platform badges */}
@@ -82,16 +80,14 @@ export function ProjectCard({ project: p }: ProjectCardProps) {
             </span>
           ))}
           {p.tags.length > 3 && (
-            <span className="font-mono text-[10px] text-muted">
-              +{p.tags.length - 3}
-            </span>
+            <span className="font-mono text-[10px] text-muted">+{p.tags.length - 3}</span>
           )}
         </div>
       )}
 
       {/* Footer: last commit */}
       <div className="flex items-center justify-between text-[11px] text-muted pt-2 border-t border-line">
-        <span>{t(lang, 'table.col.last_commit')}</span>
+        <span>{t(lang, 'metric.last_commit')}</span>
         <span className="font-mono">{lastCommitDate}</span>
       </div>
     </Link>

@@ -123,11 +123,3 @@ const FALLBACK: LangContextValue = {
     /* no-op outside the provider */
   },
 };
-
-/**
- * Convenience for components that only need the `lang` value.
- * Slightly less code at the call site than `const { lang } = useLang()`.
- */
-export function useLangValue(): Lang {
-  return useLang().lang;
-}

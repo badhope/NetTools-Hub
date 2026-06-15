@@ -5,6 +5,16 @@ import { platformLabel } from '@/lib/taxonomy';
 import { t } from '@/lib/i18n';
 import { useLang } from '@/components/lang-provider';
 
+/**
+ * Platform / status / verdict badges.
+ *
+ * Three small chip components, all client-side so they re-render
+ * when the language changes. The shared `badge` / `badge--<key>`
+ * class names live in `globals.css` (the editorial-muted palette:
+ * recommended = green, caution = amber, avoid = red, archived =
+ * red, stale = amber).
+ */
+
 export function PlatformBadges({ project }: { project: Project }) {
   const { lang } = useLang();
   return (

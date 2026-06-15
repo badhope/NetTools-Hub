@@ -118,8 +118,14 @@ export interface Project {
 
   // -- Visual (kept for back-compat with the existing card) ------------------
   highlights: string[];
-  /** First colour is the project card's left rail; rest are unused. */
-  gradient: string[];
+  /**
+   * Legacy card colour palette from the v1 design. The current
+   * card uses editorial hairline borders, so this is unused at
+   * render time but is kept in the schema for back-compat with
+   * the data file (the validator does not strip it on save).
+   * Optional so newly-authored projects can omit it.
+   */
+  gradient?: string[];
 }
 
 export interface ProjectsData {
@@ -130,5 +136,3 @@ export interface ProjectsData {
   categories: Record<string, ProjectCategory>;
   projects: Project[];
 }
-
-export type SortOption = 'default' | 'stars' | 'name' | 'updated' | 'kind';

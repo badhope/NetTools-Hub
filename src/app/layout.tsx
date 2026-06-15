@@ -9,58 +9,6 @@ import { LANG_HTML_LANG, LANG_OG_LOCALE } from '@/lib/i18n';
 import { PROJECT_COUNT, SITE_BASE_PATH, SITE_CANONICAL, SITE_OWNER } from '@/lib/site';
 import './globals.css';
 
-// Content Security Policy.
-//
-// `script-src 'self'` alone is not viable for `output: "export"`:
-// Next.js's static export emits inline `<script>` blocks for its
-// hydration payload (the `self.__next_f.push([...])` calls) and
-// those would be blocked, which would silently break *all* client
-// state — the language switcher, the search bar, the sidebar, the
-// project list filters — and the page would render the static HTML
-// but never become interactive.
-//
-// We therefore allow `unsafe-inline` for scripts. The inline
-// scripts that ship with the bundle are all generated at build
-// time by Next.js, the contents are fully under our control, and
-// the site has no user input, no auth, and no third-party embeds,
-// so the XSS surface from re-enabling inline scripts is
-// negligible. The remaining directives keep their restrictive
-// defaults: no remote scripts, no remote styles except the
-// Tailwind `unsafe-inline` (required for utility class generation),
-// no `object-src`, and a same-origin default for everything else.
-//
-// `unsafe-eval` is required in development mode because React uses
-// eval() for debugging features like reconstructing callstacks.
-// In production builds, this can be removed for better security.
-//
-// `img-src` is tightened to `'self' data:` plus a same-origin
-// `https://badhope.github.io` allowlist; the previous `'self' data:
-// https:` accepted any HTTPS origin, which would have silently
-// turned every future `<img src="…">` into a tracking-pixel
-// honeypot the moment someone forgot to vet the URL.
-//
-// `referrer` and `Permissions-Policy` are added so a future
-// Cloudflare/Netlify front-end (or a `<meta http-equiv>` here) can
-// upgrade the site to full security-header coverage without
-// revisiting this string.
-//
-// `frame-ancestors` is intentionally absent: when delivered via
-// a `<meta>` element browsers ignore it (it must be a header),
-// and keeping it here only produces noisy console warnings.
-const isDev = process.env.NODE_ENV === 'development';
-const CSP =
-  "default-src 'self'; " +
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''}; ` +
-  "style-src 'self' 'unsafe-inline'; " +
-  "img-src 'self' data: https://badhope.github.io; " +
-  "font-src 'self' data:; " +
-  "connect-src 'self'; " +
-  "base-uri 'self'; " +
-  "form-action 'self'; " +
-  "object-src 'none'; " +
-  "referrer 'strict-origin-when-cross-origin'; " +
-  'permissions-policy camera=(), microphone=(), geolocation=(), interest-cohort=()';
-
 // Display + body sans: IBM Plex Sans is a humanist grotesque
 // designed at IBM Research. It is the only major sans shipped
 // with a true monospace sibling (IBM Plex Mono) so the type
