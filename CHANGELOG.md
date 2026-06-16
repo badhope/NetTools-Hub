@@ -12,12 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Planned
+
 - Search history & saved searches (per-browser localStorage)
 - "Did you mean…?" fuzzy search suggestions
 - RSS / Atom feed for new project additions
 - Per-language CHANGELOG (zh/ja) so the file is not English-only
 
 ### Added
+
 - **Release Drafter** workflow: auto-drafts the next GitHub Release from Conventional Commits
 - **CITATION.cff**: enables GitHub's "Cite this repository" button
 - **Issue template** improvements: `question.yml` now nudges Q&A to Discussions; `config.yml` adds direct Q&A / Ideas / Security links
@@ -28,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.3.0] – 2026-06-02
 
 ### Changed (UI — round 3 polish)
+
 - **Top nav** slimmed: removed the duplicate `Categories` dropdown — only the rightmost hamburger drawer remains. Removed the `← Home` border button on the explore page. Primary CTA is now `Explore` on the landing page and `Home` on the explore page.
 - **Language switcher** rewritten: 3 inline buttons (EN/中文/日本語) → a single Globe icon with a click-outside-closing dropdown. The mobile drawer also exposes the switcher at the bottom for in-drawer language switching.
 - **Sidebar** slimmed: `w-64` (256 px) → `w-[232px]`. Removed the lonely single-line footer text at the bottom.
@@ -40,12 +43,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] – 2026-06-02
 
 ### Added
+
 - **Top nav component** (`src/components/top-nav.tsx`) shared between landing and explore.
 - **Category groups** (`src/lib/category-groups.ts`): 6 logical clusters, 21 sub-categories total.
 - New i18n keys `group.*` and `nav.*` across en / zh / ja.
 - **Multi-level dropdown** in the top nav: hover on desktop, hamburger sheet on mobile, with click-outside dismissal and ARIA labels.
 
 ### Changed
+
 - **Project list** re-grouped by category cluster with large section spacing.
 - **Project card**: `p-6` padding, 2 tags + `+N` overflow indicator, colour-coded left border, dropped redundant meta (forks), `line-clamp` on title/description, meta row separated by border.
 - **Sidebar**: 21 categories grouped into 6 logical clusters, each collapsible; cleaner hierarchy with breathing room.
@@ -55,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.1] – 2026-06-02
 
 ### Fixed
+
 - `next.config.ts`: enable `trailingSlash: true` so Next.js emits `explore/index.html` instead of `explore.html`, making sub-path routing work on GitHub Pages.
 - CSS assets resolved at `/NetTools-Hub/_next/...` correctly.
 
@@ -63,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.1.0] – 2026-06-01
 
 ### Added
+
 - Initial public release.
 - 120+ curated network tools across 21 categories in `data/projects.json`.
 - Landing page (hero, features, category grid, call-to-action, footer).

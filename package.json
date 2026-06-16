@@ -1,7 +1,7 @@
 {
   "name": "net-tools-hub",
   "version": "0.3.0",
-  "description": "🛠️ One-stop navigation platform for 120+ actively-maintained open-source network tools (proxies, VPNs, Clash family, GitHub acceleration, DNS, security, monitoring). Static site, MIT, multilingual EN/中文/日本語.",
+  "description": "🛠️ A field manual of 210 actively-maintained open-source network tools (proxies, VPNs, Clash family, GitHub acceleration, DNS, security, monitoring). Static site, MIT, multilingual EN/中文/日本語.",
   "author": {
     "name": "badhope",
     "url": "https://github.com/badhope"
@@ -51,9 +51,22 @@
     "dev": "next dev -p 8080",
     "build": "next build",
     "start": "npx serve@latest out -p 8080",
-    "lint": "eslint"
+    "lint": "eslint",
+    "validate": "node scripts/validate-projects.mjs",
+    "refresh": "node scripts/refresh-projects.mjs",
+    "scan": "node scripts/scan-awesome.mjs",
+    "i18n:audit": "node scripts/i18n-audit.mjs",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report",
+    "analyze": "node scripts/analyze-bundle.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
+    "@sentry/nextjs": "^10.57.0",
     "next": "16.2.9",
     "react": "19.2.7",
     "react-dom": "19.2.7"
@@ -74,13 +87,26 @@
     }
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "16.2.9",
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4.3.0",
     "@types/node": "^25.9.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.2",
+    "@vitest/coverage-v8": "^4.1.8",
     "eslint": "^10.4.1",
     "eslint-config-next": "16.2.9",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-prettier": "^5.5.6",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^15.14.0",
+    "jsdom": "^29.1.1",
+    "prettier": "^3.8.4",
     "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.1.8"
   }
 }

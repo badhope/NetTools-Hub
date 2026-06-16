@@ -1,127 +1,68 @@
-import type { Metadata, Viewport } from "next";
-import { Fraunces, Instrument_Sans, JetBrains_Mono } from "next/font/google";
-import { SetHtmlLang } from "@/components/set-html-lang";
-import { LANG_HTML_LANG, LANG_OG_LOCALE } from "@/lib/i18n";
-import {
-  PROJECT_COUNT,
-  SITE_BASE_PATH,
-  SITE_CANONICAL,
-  SITE_OWNER,
-} from "@/lib/site";
-import "./globals.css";
+import type { Metadata, Viewport } from 'next';
+import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
+import { SetHtmlLang } from '@/components/set-html-lang';
+import { LangProvider } from '@/components/lang-provider';
+import { SiteFooter } from '@/components/site-footer';
+import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
+import { WebVitals } from '@/components/web-vitals';
+import { LANG_HTML_LANG, LANG_OG_LOCALE } from '@/lib/i18n';
+import { PROJECT_COUNT, SITE_BASE_PATH, SITE_CANONICAL, SITE_OWNER } from '@/lib/site';
+import './globals.css';
 
-// Content Security Policy.
-//
-// `script-src 'self'` alone is not viable for `output: "export"`:
-// Next.js's static export emits inline `<script>` blocks for its
-// hydration payload (the `self.__next_f.push([...])` calls) and
-// those would be blocked, which would silently break *all* client
-// state — the language switcher, the search bar, the sidebar, the
-// project list filters — and the page would render the static HTML
-// but never become interactive.
-//
-// We therefore allow `unsafe-inline` for scripts. The inline
-// scripts that ship with the bundle are all generated at build
-// time by Next.js, the contents are fully under our control, and
-// the site has no user input, no auth, and no third-party embeds,
-// so the XSS surface from re-enabling inline scripts is
-// negligible. The remaining directives keep their restrictive
-// defaults: no remote scripts, no remote styles except the
-// Tailwind `unsafe-inline` (required for utility class generation),
-// no `object-src`, and a same-origin default for everything else.
-//
-// `img-src` is tightened to `'self' data:` plus a same-origin
-// `https://badhope.github.io` allowlist; the previous `'self' data:
-// https:` accepted any HTTPS origin, which would have silently
-// turned every future `<img src="…">` into a tracking-pixel
-// honeypot the moment someone forgot to vet the URL.
-//
-// `referrer` and `Permissions-Policy` are added so a future
-// Cloudflare/Netlify front-end (or a `<meta http-equiv>` here) can
-// upgrade the site to full security-header coverage without
-// revisiting this string.
-//
-// `frame-ancestors` is intentionally absent: when delivered via
-// a `<meta>` element browsers ignore it (it must be a header),
-// and keeping it here only produces noisy console warnings.
-const CSP =
-  "default-src 'self'; " +
-  "script-src 'self' 'unsafe-inline'; " +
-  "style-src 'self' 'unsafe-inline'; " +
-  "img-src 'self' data: https://badhope.github.io; " +
-  "font-src 'self' data:; " +
-  "connect-src 'self'; " +
-  "base-uri 'self'; " +
-  "form-action 'self'; " +
-  "object-src 'none'; " +
-  "referrer 'strict-origin-when-cross-origin'; " +
-  "permissions-policy camera=(), microphone=(), geolocation=(), interest-cohort=()";
-
-// Display serif: Fraunces is a variable serif with optical sizing,
-// soft curves and a humanist warmth that doesn't appear in any of
-// the typical "AI default" front-end stacks (Inter / Space Grotesk /
-// Geist). It is the visual signature of the editorial-atlas
-// direction: the hero / section headings all use it.
-// "opsz" 9..144 makes the optical-size axis available, which lets
-// the browser pick a tighter or looser cut depending on rendered
-// size; that alone makes the type feel "drawn for" the page.
-const fraunces = Fraunces({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-fraunces",
-  axes: ["opsz", "SOFT", "WONK"],
+// Display + body sans: IBM Plex Sans is a humanist grotesque
+// designed at IBM Research. It is the only major sans shipped
+// with a true monospace sibling (IBM Plex Mono) so the type
+// pairing is guaranteed to match. We use IBM Plex Sans for
+// both body and headings — the "field manual" design system
+// does not mix faces; the personality comes from spacing and
+// hairline rules, not from a contrasting display face.
+const plex = IBM_Plex_Sans({
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  variable: '--font-plex-sans',
+  weight: ['400', '500', '600', '700'],
 });
 
-// Body / UI sans: Instrument Sans is a humanist geometric sans
-// with a slight terminal flavour, designed by Instrument (the
-// same studio behind Linear / Vercel's design system) but
-// deliberately not the Vercel-default Geist. Its character lies
-// in the slightly condensed x-height and the open apertures,
-// which give UI text a calm, considered feel.
-const instrumentSans = Instrument_Sans({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-instrument",
-  weight: ["400", "500", "600", "700"],
-});
-
-// Monospace for technical metadata: project stars, repo URLs,
-// version numbers, category counts, "last updated" timestamps.
-// JetBrains Mono is the only monospace that ships with the
-// "calt" ligature set we want for `=>`, `!=`, and `>=` glyphs
-// in this codebase.
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin", "latin-ext"],
-  display: "swap",
-  variable: "--font-jetbrains",
-  weight: ["400", "500", "600"],
+// Mono for technical data: project stars, repo URLs, version
+// numbers, category counts, "last updated" timestamps. Plex
+// Mono is the only monospace that ships with the same metrics
+// as Plex Sans, so the two faces align on the same baseline.
+const plexMono = IBM_Plex_Mono({
+  subsets: ['latin', 'latin-ext'],
+  display: 'swap',
+  variable: '--font-plex-mono',
+  weight: ['400', '500', '600'],
 });
 
 export const viewport: Viewport = {
-  // Match the warm dark palette so the browser chrome (Safari
-  // status bar, Android system bar, PWA splash) blends in.
-  themeColor: "#0e0c0a",
-  colorScheme: "dark",
-  width: "device-width",
+  // Match the cool dark palette (`--color-bg` in globals.css) so
+  // the browser chrome (Safari status bar, Android system bar, PWA
+  // splash) blends in. The "field manual" look is monochrome-cool;
+  // a warm theme would clash with the hairlines and the steel-blue
+  // accent.
+  themeColor: '#0b0d10',
+  colorScheme: 'dark',
+  width: 'device-width',
   initialScale: 1,
 };
 
 export const metadata: Metadata = {
   title: {
-    default: "NetTools Hub — An Atlas of Network Tools",
-    template: "%s — NetTools Hub",
+    default: 'NetTools Hub — A field manual of open-source network tools',
+    template: '%s — NetTools Hub',
   },
-  description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+  description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind (proxy, VPN, DNS, acceleration, security, monitoring, ops, tools) and by platform (desktop, mobile, CLI, server, browser, router).`,
   keywords: [
-    "network tools",
-    "open source",
-    "atlas",
-    "proxy",
-    "VPN",
-    "Clash",
-    "GitHub acceleration",
-    "DNS",
-    "monitoring",
+    'network tools',
+    'open source',
+    'proxy',
+    'VPN',
+    'Clash',
+    'sing-box',
+    'WireGuard',
+    'GitHub acceleration',
+    'DNS',
+    'monitoring',
   ],
   authors: [{ name: SITE_OWNER }],
   creator: SITE_OWNER,
@@ -135,9 +76,9 @@ export const metadata: Metadata = {
     canonical: `${SITE_CANONICAL}/`,
     languages: {
       en: `${SITE_CANONICAL}/`,
-      "zh-Hans": `${SITE_CANONICAL}/?lang=zh`,
+      'zh-Hans': `${SITE_CANONICAL}/?lang=zh`,
       ja: `${SITE_CANONICAL}/?lang=ja`,
-      "x-default": `${SITE_CANONICAL}/`,
+      'x-default': `${SITE_CANONICAL}/`,
     },
   },
   // The PWA manifest is a sibling of the favicon in /public. We
@@ -145,10 +86,10 @@ export const metadata: Metadata = {
   // tag in the document head.
   manifest: `${SITE_BASE_PATH}/manifest.webmanifest`,
   openGraph: {
-    title: "NetTools Hub — An Atlas of Network Tools",
-    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    title: 'NetTools Hub — A field manual of open-source network tools',
+    description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind and by platform.`,
     url: `${SITE_CANONICAL}/`,
-    siteName: "NetTools Hub",
+    siteName: 'NetTools Hub',
     // Static export means `<html lang>` and the OG card both have to be
     // resolved at build time — we have no per-request metadata. We
     // pick English as the primary locale and expose the other two as
@@ -158,7 +99,7 @@ export const metadata: Metadata = {
     // `alternates.languages` above, which is what Google indexes.
     locale: LANG_OG_LOCALE.en,
     alternateLocale: [LANG_OG_LOCALE.zh, LANG_OG_LOCALE.ja],
-    type: "website",
+    type: 'website',
     // Social-card preview. The PNG lives in /public; using a PNG
     // (not SVG) means Twitter, LinkedIn, WeChat and most other
     // link-preview bots can render it.
@@ -167,14 +108,14 @@ export const metadata: Metadata = {
         url: `${SITE_CANONICAL}/og-image.png`,
         width: 1200,
         height: 630,
-        alt: `NetTools Hub — A curated atlas of ${PROJECT_COUNT}+ open-source network tools`,
+        alt: `NetTools Hub — A field manual of ${PROJECT_COUNT}+ open-source network tools`,
       },
     ],
   },
   twitter: {
-    card: "summary_large_image",
-    title: "NetTools Hub — An Atlas of Network Tools",
-    description: `A curated atlas of ${PROJECT_COUNT}+ open-source network tools, organised by purpose, with multilingual annotations and editorial notes.`,
+    card: 'summary_large_image',
+    title: 'NetTools Hub — A field manual of open-source network tools',
+    description: `A field manual of ${PROJECT_COUNT}+ open-source network tools, organised by kind and by platform.`,
     images: [`${SITE_CANONICAL}/og-image.png`],
   },
   robots: {
@@ -186,19 +127,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang={LANG_HTML_LANG.en}
-      className={`${fraunces.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
-    >
-      <head>
-        <meta httpEquiv="Content-Security-Policy" content={CSP} />
-      </head>
+    <html lang={LANG_HTML_LANG.en} className={`${plex.variable} ${plexMono.variable}`}>
       <body>
         {/* Skip-to-content link. Rendered outside the normal flow so
          *  it does not contribute to layout; visually hidden until
@@ -211,8 +142,11 @@ export default function RootLayout({
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
+        <LangProvider>{children}</LangProvider>
         <SetHtmlLang />
-        {children}
+        <SiteFooter />
+        <PWAInstallPrompt />
+        <WebVitals />
       </body>
     </html>
   );

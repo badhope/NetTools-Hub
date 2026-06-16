@@ -1,11 +1,21 @@
 """Generate a 1200x630 Open Graph image for NetTools Hub.
 
-The image is a static editorial composition that matches the
-landing-page hero: dark warm background, terracotta accent, serif
-display for the title, and monospace metadata strip. The script is
-re-runnable, deterministic (no random seed) and re-uses only
-system-installed fonts so it can be regenerated in CI without a
-network round-trip.
+The image is a static composition that matches the landing-page
+hero of the "field manual" design system: cool near-black
+background, steel-blue accent, a single sans-serif face (IBM Plex
+Sans — closest system fallback is DejaVu Sans), and a monospace
+metadata strip. The script is re-runnable, deterministic (no
+random seed) and re-uses only system-installed fonts so it can be
+regenerated in CI without a network round-trip.
+
+Colour values mirror `src/app/globals.css` `@theme`:
+  --color-bg       #0b0d10
+  --color-fg       #e6edf3
+  --color-fg-2     #b8c1cc
+  --color-muted    #7d8590
+  --color-dim      #3a424b
+  --color-accent   #6ea8fe   (steel blue, links)
+  --color-accent-2 #4fd1a1   (mint, active tree node)
 """
 
 from __future__ import annotations
@@ -18,16 +28,15 @@ from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 OUT_DIR = pathlib.Path(__file__).resolve().parent.parent / "public"
 W, H = 1200, 630
-BG = (14, 12, 10)        # matches `--color-bg` in globals.css
-FG = (244, 240, 232)     # matches `--color-fg`
-FG2 = (196, 184, 168)    # matches `--color-fg-2`
-MUTED = (140, 130, 118)  # matches `--color-muted`
-DIM = (62, 56, 50)       # matches `--color-dim`
-ACCENT = (212, 96, 58)   # matches `--color-accent`
+BG     = (11, 13, 16)     # #0b0d10  --color-bg
+FG     = (230, 237, 243)  # #e6edf3  --color-fg
+FG2    = (184, 193, 204)  # #b8c1cc  --color-fg-2
+MUTED  = (125, 133, 144)  # #7d8590  --color-muted
+DIM    = (58, 66, 75)     # #3a424b  --color-dim
+ACCENT = (110, 168, 254)  # #6ea8fe  --color-accent (steel blue)
 
-SERIF = "/usr/share/fonts/truetype/dejavu/DejaVuSerif-Bold.ttf"
-SERIF_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSerif.ttf"
-SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+SANS = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+SANS_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 MONO = "/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 
 
@@ -40,84 +49,77 @@ def main() -> int:
     img = Image.new("RGB", (W, H), BG)
     draw = ImageDraw.Draw(img)
 
-    # Paper-grain noise (very subtle) so the dark background does
-    # not look flat. A 1.5x-blurred copy of random monochrome noise
-    # is good enough for a 1200x630 OG image. The grain is a
-    # full-strength copy of the noise, then we blend it on top of
-    # the bg at 5% to keep the texture visible without grunging
-    # up the typography.
+    # Subtle paper-grain noise so the dark background does not look
+    # flat. A 1.5x-blurred copy of low-amplitude random monochrome
+    # noise, blended at 4% to keep the texture visible without
+    # dirtying the typography.
     import random
-    random.seed(20260101)
+    random.seed(20260611)
     noise = Image.new("L", (W, H), 0)
     npx = noise.load()
     for y in range(H):
         for x in range(W):
-            npx[x, y] = random.randint(0, 32)
+            npx[x, y] = random.randint(0, 24)
     noise = noise.filter(ImageFilter.GaussianBlur(1.5))
     grain = Image.merge("RGB", (noise, noise, noise))
-    img = Image.blend(img, grain, 0.05)
+    img = Image.blend(img, grain, 0.04)
     draw = ImageDraw.Draw(img)
 
-    # Decorative frame: 3 hairline rules along the top to echo
-    # the editorial divider in the hero section.
+    # Top hairline — single 1px rule in --color-dim. The
+    # "field manual" design uses hairlines, not double rules.
     draw.rectangle([(80, 80), (W - 80, 80)], fill=DIM)
-    draw.rectangle([(80, 84), (W - 80, 84)], fill=DIM)
-    draw.rectangle([(80, 88), (W - 80, 88)], fill=DIM)
 
-    # Eyebrow / kicker
+    # Eyebrow / kicker — monospace, dim, mirrored from the
+    # site-wide "manual-index" component.
     draw.text(
         (80, 130),
-        "AN ATLAS OF",
+        "00 ── INDEX",
         font=font(MONO, 18),
         fill=MUTED,
     )
-    draw.line([(220, 142), (W - 80, 142)], fill=DIM, width=1)
+    draw.line([(240, 142), (W - 80, 142)], fill=DIM, width=1)
     draw.text(
-        (W - 120, 130),
-        "PLATE 00",
+        (W - 200, 130),
+        "EDITION I",
         font=font(MONO, 18),
         fill=MUTED,
     )
 
-    # Title block — two lines, set in a display serif.
-    title1 = "Network Tools"
-    title2 = "An Atlas"
-    f_title = font(SERIF, 130)
-    draw.text((80, 180), title1, font=f_title, fill=FG)
-    bbox = draw.textbbox((0, 0), title1, font=f_title)
-    line1_bottom = bbox[3]
-    # Accent dash after first line
-    draw.text(
-        (80 + bbox[2] + 24, 180 + 18),
-        "—",
-        font=font(SERIF, 100),
-        fill=ACCENT,
-    )
-    # Second line in accent color
-    draw.text(
-        (80, 180 + 180),
-        title2,
-        font=font(SERIF, 130),
-        fill=ACCENT,
-    )
+    # Title block — two lines of the field-manual heading. The
+    # site no longer uses a serif display face, so the title is
+    # set in a single sans family. The accent renders only the
+    # accent word; everything else stays in --color-fg.
+    title1 = "A field manual of"
+    title2 = "open-source"
+    title3 = "network tools."
+    f_title = font(SANS, 96)
+    draw.text((80, 200), title1, font=f_title, fill=FG)
 
-    # Subtitle
+    # Line 2 with one accent word.
+    f_title_mid = font(SANS, 96)
+    bbox1 = draw.textbbox((0, 0), "open-source ", font=f_title_mid)
+    draw.text((80, 310), "open-source", font=f_title_mid, fill=FG)
+    draw.text((80 + bbox1[2] + 8, 310), "tools", font=f_title_mid, fill=ACCENT)
+    draw.text((80 + bbox1[2] + 8 + bbox1[2] + 8, 310), ".",
+              font=f_title_mid, fill=FG)
+
+    # Subtitle in --color-fg-2, monospace for the technical feel.
     sub = (
-        "A curated compendium of 120+ open-source network tools,\n"
-        "organised into six thematic groups and indexed daily."
+        "210 projects, indexed by kind and by platform.\n"
+        "Open-source. MIT. No tracking. No ads."
     )
-    sub_font = font(SANS, 22)
-    y0 = 180 + 360
+    sub_font = font(MONO, 20)
+    y0 = 440
     for i, line in enumerate(sub.split("\n")):
-        draw.text((80, y0 + i * 34), line, font=sub_font, fill=FG2)
+        draw.text((80, y0 + i * 30), line, font=sub_font, fill=FG2)
 
     # Footer rule + monospace metadata strip
     draw.line([(80, H - 90), (W - 80, H - 90)], fill=DIM, width=1)
     f_mono = font(MONO, 16)
     draw.text((80, H - 70), "NETTOOLS-HUB", font=f_mono, fill=ACCENT)
     draw.text(
-        (80 + 230, H - 70),
-        "BADHOPE · EDITION I · 2026",
+        (80 + 240, H - 70),
+        "BADHOPE · /EXPLORE",
         font=f_mono,
         fill=MUTED,
     )
@@ -132,13 +134,10 @@ def main() -> int:
     img.save(out, format="PNG", optimize=True)
     print(f"wrote {out} ({out.stat().st_size} bytes)")
 
-    # Also generate a PWA icon (square, 512px) by cropping/recentering
-    # the OG image. This is a pragmatic shortcut: the icon is the
-    # same composition, just with less whitespace around the
-    # title. The result is a clean monochrome-on-dark mark that
-    # reads at 192/96/48px.
+    # PWA icon (square, 512px). We re-use the same composition,
+    # cropped to the title block. The result is a clean
+    # monochrome-on-dark mark that reads at 192/96/48px.
     icon = img.resize((512, 512), Image.LANCZOS)
-    # Crop to a 1:1 square centered on the title block.
     crop = icon.crop((0, 80, 512, 512))
     out_icon = OUT_DIR / "icon-512.png"
     crop.save(out_icon, format="PNG", optimize=True)
