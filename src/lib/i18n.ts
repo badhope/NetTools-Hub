@@ -77,6 +77,21 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.switch_to_light': 'Switch to light mode',
     'a11y.switch_to_dark': 'Switch to dark mode',
     'a11y.opens_new_tab': 'opens in new tab',
+
+    // ---- Footer -----------------------------------------------------------
+    'footer.disclaimer_title': 'Disclaimer',
+    'footer.disclaimer_text':
+      'This site (NetTools Hub) is a personally maintained link index. It only collects repository addresses and editorial descriptions of third-party open-source projects. This site does not host, distribute, endorse, or operate any linked software. Inclusion is not recommendation. Use any project linked from this site at your own risk. Full terms at',
+    'footer.maintainer': 'Maintainer',
+    'footer.maintainer_desc': 'Single-maintainer, non-commercial',
+    'footer.source': 'Source',
+    'footer.source_desc': 'Static · MIT · No tracking',
+    'footer.last_indexed': 'Last indexed',
+    'footer.last_indexed_desc': 'Auto-refreshed via GitHub Actions',
+    'footer.license': 'License',
+    'footer.build': 'Build · static export',
+    'footer.privacy': 'No cookies · No analytics · No ads',
+
     'theme.light': 'Light',
     'theme.dark': 'Dark',
 
@@ -159,6 +174,20 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.switch_to_light': '切换到亮色模式',
     'a11y.switch_to_dark': '切换到暗色模式',
     'a11y.opens_new_tab': '在新标签页打开',
+
+    'footer.disclaimer_title': '免责声明',
+    'footer.disclaimer_text':
+      '本站点（NetTools Hub）是一个个人维护的链接索引，仅收录第三方开源项目的仓库地址与一段编辑性说明。本站不托管、不分发、不背书、不运营任何被链接的软件；收录即非推荐。使用任何通过本站跳转到的项目，风险由使用者自行承担。完整条款见',
+    'footer.maintainer': '维护者',
+    'footer.maintainer_desc': '个人维护，非商业',
+    'footer.source': '源码',
+    'footer.source_desc': '静态 · MIT · 无追踪',
+    'footer.last_indexed': '最后索引',
+    'footer.last_indexed_desc': '通过 GitHub Actions 自动刷新',
+    'footer.license': '许可证',
+    'footer.build': '构建 · 静态导出',
+    'footer.privacy': '无 Cookie · 无分析 · 无广告',
+
     'theme.light': '亮色',
     'theme.dark': '暗色',
 
@@ -237,6 +266,20 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.switch_to_light': 'ライトモードに切り替え',
     'a11y.switch_to_dark': 'ダークモードに切り替え',
     'a11y.opens_new_tab': '新しいタブで開く',
+
+    'footer.disclaimer_title': '免責事項',
+    'footer.disclaimer_text':
+      '本サイト（NetTools Hub）は個人が維持するリンクインデックスです。第三者のオープンソースプロジェクトのリポジトリアドレスと編集説明のみを収録しています。本サイトはリンク先のソフトウェアをホスト、配布、推奨、運営しません。収録は推奨を意味しません。本サイトからリンクされたプロジェクトの使用は、利用者自身の責任で行ってください。完全な条項は',
+    'footer.maintainer': 'メンテナ',
+    'footer.maintainer_desc': '個人運営、非営利',
+    'footer.source': 'ソース',
+    'footer.source_desc': '静的 · MIT · トラッキングなし',
+    'footer.last_indexed': '最終インデックス',
+    'footer.last_indexed_desc': 'GitHub Actions による自動更新',
+    'footer.license': 'ライセンス',
+    'footer.build': 'ビルド · 静的エクスポート',
+    'footer.privacy': 'Cookie なし · アナリティクスなし · 広告なし',
+
     'theme.light': 'ライト',
     'theme.dark': 'ダーク',
 

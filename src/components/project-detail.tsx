@@ -207,11 +207,9 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="border border-line p-3" role="group" aria-label={label}>
+    <div className="border border-line p-3">
       <dt className="kicker mb-1">{label}</dt>
-      <dd className="font-mono text-lg text-fg" aria-label={`${label}: ${value}`}>
-        {value}
-      </dd>
+      <dd className="font-mono text-lg text-fg">{value}</dd>
     </div>
   );
 }

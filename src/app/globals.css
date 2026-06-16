@@ -248,6 +248,9 @@
   color: var(--color-accent-4);
   border-color: var(--color-accent-4);
 }
+.badge--active {
+  color: var(--color-accent-2);
+}
 .badge--stale {
   color: var(--color-accent-3);
 }
@@ -280,6 +283,9 @@
   color: #1d4ed8;
 }
 
+:root[data-theme='light'] .badge--active {
+  background-color: rgba(5, 150, 105, 0.1);
+}
 :root[data-theme='light'] .badge--recommended {
   background-color: rgba(5, 150, 105, 0.1);
 }
@@ -287,5 +293,11 @@
   background-color: rgba(217, 119, 6, 0.1);
 }
 :root[data-theme='light'] .badge--avoid {
+  background-color: rgba(220, 38, 38, 0.1);
+}
+:root[data-theme='light'] .badge--stale {
+  background-color: rgba(217, 119, 6, 0.1);
+}
+:root[data-theme='light'] .badge--archived {
   background-color: rgba(220, 38, 38, 0.1);
 }

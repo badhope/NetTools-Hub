@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { TopNav } from '@/components/top-nav';
-import { t, withLang } from '@/lib/i18n';
+import { t, withLang, type Lang } from '@/lib/i18n';
 import { PROJECT_COUNT, TOTAL_STARS, SITE_OWNER, COPYRIGHT_YEAR } from '@/lib/site';
 import { getAllProjects, getKindCounts, getLastUpdated } from '@/lib/projects';
 import { kindLabel } from '@/lib/taxonomy';
@@ -11,15 +11,37 @@ import { KIND_ORDER } from '@/lib/constants';
 import { formatStars } from '@/lib/utils';
 import { useLang } from '@/components/lang-provider';
 
-const KIND_BLURB: Record<ProjectKind, string> = {
-  proxy: 'Cores & clients (Clash / Mihomo / sing-box / V2Ray / Xray).',
-  vpn: 'Wire protocols (WireGuard / OpenVPN / IPsec / Tailscale / ZeroTier).',
-  dns: 'Resolvers, filters, sinkholes.',
-  acceleration: 'GitHub / Docker mirror, reverse proxy, tunnel.',
-  security: 'WAF, IDS / IPS, fail2ban, honeypots.',
-  monitoring: 'Prometheus / Grafana / Uptime Kuma / Netdata.',
-  ops: 'Container, Kubernetes, self-hosted control planes.',
-  tools: 'CLI utilities, network test, data transfer.',
+const KIND_BLURB: Record<Lang, Record<ProjectKind, string>> = {
+  en: {
+    proxy: 'Cores & clients (Clash / Mihomo / sing-box / V2Ray / Xray).',
+    vpn: 'Wire protocols (WireGuard / OpenVPN / IPsec / Tailscale / ZeroTier).',
+    dns: 'Resolvers, filters, sinkholes.',
+    acceleration: 'GitHub / Docker mirror, reverse proxy, tunnel.',
+    security: 'WAF, IDS / IPS, fail2ban, honeypots.',
+    monitoring: 'Prometheus / Grafana / Uptime Kuma / Netdata.',
+    ops: 'Container, Kubernetes, self-hosted control planes.',
+    tools: 'CLI utilities, network test, data transfer.',
+  },
+  zh: {
+    proxy: '核心与客户端（Clash / Mihomo / sing-box / V2Ray / Xray）。',
+    vpn: '有线协议（WireGuard / OpenVPN / IPsec / Tailscale / ZeroTier）。',
+    dns: '解析器、过滤器、黑洞。',
+    acceleration: 'GitHub / Docker 镜像、反向代理、隧道。',
+    security: 'WAF、IDS / IPS、fail2ban、蜜罐。',
+    monitoring: 'Prometheus / Grafana / Uptime Kuma / Netdata。',
+    ops: '容器、Kubernetes、自托管控制平面。',
+    tools: 'CLI 工具、网络测试、数据传输。',
+  },
+  ja: {
+    proxy: 'コアとクライアント（Clash / Mihomo / sing-box / V2Ray / Xray）。',
+    vpn: 'ワイヤープロトコル（WireGuard / OpenVPN / IPsec / Tailscale / ZeroTier）。',
+    dns: 'リゾルバ、フィルタ、シンクホール。',
+    acceleration: 'GitHub / Docker ミラー、リバースプロキシ、トンネル。',
+    security: 'WAF、IDS / IPS、fail2ban、ハニーポット。',
+    monitoring: 'Prometheus / Grafana / Uptime Kuma / Netdata。',
+    ops: 'コンテナ、Kubernetes、セルフホスト制御平面。',
+    tools: 'CLI ユーティリティ、ネットワークテスト、データ転送。',
+  },
 };
 
 /**
@@ -119,7 +141,9 @@ export function LandingContent() {
                       </span>
                     </div>
                     <p className="mt-2 text-[15px] font-medium text-fg">{kindLabel(k, lang)}</p>
-                    <p className="mt-1 text-[12.5px] leading-relaxed text-fg-2">{KIND_BLURB[k]}</p>
+                    <p className="mt-1 text-[12.5px] leading-relaxed text-fg-2">
+                      {KIND_BLURB[lang][k]}
+                    </p>
                   </Link>
                 </li>
               );
@@ -202,13 +226,9 @@ pnpm run dev`}
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div role="group" aria-label={`${label} statistic`}>
-      <p className="kicker" aria-label="Label">
-        {label}
-      </p>
-      <p className="mt-0.5 font-mono text-[1.05rem] font-medium text-fg" aria-label="Value">
-        {value}
-      </p>
+    <div role="group" aria-label={label}>
+      <p className="kicker">{label}</p>
+      <p className="mt-0.5 font-mono text-[1.05rem] font-medium text-fg">{value}</p>
     </div>
   );
 }
