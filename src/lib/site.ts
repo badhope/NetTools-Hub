@@ -9,25 +9,22 @@
  * import from `@/lib/site`, but `site` itself imports nothing.
  */
 
-import { getAllProjects, getCategoryCount, getTotalForks, getTotalStars } from "./projects";
+import { getAllProjects, getTotalStars } from './projects';
 
 /** GitHub owner used everywhere we attribute the work / link the repo. */
-export const SITE_OWNER = "badhope";
+export const SITE_OWNER = 'badhope';
 
-/** GitHub Pages base path (matches next.config.ts `basePath`).
- *  GitHub Pages serves a user/org site at `https://<owner>.github.io`
- *  and each *project* site at `https://<owner>.github.io/<repo>/`.
- *  The Next.js `basePath` setting (computed from the `GITHUB_REPOSITORY`
- *  env var) is just the repo name — the owner is already in the
- *  origin. Building the full base path as `/{owner}/{repo}` would
- *  double it (`/badhope/NetTools-Hub`), which is what the first cut
- *  of this file did and what the sitemap and JSON-LD payloads
- *  immediately picked up. The owner is therefore *not* part of
- *  `SITE_BASE_PATH` here. */
-export const SITE_BASE_PATH = "/NetTools-Hub";
+/** GitHub Pages base path. Must agree with `next.config.ts`'s
+ *  `basePath` (computed from the `GITHUB_REPOSITORY` env var).
+ *  Locally (or in any other environment without that env var) we
+ *  serve from the filesystem root, so this must also be empty —
+ *  the previous hard-coded `/NetTools-Hub` was correct for the
+ *  deployed site but produced 404s on `manifest.webmanifest` and
+ *  `favicon.ico` in the local dev server. */
+export const SITE_BASE_PATH = process.env.GITHUB_REPOSITORY ? '/NetTools-Hub' : '';
 
 /** Canonical origin (no trailing slash). */
-export const SITE_ORIGIN = "https://badhope.github.io";
+export const SITE_ORIGIN = 'https://badhope.github.io';
 
 /** Fully-qualified canonical URL of the landing page, *without* a
  *  trailing slash. Callers that want to point at a sub-path or at
@@ -44,17 +41,11 @@ export const SITE_ORIGIN = "https://badhope.github.io";
  *  mistake obvious. */
 export const SITE_CANONICAL = `${SITE_ORIGIN}${SITE_BASE_PATH}`;
 
-/** Total number of curated projects — drives every "{n}+" copy. */
+/** Total number of curated projects — drives every "{n}" copy. */
 export const PROJECT_COUNT: number = getAllProjects().length;
-
-/** Total number of distinct categories. */
-export const CATEGORY_COUNT: number = getCategoryCount();
 
 /** Sum of `stars` across all projects. */
 export const TOTAL_STARS: number = getTotalStars();
-
-/** Sum of `forks` across all projects. */
-export const TOTAL_FORKS: number = getTotalForks();
 
 /** Current year (build-time). Static export freezes this, but the
  *  value is recomputed on every `next build` so the year stays in

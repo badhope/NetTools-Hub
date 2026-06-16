@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { useEffect } from "react";
-import { t } from "@/lib/i18n";
-import { useClientLang } from "@/lib/use-client-lang";
+import { useEffect } from 'react';
+import { t } from '@/lib/i18n';
+import { useLang } from '@/components/lang-provider';
 
 export default function Error({
   error,
@@ -15,21 +15,21 @@ export default function Error({
     console.error(error);
   }, [error]);
 
-  // `output: "export"` pre-renders this page in English regardless of
-  // the URL; the shared `useClientLang` hook picks up the real
-  // language from `?lang=` / `localStorage` / `navigator` on mount.
-  const [lang] = useClientLang();
+  // Reads the active language from the global `LangProvider`
+  // context. The static export pre-renders this page in English
+  // and the provider swaps in the real language after mount.
+  const { lang } = useLang();
 
   return (
     <main
       id="main"
-      aria-label={t(lang, "a11y.main")}
+      aria-label={t(lang, 'a11y.main')}
       tabIndex={-1}
       className="flex min-h-screen flex-col items-center justify-center bg-bg px-6 text-center outline-none"
     >
       <div className="mb-6 flex items-center gap-3">
         <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
-          {t(lang, "error.folio")}
+          {t(lang, 'error.folio')}
         </span>
         <span className="h-px w-12 bg-dim" />
       </div>
@@ -37,14 +37,14 @@ export default function Error({
         Err<span className="italic text-accent">/</span>or
       </h1>
       <p className="mt-6 max-w-sm text-sm leading-relaxed text-fg-2">
-        {t(lang, "error.description")}
+        {t(lang, 'error.description')}
       </p>
       <button
         type="button"
         onClick={reset}
         className="group mt-10 inline-flex items-center gap-3 border-b border-accent pb-1 font-display text-lg text-accent transition-colors hover:text-accent-hover"
       >
-        <span>{t(lang, "error.retry")}</span>
+        <span>{t(lang, 'error.retry')}</span>
         <svg
           className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
           fill="none"
@@ -52,10 +52,7 @@ export default function Error({
           stroke="currentColor"
           strokeWidth={1.5}
         >
-          <path
-            strokeLinecap="square"
-            d="M5 12h14M13 6l6 6-6 6"
-          />
+          <path strokeLinecap="square" d="M5 12h14M13 6l6 6-6 6" />
         </svg>
       </button>
     </main>

@@ -1,7 +1,7 @@
 name: ❓ Question / Help
 description: Ask a question about the project, deployment, or how to contribute.
-title: "[Question] "
-labels: ["question"]
+title: '[Question] '
+labels: ['question']
 assignees: []
 body:
   - type: markdown
@@ -54,7 +54,7 @@ body:
       label: Have you searched existing Discussions & Issues first?
       options:
         - "Yes — I searched and couldn't find an answer"
-        - "Yes — found a similar thread, but my question is different"
+        - 'Yes — found a similar thread, but my question is different'
         - "No, but I'll search before submitting"
     validations:
       required: true

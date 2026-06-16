@@ -1,77 +1,47 @@
-"use client";
+'use client';
 
-import { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
-import { Lang, langParam, t, withLang } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/language-switcher";
-import { CATEGORY_GROUPS } from "@/lib/category-groups";
-import { ProjectCategory } from "@/types/project";
-import { SiteMark, GroupMark } from "@/components/category-mark";
-import { COPYRIGHT_YEAR } from "@/lib/site";
+import { useState, useEffect, useRef, useCallback } from 'react';
+import Link from 'next/link';
+import { Lang, langParam, t, withLang } from '@/lib/i18n';
+import { LanguageSwitcher } from '@/components/language-switcher';
+import { SiteMark } from '@/components/site-mark';
+import { ThemeToggle } from '@/components/theme-toggle';
+import { COPYRIGHT_YEAR } from '@/lib/site';
+import { kindLabel } from '@/lib/taxonomy';
+import { KIND_ORDER } from '@/lib/constants';
+import { useLang } from '@/components/lang-provider';
 
 interface TopNavProps {
-  lang: Lang;
-  onLangChange?: (lang: Lang) => void;
-  categories: Record<string, ProjectCategory>;
-  counts: Record<string, number>;
-  variant: "landing" | "explore";
+  /**
+   * Per-kind counts, used by the mobile drawer to render a kind
+   * list with project totals. Optional — when absent (e.g. on a
+   * page that doesn't have them in scope), the drawer still
+   * renders but the counts are omitted.
+   */
+  kindCounts?: Readonly<Record<string, number>>;
+  total?: number;
+  variant: 'landing' | 'explore';
   /**
    * Whether the `<header>` should attach itself to the viewport
-   * edge via `position: sticky`. Defaults to `true` so the landing
-   * page (which does not wrap `<TopNav>` in a sticky parent) keeps
-   * its existing behaviour with no caller change. The explore
-   * page sets this to `false` so it can hoist the entire header
-   * (TopNav + stats + search + category title) into a single
-   * sticky wrapper and animate the *wrapper* on `transform:
-   * translateY(...)` — letting the search bar and category title
-   * slide out of view on scroll-down without leaving a 64px hole
-   * where the site logo used to be.
+   * edge via `position: sticky`. The new explore layout never
+   * wraps the top nav in its own sticky element, so this defaults
+   * to true and the explore page sets it explicitly to keep that
+   * behaviour.
    */
   sticky?: boolean;
 }
 
-export function TopNav({
-  lang,
-  onLangChange,
-  categories,
-  counts,
-  variant,
-  sticky = true,
-}: TopNavProps) {
+export function TopNav({ kindCounts, total, variant, sticky = true }: TopNavProps) {
+  const { lang, setLang } = useLang();
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>(() =>
-    Object.fromEntries(CATEGORY_GROUPS.map((g) => [g.id, true])),
-  );
   const triggerRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
 
-  // Scroll-lock the page when the mobile drawer is open. We remember
-  // the previous overflow value so that whatever rule the page already
-  // had in place (e.g. `auto`) is restored when the drawer closes —
-  // blindly setting `body.style.overflow = ""` would clobber it.
-  useEffect(() => {
-    if (!mobileOpen) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = previous;
-    };
-  }, [mobileOpen]);
-
-  // Close the drawer on Escape, and trap focus inside it while it is
-  // open. The trap is a minimal but correct two-step: when Tab would
-  // move past the last focusable element, wrap back to the close
-  // button; when Shift+Tab would move past the close button, wrap to
-  // the last focusable element. The close button receives focus on
-  // open and the trigger receives focus back on close so the user's
-  // keyboard position is preserved.
+  // Focus trap + Esc-to-close for the mobile drawer. Same shape as
+  // before; the only thing that changed is the inner content.
   useEffect(() => {
     if (!mobileOpen) return;
     const panel = panelRef.current;
-    // Snapshot the trigger ref now (not in the cleanup) — by the time
-    // cleanup runs the component may have re-rendered with a fresh
-    // ref value, and focusing the wrong button is a small but real
-    // a11y bug.
     const trigger = triggerRef.current;
     const focusables = () =>
       panel
@@ -81,16 +51,16 @@ export function TopNav({
             ),
           )
         : [];
-    const closeBtn = panel?.querySelector<HTMLElement>("[data-drawer-close]");
+    const closeBtn = panel?.querySelector<HTMLElement>('[data-drawer-close]');
     closeBtn?.focus();
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+      if (e.key === 'Escape') {
         e.preventDefault();
         setMobileOpen(false);
         return;
       }
-      if (e.key !== "Tab") return;
+      if (e.key !== 'Tab') return;
       const items = focusables();
       if (items.length === 0) return;
       const first = items[0]!;
@@ -104,71 +74,54 @@ export function TopNav({
         first.focus();
       }
     };
-    document.addEventListener("keydown", onKey);
+    document.addEventListener('keydown', onKey);
     return () => {
-      document.removeEventListener("keydown", onKey);
+      document.removeEventListener('keydown', onKey);
       trigger?.focus();
     };
   }, [mobileOpen]);
 
-  // Closing the drawer on language change is part of the spec: the
-  // language switcher in the mobile drawer (`onChange`) and the one in
-  // the top bar both call this, and leaving the drawer up after the
-  // copy under it has re-rendered would be visually confusing.
   const handleLangChange = useCallback(
     (next: Lang) => {
-      onLangChange?.(next);
+      setLang(next);
       setMobileOpen(false);
     },
-    [onLangChange],
+    [setLang],
   );
 
-  const homeHref = langParam(lang, "/");
-  const exploreHref = langParam(lang, "/explore");
-  const primaryCta = variant === "landing" ? t(lang, "editorial.open_atlas") : t(lang, "nav.home");
-  const primaryHref = variant === "landing" ? exploreHref : homeHref;
+  const homeHref = langParam(lang, '/');
+  const exploreHref = langParam(lang, '/explore');
+  const primaryCta = variant === 'landing' ? t(lang, 'editorial.open_atlas') : t(lang, 'nav.home');
+  const primaryHref = variant === 'landing' ? exploreHref : homeHref;
 
   return (
     <>
       <header
         className={`z-40 border-b border-line bg-bg/85 backdrop-blur-md ${
-          sticky ? "sticky top-0" : "relative"
+          sticky ? 'sticky top-0' : 'relative'
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6">
-          <Link
-            href={homeHref}
-            className="group flex shrink-0 items-center gap-2.5 text-fg"
-          >
+          <Link href={homeHref} className="group flex shrink-0 items-center gap-2.5 text-fg">
             <SiteMark
               size={22}
               className="text-accent transition-transform duration-500 group-hover:rotate-45"
             />
             <span className="hidden font-display text-[1.05rem] font-medium leading-none tracking-tight sm:inline">
-              {t(lang, "site.title")}
+              {t(lang, 'site.title')}
             </span>
           </Link>
 
-          <span
-            aria-hidden
-            className="hidden h-5 w-px shrink-0 bg-dim md:inline-block"
-          />
+          <span aria-hidden className="hidden h-5 w-px shrink-0 bg-dim md:inline-block" />
 
           <span className="kicker hidden md:inline-block">
-            {t(lang, "editorial.edition", { date: String(COPYRIGHT_YEAR) })}
+            {t(lang, 'editorial.edition', { date: String(COPYRIGHT_YEAR) })}
           </span>
 
           <div className="flex-1" />
 
-          <LanguageSwitcher lang={lang} onChange={onLangChange} />
-
-          <Link
-            href={exploreHref}
-            className="link-editorial hidden h-9 items-center gap-1.5 px-1 text-sm md:inline-flex"
-            aria-label={t(lang, "nav.explore")}
-          >
-            <span>{t(lang, "nav.explore")}</span>
-          </Link>
+          <ThemeToggle />
+          <LanguageSwitcher lang={lang} onChange={setLang} />
 
           <Link
             href={primaryHref}
@@ -182,11 +135,7 @@ export function TopNav({
               stroke="currentColor"
               strokeWidth={1.5}
             >
-              <path
-                strokeLinecap="square"
-                strokeLinejoin="miter"
-                d="M5 12h14M13 6l6 6-6 6"
-              />
+              <path strokeLinecap="square" d="M5 12h14M13 6l6 6-6 6" />
             </svg>
           </Link>
 
@@ -194,7 +143,7 @@ export function TopNav({
             ref={triggerRef}
             onClick={() => setMobileOpen(true)}
             className="inline-flex h-9 w-9 items-center justify-center border border-dim text-fg-2 transition-colors hover:border-accent hover:text-accent lg:hidden"
-            aria-label={t(lang, "nav.menu")}
+            aria-label={t(lang, 'nav.menu')}
             aria-expanded={mobileOpen}
             aria-controls="mobile-drawer"
           >
@@ -213,25 +162,22 @@ export function TopNav({
 
       {mobileOpen && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          <div
-            className="absolute inset-0 bg-bg/80"
-            onClick={() => setMobileOpen(false)}
-          />
+          <div className="absolute inset-0 bg-bg/80" onClick={() => setMobileOpen(false)} />
           <div
             id="mobile-drawer"
             ref={panelRef}
             role="dialog"
             aria-modal="true"
-            aria-label={t(lang, "nav.categories")}
+            aria-label={t(lang, 'nav.index')}
             className="absolute inset-y-0 right-0 flex w-[min(88vw,360px)] flex-col border-l border-line bg-bg-elev"
           >
             <div className="flex h-16 shrink-0 items-center justify-between border-b border-line px-5">
-              <span className="kicker">{t(lang, "nav.categories")}</span>
+              <span className="kicker">{t(lang, 'taxonomy.index')}</span>
               <button
                 data-drawer-close
                 onClick={() => setMobileOpen(false)}
                 className="text-fg-2 hover:text-accent"
-                aria-label={t(lang, "nav.close")}
+                aria-label={t(lang, 'nav.close')}
               >
                 <svg
                   className="h-5 w-5"
@@ -244,52 +190,37 @@ export function TopNav({
                 </svg>
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto px-4 py-5">
-              {CATEGORY_GROUPS.map((group, idx) => {
-                const isOpen = expandedGroups[group.id];
+            <nav className="flex-1 overflow-y-auto px-4 py-5 font-mono text-[12.5px]">
+              {/* All projects — root */}
+              <Link
+                href={withLang(lang, '/explore')}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-line py-2 text-fg-2 hover:text-accent"
+              >
+                <span>
+                  <span className="text-muted">/</span> {t(lang, 'taxonomy.all')}
+                </span>
+                {total !== undefined && (
+                  <span className="text-[10px] text-muted">{String(total).padStart(3, '0')}</span>
+                )}
+              </Link>
+              {/* Kinds */}
+              {KIND_ORDER.map((k) => {
+                const count = kindCounts?.[k] ?? 0;
+                if (count === 0) return null;
                 return (
-                  <div key={group.id} className="mb-5 last:mb-0">
-                    <button
-                      onClick={() =>
-                        setExpandedGroups((prev) => ({
-                          ...prev,
-                          [group.id]: !prev[group.id],
-                        }))
-                      }
-                      className="editorial-index mb-2 w-full text-left"
-                      data-index={String(idx + 1).padStart(2, "0")}
-                      aria-expanded={isOpen}
-                    >
-                      <span className="flex shrink-0 items-center gap-2 text-fg-2">
-                        <GroupMark id={group.id} size={14} />
-                        <span className="font-display text-sm text-fg">
-                          {t(lang, group.labelKey)}
-                        </span>
-                      </span>
-                    </button>
-                    {isOpen && (
-                      <ul className="space-y-0.5">
-                        {group.slugs.map((slug) => {
-                          const cat = categories[slug];
-                          if (!cat || (counts[slug] || 0) === 0) return null;
-                          return (
-                            <li key={slug}>
-                              <Link
-                                href={withLang(lang, `/explore?category=${slug}`)}
-                                onClick={() => setMobileOpen(false)}
-                                className="flex items-center justify-between gap-2 px-3 py-2 text-sm text-fg-2 transition-colors hover:bg-bg-sunk hover:text-fg"
-                              >
-                                <span className="truncate">{cat.name}</span>
-                                <span className="font-mono text-[10px] text-muted">
-                                  {counts[slug] || 0}
-                                </span>
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    )}
-                  </div>
+                  <Link
+                    key={k}
+                    href={withLang(lang, `/explore/k/${k}`)}
+                    onClick={() => setMobileOpen(false)}
+                    className="flex items-center justify-between border-b border-line py-2 text-fg-2 hover:text-accent"
+                  >
+                    <span>
+                      <span className="text-muted">/</span> {kindLabel(k, lang)}{' '}
+                      <span className="text-[10px] text-muted">/{k}</span>
+                    </span>
+                    <span className="text-[10px] text-muted">{String(count).padStart(3, '0')}</span>
+                  </Link>
                 );
               })}
             </nav>

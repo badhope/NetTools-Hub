@@ -1,7 +1,7 @@
 name: Feature Request
 description: Suggest a new feature or improvement.
-title: "[feat]: "
-labels: ["enhancement", "triage"]
+title: '[feat]: '
+labels: ['enhancement', 'triage']
 assignees: []
 
 body:
@@ -16,7 +16,7 @@ body:
     attributes:
       label: The problem
       description: What's painful? What can't you do today?
-      placeholder: "Right now I have to ...; this is annoying because ..."
+      placeholder: 'Right now I have to ...; this is annoying because ...'
     validations:
       required: true
 

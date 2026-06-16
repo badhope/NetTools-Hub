@@ -1,165 +1,104 @@
-import Link from "next/link";
-import { Project } from "@/types/project";
-import { formatNumber } from "@/lib/utils";
-import type { Lang } from "@/lib/i18n";
-import { t } from "@/lib/i18n";
+'use client';
 
-const languageColors: Record<string, string> = {
-  TypeScript: "#3178c6",
-  JavaScript: "#f1e05a",
-  Go: "#00add8",
-  Rust: "#dea584",
-  Python: "#3572a5",
-  C: "#555555",
-  "C++": "#f34b7d",
-  "C#": "#178600",
-  Java: "#b07219",
-  Ruby: "#701516",
-  Swift: "#f05138",
-  Kotlin: "#a97bff",
-  Dart: "#00b4ab",
-  PHP: "#4f5d95",
-  Lua: "#000080",
-  Shell: "#89e051",
-  Markdown: "#083fa1",
-  HTML: "#e34c26",
-  CSS: "#563d7c",
-  Vue: "#41b883",
-  Perl: "#0298c3",
-};
+import Link from 'next/link';
+import type { Project } from '@/types/project';
+import { formatStars, formatNumber } from '@/lib/utils';
+import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
+import { useLang } from '@/components/lang-provider';
+import { t, langParam } from '@/lib/i18n';
 
-// Atlas entry: left rail uses the project's own first gradient stop
-// as a hairline, never as a fill. The body is calm body text, the
-// title is the display serif, the metadata is mono. The hover state
-// warms the rail and the title — no translate, no shadow.
-export function ProjectCard({
-  project,
-  lang = "en",
-}: {
+interface ProjectCardProps {
   project: Project;
-  lang?: Lang;
-}) {
-  const dotColor = languageColors[project.language] || "#8b949e";
-  const railColor = project.gradient[0] || "#d97a3a";
+}
+
+/**
+ * Project card for grid display.
+ *
+ * Rich information in a compact card layout:
+ * - Header: name, author, status/verdict badges
+ * - Description (2 lines max)
+ * - Key metrics: stars, forks, language, license
+ * - Platform badges
+ * - Tags (first 3)
+ * - Link to detail page
+ *
+ * The card is a client component to read the active language
+ * from LangProvider for i18n labels.
+ */
+export function ProjectCard({ project: p }: ProjectCardProps) {
+  const { lang } = useLang();
+
+  const lastCommitDate = new Date(p.lastCommit).toLocaleDateString(
+    lang === 'zh' ? 'zh-CN' : lang === 'ja' ? 'ja-JP' : 'en-US',
+    { year: 'numeric', month: 'short', day: 'numeric' },
+  );
 
   return (
     <Link
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      aria-label={t(lang, "card.open_external") + ": " + project.name}
-      className="group relative flex h-full flex-col gap-3 border border-line bg-bg-elev/60 p-5 pl-6 transition-colors duration-300 hover:border-dim hover:bg-bg-elev focus-visible:border-accent"
-      style={
-        {
-          // The rail is a 1px-wide coloured bar inset on the left
-          // edge. Implemented as a CSS custom property so the
-          // hover-state override can re-tint it without recomputing
-          // the gradient.
-          ["--rail" as string]: railColor,
-        } as React.CSSProperties
-      }
+      href={langParam(lang, `/explore/project/${p.id}`)}
+      className="group block border border-line bg-bg-elev/40 p-4 transition-all hover:border-accent hover:bg-bg-sunk"
     >
-      <span
-        aria-hidden
-        className="absolute inset-y-3 left-0 w-px transition-colors duration-300 group-hover:bg-[var(--rail)]"
-        style={{ backgroundColor: "var(--rail)" }}
-      />
-
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="min-w-0 flex-1 font-display text-[1.15rem] font-medium leading-tight text-fg transition-colors duration-200 group-hover:text-accent line-clamp-1 break-words">
-          {project.name}
-        </h3>
-        <span className="flex shrink-0 items-center gap-2 font-mono text-[11px] text-muted">
-          <span className="flex items-baseline gap-1" title={`${project.stars} stars`}>
-            <span className="text-fg-2">{formatNumber(project.stars, lang)}</span>
-            <span aria-hidden>★</span>
-          </span>
-          {/* External-link arrow — sits at the corner of the card
-           *  so the user knows the link opens in a new tab. The
-           *  whole card is already a link, so the arrow is purely
-           *  decorative (`aria-hidden`) and the link's own
-           *  `aria-label` (above) is what screen readers announce. */}
-          <svg
-            aria-hidden
-            className="h-3 w-3 text-fg-3 transition-colors duration-200 group-hover:text-accent"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path
-              strokeLinecap="square"
-              strokeLinejoin="miter"
-              d="M14 3h7v7M21 3l-9 9M21 14v7H3V3h7"
-            />
-          </svg>
-        </span>
+      {/* Header */}
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <div className="flex-1 min-w-0">
+          <h3 className="font-medium text-fg group-hover:text-accent transition-colors truncate">
+            {p.name}
+          </h3>
+          <p className="text-xs text-muted mt-0.5">{p.author}</p>
+        </div>
+        <div className="flex flex-col items-end gap-1">
+          <StatusBadge status={p.status} />
+          {p.verdict && <VerdictBadge verdict={p.verdict} />}
+        </div>
       </div>
 
-      <p className="text-[13px] leading-relaxed text-fg-2 line-clamp-2 break-words">
-        {project.description}
-      </p>
+      {/* Description */}
+      <p className="text-sm text-fg-2 leading-relaxed line-clamp-2 mb-3">{p.description}</p>
 
-      <div className="mt-1 flex flex-wrap gap-x-2 gap-y-1">
-        {project.tags.slice(0, 3).map((tag) => (
-          <span
-            key={tag}
-            className="font-mono text-[10px] uppercase tracking-wider text-muted"
-          >
-            #{tag}
-          </span>
-        ))}
+      {/* Key metrics */}
+      <div className="grid grid-cols-4 gap-2 mb-3 text-xs">
+        <MetricItem label={t(lang, 'metric.stars')} value={formatStars(p.stars)} />
+        <MetricItem label={t(lang, 'metric.forks')} value={formatNumber(p.forks)} />
+        <MetricItem label={t(lang, 'metric.language')} value={p.language} />
+        <MetricItem label={t(lang, 'metric.license')} value={p.license} />
       </div>
 
-      <div className="mt-auto flex items-center justify-between gap-2 border-t border-line pt-3 font-mono text-[10.5px] text-muted">
-        <span className="flex items-center gap-1.5">
-          <span
-            className="inline-block h-1.5 w-1.5 rounded-full"
-            style={{ backgroundColor: dotColor }}
-          />
-          {project.language}
-        </span>
-        <span className="flex min-w-0 items-center gap-3 truncate">
-          {/* Forks are a second, smaller popularity signal — only
-           *  rendered when there is at least one, so a fresh
-           *  project does not look "unpopular" by virtue of being
-           *  new. The icon is the standard GitHub branch mark. */}
-          {project.forks > 0 && (
+      {/* Platform badges */}
+      <div className="mb-3">
+        <PlatformBadges project={p} />
+      </div>
+
+      {/* Tags (first 3) */}
+      {p.tags.length > 0 && (
+        <div className="flex flex-wrap gap-1 mb-3">
+          {p.tags.slice(0, 3).map((tag) => (
             <span
-              className="flex shrink-0 items-center gap-1"
-              title={t(lang, "card.forks", { count: project.forks })}
+              key={tag}
+              className="font-mono text-[10px] text-muted border border-line px-1.5 py-0.5"
             >
-              <svg
-                aria-hidden
-                className="h-3 w-3"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={1.5}
-              >
-                <circle cx="6" cy="6" r="2" />
-                <circle cx="6" cy="18" r="2" />
-                <circle cx="18" cy="6" r="2" />
-                <path d="M6 8v8M18 8c0 6-6 4-6 10" />
-              </svg>
-              <span>{formatNumber(project.forks, lang)}</span>
+              #{tag}
             </span>
+          ))}
+          {p.tags.length > 3 && (
+            <span className="font-mono text-[10px] text-muted">+{p.tags.length - 3}</span>
           )}
-          {/* License is rendered verbatim from the data file
-           *  (e.g. "MIT", "Apache-2.0") and prefixed with the
-           *  localised "License: " label so it is still useful
-           *  when the abbreviation is unfamiliar. */}
-          {project.license && (
-            <span
-              className="shrink-0 truncate"
-              title={t(lang, "card.license", { name: project.license })}
-            >
-              <span aria-hidden className="mr-1 text-fg-3">ⓘ</span>
-              {project.license}
-            </span>
-          )}
-        </span>
+        </div>
+      )}
+
+      {/* Footer: last commit */}
+      <div className="flex items-center justify-between text-[11px] text-muted pt-2 border-t border-line">
+        <span>{t(lang, 'metric.last_commit')}</span>
+        <span className="font-mono">{lastCommitDate}</span>
       </div>
     </Link>
+  );
+}
+
+function MetricItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border border-line px-2 py-1">
+      <div className="text-[10px] text-muted leading-tight">{label}</div>
+      <div className="font-mono text-fg text-xs leading-tight mt-0.5">{value}</div>
+    </div>
   );
 }

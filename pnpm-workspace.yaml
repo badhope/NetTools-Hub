@@ -10,5 +10,5 @@
 # image proxy. If image optimisation is ever re-enabled, add `sharp`
 # back to this list.
 ignoredBuiltDependencies:
-  - "@tailwindcss/oxide"
+  - '@tailwindcss/oxide'
   - unrs-resolver

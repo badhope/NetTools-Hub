@@ -1,12 +1,7 @@
-"use client";
+'use client';
 
-import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  Lang,
-  readLangFromUrl,
-  resolveInitialLang,
-  setLangAndPersist,
-} from "@/lib/i18n";
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Lang, readLangFromUrl, resolveInitialLang, setLangAndPersist } from '@/lib/i18n';
 
 /**
  * Client-only `Lang` state hook.
@@ -53,7 +48,7 @@ import {
 export function useClientLang(): readonly [Lang, (next: Lang) => void] {
   // SSR-safe initial value: always English, matching the prerendered
   // HTML. The real language is applied in the mount effect below.
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>('en');
 
   // Mirror `lang` into a ref so the mount-only event listeners can
   // read the latest value without re-subscribing on every change.
@@ -99,11 +94,11 @@ export function useClientLang(): readonly [Lang, (next: Lang) => void] {
       }
     };
 
-    window.addEventListener("popstate", onPop);
-    window.addEventListener("nethub:langchange", onChange);
+    window.addEventListener('popstate', onPop);
+    window.addEventListener('nethub:langchange', onChange);
     return () => {
-      window.removeEventListener("popstate", onPop);
-      window.removeEventListener("nethub:langchange", onChange);
+      window.removeEventListener('popstate', onPop);
+      window.removeEventListener('nethub:langchange', onChange);
     };
   }, []);
 
