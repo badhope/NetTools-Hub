@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { withLang } from '@/lib/i18n';
+import { t, withLang } from '@/lib/i18n';
 import { useLang } from '@/components/lang-provider';
 import type { Crumb } from '@/lib/breadcrumb';
 
@@ -25,7 +25,7 @@ export function Breadcrumb({ trail }: BreadcrumbProps) {
   return (
     <div className="flex flex-col gap-1">
       <nav
-        aria-label="Breadcrumb"
+        aria-label={t(lang, 'aria.breadcrumb')}
         className="flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 font-mono text-[11.5px]"
       >
         <span className="text-accent-2">$</span>

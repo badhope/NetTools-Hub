@@ -2,10 +2,10 @@
 
 import type { Project } from '@/types/project';
 import { t, langParam } from '@/lib/i18n';
+import { useLang } from '@/components/lang-provider';
 import { formatStars, formatNumber } from '@/lib/utils';
 import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import Link from 'next/link';
-import { useLang } from '@/components/lang-provider';
 
 interface ProjectDetailProps {
   project: Project;
@@ -82,10 +82,10 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
       {/* Metadata grid */}
       <div className="grid gap-4 sm:grid-cols-2">
         <div className="border border-line p-4">
-          <h3 className="kicker mb-3">Timeline</h3>
+          <h3 className="kicker mb-3">{t(lang, 'detail.timeline')}</h3>
           <dl className="space-y-2 text-sm">
             <div className="flex justify-between">
-              <dt className="text-muted">Added</dt>
+              <dt className="text-muted">{t(lang, 'detail.added')}</dt>
               <dd className="font-mono text-fg-2">{addedDate}</dd>
             </div>
             <div className="flex justify-between">
@@ -96,7 +96,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
         </div>
 
         <div className="border border-line p-4">
-          <h3 className="kicker mb-3">Tags</h3>
+          <h3 className="kicker mb-3">{t(lang, 'detail.tags')}</h3>
           <div className="flex flex-wrap gap-2">
             {p.tags.map((tag) => (
               <span
@@ -113,7 +113,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
       {/* Highlights */}
       {p.highlights.length > 0 && (
         <div className="border border-line p-4">
-          <h3 className="kicker mb-3">Highlights</h3>
+          <h3 className="kicker mb-3">{t(lang, 'detail.highlights')}</h3>
           <ul className="space-y-2 text-sm text-fg-2">
             {p.highlights.map((highlight, i) => (
               <li key={i} className="flex items-start gap-2">
@@ -128,7 +128,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
       {/* Notes */}
       {p.notes && (
         <div className="border border-line p-4 bg-bg-elev">
-          <h3 className="kicker mb-3">Notes</h3>
+          <h3 className="kicker mb-3">{t(lang, 'detail.notes')}</h3>
           <p className="text-sm text-fg-2 leading-relaxed">{p.notes}</p>
         </div>
       )}
@@ -139,10 +139,10 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
           href={p.url}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={`${p.name} repository (opens in new tab)`}
+          aria-label={`${p.name} ${t(lang, 'detail.view_repo')} (${t(lang, 'a11y.opens_new_tab')})`}
           className="link-editorial inline-flex items-center gap-2 px-4 py-2 border border-accent text-accent hover:bg-accent hover:text-bg transition-colors"
         >
-          <span>View Repository</span>
+          <span>{t(lang, 'detail.view_repo')}</span>
           <span aria-hidden="true">↗</span>
         </a>
         {p.homepage && (
@@ -150,10 +150,10 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
             href={p.homepage}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={`${p.name} homepage (opens in new tab)`}
+            aria-label={`${p.name} ${t(lang, 'detail.homepage')} (${t(lang, 'a11y.opens_new_tab')})`}
             className="link-editorial inline-flex items-center gap-2 px-4 py-2 border border-line text-fg-2 hover:border-fg-2 hover:text-fg transition-colors"
           >
-            <span>Homepage</span>
+            <span>{t(lang, 'detail.homepage')}</span>
             <span aria-hidden="true">↗</span>
           </a>
         )}

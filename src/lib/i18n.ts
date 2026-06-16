@@ -76,6 +76,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.skip_to_content': 'Skip to main content',
     'a11y.switch_to_light': 'Switch to light mode',
     'a11y.switch_to_dark': 'Switch to dark mode',
+    'a11y.opens_new_tab': 'opens in new tab',
     'theme.light': 'Light',
     'theme.dark': 'Dark',
 
@@ -85,6 +86,28 @@ const translations: Record<Lang, Record<string, string>> = {
     'pwa.install_btn': 'Install',
     'pwa.dismiss_btn': 'Not now',
     'pwa.dismiss_label': 'Dismiss install prompt',
+
+    // ---- Detail page ------------------------------------------------------
+    'detail.timeline': 'Timeline',
+    'detail.tags': 'Tags',
+    'detail.highlights': 'Highlights',
+    'detail.notes': 'Notes',
+    'detail.view_repo': 'View Repository',
+    'detail.homepage': 'Homepage',
+    'detail.added': 'Added',
+
+    // ---- ARIA labels ------------------------------------------------------
+    'aria.breadcrumb': 'Breadcrumb',
+    'aria.main_content': 'Main content',
+    'aria.introduction': 'Introduction',
+    'aria.browse_by_kind': 'Browse by kind',
+    'aria.how_maintained': 'How the index is maintained',
+
+    // ---- Stat labels ------------------------------------------------------
+    'stat.projects': 'Projects',
+    'stat.kinds': 'Kinds',
+    'stat.total_stars': 'Total stars',
+    'stat.last_indexed': 'Last indexed',
   },
   zh: {
     'site.title': 'NetTools Hub',
@@ -135,6 +158,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.skip_to_content': '跳转到主内容',
     'a11y.switch_to_light': '切换到亮色模式',
     'a11y.switch_to_dark': '切换到暗色模式',
+    'a11y.opens_new_tab': '在新标签页打开',
     'theme.light': '亮色',
     'theme.dark': '暗色',
 
@@ -143,6 +167,25 @@ const translations: Record<Lang, Record<string, string>> = {
     'pwa.install_btn': '安装',
     'pwa.dismiss_btn': '暂不',
     'pwa.dismiss_label': '关闭安装提示',
+
+    'detail.timeline': '时间线',
+    'detail.tags': '标签',
+    'detail.highlights': '亮点',
+    'detail.notes': '备注',
+    'detail.view_repo': '查看仓库',
+    'detail.homepage': '主页',
+    'detail.added': '添加时间',
+
+    'aria.breadcrumb': '面包屑导航',
+    'aria.main_content': '主内容',
+    'aria.introduction': '介绍',
+    'aria.browse_by_kind': '按分类浏览',
+    'aria.how_maintained': '索引维护方式',
+
+    'stat.projects': '项目数',
+    'stat.kinds': '分类数',
+    'stat.total_stars': '总星标',
+    'stat.last_indexed': '最后索引',
   },
   ja: {
     'site.title': 'NetTools Hub',
@@ -193,6 +236,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'a11y.skip_to_content': 'メインコンテンツへスキップ',
     'a11y.switch_to_light': 'ライトモードに切り替え',
     'a11y.switch_to_dark': 'ダークモードに切り替え',
+    'a11y.opens_new_tab': '新しいタブで開く',
     'theme.light': 'ライト',
     'theme.dark': 'ダーク',
 
@@ -202,6 +246,25 @@ const translations: Record<Lang, Record<string, string>> = {
     'pwa.install_btn': 'インストール',
     'pwa.dismiss_btn': '後で',
     'pwa.dismiss_label': 'インストール案内を閉じる',
+
+    'detail.timeline': 'タイムライン',
+    'detail.tags': 'タグ',
+    'detail.highlights': 'ハイライト',
+    'detail.notes': 'ノート',
+    'detail.view_repo': 'リポジトリを見る',
+    'detail.homepage': 'ホームページ',
+    'detail.added': '追加日',
+
+    'aria.breadcrumb': 'パンくずリスト',
+    'aria.main_content': 'メインコンテンツ',
+    'aria.introduction': 'イントロダクション',
+    'aria.browse_by_kind': '種類別に閲覧',
+    'aria.how_maintained': 'インデックスの維持方法',
+
+    'stat.projects': 'プロジェクト',
+    'stat.kinds': '種類',
+    'stat.total_stars': '総スター数',
+    'stat.last_indexed': '最終インデックス',
   },
 };
 

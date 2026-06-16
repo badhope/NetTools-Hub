@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { TopNav } from '@/components/top-nav';
-import { withLang } from '@/lib/i18n';
+import { t, withLang } from '@/lib/i18n';
 import { PROJECT_COUNT, TOTAL_STARS, SITE_OWNER, COPYRIGHT_YEAR } from '@/lib/site';
 import { getAllProjects, getKindCounts, getLastUpdated } from '@/lib/projects';
 import { kindLabel } from '@/lib/taxonomy';
@@ -47,13 +47,13 @@ export function LandingContent() {
       <TopNav variant="landing" kindCounts={counts} total={projects.length} />
       <main
         id="main"
-        aria-label="Main content"
+        aria-label={t(lang, 'aria.main_content')}
         className="mx-auto max-w-7xl px-5 py-10 sm:px-8 sm:py-14"
       >
         {/* ============================================================
          *  Hero
          * ============================================================ */}
-        <section aria-label="Introduction" className="border-b border-line pb-10">
+        <section aria-label={t(lang, 'aria.introduction')} className="border-b border-line pb-10">
           <div className="manual-index mb-3" data-index="00">
             <span>Index</span>
           </div>
@@ -88,17 +88,17 @@ export function LandingContent() {
 
           {/* Stat bar — one line of "facts about the index" */}
           <div className="mt-6 grid grid-cols-2 gap-3 border-y border-line py-3 sm:grid-cols-4">
-            <Stat label="Projects" value={String(PROJECT_COUNT)} />
-            <Stat label="Kinds" value={String(KIND_ORDER.length)} />
-            <Stat label="Total stars" value={formatStars(TOTAL_STARS)} />
-            <Stat label="Last indexed" value={lastUpdated} />
+            <Stat label={t(lang, 'stat.projects')} value={String(PROJECT_COUNT)} />
+            <Stat label={t(lang, 'stat.kinds')} value={String(KIND_ORDER.length)} />
+            <Stat label={t(lang, 'stat.total_stars')} value={formatStars(TOTAL_STARS)} />
+            <Stat label={t(lang, 'stat.last_indexed')} value={lastUpdated} />
           </div>
         </section>
 
         {/* ============================================================
          *  Table of contents — 8 kind cards in a 2×4 grid
          * ============================================================ */}
-        <section aria-label="Browse by kind" className="mt-10">
+        <section aria-label={t(lang, 'aria.browse_by_kind')} className="mt-10">
           <div className="manual-index mb-4" data-index="01">
             <span>Browse by kind</span>
           </div>
@@ -131,7 +131,7 @@ export function LandingContent() {
          *  How the index is maintained
          * ============================================================ */}
         <section
-          aria-label="How the index is maintained"
+          aria-label={t(lang, 'aria.how_maintained')}
           className="mt-12 grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-3"
         >
           <div className="lg:col-span-2">
