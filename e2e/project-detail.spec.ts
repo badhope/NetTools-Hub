@@ -30,7 +30,7 @@ test.describe('Project Detail Page', () => {
     // when the project has at least one related entry. We
     // assert on the *label text* rather than a data attribute
     // so the test is robust to styling changes.
-    const relatedHeading = page.getByText(/Related Projects|相关项目|相关プロジェクト/);
+    const relatedHeading = page.getByText(/Related Projects|相关项目|関連プロジェクト/);
     await expect(relatedHeading).toBeVisible();
   });
 

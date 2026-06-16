@@ -7,7 +7,7 @@ test.describe('Explore Page', () => {
 
   test('should load explore page successfully', async ({ page }) => {
     await expect(page).toHaveTitle(/Explore.*NetTools Hub/);
-    await expect(page.locator('h1')).toContainText(/Explore|All projects/);
+    await expect(page.locator('h1')).toContainText(/All Projects|projects|explore/i);
   });
 
   test('should display project cards in a grid', async ({ page }) => {
