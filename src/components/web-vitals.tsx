@@ -18,8 +18,8 @@ export function WebVitals() {
       if (metric.name === 'LCP' && metric.value > 2500) {
         console.warn(`LCP is slow: ${metric.value}ms`);
       }
-      if (metric.name === 'FID' && metric.value > 100) {
-        console.warn(`FID is slow: ${metric.value}ms`);
+      if (metric.name === 'INP' && metric.value > 200) {
+        console.warn(`INP is slow: ${metric.value}ms`);
       }
       if (metric.name === 'CLS' && metric.value > 0.1) {
         console.warn(`CLS is high: ${metric.value}`);

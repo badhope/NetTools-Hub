@@ -1,6 +1,8 @@
 'use client';
 
 import { useSyncExternalStore, useCallback, useEffect } from 'react';
+import { t } from '@/lib/i18n';
+import { useLang } from '@/components/lang-provider';
 
 const STORAGE_KEY = 'theme';
 type Theme = 'dark' | 'light';
@@ -42,6 +44,7 @@ function subscribe(callback: () => void): () => void {
  * effect to bridge the two.
  */
 export function ThemeToggle() {
+  const { lang } = useLang();
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   // Keep <html data-theme=…> in sync. The setter only runs on the
@@ -67,7 +70,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       className="flex items-center gap-2 px-3 py-1.5 text-sm text-muted hover:text-fg transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50"
-      aria-label={theme === 'dark' ? '切换到亮色模式' : '切换到暗色模式'}
+      aria-label={t(lang, theme === 'dark' ? 'a11y.switch_to_light' : 'a11y.switch_to_dark')}
     >
       {theme === 'dark' ? (
         <svg
@@ -94,7 +97,7 @@ export function ThemeToggle() {
         </svg>
       )}
       <span className="font-mono text-xs uppercase tracking-wider">
-        {theme === 'dark' ? '暗色' : '亮色'}
+        {t(lang, theme === 'dark' ? 'theme.dark' : 'theme.light')}
       </span>
     </button>
   );

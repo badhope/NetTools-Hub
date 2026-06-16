@@ -27,7 +27,7 @@ export default function ExploreLoading() {
           </div>
 
           {/* Metric grid (2x2) */}
-          <div className="mb-3 grid grid-cols-2 gap-2">
+          <div className="mb-3 grid grid-cols-4 gap-2">
             {Array.from({ length: 4 }).map((_, j) => (
               <div key={j} className="border border-line px-2 py-1">
                 <div className="h-2 w-10 animate-pulse bg-bg-elev" />

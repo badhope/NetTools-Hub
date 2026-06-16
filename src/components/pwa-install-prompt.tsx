@@ -1,6 +1,8 @@
 'use client';
 
 import { useSyncExternalStore, useCallback, useState } from 'react';
+import { t } from '@/lib/i18n';
+import { useLang } from '@/components/lang-provider';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -103,6 +105,7 @@ function subscribePrompt(callback: () => void): () => void {
  * once hydration completes and the real snapshots come in.
  */
 export function PWAInstallPrompt() {
+  const { lang } = useLang();
   const isInstalled = useSyncExternalStore(
     subscribeInstalled,
     getInstalledSnapshot,
@@ -153,30 +156,28 @@ export function PWAInstallPrompt() {
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-sm rounded-none border border-line bg-bg-elev p-4 shadow-lg">
       <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="text-sm font-semibold text-fg">Install NetTools Hub</h3>
+        <h3 className="text-sm font-semibold text-fg">{t(lang, 'pwa.install_title')}</h3>
         <button
           onClick={handleDismiss}
           className="text-muted hover:text-fg"
-          aria-label="Dismiss install prompt"
+          aria-label={t(lang, 'pwa.dismiss_label')}
         >
           ✕
         </button>
       </div>
-      <p className="mb-3 text-xs text-fg-2">
-        Install as an app for quick access and offline support.
-      </p>
+      <p className="mb-3 text-xs text-fg-2">{t(lang, 'pwa.install_desc')}</p>
       <div className="flex gap-2">
         <button
           onClick={handleInstall}
           className="flex-1 rounded-none border border-accent bg-accent px-3 py-1.5 text-xs font-medium text-bg hover:bg-accent/90"
         >
-          Install
+          {t(lang, 'pwa.install_btn')}
         </button>
         <button
           onClick={handleDismiss}
           className="flex-1 rounded-none border border-line px-3 py-1.5 text-xs font-medium text-fg-2 hover:border-fg-2 hover:text-fg"
         >
-          Not now
+          {t(lang, 'pwa.dismiss_btn')}
         </button>
       </div>
     </div>

@@ -1,7 +1,7 @@
 'use client';
 
 import type { Project } from '@/types/project';
-import { t } from '@/lib/i18n';
+import { t, langParam } from '@/lib/i18n';
 import { formatStars, formatNumber } from '@/lib/utils';
 import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import Link from 'next/link';
@@ -158,12 +158,12 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
           </a>
         )}
         <Link
-          href={`/explore/k/${p.kind}?lang=${lang}`}
-          aria-label={`Back to ${p.kind} category`}
+          href={langParam(lang, `/explore/k/${p.kind}`)}
+          aria-label={t(lang, 'nav.back_to_kind', { kind: p.kind })}
           className="inline-flex items-center gap-2 px-4 py-2 border border-line text-fg-2 hover:border-fg-2 hover:text-fg transition-colors"
         >
           <span aria-hidden="true">←</span>
-          <span>Back to {p.kind}</span>
+          <span>{t(lang, 'nav.back_to_kind', { kind: p.kind })}</span>
         </Link>
       </div>
 
@@ -175,7 +175,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
             {relatedProjects.map((related) => (
               <Link
                 key={related.id}
-                href={`/explore/project/${related.id}?lang=${lang}`}
+                href={langParam(lang, `/explore/project/${related.id}`)}
                 className="group border border-line p-4 hover:border-accent transition-colors"
                 aria-label={`View ${related.name}`}
               >

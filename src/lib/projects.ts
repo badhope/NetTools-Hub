@@ -4,9 +4,9 @@ import { ProjectsData, Project, ProjectKind, ProjectPlatform } from '@/types/pro
 // read it without going through the Next.js import graph). Resolve
 // with a relative path; the @/ alias only covers src/.
 import rawData from '../../data/projects.json';
-import { formatNumber, formatTotalStars } from '@/lib/utils';
+import { formatNumber } from '@/lib/utils';
 
-export { formatNumber, formatTotalStars };
+export { formatNumber };
 
 const data = rawData as ProjectsData;
 

@@ -28,6 +28,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.close': 'Close',
     'nav.index': 'Index',
     'nav.switch_language': 'Switch language',
+    'nav.back_to_kind': 'Back to {kind}',
     'editorial.edition': 'Edition I · {date}',
     'editorial.open_atlas': 'Open the index',
 
@@ -73,6 +74,17 @@ const translations: Record<Lang, Record<string, string>> = {
 
     // ---- Accessibility ---------------------------------------------------
     'a11y.skip_to_content': 'Skip to main content',
+    'a11y.switch_to_light': 'Switch to light mode',
+    'a11y.switch_to_dark': 'Switch to dark mode',
+    'theme.light': 'Light',
+    'theme.dark': 'Dark',
+
+    // ---- PWA ----------------------------------------------------------------
+    'pwa.install_title': 'Install NetTools Hub',
+    'pwa.install_desc': 'Install as an app for quick access and offline support.',
+    'pwa.install_btn': 'Install',
+    'pwa.dismiss_btn': 'Not now',
+    'pwa.dismiss_label': 'Dismiss install prompt',
   },
   zh: {
     'site.title': 'NetTools Hub',
@@ -81,6 +93,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.close': '关闭',
     'nav.index': '索引',
     'nav.switch_language': '切换语言',
+    'nav.back_to_kind': '返回 {kind}',
     'editorial.edition': '第一版 · {date}',
     'editorial.open_atlas': '打开索引',
 
@@ -120,6 +133,16 @@ const translations: Record<Lang, Record<string, string>> = {
     'related.title': '相关项目',
 
     'a11y.skip_to_content': '跳转到主内容',
+    'a11y.switch_to_light': '切换到亮色模式',
+    'a11y.switch_to_dark': '切换到暗色模式',
+    'theme.light': '亮色',
+    'theme.dark': '暗色',
+
+    'pwa.install_title': '安装 NetTools Hub',
+    'pwa.install_desc': '安装为应用以获得快速访问和离线支持。',
+    'pwa.install_btn': '安装',
+    'pwa.dismiss_btn': '暂不',
+    'pwa.dismiss_label': '关闭安装提示',
   },
   ja: {
     'site.title': 'NetTools Hub',
@@ -128,6 +151,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.close': '閉じる',
     'nav.index': '索引',
     'nav.switch_language': '言語切替',
+    'nav.back_to_kind': '{kind} に戻る',
     'editorial.edition': '初版 · {date}',
     'editorial.open_atlas': '索引を開く',
 
@@ -167,6 +191,17 @@ const translations: Record<Lang, Record<string, string>> = {
     'related.title': '関連プロジェクト',
 
     'a11y.skip_to_content': 'メインコンテンツへスキップ',
+    'a11y.switch_to_light': 'ライトモードに切り替え',
+    'a11y.switch_to_dark': 'ダークモードに切り替え',
+    'theme.light': 'ライト',
+    'theme.dark': 'ダーク',
+
+    'pwa.install_title': 'NetTools Hub をインストール',
+    'pwa.install_desc':
+      'アプリとしてインストールすると、クイックアクセスとオフラインサポートが利用できます。',
+    'pwa.install_btn': 'インストール',
+    'pwa.dismiss_btn': '後で',
+    'pwa.dismiss_label': 'インストール案内を閉じる',
   },
 };
 

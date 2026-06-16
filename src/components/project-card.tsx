@@ -5,7 +5,7 @@ import type { Project } from '@/types/project';
 import { formatStars, formatNumber } from '@/lib/utils';
 import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import { useLang } from '@/components/lang-provider';
-import { t } from '@/lib/i18n';
+import { t, langParam } from '@/lib/i18n';
 
 interface ProjectCardProps {
   project: Project;
@@ -35,7 +35,7 @@ export function ProjectCard({ project: p }: ProjectCardProps) {
 
   return (
     <Link
-      href={`/explore/project/${p.id}?lang=${lang}`}
+      href={langParam(lang, `/explore/project/${p.id}`)}
       className="group block border border-line bg-bg-elev/40 p-4 transition-all hover:border-accent hover:bg-bg-sunk"
     >
       {/* Header */}
