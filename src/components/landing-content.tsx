@@ -77,7 +77,7 @@ export function LandingContent() {
          * ============================================================ */}
         <section aria-label={t(lang, 'aria.introduction')} className="border-b border-line pb-10">
           <div className="manual-index mb-3" data-index="00">
-            <span>Index</span>
+            <span>{t(lang, 'landing.index_label')}</span>
           </div>
           <h1 className="max-w-4xl text-[2rem] font-semibold leading-[1.1] tracking-tight sm:text-[2.5rem]">
             A field manual of <span className="text-accent-2">{PROJECT_COUNT}</span> open-source
@@ -94,18 +94,16 @@ export function LandingContent() {
             .
           </h1>
           <p className="mt-4 max-w-3xl text-[14.5px] leading-relaxed text-fg-2">
-            NetTools Hub is a personal link index, not a directory service and not a proxy. We do
-            not host, distribute, endorse, or operate any project linked from this page. Use at your
-            own risk;{' '}
+            {t(lang, 'landing.hero_intro')}{' '}
             <Link
               href="https://github.com/badhope/NetTools-Hub/blob/main/DISCLAIMER.md"
               target="_blank"
               rel="noopener noreferrer"
               className="link-editorial"
             >
-              read the full disclaimer
+              {t(lang, 'landing.read_disclaimer')}
             </Link>{' '}
-            before installing anything.
+            {t(lang, 'landing.before_installing')}
           </p>
 
           {/* Stat bar — one line of "facts about the index" */}
@@ -122,7 +120,7 @@ export function LandingContent() {
          * ============================================================ */}
         <section aria-label={t(lang, 'aria.browse_by_kind')} className="mt-10">
           <div className="manual-index mb-4" data-index="01">
-            <span>Browse by kind</span>
+            <span>{t(lang, 'landing.browse_by_kind')}</span>
           </div>
           <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {KIND_ORDER.map((k) => {
@@ -160,11 +158,10 @@ export function LandingContent() {
         >
           <div className="lg:col-span-2">
             <div className="manual-index mb-3" data-index="02">
-              <span>How the index is maintained</span>
+              <span>{t(lang, 'landing.how_maintained')}</span>
             </div>
             <p className="max-w-3xl text-[14px] leading-relaxed text-fg-2">
-              The <code className="font-mono text-fg">data/projects.json</code> file is the only
-              source of truth. The schema and entry format are documented in{' '}
+              {t(lang, 'landing.maintained_desc', { code: 'data/projects.json' })}{' '}
               <Link
                 href="https://github.com/badhope/NetTools-Hub/blob/main/docs/data-model.md"
                 target="_blank"
@@ -173,9 +170,9 @@ export function LandingContent() {
               >
                 docs/data-model.md
               </Link>
-              ; the validator is{' '}
-              <code className="font-mono text-fg">scripts/validate-projects.mjs</code>; the live
-              metadata is refreshed by a scheduled GitHub Action every Sunday 03:00 UTC.
+              {t(lang, 'landing.maintained_validator')}{' '}
+              <code className="font-mono text-fg">scripts/validate-projects.mjs</code>
+              {t(lang, 'landing.maintained_refresh')}
             </p>
             <pre className="mt-3 overflow-x-auto border border-line bg-bg-sunk/60 p-3 font-mono text-[12px] leading-relaxed text-fg-2">
               {`#   validate   the data file
@@ -190,14 +187,15 @@ pnpm run dev`}
           </div>
           <aside>
             <div className="manual-index mb-3" data-index="03">
-              <span>Facts</span>
+              <span>{t(lang, 'landing.facts')}</span>
             </div>
             <ul className="space-y-2 text-[13px] text-fg-2">
               <li>
-                <span className="kicker mr-1">Type</span> Static, no backend
+                <span className="kicker mr-1">{t(lang, 'landing.fact_type')}</span>{' '}
+                {t(lang, 'landing.fact_type_value')}
               </li>
               <li>
-                <span className="kicker mr-1">Maintainer</span>{' '}
+                <span className="kicker mr-1">{t(lang, 'landing.fact_maintainer')}</span>{' '}
                 <Link
                   href={`https://github.com/${SITE_OWNER}`}
                   target="_blank"
@@ -208,13 +206,15 @@ pnpm run dev`}
                 </Link>
               </li>
               <li>
-                <span className="kicker mr-1">License</span> MIT
+                <span className="kicker mr-1">{t(lang, 'landing.fact_license')}</span> MIT
               </li>
               <li>
-                <span className="kicker mr-1">Edition</span> {COPYRIGHT_YEAR}
+                <span className="kicker mr-1">{t(lang, 'landing.fact_edition')}</span>{' '}
+                {COPYRIGHT_YEAR}
               </li>
               <li>
-                <span className="kicker mr-1">Stack</span> Next.js · TypeScript · Tailwind v4
+                <span className="kicker mr-1">{t(lang, 'landing.fact_stack')}</span>{' '}
+                {t(lang, 'landing.fact_stack_value')}
               </li>
             </ul>
           </aside>

@@ -38,7 +38,7 @@ export function SiteFooter() {
             >
               DISCLAIMER.md
             </Link>
-            。
+            {t(lang, 'footer.disclaimer_end')}
           </p>
         </div>
 

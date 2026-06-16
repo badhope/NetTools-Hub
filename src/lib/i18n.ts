@@ -82,6 +82,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer_title': 'Disclaimer',
     'footer.disclaimer_text':
       'This site (NetTools Hub) is a personally maintained link index. It only collects repository addresses and editorial descriptions of third-party open-source projects. This site does not host, distribute, endorse, or operate any linked software. Inclusion is not recommendation. Use any project linked from this site at your own risk. Full terms at',
+    'footer.disclaimer_end': '.',
     'footer.maintainer': 'Maintainer',
     'footer.maintainer_desc': 'Single-maintainer, non-commercial',
     'footer.source': 'Source',
@@ -123,6 +124,28 @@ const translations: Record<Lang, Record<string, string>> = {
     'stat.kinds': 'Kinds',
     'stat.total_stars': 'Total stars',
     'stat.last_indexed': 'Last indexed',
+
+    // ---- Landing page content --------------------------------------------
+    'landing.index_label': 'Index',
+    'landing.browse_by_kind': 'Browse by kind',
+    'landing.how_maintained': 'How the index is maintained',
+    'landing.facts': 'Facts',
+    'landing.hero_intro':
+      'NetTools Hub is a personal link index, not a directory service and not a proxy. We do not host, distribute, endorse, or operate any project linked from this page. Use at your own risk;',
+    'landing.read_disclaimer': 'read the full disclaimer',
+    'landing.before_installing': 'before installing anything.',
+    'landing.fact_type': 'Type',
+    'landing.fact_type_value': 'Static, no backend',
+    'landing.fact_maintainer': 'Maintainer',
+    'landing.fact_license': 'License',
+    'landing.fact_edition': 'Edition',
+    'landing.fact_stack': 'Stack',
+    'landing.fact_stack_value': 'Next.js · TypeScript · Tailwind v4',
+    'landing.maintained_desc':
+      'The {code} file is the only source of truth. The schema and entry format are documented in',
+    'landing.maintained_validator': '; the validator is',
+    'landing.maintained_refresh':
+      '; the live metadata is refreshed by a scheduled GitHub Action every Sunday 03:00 UTC.',
   },
   zh: {
     'site.title': 'NetTools Hub',
@@ -178,6 +201,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer_title': '免责声明',
     'footer.disclaimer_text':
       '本站点（NetTools Hub）是一个个人维护的链接索引，仅收录第三方开源项目的仓库地址与一段编辑性说明。本站不托管、不分发、不背书、不运营任何被链接的软件；收录即非推荐。使用任何通过本站跳转到的项目，风险由使用者自行承担。完整条款见',
+    'footer.disclaimer_end': '。',
     'footer.maintainer': '维护者',
     'footer.maintainer_desc': '个人维护，非商业',
     'footer.source': '源码',
@@ -215,6 +239,26 @@ const translations: Record<Lang, Record<string, string>> = {
     'stat.kinds': '分类数',
     'stat.total_stars': '总星标',
     'stat.last_indexed': '最后索引',
+
+    // ---- Landing page content --------------------------------------------
+    'landing.index_label': '索引',
+    'landing.browse_by_kind': '按分类浏览',
+    'landing.how_maintained': '索引维护方式',
+    'landing.facts': '事实',
+    'landing.hero_intro':
+      'NetTools Hub 是一个个人维护的链接索引，不是目录服务，也不是代理。我们不托管、不分发、不背书、不运营任何被链接的项目。使用风险自负；',
+    'landing.read_disclaimer': '阅读完整免责声明',
+    'landing.before_installing': '后再安装任何内容。',
+    'landing.fact_type': '类型',
+    'landing.fact_type_value': '静态，无后端',
+    'landing.fact_maintainer': '维护者',
+    'landing.fact_license': '许可证',
+    'landing.fact_edition': '版本',
+    'landing.fact_stack': '技术栈',
+    'landing.fact_stack_value': 'Next.js · TypeScript · Tailwind v4',
+    'landing.maintained_desc': '{code} 文件是唯一的数据来源。架构与条目格式详见',
+    'landing.maintained_validator': '；验证器为',
+    'landing.maintained_refresh': '；元数据由 GitHub Action 每周日 UTC 03:00 自动刷新。',
   },
   ja: {
     'site.title': 'NetTools Hub',
@@ -270,6 +314,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'footer.disclaimer_title': '免責事項',
     'footer.disclaimer_text':
       '本サイト（NetTools Hub）は個人が維持するリンクインデックスです。第三者のオープンソースプロジェクトのリポジトリアドレスと編集説明のみを収録しています。本サイトはリンク先のソフトウェアをホスト、配布、推奨、運営しません。収録は推奨を意味しません。本サイトからリンクされたプロジェクトの使用は、利用者自身の責任で行ってください。完全な条項は',
+    'footer.disclaimer_end': '。',
     'footer.maintainer': 'メンテナ',
     'footer.maintainer_desc': '個人運営、非営利',
     'footer.source': 'ソース',
@@ -308,6 +353,26 @@ const translations: Record<Lang, Record<string, string>> = {
     'stat.kinds': '種類',
     'stat.total_stars': '総スター数',
     'stat.last_indexed': '最終インデックス',
+
+    // ---- Landing page content --------------------------------------------
+    'landing.index_label': '索引',
+    'landing.browse_by_kind': '種類別に閲覧',
+    'landing.how_maintained': 'インデックスの維持方法',
+    'landing.facts': '事実',
+    'landing.hero_intro':
+      'NetTools Hub は個人が維持するリンクインデックスであり、ディレクトリサービスでもプロキシでもありません。リンク先のプロジェクトをホスト、配布、推奨、運営しません。自己責任でご利用ください；',
+    'landing.read_disclaimer': '完全な免責事項を読む',
+    'landing.before_installing': 'インストール前に。',
+    'landing.fact_type': 'タイプ',
+    'landing.fact_type_value': '静的、バックエンドなし',
+    'landing.fact_maintainer': 'メンテナ',
+    'landing.fact_license': 'ライセンス',
+    'landing.fact_edition': 'エディション',
+    'landing.fact_stack': 'スタック',
+    'landing.fact_stack_value': 'Next.js · TypeScript · Tailwind v4',
+    'landing.maintained_desc': '{code} ファイルが唯一の情報源です。スキーマとエントリ形式は',
+    'landing.maintained_validator': 'に記載、バリデータは',
+    'landing.maintained_refresh': '、メタデータは GitHub Action で毎週日曜 UTC 03:00 に更新されます。',
   },
 };
 
