@@ -149,6 +149,37 @@ export function LandingContent() {
         </section>
 
         {/* ============================================================
+         *  Free proxy sources — callout banner
+         * ============================================================ */}
+        <section aria-label={t(lang, 'nav.free_sources')} className="mt-10">
+          <Link
+            href={withLang(lang, '/free-sources')}
+            className="kind-card block border border-accent-3/40 bg-bg-elev/40 p-5 transition-colors hover:border-accent-3 hover:bg-bg-sunk"
+          >
+            <div className="flex items-start gap-4">
+              <span className="font-mono text-2xl text-accent-3">★</span>
+              <div className="flex-1">
+                <div className="kicker mb-1 text-accent-3">{t(lang, 'sources.folio')}</div>
+                <h2 className="text-lg font-medium text-fg">{t(lang, 'sources.title')}</h2>
+                <p className="mt-1 text-[13px] leading-relaxed text-fg-2">
+                  {t(lang, 'sources.subtitle')}
+                </p>
+              </div>
+              <svg
+                className="mt-1 h-5 w-5 shrink-0 text-accent-3 transition-transform duration-300 group-hover:translate-x-1"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={1.5}
+                aria-hidden
+              >
+                <path strokeLinecap="square" d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+            </div>
+          </Link>
+        </section>
+
+        {/* ============================================================
          *  How the index is maintained
          * ============================================================ */}
         <section

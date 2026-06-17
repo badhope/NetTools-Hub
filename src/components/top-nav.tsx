@@ -118,6 +118,13 @@ export function TopNav({ kindCounts, total, variant, sticky = true }: TopNavProp
             {t(lang, 'editorial.edition', { date: String(COPYRIGHT_YEAR) })}
           </span>
 
+          <Link
+            href={withLang(lang, '/free-sources')}
+            className="link-editorial hidden font-mono text-[11px] text-accent md:inline-block"
+          >
+            {t(lang, 'nav.free_sources')}
+          </Link>
+
           <div className="flex-1" />
 
           <ThemeToggle />
@@ -204,6 +211,16 @@ export function TopNav({ kindCounts, total, variant, sticky = true }: TopNavProp
                 {total !== undefined && (
                   <span className="text-[10px] text-muted">{String(total).padStart(3, '0')}</span>
                 )}
+              </Link>
+              {/* Free sources */}
+              <Link
+                href={withLang(lang, '/free-sources')}
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between border-b border-line py-2 text-fg-2 hover:text-accent"
+              >
+                <span>
+                  <span className="text-muted">★</span> {t(lang, 'nav.free_sources')}
+                </span>
               </Link>
               {/* Kinds */}
               {KIND_ORDER.map((k) => {

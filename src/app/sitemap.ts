@@ -131,5 +131,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...kindEntries,
     ...kpEntries,
     ...projectEntries,
+    {
+      url: `${SITE_CANONICAL}/free-sources`,
+      lastModified: lastUpdated,
+      changeFrequency: 'weekly',
+      priority: 0.7,
+      alternates: {
+        languages: Object.fromEntries(alternates('/free-sources').map((a) => [a.hreflang, a.href])),
+      },
+    },
   ];
 }

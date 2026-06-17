@@ -27,6 +27,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.menu': 'Menu',
     'nav.close': 'Close',
     'nav.index': 'Index',
+    'nav.free_sources': 'Free sources',
     'nav.switch_language': 'Switch language',
     'nav.back_to_kind': 'Back to {kind}',
     'editorial.edition': 'Edition I · {date}',
@@ -166,6 +167,28 @@ const translations: Record<Lang, Record<string, string>> = {
     'explore.meta_index': '[ index ]',
     'explore.meta_detail': '[ detail ]',
     'explore.stars': 'stars',
+
+    // -- Free sources page -------------------------------------------------
+    'sources.folio': 'Free sources',
+    'sources.title': 'Free proxy sources',
+    'sources.subtitle':
+      'A curated index of places that publish free proxy nodes, subscription links, and node lists. Updated by the community — always verify before use.',
+    'sources.disclaimer':
+      'Free nodes are shared by volunteers and may be slow, unstable, or short-lived. They are for testing and learning only — do not rely on them for anything important.',
+    'sources.count': '{count} sources',
+    'sources.last_updated': 'Last updated',
+    'sources.visit': 'Visit',
+    'sources.view_repo': 'View repo',
+    'sources.notes': 'Note',
+    'sources.stars': 'stars',
+    'sources.updated': 'Updated',
+    'sources.format': 'Format',
+    'sources.type': 'Type',
+    'sources.language': 'Language',
+    'sources.no_results': 'No sources found.',
+    'sources.back_to_index': '← back to index',
+    'sources.aria_sources': 'Free proxy sources list',
+    'sources.aria_disclaimer': 'Disclaimer',
   },
   zh: {
     'site.title': 'NetTools Hub',
@@ -173,6 +196,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.menu': '菜单',
     'nav.close': '关闭',
     'nav.index': '索引',
+    'nav.free_sources': '免费节点',
     'nav.switch_language': '切换语言',
     'nav.back_to_kind': '返回 {kind}',
     'editorial.edition': '第一版 · {date}',
@@ -299,6 +323,28 @@ const translations: Record<Lang, Record<string, string>> = {
     'explore.meta_index': '[ 索引 ]',
     'explore.meta_detail': '[ 详情 ]',
     'explore.stars': '星标',
+
+    // -- 免费节点来源页面 -------------------------------------------------
+    'sources.folio': '免费来源',
+    'sources.title': '免费代理节点来源',
+    'sources.subtitle':
+      '收录发布免费代理节点、订阅链接和节点列表的资源。由社区维护——使用前请自行验证可用性。',
+    'sources.disclaimer':
+      '免费节点由志愿者分享，可能速度慢、不稳定或短期失效。仅供测试和学习使用——请勿用于重要用途。',
+    'sources.count': '{count} 个来源',
+    'sources.last_updated': '最后更新',
+    'sources.visit': '访问',
+    'sources.view_repo': '查看仓库',
+    'sources.notes': '备注',
+    'sources.stars': '星标',
+    'sources.updated': '更新频率',
+    'sources.format': '提供格式',
+    'sources.type': '类型',
+    'sources.language': '语言',
+    'sources.no_results': '未找到来源。',
+    'sources.back_to_index': '← 返回索引',
+    'sources.aria_sources': '免费代理节点来源列表',
+    'sources.aria_disclaimer': '免责声明',
   },
   ja: {
     'site.title': 'NetTools Hub',
@@ -306,6 +352,7 @@ const translations: Record<Lang, Record<string, string>> = {
     'nav.menu': 'メニュー',
     'nav.close': '閉じる',
     'nav.index': '索引',
+    'nav.free_sources': '無料ノード',
     'nav.switch_language': '言語切替',
     'nav.back_to_kind': '{kind} に戻る',
     'editorial.edition': '初版 · {date}',
@@ -434,6 +481,28 @@ const translations: Record<Lang, Record<string, string>> = {
     'explore.meta_index': '[ 索引 ]',
     'explore.meta_detail': '[ 詳細 ]',
     'explore.stars': 'スター',
+
+    // -- 無料ノードソースページ -------------------------------------------
+    'sources.folio': '無料ソース',
+    'sources.title': '無料プロキシソース',
+    'sources.subtitle':
+      '無料プロキシノード、サブスクリプションリンク、ノードリストを公開するリソースの索引。コミュニティにより維持——使用前に必ず確認してください。',
+    'sources.disclaimer':
+      '無料ノードはボランティアにより共有され、低速、不安定、または短期間で無効になる場合があります。テストと学習のみを目的としてください。',
+    'sources.count': '{count} 件のソース',
+    'sources.last_updated': '最終更新',
+    'sources.visit': 'アクセス',
+    'sources.view_repo': 'リポジトリを見る',
+    'sources.notes': '備考',
+    'sources.stars': 'スター',
+    'sources.updated': '更新頻度',
+    'sources.format': '形式',
+    'sources.type': 'タイプ',
+    'sources.language': '言語',
+    'sources.no_results': 'ソースが見つかりません。',
+    'sources.back_to_index': '← 索引に戻る',
+    'sources.aria_sources': '無料プロキシソースリスト',
+    'sources.aria_disclaimer': '免責事項',
   },
 };
 
