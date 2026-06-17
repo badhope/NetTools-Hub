@@ -21,6 +21,18 @@ import rawData from '../../data/free-sources.json';
 const data = rawData as ProxySourcesData;
 
 // ============================================================================
+// Schema version check
+// ============================================================================
+
+const CURRENT_SCHEMA_VERSION = 1;
+
+if (data.schemaVersion !== CURRENT_SCHEMA_VERSION) {
+  console.warn(
+    `[sources] Schema version mismatch: expected ${CURRENT_SCHEMA_VERSION}, got ${data.schemaVersion}. Some features may not work correctly.`,
+  );
+}
+
+// ============================================================================
 // Taxonomy labels
 // ============================================================================
 
@@ -91,22 +103,24 @@ export function sourceCategoryLabel(category: string, lang: Lang = 'en'): string
 // Data access
 // ============================================================================
 
-let cachedSources: ProxySource[] | null = null;
+let cachedSources: readonly ProxySource[] | null = null;
 
-/** All sources, sorted by stars (desc) then name. */
-export function getAllSources(): ProxySource[] {
+/** All sources, sorted by status (active first), then stars (desc), then name. */
+export function getAllSources(): readonly ProxySource[] {
   if (cachedSources) return cachedSources;
-  cachedSources = [...data.sources].sort((a, b) => {
-    // Active first, then by stars desc, then by name.
-    if (a.status !== b.status) {
-      if (a.status === 'active') return -1;
-      if (b.status === 'active') return 1;
-    }
-    const sa = a.stars ?? 0;
-    const sb = b.stars ?? 0;
-    if (sb !== sa) return sb - sa;
-    return a.name.localeCompare(b.name);
-  });
+  cachedSources = Object.freeze(
+    [...data.sources].sort((a, b) => {
+      // Active first, then by stars desc, then by name.
+      if (a.status !== b.status) {
+        if (a.status === 'active') return -1;
+        if (b.status === 'active') return 1;
+      }
+      const sa = a.stars ?? 0;
+      const sb = b.stars ?? 0;
+      if (sb !== sa) return sb - sa;
+      return a.name.localeCompare(b.name);
+    }),
+  );
   return cachedSources;
 }
 

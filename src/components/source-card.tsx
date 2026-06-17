@@ -47,7 +47,7 @@ export function SourceCard({ source: s }: { source: ProxySource }) {
             {sourceTypeLabel(s.type, lang)} · {sourceFormatLabel(s.format, lang)}
           </p>
         </div>
-        <span className={`badge ${statusClass} shrink-0`}>{s.status}</span>
+        <span className={`badge ${statusClass} shrink-0`}>{t(lang, `status.${s.status}`)}</span>
       </div>
 
       {/* Description */}

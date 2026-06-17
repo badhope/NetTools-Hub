@@ -36,9 +36,13 @@ export default function FreeSourcesPage() {
   // Total stars across GitHub sources (for the stat bar).
   const totalStars = sources.reduce((sum, s) => sum + (s.stars ?? 0), 0);
 
+  // TopNav draws the mobile drawer "All projects" link with this total;
+  // it must be the project count, not the source count.
+  const totalProjects = Object.values(kindCounts).reduce((sum, n) => sum + n, 0);
+
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <TopNav kindCounts={kindCounts} total={sources.length} variant="explore" sticky />
+      <TopNav kindCounts={kindCounts} total={totalProjects} variant="explore" sticky />
       <main
         id="main"
         aria-label={t(lang, 'sources.aria_sources')}
