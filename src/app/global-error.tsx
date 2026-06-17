@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { t } from '@/lib/i18n';
+import { t, LANG_HTML_LANG } from '@/lib/i18n';
 import { useClientLang } from '@/lib/use-client-lang';
 
 /**
@@ -10,6 +10,8 @@ import { useClientLang } from '@/lib/use-client-lang';
  * This catches errors that occur in the root layout or during
  * navigation. Unlike route-level error.tsx files, this handles
  * catastrophic failures that prevent the app from rendering at all.
+ * It replaces the root layout entirely, so it renders its own
+ * <html>/<body> and must sync `<html lang>` itself.
  */
 export default function GlobalError({
   error,
@@ -18,11 +20,19 @@ export default function GlobalError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const [lang] = useClientLang();
+
   useEffect(() => {
     console.error('Global error:', error);
   }, [error]);
 
-  const [lang] = useClientLang();
+  // Sync <html lang> with the resolved language. The initial SSR
+  // render is always 'en' (matching the prerendered HTML); after
+  // hydration `useClientLang` swaps to the real language and this
+  // effect mirrors it into the DOM for screen readers.
+  useEffect(() => {
+    document.documentElement.lang = LANG_HTML_LANG[lang];
+  }, [lang]);
 
   return (
     <html lang="en">

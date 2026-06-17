@@ -80,18 +80,17 @@ export function LandingContent() {
             <span>{t(lang, 'landing.index_label')}</span>
           </div>
           <h1 className="max-w-4xl text-[2rem] font-semibold leading-[1.1] tracking-tight sm:text-[2.5rem]">
-            A field manual of <span className="text-accent-2">{PROJECT_COUNT}</span> open-source
-            network tools,
+            {t(lang, 'landing.hero_pre')} <span className="text-accent-2">{PROJECT_COUNT}</span>{' '}
+            {t(lang, 'landing.hero_mid')}
             <br className="hidden sm:inline" />
-            organised by{' '}
+            {t(lang, 'landing.hero_organised_by')}{' '}
             <Link href={withLang(lang, '/explore/k/proxy')} className="link-editorial">
-              kind
+              {t(lang, 'landing.hero_kind')}
             </Link>{' '}
-            and by{' '}
+            {t(lang, 'landing.hero_and_by')}{' '}
             <Link href={withLang(lang, '/explore/k/proxy/p/desktop')} className="link-editorial">
-              platform
+              {t(lang, 'landing.hero_platform')}
             </Link>
-            .
           </h1>
           <p className="mt-4 max-w-3xl text-[14.5px] leading-relaxed text-fg-2">
             {t(lang, 'landing.hero_intro')}{' '}

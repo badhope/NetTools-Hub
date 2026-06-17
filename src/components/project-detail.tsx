@@ -3,6 +3,7 @@
 import type { Project } from '@/types/project';
 import { t, langParam } from '@/lib/i18n';
 import { useLang } from '@/components/lang-provider';
+import { kindLabel } from '@/lib/taxonomy';
 import { formatStars, formatNumber } from '@/lib/utils';
 import { PlatformBadges, StatusBadge, VerdictBadge } from './project-badges';
 import Link from 'next/link';
@@ -194,7 +195,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
                   <span>·</span>
                   <span className="font-mono">{related.language}</span>
                   <span>·</span>
-                  <span className="capitalize">{related.kind}</span>
+                  <span className="capitalize">{kindLabel(related.kind, lang)}</span>
                 </div>
               </Link>
             ))}

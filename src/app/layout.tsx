@@ -147,18 +147,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body>
-        {/* Skip-to-content link. Rendered outside the normal flow so
-         *  it does not contribute to layout; visually hidden until
-         *  focused, at which point it slides into the top-left of
-         *  the viewport. The destination `id="main"` lives on the
-         *  per-page `<main>` element. The label is translated by the
-         *  SkipLink client component via the LangProvider context. */}
-        <SkipLink />
-        <LangProvider>{children}</LangProvider>
-        <SetHtmlLang />
-        <SiteFooter />
-        <PWAInstallPrompt />
-        <WebVitals />
+        {/* All client components that read `useLang()` (SkipLink,
+         *  SetHtmlLang, SiteFooter, PWAInstallPrompt) must live
+         *  INSIDE <LangProvider> — otherwise they receive the
+         *  fallback `{ lang: 'en' }` and never translate. */}
+        <LangProvider>
+          <SkipLink />
+          {children}
+          <SetHtmlLang />
+          <SiteFooter />
+          <PWAInstallPrompt />
+          <WebVitals />
+        </LangProvider>
       </body>
     </html>
   );

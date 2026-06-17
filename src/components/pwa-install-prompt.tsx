@@ -156,7 +156,7 @@ export function PWAInstallPrompt() {
   return (
     <div className="fixed bottom-4 right-4 z-50 max-w-sm rounded-none border border-line bg-bg-elev p-4 shadow-lg">
       <div className="mb-2 flex items-start justify-between gap-2">
-        <h3 className="text-sm font-semibold text-fg">{t(lang, 'pwa.install_title')}</h3>
+        <h2 className="text-sm font-semibold text-fg">{t(lang, 'pwa.install_title')}</h2>
         <button
           onClick={handleDismiss}
           className="text-muted hover:text-fg"
