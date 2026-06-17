@@ -52,7 +52,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
           <div className="flex-1">
             <h2 className="text-[1.75rem] font-semibold text-fg">{p.name}</h2>
             <p className="mt-1 text-sm text-muted">
-              by <span className="text-fg-2">{p.author}</span>
+              {t(lang, 'detail.by')} <span className="text-fg-2">{p.author}</span>
             </p>
           </div>
           <div className="flex flex-col items-end gap-2">
@@ -177,7 +177,7 @@ export function ProjectDetail({ project: p, relatedProjects }: ProjectDetailProp
                 key={related.id}
                 href={langParam(lang, `/explore/project/${related.id}`)}
                 className="group border border-line p-4 hover:border-accent transition-colors"
-                aria-label={`View ${related.name}`}
+                aria-label={t(lang, 'detail.view_project', { name: related.name })}
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">

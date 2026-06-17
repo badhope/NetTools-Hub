@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import {
   getAllKinds,
   getAllPlatforms,
+  getAllProjects,
   getKindPlatformCounts,
   getLastUpdated,
   isValidKind,
@@ -77,6 +78,28 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
+  // /explore/project/<id> entries. One per project, across all
+  // three languages. These are the deepest pages in the tree and
+  // carry the most specific content (stars, description, related
+  // projects), so they get a lower priority than the index pages
+  // but are still essential for crawl coverage.
+  const projectEntries: MetadataRoute.Sitemap = getAllProjects().flatMap((p) =>
+    LANGS.map((lang) => ({
+      url:
+        lang === 'en'
+          ? `${SITE_CANONICAL}/explore/project/${p.id}`
+          : `${SITE_CANONICAL}/explore/project/${p.id}?lang=${lang}`,
+      lastModified: lastUpdated,
+      changeFrequency: 'weekly' as const,
+      priority: 0.6,
+      alternates: {
+        languages: Object.fromEntries(
+          alternates(`/explore/project/${p.id}`).map((a) => [a.hreflang, a.href]),
+        ),
+      },
+    })),
+  );
+
   return [
     {
       url: `${SITE_CANONICAL}/`,
@@ -107,5 +130,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     ...kindEntries,
     ...kpEntries,
+    ...projectEntries,
   ];
 }

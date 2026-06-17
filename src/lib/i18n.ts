@@ -63,9 +63,11 @@ const translations: Record<Lang, Record<string, string>> = {
     '404.description': 'This page does not exist.',
     '404.back': '← Back to home',
     'error.folio': 'Error',
+    'error.title': 'Error',
     'error.description': 'An unexpected error occurred. Please try again.',
     'error.retry': 'Try again',
     'error.explore_folio': 'Explore — error',
+    'error.explore_title': 'Failed to load',
     'error.explore_desc': 'Something went wrong while loading the index.',
     'error.explore_retry': 'Retry',
 
@@ -111,6 +113,8 @@ const translations: Record<Lang, Record<string, string>> = {
     'detail.view_repo': 'View Repository',
     'detail.homepage': 'Homepage',
     'detail.added': 'Added',
+    'detail.by': 'by',
+    'detail.view_project': 'View {name}',
 
     // ---- ARIA labels ------------------------------------------------------
     'aria.breadcrumb': 'Breadcrumb',
@@ -146,6 +150,16 @@ const translations: Record<Lang, Record<string, string>> = {
     'landing.maintained_validator': '; the validator is',
     'landing.maintained_refresh':
       '; the live metadata is refreshed by a scheduled GitHub Action every Sunday 03:00 UTC.',
+
+    // ---- Explore page meta ------------------------------------------------
+    'explore.all_projects': 'All projects',
+    'explore.total_stars': 'total stars',
+    'explore.sorted_by_stars': 'sorted by stars',
+    'explore.back_to_index': '← back to index',
+    'explore.back_to_kind': '← back to {kind}',
+    'explore.meta_index': '[ index ]',
+    'explore.meta_detail': '[ detail ]',
+    'explore.stars': 'stars',
   },
   zh: {
     'site.title': 'NetTools Hub',
@@ -185,9 +199,11 @@ const translations: Record<Lang, Record<string, string>> = {
     '404.description': '该页面不存在。',
     '404.back': '← 返回首页',
     'error.folio': '错误',
+    'error.title': '错误',
     'error.description': '出现意外错误，请重试。',
     'error.retry': '重试',
     'error.explore_folio': '探索 — 错误',
+    'error.explore_title': '加载失败',
     'error.explore_desc': '加载索引时出现问题。',
     'error.explore_retry': '重新尝试',
 
@@ -228,6 +244,8 @@ const translations: Record<Lang, Record<string, string>> = {
     'detail.view_repo': '查看仓库',
     'detail.homepage': '主页',
     'detail.added': '添加时间',
+    'detail.by': '作者',
+    'detail.view_project': '查看{name}',
 
     'aria.breadcrumb': '面包屑导航',
     'aria.main_content': '主内容',
@@ -259,6 +277,16 @@ const translations: Record<Lang, Record<string, string>> = {
     'landing.maintained_desc': '{code} 文件是唯一的数据来源。架构与条目格式详见',
     'landing.maintained_validator': '；验证器为',
     'landing.maintained_refresh': '；元数据由 GitHub Action 每周日 UTC 03:00 自动刷新。',
+
+    // ---- Explore page meta ------------------------------------------------
+    'explore.all_projects': '全部项目',
+    'explore.total_stars': '总星标',
+    'explore.sorted_by_stars': '按星标排序',
+    'explore.back_to_index': '← 返回索引',
+    'explore.back_to_kind': '← 返回{kind}',
+    'explore.meta_index': '[ 索引 ]',
+    'explore.meta_detail': '[ 详情 ]',
+    'explore.stars': '星标',
   },
   ja: {
     'site.title': 'NetTools Hub',
@@ -298,9 +326,11 @@ const translations: Record<Lang, Record<string, string>> = {
     '404.description': 'このページは存在しません。',
     '404.back': '← ホームへ戻る',
     'error.folio': 'エラー',
+    'error.title': 'エラー',
     'error.description': '予期しないエラーが発生しました。再試行してください。',
     'error.retry': '再試行',
     'error.explore_folio': '探索 — エラー',
+    'error.explore_title': '読み込み失敗',
     'error.explore_desc': '索引の読み込み中に問題が発生しました。',
     'error.explore_retry': '再試行',
 
@@ -342,6 +372,8 @@ const translations: Record<Lang, Record<string, string>> = {
     'detail.view_repo': 'リポジトリを見る',
     'detail.homepage': 'ホームページ',
     'detail.added': '追加日',
+    'detail.by': 'by',
+    'detail.view_project': '{name}を見る',
 
     'aria.breadcrumb': 'パンくずリスト',
     'aria.main_content': 'メインコンテンツ',
@@ -372,7 +404,18 @@ const translations: Record<Lang, Record<string, string>> = {
     'landing.fact_stack_value': 'Next.js · TypeScript · Tailwind v4',
     'landing.maintained_desc': '{code} ファイルが唯一の情報源です。スキーマとエントリ形式は',
     'landing.maintained_validator': 'に記載、バリデータは',
-    'landing.maintained_refresh': '、メタデータは GitHub Action で毎週日曜 UTC 03:00 に更新されます。',
+    'landing.maintained_refresh':
+      '、メタデータは GitHub Action で毎週日曜 UTC 03:00 に更新されます。',
+
+    // ---- Explore page meta ------------------------------------------------
+    'explore.all_projects': 'すべてのプロジェクト',
+    'explore.total_stars': '総スター',
+    'explore.sorted_by_stars': 'スター順',
+    'explore.back_to_index': '← 索引に戻る',
+    'explore.back_to_kind': '← {kind}に戻る',
+    'explore.meta_index': '[ 索引 ]',
+    'explore.meta_detail': '[ 詳細 ]',
+    'explore.stars': 'スター',
   },
 };
 

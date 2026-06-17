@@ -66,7 +66,7 @@ export function TreeSidebar({ current, kindCounts, kindPlatformCounts, total }: 
     if (!treeRef.current) return;
 
     const items = Array.from(
-      treeRef.current.querySelectorAll('a[role="treeitem"]'),
+      treeRef.current.querySelectorAll('li[role="treeitem"] a'),
     ) as HTMLAnchorElement[];
     const currentIndex = items.findIndex((item) => item === document.activeElement);
 

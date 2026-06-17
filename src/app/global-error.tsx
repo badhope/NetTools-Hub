@@ -25,7 +25,7 @@ export default function GlobalError({
   const [lang] = useClientLang();
 
   return (
-    <html>
+    <html lang="en">
       <body>
         <main
           id="main"
@@ -40,7 +40,7 @@ export default function GlobalError({
             <span className="h-px w-12 bg-dim" />
           </div>
           <h1 className="font-display text-5xl leading-none text-fg sm:text-6xl">
-            Err<span className="italic text-accent">/</span>or
+            {t(lang, 'error.title')}
           </h1>
           <p className="mt-6 max-w-sm text-sm leading-relaxed text-fg-2">
             {t(lang, 'error.description')}

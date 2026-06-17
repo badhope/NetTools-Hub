@@ -9,7 +9,7 @@ import {
 import { Breadcrumb } from '@/components/breadcrumb';
 import { rootCrumb } from '@/lib/breadcrumb';
 import { PROJECT_COUNT, SITE_CANONICAL } from '@/lib/site';
-import { safeJsonLd, formatStars } from '@/lib/utils';
+import { safeJsonLd } from '@/lib/utils';
 
 export const metadata = {
   title: 'Explore',
@@ -50,14 +50,12 @@ export default function ExploreRootPage() {
       kindCounts={kindCounts}
       kindPlatformCounts={kpCounts}
       total={projects.length}
-      title="All projects"
-      meta={
-        <p className="text-[12.5px] text-fg-2">
-          <span className="font-mono text-muted">[ index ]</span> {projects.length} entries ·{' '}
-          {formatStars(totalStars)} total stars ·{' '}
-          <span className="font-mono text-muted">sorted by stars</span>
-        </p>
-      }
+      titleData={{ type: 'all' }}
+      metaData={{
+        variant: 'all',
+        count: projects.length,
+        totalStars,
+      }}
       breadcrumb={<Breadcrumb trail={[rootCrumb('en')]} />}
     >
       <script

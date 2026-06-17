@@ -33,7 +33,7 @@ export default function ExploreError({
         <span className="h-px w-12 bg-dim" />
       </div>
       <h1 className="font-display text-4xl leading-tight text-fg sm:text-5xl">
-        Failed to <span className="italic text-accent">load</span>
+        {t(lang, 'error.explore_title')}
       </h1>
       <p className="mt-6 max-w-sm text-sm leading-relaxed text-fg-2">
         {t(lang, 'error.explore_desc')}

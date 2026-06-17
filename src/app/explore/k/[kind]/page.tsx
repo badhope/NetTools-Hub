@@ -16,9 +16,6 @@ import { safeJsonLd } from '@/lib/utils';
 import type { ProjectKind } from '@/types/project';
 
 export function generateStaticParams() {
-  // Pre-render one page per known kind. Static export requires the
-  // exhaustive list of valid paths at build time; the array below
-  // is the same one the validator accepts as `kind` values.
   return (
     ['proxy', 'vpn', 'dns', 'acceleration', 'security', 'monitoring', 'ops', 'tools'] as const
   ).map((kind) => ({ kind }));
@@ -37,8 +34,8 @@ export async function generateMetadata({ params }: { params: Promise<{ kind: str
 export default async function KindPage({ params }: { params: Promise<{ kind: string }> }) {
   const { kind } = await params;
   if (!isValidKind(kind)) notFound();
-  const list = getProjectsByKind(kind);
-  // Deterministic order: stars desc, then name asc.
+  const typedKind = kind as ProjectKind;
+  const list = getProjectsByKind(typedKind);
   const sorted = [...list].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
   const kindCounts = getKindCounts();
   const kpCounts = getKindPlatformCounts();
@@ -46,7 +43,7 @@ export default async function KindPage({ params }: { params: Promise<{ kind: str
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: `NetTools Hub — ${kindLabel(kind)}`,
+    name: `NetTools Hub — ${kindLabel(typedKind)}`,
     url: `${SITE_CANONICAL}/explore/k/${kind}`,
     numberOfItems: sorted.length,
     itemListElement: sorted.slice(0, 100).map((p, i) => ({
@@ -59,21 +56,13 @@ export default async function KindPage({ params }: { params: Promise<{ kind: str
   };
   return (
     <ExploreLayout
-      current={{ kind: kind as ProjectKind }}
+      current={{ kind: typedKind }}
       kindCounts={kindCounts}
       kindPlatformCounts={kpCounts}
       total={total}
-      title={`${kindLabel(kind)} (${kind})`}
-      meta={
-        <p className="text-[12.5px] text-fg-2">
-          <span className="font-mono text-muted">[ {kind} ]</span> {sorted.length} entries ·{' '}
-          <span className="font-mono text-muted">sorted by stars</span> ·{' '}
-          <a href={`${SITE_CANONICAL}/explore`} className="link-editorial">
-            ← back to index
-          </a>
-        </p>
-      }
-      breadcrumb={<Breadcrumb trail={[rootCrumb('en'), kindCrumb('en', kind)]} />}
+      titleData={{ type: 'kind', kind: typedKind }}
+      metaData={{ variant: 'kind', count: sorted.length, kind: typedKind }}
+      breadcrumb={<Breadcrumb trail={[rootCrumb('en'), kindCrumb('en', typedKind)]} />}
     >
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: safeJsonLd(jsonLd) }} />
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

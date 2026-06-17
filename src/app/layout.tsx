@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { IBM_Plex_Sans, IBM_Plex_Mono } from 'next/font/google';
 import { SetHtmlLang } from '@/components/set-html-lang';
 import { LangProvider } from '@/components/lang-provider';
+import { SkipLink } from '@/components/skip-link';
 import { SiteFooter } from '@/components/site-footer';
 import { PWAInstallPrompt } from '@/components/pwa-install-prompt';
 import { WebVitals } from '@/components/web-vitals';
@@ -35,13 +36,15 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const viewport: Viewport = {
-  // Match the cool dark palette (`--color-bg` in globals.css) so
-  // the browser chrome (Safari status bar, Android system bar, PWA
-  // splash) blends in. The "field manual" look is monochrome-cool;
-  // a warm theme would clash with the hairlines and the steel-blue
-  // accent.
-  themeColor: '#0b0d10',
-  colorScheme: 'dark',
+  // Match the palette for both dark and light modes so the browser
+  // chrome (Safari status bar, Android system bar, PWA splash)
+  // blends in regardless of the user's theme choice. The media
+  // queries let the browser pick the right color automatically.
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: '#0b0d10' },
+    { media: '(prefers-color-scheme: light)', color: '#f7f7f5' },
+  ],
+  colorScheme: 'dark light',
   width: 'device-width',
   initialScale: 1,
 };
@@ -130,18 +133,27 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang={LANG_HTML_LANG.en} className={`${plex.variable} ${plexMono.variable}`}>
+      <head>
+        {/* FOUC prevention: read the persisted theme from localStorage
+         *  and set `data-theme` on <html> before first paint. Without
+         *  this, a user who previously chose light mode sees a flash
+         *  of the default dark theme until the client-side ThemeToggle
+         *  component hydrates and sets the attribute. The script is
+         *  inline and synchronous so it runs before the body renders. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('theme');if(t){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body>
         {/* Skip-to-content link. Rendered outside the normal flow so
          *  it does not contribute to layout; visually hidden until
          *  focused, at which point it slides into the top-left of
          *  the viewport. The destination `id="main"` lives on the
-         *  per-page `<main>` element. The label is statically
-         *  English (it is a global UI primitive, not a piece of
-         *  content) but visually a keyboard user will only ever
-         *  see it for a fraction of a second during the Tab key. */}
-        <a href="#main" className="skip-link">
-          Skip to main content
-        </a>
+         *  per-page `<main>` element. The label is translated by the
+         *  SkipLink client component via the LangProvider context. */}
+        <SkipLink />
         <LangProvider>{children}</LangProvider>
         <SetHtmlLang />
         <SiteFooter />

@@ -53,6 +53,7 @@
   --color-accent-2: #4fd1a1; /* active tree node */
   --color-accent-3: #f0b86e; /* caution badge */
   --color-accent-4: #f47272; /* danger / avoid badge */
+  --color-accent-hover: #a7c4ff; /* hover state for accent links */
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -78,10 +79,6 @@
   }
 
   ::selection {
-    background-color: var(--color-accent);
-    color: var(--color-bg);
-  }
-  ::-moz-selection {
     background-color: var(--color-accent);
     color: var(--color-bg);
   }
@@ -240,6 +237,10 @@
   color: var(--color-accent-2);
   border-color: var(--color-accent-2);
 }
+.badge--neutral {
+  color: var(--color-muted);
+  border-color: var(--color-dim);
+}
 .badge--caution {
   color: var(--color-accent-3);
   border-color: var(--color-accent-3);
@@ -270,13 +271,14 @@
   --color-bg-sunk: #f0f2f5;
   --color-fg: #1a1a1a;
   --color-fg-2: #4a4a4a;
-  --color-muted: #8a8a8a;
+  --color-muted: #6b7280; /* meta, labels — WCAG AA on #ffffff */
   --color-dim: #d0d0d0;
   --color-line: #e5e7eb;
   --color-accent: #2563eb;
   --color-accent-2: #059669;
   --color-accent-3: #d97706;
   --color-accent-4: #dc2626;
+  --color-accent-hover: #1d4ed8;
 }
 
 :root[data-theme='light'] .link-editorial:hover {
@@ -300,4 +302,18 @@
 }
 :root[data-theme='light'] .badge--archived {
   background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* ============================================================
+ * Reduced motion — respect user preference
+ * ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

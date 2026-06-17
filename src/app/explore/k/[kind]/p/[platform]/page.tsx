@@ -54,13 +54,15 @@ export default async function KindPlatformPage({
 }) {
   const { kind, platform } = await params;
   if (!isValidKind(kind) || !isValidPlatform(platform)) notFound();
-  const list = getProjectsByKindPlatform(kind as ProjectKind, platform as ProjectPlatform);
+  const typedKind = kind as ProjectKind;
+  const typedPlatform = platform as ProjectPlatform;
+  const list = getProjectsByKindPlatform(typedKind, typedPlatform);
   const sorted = [...list].sort((a, b) => b.stars - a.stars || a.name.localeCompare(b.name));
   const total = getAllProjects().length;
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    name: `NetTools Hub — ${kindLabel(kind)} on ${platformLabel(platform)}`,
+    name: `NetTools Hub — ${kindLabel(typedKind)} on ${platformLabel(typedPlatform)}`,
     url: `${SITE_CANONICAL}/explore/k/${kind}/p/${platform}`,
     numberOfItems: sorted.length,
     itemListElement: sorted.slice(0, 100).map((p, i) => ({
@@ -72,25 +74,19 @@ export default async function KindPlatformPage({
   };
   return (
     <ExploreLayout
-      current={{ kind: kind as ProjectKind, platform: platform as ProjectPlatform }}
+      current={{ kind: typedKind, platform: typedPlatform }}
       kindCounts={getKindCounts()}
       kindPlatformCounts={getKindPlatformCounts()}
       total={total}
-      title={`${platformLabel(platform)} · ${kindLabel(kind)}`}
-      meta={
-        <p className="text-[12.5px] text-fg-2">
-          <span className="font-mono text-muted">
-            [ {kind} / {platform} ]
-          </span>{' '}
-          {sorted.length} entries · <span className="font-mono text-muted">sorted by stars</span> ·{' '}
-          <a href={`${SITE_CANONICAL}/explore/k/${kind}`} className="link-editorial">
-            ← back to {kindLabel(kind)}
-          </a>
-        </p>
-      }
+      titleData={{ type: 'platform', kind: typedKind, platform: typedPlatform }}
+      metaData={{ variant: 'platform', count: sorted.length, kind: typedKind }}
       breadcrumb={
         <Breadcrumb
-          trail={[rootCrumb('en'), kindCrumb('en', kind), platformCrumb('en', kind, platform)]}
+          trail={[
+            rootCrumb('en'),
+            kindCrumb('en', typedKind),
+            platformCrumb('en', typedKind, typedPlatform),
+          ]}
         />
       }
     >

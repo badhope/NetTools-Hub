@@ -41,9 +41,9 @@ export function ProjectCard({ project: p }: ProjectCardProps) {
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
         <div className="flex-1 min-w-0">
-          <h3 className="font-medium text-fg group-hover:text-accent transition-colors truncate">
+          <h2 className="font-medium text-fg group-hover:text-accent transition-colors truncate">
             {p.name}
-          </h3>
+          </h2>
           <p className="text-xs text-muted mt-0.5">{p.author}</p>
         </div>
         <div className="flex flex-col items-end gap-1">

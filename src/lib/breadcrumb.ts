@@ -12,6 +12,7 @@
 import type { Lang } from './i18n';
 import { t } from './i18n';
 import { kindLabel, platformLabel } from './taxonomy';
+import type { ProjectKind, ProjectPlatform } from '@/types/project';
 
 export interface Crumb {
   label: string;
@@ -24,16 +25,16 @@ export function rootCrumb(lang: Lang): Crumb {
 }
 
 /** Convenience: kind crumb. */
-export function kindCrumb(lang: Lang, kind: string): Crumb {
+export function kindCrumb(lang: Lang, kind: ProjectKind): Crumb {
   return {
-    label: `${kindLabel(kind as never, lang)} (${kind})`,
+    label: `${kindLabel(kind, lang)} (${kind})`,
     href: `/explore/k/${kind}`,
   };
 }
 
 /** Convenience: platform crumb (last, no link). */
-export function platformCrumb(lang: Lang, kind: string, platform: string): Crumb {
+export function platformCrumb(lang: Lang, kind: ProjectKind, platform: ProjectPlatform): Crumb {
   return {
-    label: `${platformLabel(platform as never, lang)} (${platform})`,
+    label: `${platformLabel(platform, lang)} (${platform})`,
   };
 }

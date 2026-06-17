@@ -125,6 +125,7 @@ export function TopNav({ kindCounts, total, variant, sticky = true }: TopNavProp
 
           <Link
             href={primaryHref}
+            aria-label={primaryCta}
             className="link-editorial inline-flex h-9 items-center gap-2 px-1 text-sm"
           >
             <span className="hidden sm:inline">{primaryCta}</span>

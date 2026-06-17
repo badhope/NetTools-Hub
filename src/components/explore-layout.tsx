@@ -2,6 +2,10 @@
 
 import { TreeSidebar } from '@/components/tree-sidebar';
 import { TopNav } from '@/components/top-nav';
+import { ExploreMeta } from '@/components/explore-meta';
+import { useLang } from '@/components/lang-provider';
+import { t } from '@/lib/i18n';
+import { kindLabel, platformLabel } from '@/lib/taxonomy';
 import { ReactNode } from 'react';
 import type { ProjectKind, ProjectPlatform } from '@/types/project';
 
@@ -10,8 +14,24 @@ interface ExploreLayoutProps {
   kindCounts: Record<string, number>;
   kindPlatformCounts: Record<string, number>;
   total: number;
-  title: string;
-  meta?: ReactNode;
+  /** Structured title data; the layout renders it with i18n. */
+  titleData: {
+    type: 'all' | 'kind' | 'platform' | 'project';
+    kind?: ProjectKind;
+    platform?: ProjectPlatform;
+    projectName?: string;
+    projectKind?: ProjectKind;
+  };
+  /** Structured meta data; the layout renders it with i18n. */
+  metaData: {
+    variant: 'all' | 'kind' | 'platform' | 'project';
+    count: number;
+    totalStars?: number;
+    kind?: ProjectKind;
+    projectName?: string;
+    projectStars?: number;
+    projectLanguage?: string;
+  };
   breadcrumb?: ReactNode;
   children: ReactNode;
 }
@@ -19,36 +39,39 @@ interface ExploreLayoutProps {
 /**
  * Shared layout for the /explore/* URL tree.
  *
- *   ┌──────────────────────────────────────────────────────────┐
- *   │  TopNav (site chrome, language switcher)                 │
- *   ├──────────────────────────────────────────────────────────┤
- *   │  breadcrumb   /  kind  /  platform                       │
- *   │  title         "Proxy cores — desktop"                    │
- *   │  meta line     12 entries · 5.4k stars · sorted by ...   │
- *   ├──────────────────────────────────────────────────────────┤
- *   │ ┌──────────┐  ┌──────────────────────────────────────┐  │
- *   │ │ tree     │  │  card grid                           │  │
- *   │ │ sidebar  │  │                                      │  │
- *   │ └──────────┘  └──────────────────────────────────────┘  │
- *   └──────────────────────────────────────────────────────────┘
- *
- * The language is read from the `LangProvider` context by the
- * children (TopNav, TreeSidebar, Breadcrumb) so a switch in the
- * top nav re-renders the labels, tree titles, and breadcrumbs
- * without a full page reload. The `title` and `meta` props are
- * still passed in from the page because they are page-specific
- * and not in the i18n key space.
+ * Reads the active language from LangProvider so the title, meta
+ * line, tree sidebar, and breadcrumbs all re-render on language
+ * switch without a full page reload.
  */
 export function ExploreLayout({
   current,
   kindCounts,
   kindPlatformCounts,
   total,
-  title,
-  meta,
+  titleData,
+  metaData,
   breadcrumb,
   children,
 }: ExploreLayoutProps) {
+  const { lang } = useLang();
+
+  // Compute the page title from structured data + i18n.
+  let title: string;
+  switch (titleData.type) {
+    case 'all':
+      title = t(lang, 'explore.all_projects');
+      break;
+    case 'kind':
+      title = `${kindLabel(titleData.kind!, lang)} (${titleData.kind})`;
+      break;
+    case 'platform':
+      title = `${platformLabel(titleData.platform!, lang)} · ${kindLabel(titleData.kind!, lang)}`;
+      break;
+    case 'project':
+      title = `${titleData.projectName} — ${titleData.projectKind}`;
+      break;
+  }
+
   return (
     <div className="min-h-screen bg-bg text-fg">
       <TopNav kindCounts={kindCounts} total={total} variant="explore" sticky />
@@ -56,7 +79,9 @@ export function ExploreLayout({
         <header className="mb-5 border-b border-line pb-4">
           {breadcrumb}
           <h1 className="mt-2 text-[1.5rem] font-semibold leading-tight text-fg">{title}</h1>
-          {meta && <div className="mt-1">{meta}</div>}
+          <div className="mt-1">
+            <ExploreMeta {...metaData} />
+          </div>
         </header>
         <div className="flex flex-col gap-6 lg:flex-row">
           <TreeSidebar
