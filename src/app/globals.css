@@ -145,7 +145,12 @@
 }
 .link-editorial:hover {
   border-bottom-color: var(--color-accent);
-  color: #a7c4ff;
+  color: var(--color-accent-hover);
+}
+.link-editorial:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 1px;
 }
 
 /* Numbered section marker: `01 ───────────────────`. The number
@@ -281,10 +286,6 @@
   --color-accent-hover: #1d4ed8;
 }
 
-:root[data-theme='light'] .link-editorial:hover {
-  color: #1d4ed8;
-}
-
 :root[data-theme='light'] .badge--active {
   background-color: rgba(5, 150, 105, 0.1);
 }
@@ -302,6 +303,39 @@
 }
 :root[data-theme='light'] .badge--archived {
   background-color: rgba(220, 38, 38, 0.1);
+}
+
+/* ============================================================
+ * Kind card — landing page category grid
+ * ============================================================
+ * The card is a full-block <a>. On hover a 2px accent rail slides
+ * in from the left (via a ::before pseudo-element) and the
+ * background shifts to the sunk tone, giving the "field manual
+ * tab" feel without a heavy shadow or radius. Focus-visible
+ * mirrors the hover rail so keyboard users get the same signal.
+ * ============================================================ */
+.kind-card {
+  position: relative;
+  overflow: hidden;
+}
+.kind-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-accent);
+  transform: translateX(-100%);
+  transition: transform 160ms var(--ease-editorial);
+}
+.kind-card:hover::before,
+.kind-card:focus-visible::before {
+  transform: translateX(0);
+}
+.kind-card:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
 }
 
 /* ============================================================

@@ -129,7 +129,7 @@ export function LandingContent() {
                 <li key={k}>
                   <Link
                     href={withLang(lang, `/explore/k/${k}`)}
-                    className="block border border-line bg-bg-elev/40 p-4 transition-colors hover:border-accent hover:bg-bg-sunk"
+                    className="kind-card block border border-line bg-bg-elev/40 p-4 transition-colors hover:border-accent hover:bg-bg-sunk"
                   >
                     <div className="flex items-baseline justify-between">
                       <span className="font-mono text-[10.5px] text-muted">/{k}</span>

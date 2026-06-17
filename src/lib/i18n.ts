@@ -515,7 +515,7 @@ export function setLangAndPersist(newLang: Lang): void {
  * `localStorage` key for the user's preferred language. Kept as a
  * single constant so it's trivial to grep and rename.
  */
-export const LANG_STORAGE_KEY = 'nethub.lang';
+const LANG_STORAGE_KEY = 'nethub.lang';
 
 /**
  * Resolve the initial client-side language using the same precedence

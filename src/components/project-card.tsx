@@ -36,7 +36,7 @@ export function ProjectCard({ project: p }: ProjectCardProps) {
   return (
     <Link
       href={langParam(lang, `/explore/project/${p.id}`)}
-      className="group block border border-line bg-bg-elev/40 p-4 transition-all hover:border-accent hover:bg-bg-sunk"
+      className="kind-card group block border border-line bg-bg-elev/40 p-4 transition-all hover:border-accent hover:bg-bg-sunk"
     >
       {/* Header */}
       <div className="flex items-start justify-between gap-2 mb-2">
