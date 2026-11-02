@@ -586,6 +586,9 @@ SOLUTIONS = {
 }
 
 
+VALID_LANGS = {"python", "javascript", "typescript", "c", "lua", "sql"}
+
+
 def structural_checks(lessons):
     problems = []
     for lesson in lessons:
@@ -611,6 +614,28 @@ def structural_checks(lessons):
                 for row in b["rows"]:
                     if len(row) != width:
                         problems.append(f"{lid}: 表格列数不一致")
+            if b.get("type") == "compare":
+                cols = b.get("columns") or []
+                if len(cols) < 2:
+                    problems.append(f"{lid}: compare 至少需要 2 栏")
+                for c in cols:
+                    if not c.get("code"):
+                        problems.append(f"{lid}: compare 栏缺少 code")
+                    if c.get("lang") not in VALID_LANGS:
+                        problems.append(f"{lid}: compare 栏语言非法 {c.get('lang')!r}")
+            if b.get("type") == "visualize":
+                frames = b.get("frames") or []
+                if len(frames) < 2:
+                    problems.append(f"{lid}: visualize 至少需要 2 帧（否则没有「过程」）")
+                for f in frames:
+                    if not f.get("label"):
+                        problems.append(f"{lid}: visualize 帧缺少 label")
+                    names = {i.get("name") for i in (f.get("items") or [])}
+                    for h in (f.get("highlight") or []):
+                        if h not in names:
+                            problems.append(
+                                f"{lid}: visualize 高亮项 {h!r} 不在该帧 items 里"
+                            )
     return problems
 
 
@@ -762,7 +787,7 @@ def main():
     )
     with open(pack_path, encoding="utf-8") as f:
         lessons.extend(json.load(f))
-    for pack in ("dsa-basics.json", "dsa-mastery.json", "js-basics.json", "lua-basics.json", "sql-basics.json"):
+    for pack in ("dsa-basics.json", "dsa-mastery.json", "js-basics.json", "ts-basics.json", "c-basics.json", "lua-basics.json", "sql-basics.json"):
         pack_path = os.path.join(os.path.dirname(__file__), "..", "content_packs", pack)
         with open(pack_path, encoding="utf-8") as f:
             lessons.extend(json.load(f))
@@ -777,10 +802,12 @@ def main():
     # 多语言：JS 课程的判题在 tests/test_js_lessons.py 里用真实 JS 引擎（node）
     # 执行；Python runner 无法执行 JS，这里只做结构检查并单独计数。
     js_lessons = [l for l in lessons if l.get("lang", "python") == "javascript"]
+    c_lessons = [l for l in lessons if l.get("lang", "python") == "c"]
+    ts_lessons = [l for l in lessons if l.get("lang", "python") == "typescript"]
     lua_lessons = [l for l in lessons if l.get("lang", "python") == "lua"]
     sql_lessons = [l for l in lessons if l.get("lang", "python") == "sql"]
     py_lessons = [
-        l for l in lessons if l.get("lang", "python") not in ("javascript", "lua", "sql")
+        l for l in lessons if l.get("lang", "python") not in ("javascript", "typescript", "c", "lua", "sql")
     ]
     items = []
     for lesson in sorted(py_lessons, key=lambda x: x["order"]):
@@ -818,8 +845,9 @@ def main():
 
     print(
         f"\n课程数={len(lessons)}（Python {len(py_lessons)} + JavaScript {len(js_lessons)}"
-        f" + Lua {len(lua_lessons)} + SQL {len(sql_lessons)}；"
-        f"JS / Lua / SQL 判题分别由 test_js_lessons / LuaCoursePacksTest / test_sql_lessons 执行）"
+        f" + TypeScript {len(ts_lessons)} + C {len(c_lessons)} + Lua {len(lua_lessons)} + SQL {len(sql_lessons)}；"
+        f"JS / TS / C / Lua / SQL 判题分别由 test_js_lessons / TypeScriptCoursePacksTest / CCoursePacksTest"
+        f" / LuaCoursePacksTest / test_sql_lessons 执行）"
         f" 挑战数={len(challenges)}（JS {len(challenges) - len(py_challenges)} 道）"
         f" 判题项={checked} 用例总数={total_cases}"
     )

@@ -113,10 +113,12 @@ def main():
         json.loads(z.read(hit[0]).decode("utf-8"))
     print(f"[PASS] 课程与挑战 JSON 完整且可解析（{len(required_assets)} 个）")
 
-    syn = [n for n in names if n.endswith("syntaxes/javascript.tmLanguage.json")]
-    if not syn:
-        fail("APK 缺少 syntaxes/javascript.tmLanguage.json")
-    print("[PASS] JavaScript 语法高亮资源存在")
+    # 每门内置语言都必须有语法文件，否则该语言编辑器静默降级成白底
+    for lang in ("python", "javascript", "typescript", "c", "lua", "sql"):
+        hit = [n for n in names if n.endswith(f"syntaxes/{lang}.tmLanguage.json")]
+        if not hit:
+            fail(f"APK 缺少 syntaxes/{lang}.tmLanguage.json")
+    print("[PASS] 语法高亮资源齐全（python / javascript / typescript / c / lua / sql）")
 
     # AXML 是二进制格式，字符串资源以 UTF-16LE 存储
     manifest = z.read("AndroidManifest.xml").decode("utf-16-le", "ignore")

@@ -49,6 +49,32 @@ class EditorThemeTests(unittest.TestCase):
         )
         self.assertIn('"source.python"', text)
         self.assertIn('"source.js"', text)
+        self.assertIn('"source.ts"', text, "TypeScript 必须有独立 scope，否则高亮降级")
+        self.assertIn('"source.c"', text, "C 必须有独立 scope，否则高亮降级")
+
+    def test_every_shipped_language_has_syntax_file(self):
+        """每门内置语言都必须有 TextMate 语法文件，且文件里的 scopeName 与代码一致。
+
+        漏一个的直接后果：该语言编辑器静默降级成白底默认主题。
+        """
+        import plistlib
+        # 语言 id → (scopeName, 代表扩展名)
+        expected = {
+            "python": ("source.python", "py"),
+            "javascript": ("source.js", "js"),
+            "typescript": ("source.ts", "ts"),
+            "c": ("source.c", "c"),
+            "lua": ("source.lua", "lua"),
+            "sql": ("source.sql", "sql"),
+        }
+        for lang, (scope, ext) in expected.items():
+            with self.subTest(lang=lang):
+                path = os.path.join(ASSETS, "syntaxes", f"{lang}.tmLanguage.json")
+                self.assertTrue(os.path.exists(path), f"缺少语法文件 {lang}.tmLanguage.json")
+                with open(path, "rb") as f:
+                    data = plistlib.loads(f.read())
+                self.assertEqual(data["scopeName"], scope, f"{lang} 的 scopeName 应为 {scope}")
+                self.assertIn(ext, data["fileTypes"], f"{lang} 的 fileTypes 应含扩展名 {ext}")
 
     def test_theme_covers_sora_color_keys(self):
         text = _read(JAVA, "ui", "components", "CodeEditor.kt")
@@ -186,8 +212,9 @@ class VisualRegressionTests(unittest.TestCase):
 
     def test_code_inputs_disable_ime_autocapitalization(self):
         """代码大小写敏感：终端/填空/自定义颜色输入必须关掉 IME 自动大写。"""
+        # 自定义颜色输入已抽到 ThemePickerSection（设置页与「我的」页共用）
         for rel in (("screens", "TerminalScreen.kt"), ("screens", "LessonBlockCards.kt"),
-                    ("screens", "ProfileScreen.kt")):
+                    ("screens", "ThemePickerSection.kt")):
             text = _read(JAVA, *rel)
             self.assertIn("KeyboardType.Password", text, f"{rel[-1]} 未关闭自动大写")
             self.assertIn("autoCorrect = false", text, f"{rel[-1]} 未关闭自动纠错")
@@ -207,6 +234,124 @@ class VisualRegressionTests(unittest.TestCase):
         text = _read(JAVA, "screens", "HomeScreen.kt")
         seg = text[text.index('label = "挑战"'):][:300]
         self.assertIn("LocalFireDepartment", seg, "挑战按钮不应使用人像图标")
+
+
+class VisualStyleSwitchTests(unittest.TestCase):
+    """视觉风格开关（2026-11）：赛博朋克是默认个性，但必须可以关掉。
+
+    设计约束：风格只管「怎么动、怎么描边、什么形状」，不得引入第二套色板。
+    """
+
+    def test_style_enum_exists_with_both_options(self):
+        text = _read(JAVA, "ui", "theme", "VisualStyle.kt")
+        self.assertIn("enum class VisualStyle", text)
+        self.assertIn("CYBER", text)
+        self.assertIn("MINIMAL", text)
+        self.assertIn("LocalVisualStyle", text)
+
+    def test_style_does_not_define_its_own_colors(self):
+        """风格层只能引用现有 Token，不得自造色值（否则配色与风格会互相打架）。"""
+        text = _read(JAVA, "ui", "theme", "VisualStyle.kt")
+        self.assertNotRegex(
+            text, r"Color\(0x", "VisualStyle 不得定义 Color(0x…)，颜色一律来自 AppTheme"
+        )
+
+    def test_glitch_text_respects_style(self):
+        """简洁风格必须走纯 Text 分支，不能创建无限动画。"""
+        text = _read(JAVA, "ui", "effects", "Effects.kt")
+        seg = text[text.index("fun GlitchText"):][:900]
+        self.assertIn("glitchEnabled", seg, "GlitchText 必须响应风格开关")
+        self.assertRegex(seg, r"if \(!LocalVisualStyle\.current\.glitchEnabled\)",
+                         "简洁风格应在创建动画前直接返回")
+
+    def test_backdrop_modifiers_respect_style(self):
+        """扫描线与网格必须能整体关闭（省电、减少视觉噪音）。"""
+        text = _read(JAVA, "ui", "effects", "Effects.kt")
+        for name in ("fun Modifier.scanlines", "fun Modifier.cyberGrid"):
+            with self.subTest(modifier=name):
+                seg = text[text.index(name):][:700]
+                self.assertIn("backdropEnabled", seg, f"{name} 必须响应风格开关")
+
+    def test_neon_card_shape_and_border_follow_style(self):
+        """卡片形状与描边必须来自风格，不能写死切角 + 霓虹渐变。"""
+        text = _read(JAVA, "ui", "effects", "Effects.kt")
+        seg = text[text.index("fun NeonCard"):][:1200]
+        self.assertIn("LocalVisualStyle.current.cardShape", seg)
+        self.assertIn("styleBorder", seg)
+
+    def test_theme_provides_visual_style(self):
+        """主题必须同时下发配色与风格，否则子界面拿不到开关。"""
+        theme = _read(JAVA, "ui", "theme", "Theme.kt")
+        self.assertIn("LocalVisualStyle provides visualStyle", theme)
+        activity = _read(os.path.join(JAVA, "MainActivity.kt"))
+        self.assertIn("KEY_VISUAL_STYLE", activity, "MainActivity 必须监听风格变更以即时生效")
+
+    def test_settings_screen_exposes_style_picker(self):
+        """风格切换必须能从设置页进入（用户明确要求放在设置里）。"""
+        text = _read(JAVA, "screens", "SettingsScreen.kt")
+        self.assertIn("外观风格", text)
+        self.assertIn("VisualStyle.entries", text)
+        self.assertIn("saveVisualStyle", text)
+
+    def test_style_preference_is_persisted(self):
+        text = _read(JAVA, "utils", "ThemePreference.kt")
+        self.assertIn("KEY_VISUAL_STYLE", text)
+        self.assertIn("getVisualStyle", text)
+        self.assertIn("saveVisualStyle", text)
+
+
+class AccessibilityTests(unittest.TestCase):
+    """可访问性：字号缩放必须存在，且不得破坏代码块对齐。"""
+
+    def test_font_scale_enum_exists(self):
+        text = _read(JAVA, "ui", "theme", "Type.kt")
+        self.assertIn("enum class FontScale", text)
+        for level in ("COMPACT", "NORMAL", "COMFORT", "LARGE"):
+            self.assertIn(level, text, f"缺少字号档位 {level}")
+
+    def test_font_scale_only_scales_reading_text(self):
+        """只放大正文，不放大等宽标题——否则窄屏中文标题会换行错位。"""
+        text = _read(JAVA, "ui", "theme", "Type.kt")
+        seg = text[text.index("fun typographyFor"):]
+        self.assertIn("bodyLarge", seg)
+        self.assertIn("bodyMedium", seg)
+        self.assertNotIn("headlineLarge = AppTypography.headlineLarge.scaled()", seg,
+                         "标题不应参与缩放")
+        self.assertNotIn("labelSmall = AppTypography.labelSmall.scaled()", seg,
+                         "等宽标签不应参与缩放")
+
+    def test_font_scale_is_persisted_and_applied(self):
+        pref = _read(JAVA, "utils", "ThemePreference.kt")
+        self.assertIn("KEY_FONT_SCALE", pref)
+        self.assertIn("getFontScale", pref)
+        theme = _read(JAVA, "ui", "theme", "Theme.kt")
+        self.assertIn("typographyFor(fontScale)", theme, "主题必须应用字号档位")
+        activity = _read(os.path.join(JAVA, "MainActivity.kt"))
+        self.assertIn("KEY_FONT_SCALE", activity, "MainActivity 必须监听字号变更")
+
+    def test_theme_picker_reachable_from_settings(self):
+        """配色主题必须能从设置页进入，且与「我的」页共用同一组件（防两套漂移）。"""
+        settings = _read(JAVA, "screens", "SettingsScreen.kt")
+        self.assertIn("ThemePickerSection()", settings, "设置页缺少配色主题入口")
+        profile = _read(JAVA, "screens", "ProfileScreen.kt")
+        self.assertIn("ThemePickerSection()", profile, "「我的」页应复用同一组件")
+        # 不允许任何一页自己再写一份 AppThemes.allThemes 循环
+        self.assertNotIn("AppThemes.allThemes.forEach", profile,
+                         "主题列表只应存在于 ThemePickerSection，不得重复实现")
+        self.assertNotIn("AppThemes.allThemes.forEach", settings,
+                         "主题列表只应存在于 ThemePickerSection，不得重复实现")
+
+    def test_settings_exposes_font_scale(self):
+        text = _read(JAVA, "screens", "SettingsScreen.kt")
+        self.assertIn("FontScale.entries", text)
+        self.assertIn("saveFontScale", text)
+
+    def test_minimal_style_disables_autoplay(self):
+        """简洁风格下可视化块不应自动播放（避免持续动画干扰阅读）。"""
+        text = _read(JAVA, "screens", "LessonBlockCards.kt")
+        seg = text[text.index("fun VisualizeCard"):]
+        self.assertIn("pressAnimationEnabled", seg,
+                      "自动播放按钮应受风格开关控制")
 
 
 if __name__ == "__main__":

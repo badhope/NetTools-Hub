@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-10-24",
-  "sha256": "54d6f1a97dfc845a6261aa757b5dbefb2350009f501ea91a63c426e735cf9f01",
+  "updated_at": "2026-11-03",
+  "sha256": "e9d22425055aba8b346cb1b9021e59b3f2231a1f8175af0c9aeb008f59ec80bb",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -55,6 +55,24 @@
       "sha256": "fd2f8d7899b04b1cb4f5d9abc6f5b510ae4f9cf13be01e12abc50ad42aa03f00",
       "kind": "course",
       "lang": "sql"
+    },
+    {
+      "id": "ts-basics",
+      "name": "语言包 · TypeScript 启程",
+      "version": 1,
+      "description": "6 讲 TypeScript 入门：类型标注 / interface / 函数签名 / 联合类型收窄 / 泛型 / enum。类型在运行时被擦除，与 JS 同一套 Rhino 沙箱执行。",
+      "sha256": "db6c6fc32ff30e3c8aa0eb1419ecdb253a6ebff59ac0422da8f052ffe7380022",
+      "kind": "course",
+      "lang": "typescript"
+    },
+    {
+      "id": "c-basics",
+      "name": "语言包 · C 启程",
+      "version": 1,
+      "description": "6 讲 C 入门：printf / 类型 / 循环 / 数组 / 函数递归 / 语言边界。设备端教学子集解释器直接执行，无需 NDK。",
+      "sha256": "afa0a9f6649e3529675661a5560b21dc25f10deb3f814d6a556d762c844d4534",
+      "kind": "course",
+      "lang": "c"
     }
   ]
 }

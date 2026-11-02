@@ -87,15 +87,24 @@ flowchart LR
     U --> W
 ```
 
-## 📈 Content At A Glance
+## 📈 What You Learn · Six Languages, Really Executed
 
-```mermaid
-pie title Content Scale (lessons / items)
-    "38 Built-in Lessons" : 38
-    "17 Language-Pack Lessons" : 17
-    "8 Arena Challenges" : 8
-    "63 assert judge items" : 63
-```
+Every language ships a **real runtime + lessons + assert-based judging** — not a syntax cheat sheet:
+
+| Language | Runtime | What you'll learn | Lessons |
+|---|---|---|---|
+| **Python** | Embedded CPython 3.13 | print through async coroutines, decorators, regex, type hints — plus two capstone projects | 38-lesson mainline + DSA basics/advanced + builtin tour |
+| **JavaScript** | Rhino 1.7.15 | console.log, Math, string methods, branching guards, array loops, object stats | 6-lesson starter pack |
+| **TypeScript** | Type erasure + Rhino | type annotations, interface, function signatures, union narrowing, generics, enum | 6-lesson starter pack |
+| **C** | Built-in interpreter (no NDK) | printf, int/double/char, for/while, arrays, functions & recursion, language limits | 6-lesson starter pack |
+| **Lua** | LuaJ 3.0.1 | print, local & types, if/for/while, tables (array + map), multiple returns, string library | 6-lesson starter pack |
+| **SQL** | SQLite (in-memory) | SELECT, WHERE/ORDER BY, aggregates, INNER JOIN, INSERT/UPDATE, subqueries & NULL | 6-lesson starter pack |
+
+All four share one judging contract: write → run → assert → coach on failure → advance on pass.
+
+- **Built-in vs on-demand**: the Python mainline ships inside the APK; JS / TS / C / Lua / SQL packs download from the Language Center and only then appear in the lesson list — no first-install bloat.
+- **Separate sandboxes**: Python uses a `settrace` watchdog, JS and TS deny all Java classes via `ClassShutter` (TS transpiles then reuses the JS sandbox), C runs on a purpose-built subset interpreter (no pointers/structs/preprocessor), Lua omits `io`/`os`/`require`, SQL stays on `:memory:` with `ATTACH` denied.
+- **Not yet supported**: Java / C++ / Go / Rust need compilers or native toolchains and can't ship offline; the Language Center marks them "unsupported" and offers no download.
 
 ## 🏆 Six-Tier Progression
 
@@ -220,6 +229,10 @@ A second client runs the **same course JSON and the same `runner.py`** in the br
 ### 🧩 Engineering Quality
 
 - 🎨 **7 Color Themes** — Cyber Neon / Deep Space Gray / Aurora Green / Twilight Purple / Twilight Orange / Soft Eye-Care / Paper White, instant switch without restart
+- 🔍 **Four font sizes** — Compact / Normal / Comfortable / Large in Settings; scales lesson prose only, code blocks keep their size so indentation stays aligned
+- 🎬 **Step-through visualizations** — loop variables and recursion stacks as frame-by-frame animations: single-step, autoplay, changed values highlighted
+- 🔀 **Side-by-side language comparison** — the same task in 2–4 languages, each column runnable for instant output diffing
+- 🎛 **Cyber / Minimal Dual Style** — colour and motion are decoupled: if you'd rather not see glitch jitter, scanlines or neon gradient borders, switch to Minimal in Settings → Appearance (static type, hairline borders, rounded cards). Colours stay free to mix.
 - 👓 **Readability-First UI** — effects confined to decoration zones (boot/home/terminal…); lesson body and graded results use larger sans-serif text, no gimmicks
 - ⚡ **Fully Offline** — lessons and interpreter ship inside the APK, no account required; new versions are installed from Releases (no in-app updater yet)
 

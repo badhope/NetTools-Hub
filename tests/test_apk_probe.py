@@ -58,7 +58,8 @@ def _write_apk(path, layout="py", *, with_assets=True, runner=None, repl=None):
             for name in ("lessons_basic.json", "lessons_mid.json", "lessons_adv.json",
                          "lessons_pro.json", "challenges.json"):
                 z.writestr(f"assets/{name}", json.dumps([]))
-            z.writestr("assets/syntaxes/javascript.tmLanguage.json", "{}")
+            for _lang in ("python", "javascript", "typescript", "c", "lua", "sql"):
+                z.writestr(f"assets/syntaxes/{_lang}.tmLanguage.json", "{}")
         z.writestr("AndroidManifest.xml", "com.pyneon.academy".encode("utf-16-le"))
         z.writestr("classes.dex", b"dex-035")
         for i in range(520):
@@ -99,7 +100,8 @@ class ApkProbeTests(unittest.TestCase):
                         for n in ("lessons_basic.json", "lessons_mid.json", "lessons_adv.json",
                                   "lessons_pro.json", "challenges.json"):
                             z.writestr(f"assets/{n}", "[]")
-                        z.writestr("assets/syntaxes/javascript.tmLanguage.json", "{}")
+                        for _lang in ("python", "javascript", "typescript", "c", "lua", "sql"):
+                            z.writestr(f"assets/syntaxes/{_lang}.tmLanguage.json", "{}")
                         z.writestr("AndroidManifest.xml", "com.pyneon.academy".encode("utf-16-le"))
                         z.writestr("classes.dex", b"dex-035")
                         for i in range(520):
@@ -124,7 +126,8 @@ class ApkProbeTests(unittest.TestCase):
                 for n in ("lessons_basic.json", "lessons_mid.json", "lessons_adv.json",
                           "lessons_pro.json", "challenges.json"):
                     z.writestr(f"assets/{n}", "[]")
-                z.writestr("assets/syntaxes/javascript.tmLanguage.json", "{}")
+                for _lang in ("python", "javascript", "typescript", "c", "lua", "sql"):
+                    z.writestr(f"assets/syntaxes/{_lang}.tmLanguage.json", "{}")
                 z.writestr("AndroidManifest.xml", "com.pyneon.academy".encode("utf-16-le"))
                 z.writestr("classes.dex", b"dex-035")
                 for i in range(520):

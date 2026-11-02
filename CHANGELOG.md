@@ -4,9 +4,28 @@
 
 ## [Unreleased]
 
+### Added
+- **C 运行时**（`c/CInterpreter.kt` + `c/CBridge.kt`，纯 Kotlin 教学子集解释器，无 NDK）：支持 int/double/char、一维数组、函数与递归、printf/puts/putchar、assert/assertOutput；不支持指针/结构体/预处理/switch，遇到即明确报错而非静默错答
+- **C 启程课程包**（`content_packs/c-basics.json`，6 讲 / 15 判题用例）
+- **TypeScript 运行时**（`ts/TypeScriptTranspiler.kt` + `ts/TsBridge.kt`）：类型擦除后复用 Rhino 沙箱，零新增依赖、零 APK 体积增长；支持类型标注/interface/泛型/enum/联合类型，不支持装饰器/命名空间
+- **TypeScript 启程课程包**（6 讲 / 17 判题用例）
+- **两种新内容块**：`compare`（多语言并排对照，每栏可独立运行）与 `visualize`（过程逐帧可视化，支持单步/自动播放/变化项高亮）
+- **视觉风格开关**（`ui/theme/VisualStyle.kt`）：赛博朋克 / 简洁双风格，与配色正交；简洁模式关闭故障字抖动、扫描线、霓虹渐变描边与按压回弹
+- **四档字号**（`FontScale`）：紧凑/标准/舒适/大字，只放大课程正文，代码块保持原字号
+- 设置页新增「外观风格」与「字号」区块
+
 ### Changed
-- 路线页 / `TrackRepository` / `LessonRepository` 的「内容中心」术语统一为「语言中心」（含未下载提示「需在语言中心下载」）
-- `ARCHITECTURE.md` 新增工具清单：`gen_language_packs` / `update_catalog` / `sync_pages_assets` / `check_links` / `ci_apk_probe`
+- 版本 0.5.0 → **0.6.0**（versionCode 17 → 18）
+- 语言中心 / 课程路线 / README 三语 / 官网同步六门语言口径
+
+### Fixed
+- **判题假通过漏洞**（C）：用户代码与测试都定义 `main` 时，测试的 `main` 静默覆盖用户实现，导致空实现也能通过。现改为测试入口重命名为 `__test_main`，并先跑用户 `main` 再跑测试，输出共享同一缓冲区
+- **Python 引擎并发串台**：`runner.py` 改写进程级 `sys.stdout` 却无互斥，两路并发执行会互相劫持输出（实测 A 只剩 3/50 行）。新增 `EXEC_LOCK`（RLock），`repl.py` 复用同一把锁，`PyBridge` 加 `synchronized` 门闩
+- Windows 下 `test_web_sync` 子进程输出按 GBK 解码导致 UnicodeDecodeError
+
+### Changed（历史遗留项，已在 0.5.0 发布）
+- 路线页 / `TrackRepository` / `LessonRepository` 的「内容中心」术语统一为「语言中心」
+- `ARCHITECTURE.md` 新增工具清单
 
 ## [0.5.0] - 2026-10-24
 

@@ -15,6 +15,10 @@ flowchart TB
         R["runner.py<br/>无状态执行 + assert 判题 + 变量快照"]
         P["repl.py<br/>有状态会话（仅 Android）"]
         J["JsBridge.kt<br/>Rhino 1.7.15 解释模式（仅 Android）"]
+        T["TsBridge.kt<br/>TypeScript 类型擦除 → 复用 Rhino"]
+        CI["CInterpreter.kt<br/>C 教学子集解释器（纯 Kotlin）"]
+        L["LuaBridge.kt<br/>LuaJ 沙箱"]
+        S["SqlBridge.kt<br/>SQLite 内存库"]
     end
     subgraph Storage["本地存储"]
         D["DataStore Preferences<br/>pyneon_progress"]
@@ -39,7 +43,7 @@ flowchart TB
 设计约束：
 
 - **判题语义单一实现**。`runner.py` 是唯一判题引擎；Android 通过 Chaquopy 调用，网页端通过 Pyodide 执行同一份源码（`web/gen_data.py` 内联，`tests/test_web_sync.py` 逐字节校验）。
-- **运行时抽象**。`LanguageRuntime` 接口（`app/src/main/java/com/pyneon/academy/lang/LanguageRuntime.kt`）定义 `runCode / checkExercise / replStart / replPush / version / warmup / ensureStarted`；`PyBridge` 与 `JsBridge` 是两个实现，UI 只依赖接口与 `LanguageRegistry`。
+- **运行时抽象**。`LanguageRuntime` 接口（`app/src/main/java/com/pyneon/academy/lang/LanguageRuntime.kt`）定义 `runCode / checkExercise / replStart / replPush / version / warmup / ensureStarted`；六个实现（`PyBridge` / `JsBridge` / `TsBridge` / `CBridge` / `LuaBridge` / `SqlBridge`）全部返回同一 JSON 结构，UI 只依赖接口与 `LanguageRegistry`。
 - **离线优先**。学习、运行、判题不触网；只有「语言中心」手动检查/下载课程包时联网，走三级源 + SHA-256。
 
 ## 2. 执行与沙箱
@@ -87,7 +91,7 @@ flowchart TB
 | `id` | string | 全局唯一（`tests/test_multilang_content.py` 校验跨语言唯一） |
 | `chapter` / `chapterName` | int / string | 内置 38 讲分 5 幕（1-10 / 11-18 / 19-26 / 27-30 / 31-38） |
 | `lang` | `python` \| `javascript` | 缺省 `python`，旧内容零改动兼容 |
-| `blocks[]` | 14 种块 | heading/text/tip/warn/task/steps/diagram/output/table/code/quiz/order/practice/fill + exercise |
+| `blocks[]` | 16 种块 | heading/text/tip/warn/task/steps/diagram/output/table/code/quiz/order/practice/fill + compare/visualize + exercise |
 | `exercise.tests[]` | string[] | Python 为 assert 语句；JS 为 `assert(cond, msg)` |
 
 内容包（`content_packs/*.json`）由语言中心下载到 `filesDir/courses/<id>.v<N>.json`；`catalog.json` 顶层 `sha256` 为「剥离自身 sha256 字段后的文本」哈希，包内 `sha256` 逐包校验。

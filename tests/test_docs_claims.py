@@ -148,6 +148,39 @@ class TestCapabilityClaims(unittest.TestCase):
                     self.assertNotIn(phrase, head, f"{name} 声称语言包可扩展运行时，但当前无语言包下载")
                 self.assertIn("JavaScript", head, f"{name} 首屏应写明已内置 JavaScript 运行时")
 
+    def test_readmes_list_all_shipped_languages(self):
+        """三语 README 的「学什么」表必须逐门列出四个运行时，且点明按需下载。
+
+        口径约定（2026-11）：对外讲「有哪些语言、各能学到什么」，
+        不再用单一的判题总数当卖点——数字会随内容增删漂移，语言清单不会。
+        """
+        cases = {
+            "README.zh-CN.md": ("Python", "JavaScript", "Lua", "SQL", "按需下载"),
+            "README.md": ("Python", "JavaScript", "Lua", "SQL", "on-demand"),
+            "README.ja-JP.md": ("Python", "JavaScript", "Lua", "SQL", "オンデマンド"),
+        }
+        for name, needles in cases.items():
+            with self.subTest(file=name):
+                text = _read(ROOT / name)
+                for needle in needles:
+                    self.assertIn(needle, text, f"{name} 缺少语言清单要素：{needle}")
+
+    def test_no_stale_judge_totals_in_public_docs(self):
+        """公开文档不得再出现与仓库不符的判题总数（曾写死 63 项 / 230 用例）。
+
+        正确口径来自 assets + content_packs 实时统计，禁止在文案里硬编码。
+        """
+        stale = ("63 项 assert 判题", "63 assert judge items", "63 項目",
+                 "230 用例", "230 CASES")
+        for name in ("README.md", "README.zh-CN.md", "README.ja-JP.md"):
+            with self.subTest(file=name):
+                text = _read(ROOT / name)
+                for phrase in stale:
+                    self.assertNotIn(phrase, text, f"{name} 仍含过期判题总数：{phrase}")
+        index = _read(ROOT / "docs" / "index.html")
+        for phrase in ("63 项 assert 判题", "63 项判题", "230 用例", "230 CASES"):
+            self.assertNotIn(phrase, index, f"官网仍含过期判题总数：{phrase}")
+
 
 class TestCiClaims(unittest.TestCase):
     """GitCode 的代码化流水线 push 不自动触发，文档不得再声称它承担门禁。"""
