@@ -200,6 +200,23 @@ fun LessonDetailScreen(lessonId: String, onBack: () -> Unit, onNextLesson: ((Str
                     is Block.Fill -> FillCard(block, lang = lesson.lang)
                     is Block.Order -> OrderPuzzleCard(block)
                     is Block.Quiz -> QuizCard(block)
+                    is Block.Compare -> CompareCard(
+                        block = block,
+                        results = runResults,
+                        runningKey = runningKey,
+                        onRun = { key, col ->
+                            scope.launch {
+                                runningKey = key
+                                val r = withContext(Dispatchers.Default) {
+                                    LanguageRegistry.get(col.lang).runCode(col.code, emptyList())
+                                }
+                                runResults[key] = r
+                                runningKey = null
+                                recordSideEffects(context, r)
+                            }
+                        }
+                    )
+                    is Block.Visualize -> VisualizeCard(block)
                     is Block.CodeBlock -> CodeExampleCard(
                         code = block.code,
                         runnable = block.runnable,

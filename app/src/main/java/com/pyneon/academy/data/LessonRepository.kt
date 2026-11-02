@@ -35,6 +35,47 @@ sealed class Block {
         val answerIndex: Int,
         val explain: String
     ) : Block()
+
+    /**
+     * 多语言对照块：同一件事在 2–3 门语言里怎么写。
+     *
+     * 教学价值：学习者最容易建立「概念是共通的、语法才是差异」的认知。
+     * 每栏可独立运行（runnable），由各自语言的运行时执行。
+     */
+    data class Compare(
+        val title: String,
+        val columns: List<CompareColumn>
+    ) : Block()
+
+    data class CompareColumn(
+        val lang: String,
+        val code: String,
+        val note: String = "",
+        val runnable: Boolean = true
+    )
+
+    /**
+     * 可视化块：把抽象过程画成可逐步播放的动画。
+     *
+     * 用途：变量变化、循环迭代、数组移动、递归调用栈——这些用文字描述
+     * 很吃力，但一帧一帧看就明白了。每帧是一组「标签 → 值」快照，
+     * 播放器按顺序高亮变化项。
+     */
+    data class Visualize(
+        val title: String,
+        val caption: String = "",
+        /** 每帧：一行说明 + 若干「名字 → 值」项 */
+        val frames: List<VisualFrame>
+    ) : Block()
+
+    data class VisualFrame(
+        val label: String,
+        val items: List<VisualItem> = emptyList(),
+        /** 高亮哪些项发生了变化（按 name 匹配） */
+        val highlight: List<String> = emptyList()
+    )
+
+    data class VisualItem(val name: String, val value: String)
 }
 
 data class Exercise(
@@ -190,6 +231,46 @@ object LessonRepository {
                         buildList { for (j in 0 until la.length()) add(la.getString(j)) }
                     }
                     blocks.add(Block.Order(b.getString("title"), ls))
+                }
+                "compare" -> {
+                    val cols = mutableListOf<Block.CompareColumn>()
+                    val ca = b.optJSONArray("columns") ?: JSONArray()
+                    for (j in 0 until ca.length()) {
+                        val c = ca.getJSONObject(j)
+                        cols.add(
+                            Block.CompareColumn(
+                                lang = c.optString("lang", LanguageIds.PYTHON),
+                                code = c.getString("code"),
+                                note = c.optString("note", ""),
+                                runnable = c.optBoolean("runnable", true)
+                            )
+                        )
+                    }
+                    blocks.add(Block.Compare(b.optString("title", "多语言对照"), cols))
+                }
+                "visualize" -> {
+                    val frames = mutableListOf<Block.VisualFrame>()
+                    val fa = b.optJSONArray("frames") ?: JSONArray()
+                    for (j in 0 until fa.length()) {
+                        val f = fa.getJSONObject(j)
+                        val items = mutableListOf<Block.VisualItem>()
+                        val ia = f.optJSONArray("items") ?: JSONArray()
+                        for (k in 0 until ia.length()) {
+                            val it = ia.getJSONObject(k)
+                            items.add(Block.VisualItem(it.getString("name"), it.getString("value")))
+                        }
+                        val hl = f.optJSONArray("highlight")?.let { ha ->
+                            buildList { for (k in 0 until ha.length()) add(ha.getString(k)) }
+                        } ?: emptyList()
+                        frames.add(Block.VisualFrame(f.getString("label"), items, hl))
+                    }
+                    blocks.add(
+                        Block.Visualize(
+                            title = b.optString("title", "过程可视化"),
+                            caption = b.optString("caption", ""),
+                            frames = frames
+                        )
+                    )
                 }
                 "quiz" -> {
                     val options = b.getJSONArray("options").let { oa ->
