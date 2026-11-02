@@ -18,6 +18,15 @@ MAX_OUTPUT = 1_048_576
 MAX_VAR_BYTES = 1_000_000
 
 
+# 进程级执行锁：一次运行会改写 sys.stdout / sys.stderr / builtins.input 这些
+# 进程级全局对象（见 _run_protected），两个执行并发进入就会互相劫持缓冲区。
+# 实测：两个线程各打印 50 行，A 的 47 行被写进了 B 的缓冲区，A 自己只剩 3 行。
+# 所有改动这些全局状态的入口（run_code / check_exercise / repl.push）必须共用
+# 同一把锁，因此 repl.py 也导入本对象而不是自带一把。
+# 用 RLock 是为了容忍同线程内的嵌套获取（push -> runcode）。
+EXEC_LOCK = threading.RLock()
+
+
 class SandboxTimeout(Exception):
     pass
 
@@ -208,7 +217,8 @@ def _snapshot(namespace):
 
 def run_code(code, stdin_lines=None, timeout=DEFAULT_TIMEOUT):
     namespace = {"__name__": "__main__", "__doc__": None}
-    core = _run_protected(code, namespace, stdin_lines or [], float(timeout))
+    with EXEC_LOCK:
+        core = _run_protected(code, namespace, stdin_lines or [], float(timeout))
     result = dict(core)
     result["ok"] = core["error"] is None
     result["variables"] = _snapshot(namespace)
@@ -216,7 +226,14 @@ def run_code(code, stdin_lines=None, timeout=DEFAULT_TIMEOUT):
 
 
 def check_exercise(code, tests, stdin_lines=None):
+    # 用户代码与后续每条断言都会改写进程级 sys.stdout，必须与 run_code 互斥，
+    # 且整段（跑用户代码 + 跑用例）保持同一把锁，否则中途可能被另一次运行插入。
     namespace = {"__name__": "__main__", "__doc__": None}
+    with EXEC_LOCK:
+        return _check_exercise_locked(code, tests, stdin_lines, namespace)
+
+
+def _check_exercise_locked(code, tests, stdin_lines, namespace):
     core = _run_protected(code, namespace, stdin_lines or [], DEFAULT_TIMEOUT)
     if core["error"] is not None:
         return {

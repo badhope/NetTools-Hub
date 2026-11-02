@@ -5,7 +5,7 @@ import sys
 import threading
 import time
 
-from runner import DEFAULT_TIMEOUT, SandboxTimeout, _Watchdog, _truncate
+from runner import DEFAULT_TIMEOUT, EXEC_LOCK, SandboxTimeout, _Watchdog, _truncate
 
 # B1: how long a single REPL statement may run before it is force-interrupted.
 # Mirrors runner.DEFAULT_TIMEOUT so the desktop/Android behaviour is identical.
@@ -14,7 +14,9 @@ REPL_TIMEOUT = DEFAULT_TIMEOUT
 _console = None
 # E3: REPL 会话是进程内单例（跨 push 保持状态），用锁保证 start/reset/push
 # 的原子性，避免 UI 线程与后台线程并发访问同一个 console 导致串台。
-_console_lock = threading.Lock()
+# 复用 runner.EXEC_LOCK：REPL 同样会改写进程级 sys.stdout/sys.stderr，
+# 必须与 run_code / check_exercise 互斥，否则终端与课程页并发执行会互相劫持输出。
+_console_lock = EXEC_LOCK
 
 
 class NeonConsole(code_module.InteractiveConsole):

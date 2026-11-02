@@ -44,6 +44,19 @@ object PyBridge : LanguageRuntime {
 
     private fun module(name: String) = Python.getInstance().getModule(name)
 
+    /**
+     * 执行互斥锁。
+     *
+     * runner.py 的一次运行会改写进程级全局 `sys.stdout` / `sys.stderr` /
+     * `builtins.input`，两次执行并发进入就会互相劫持缓冲区（实测：A 的 47 行
+     * 输出被写进 B 的输出、A 自己只剩 3 行）。Python 侧已有 `runner.EXEC_LOCK`
+     * 串行化，这里再加一层与 [com.pyneon.academy.js.JsBridge] /
+     * [com.pyneon.academy.lua.LuaBridge] 相同的 synchronized 门闩：
+     * 让阻塞发生在 JVM 侧，避免多线程同时压进 Chaquopy 的调用通道。
+     * 同一线程重入是安全的（JVM monitor 可重入，warmup → runCode 依赖这一点）。
+     */
+    private val execLock = Any()
+
     override fun runCode(
         code: String,
         stdinLines: List<String>,
@@ -54,7 +67,9 @@ object PyBridge : LanguageRuntime {
             put("stdin", JSONArray(stdinLines))
             put("timeout", timeoutSec)
         }
-        return parseRun(module("runner").callAttr("run_code_json", payload.toString()).toString())
+        return synchronized(execLock) {
+            parseRun(module("runner").callAttr("run_code_json", payload.toString()).toString())
+        }
     }
 
     override fun checkExercise(
@@ -67,7 +82,9 @@ object PyBridge : LanguageRuntime {
             put("tests", JSONArray(tests))
             put("stdin", JSONArray(stdinLines))
         }
-        return parseRun(module("runner").callAttr("check_exercise_json", payload.toString()).toString())
+        return synchronized(execLock) {
+            parseRun(module("runner").callAttr("check_exercise_json", payload.toString()).toString())
+        }
     }
 
     fun pythonVersion(): String {
