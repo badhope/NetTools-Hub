@@ -36,9 +36,14 @@ def _read(path):
 
 
 def _load_assets():
+    """assets 内置课程 + content_packs 语言包（与 web/gen_data.py 的合并顺序一致）。"""
     lessons = []
     for name in LESSON_FILES:
         lessons.extend(json.loads(_read(os.path.join(ASSETS, name))))
+    packs_dir = os.path.join(ROOT, "content_packs")
+    for name in sorted(os.listdir(packs_dir)):
+        if name.endswith(".json"):
+            lessons.extend(json.loads(_read(os.path.join(packs_dir, name))))
     challenges = json.loads(_read(os.path.join(ASSETS, "challenges.json")))
     return lessons, challenges
 
@@ -61,7 +66,7 @@ def _parse_engine_js():
 
 class TestWebDataSync(unittest.TestCase):
     def test_web_lessons_match_assets(self):
-        """R1: 课程逐条一致（id 序列 + chapter + order）。"""
+        """R1: 课程逐条一致（id 序列 + chapter + order），含全部语言包。"""
         assets_lessons, _ = _load_assets()
         web_lessons, _ = _parse_data_js()
         self.assertEqual(
@@ -302,7 +307,7 @@ class TestTooling(unittest.TestCase):
     def test_check_links_passes_on_repo(self):
         import subprocess, sys
         r = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "check_links.py")],
-                           capture_output=True, text=True, cwd=ROOT, timeout=120)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=ROOT, timeout=120)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
     def test_check_links_catches_missing_target(self):
@@ -326,13 +331,65 @@ class TestTooling(unittest.TestCase):
                    os.path.join(ROOT, "docs", "web", "app.js")]
         before = [digest(p) for p in targets]
         r = subprocess.run([sys.executable, os.path.join(ROOT, "tools", "sync_pages_assets.py")],
-                           capture_output=True, text=True, cwd=ROOT, timeout=180)
+                           capture_output=True, text=True, encoding="utf-8", errors="replace", cwd=ROOT, timeout=180)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
         self.assertEqual(before, [digest(p) for p in targets], "同步脚本不是幂等的")
 
     def test_brand_assets_exist(self):
         for rel in ("docs/banner.png", "demo/promo-poster.jpg", "docs/assets/og.jpg"):
             self.assertTrue(os.path.exists(os.path.join(ROOT, rel)), f"缺少品牌资产 {rel}")
+
+
+class WebMultiLanguageTests(unittest.TestCase):
+    """网页端多语言口径（2026-11）：全部课程可读，仅 Python 可运行。
+
+    设计取舍：不隐藏非 Python 课程——学习者能读到讲解、看到答案；
+    但必须明确标注「需在 App 内运行」，不能假装能跑。
+    """
+
+    def test_web_data_contains_all_languages(self):
+        text = _read(os.path.join(ROOT, "web", "data.js"))
+        for lid in ("l01", "js01", "ts01", "c01", "lua01", "sql01"):
+            with self.subTest(lesson=lid):
+                self.assertIn(f'"{lid}"', text, f"web/data.js 缺少课程 {lid}")
+
+    def test_web_declares_runnable_languages(self):
+        js = _read(os.path.join(ROOT, "web", "app.js"))
+        self.assertIn("RUNNABLE_LANGS", js, "必须显式声明哪些语言可运行")
+        self.assertIn("langRunnable", js)
+        # 只有 python 在可运行表里
+        seg = js[js.index("RUNNABLE_LANGS"):][:120]
+        self.assertIn("python: true", seg)
+        for other in ("javascript", "typescript", "lua", "sql"):
+            self.assertNotIn(f"{other}: true", seg, f"{other} 不应在网页端可运行")
+
+    def test_non_python_code_block_is_readonly_with_notice(self):
+        js = _read(os.path.join(ROOT, "web", "app.js"))
+        seg = js[js.index("function codeCard"):][:600]
+        self.assertIn("langRunnable", seg, "codeCard 必须按语言判断是否可运行")
+        self.assertIn("App 内运行", seg, "必须提示该代码需在 App 内运行")
+
+    def test_web_renders_compare_and_visualize(self):
+        js = _read(os.path.join(ROOT, "web", "app.js"))
+        self.assertIn('case "compare"', js, "网页端缺少 compare 块渲染")
+        self.assertIn('case "visualize"', js, "网页端缺少 visualize 块渲染")
+        self.assertIn("renderCompare", js)
+        self.assertIn("renderVisualize", js)
+
+    def test_web_style_has_new_block_classes(self):
+        css = _read(os.path.join(ROOT, "web", "style.css"))
+        for cls in (".blk-compare", ".blk-viz", ".viz-row.changed", ".cmp-lang"):
+            with self.subTest(cls=cls):
+                self.assertIn(cls, css, f"样式缺少 {cls}")
+
+    def test_docs_web_copy_is_in_sync(self):
+        for name in ("app.js", "data.js", "engine.js", "style.css"):
+            with self.subTest(file=name):
+                self.assertEqual(
+                    _read(os.path.join(ROOT, "web", name)),
+                    _read(os.path.join(ROOT, "docs", "web", name)),
+                    f"docs/web/{name} 与 web/{name} 不一致（需跑 sync_pages_assets.py）",
+                )
 
 
 if __name__ == "__main__":

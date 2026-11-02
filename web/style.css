@@ -422,3 +422,29 @@ html[data-theme="light"] .repl-term { background: #F7FAFF; color: #04654A; }
 @media (prefers-reduced-motion: reduce) {
   * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }
+
+/* ---------- 多语言对照块 ---------- */
+.blk-compare { margin: 18px 0; display: flex; flex-direction: column; gap: 12px; }
+.cmp-col { border: 1px solid var(--line2); border-radius: 10px; padding: 10px; background: var(--card); }
+.cmp-head { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
+.cmp-lang {
+  font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--magenta, #FF2D78);
+  background: rgba(255, 45, 120, .12); border-radius: 4px; padding: 2px 8px;
+}
+.cmp-note { font-size: 12px; color: var(--dim); }
+
+/* ---------- 过程可视化块 ---------- */
+.blk-viz { margin: 18px 0; border: 1px solid var(--line2); border-radius: 10px; padding: 12px; background: var(--card); }
+.viz-stage { margin: 10px 0; display: flex; flex-direction: column; gap: 6px; }
+.viz-label { font-size: 13px; color: var(--text, #E6F6FF); margin-bottom: 4px; }
+.viz-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 10px; border-radius: 6px; font-family: var(--mono); font-size: 13px;
+}
+.viz-row.changed { background: rgba(247, 255, 0, .12); color: var(--yellow, #F7FF00); }
+.viz-name { color: var(--dim); }
+.viz-val { font-weight: 700; }
+
+/* 非 Python 语言的只读代码卡：与可运行卡区分开 */
+.code-card .run-tag { font-size: 11px; color: var(--dim); }

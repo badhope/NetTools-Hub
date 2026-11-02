@@ -31,6 +31,16 @@ for fname in ("lessons_basic.json", "lessons_mid.json", "lessons_adv.json", "les
     if p.exists():
         lessons += json.loads(p.read_text(encoding="utf-8"))
 
+# ---- 语言包课程（同样内联，网页端可读；能否运行由前端按语言判断）----
+PACKS = ROOT / "content_packs"
+pack_lessons = []
+for pack in sorted(PACKS.glob("*.json")):
+    try:
+        pack_lessons += json.loads(pack.read_text(encoding="utf-8"))
+    except Exception as exc:  # 单个包坏了不该拖垮整个生成
+        print(f"  [warn] 跳过 {pack.name}: {exc}")
+lessons += pack_lessons
+
 challenges = []
 cp = ASSETS / "challenges.json"
 if cp.exists():
@@ -96,6 +106,10 @@ def repl_reset_json(payload_json=""):
 
 js_challenges = sum(1 for c in challenges if c.get("lang", "python") == "javascript")
 print("OK generated web/data.js + web/engine.js")
-print("  lessons      :", len(lessons))
+print("  lessons      :", len(lessons), f"(内置 + 语言包 {len(pack_lessons)})")
+_by_lang = {}
+for _l in lessons:
+    _by_lang[_l.get("lang", "python")] = _by_lang.get(_l.get("lang", "python"), 0) + 1
+print("  by language  :", ", ".join(f"{k} {v}" for k, v in sorted(_by_lang.items())))
 print("  challenges   :", len(challenges), f"(python {len(challenges) - js_challenges} + javascript {js_challenges}，JS 挑战仅 App 内可运行)")
 print("  engine.py len:", len(runner_src), "chars")

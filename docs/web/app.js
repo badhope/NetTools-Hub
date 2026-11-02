@@ -11,7 +11,7 @@
 
   var STORAGE_KEY = "mashang.web.v1";
   var THEME_KEY = "mashang.web.theme";
-  var APP_VERSION = "0.5.0";
+  var APP_VERSION = "0.6.0";
   var PYODIDE_VERSION = "0.29.5";
   var PYODIDE_SOURCES = [
     { js: "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE_VERSION + "/full/pyodide.js", index: "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE_VERSION + "/full/" },
@@ -100,6 +100,15 @@
     return n;
   }
   function coreLessons() { return lessons.filter(function (l) { return (l.lang || "python") === "python"; }); }
+
+  // 网页端只有 Pyodide（CPython）。其他语言的课程可读、可看答案与讲解，
+  // 但代码不能在此运行——明确标注，而不是假装能跑或干脆隐藏内容。
+  var RUNNABLE_LANGS = { python: true };
+  function langRunnable(lang) { return !!RUNNABLE_LANGS[lang || "python"]; }
+  function langLabel(lang) {
+    var m = { python: "Python", javascript: "JavaScript", typescript: "TypeScript", c: "C", lua: "Lua", sql: "SQL" };
+    return m[lang || "python"] || (lang || "python");
+  }
 
   // ---------- 引擎：Web Worker 优先 ----------
   function setStatus(text, ok) {
@@ -348,8 +357,16 @@
   }
 
   // ---------- 可运行代码卡 ----------
-  function codeCard(code, expected, stdin) {
+  function codeCard(code, expected, stdin, lang) {
+    lang = lang || "python";
     var card = el("div", "code-card");
+    if (!langRunnable(lang)) {
+      // 非 Python 语言：只读代码 + 明确说明在 App 内可运行
+      card.appendChild(el("pre", "term", code));
+      card.appendChild(el("div", "run-tag",
+        langLabel(lang) + " · 网页端仅有 Python 引擎，此代码请在「码上」App 内运行"));
+      return card;
+    }
     var ta = el("textarea", "code-area");
     ta.value = code;
     ta.spellcheck = false;
@@ -607,14 +624,72 @@
       case "diagram": return el("pre", "diagram", b.text);
       case "output": return el("pre", "term preview", b.text);
       case "table": return renderTable(b);
-      case "code": return b.runnable === false ? el("pre", "term", b.code) : codeCard(b.code, null, b.stdin || []);
+      case "code": return b.runnable === false ? el("pre", "term", b.code) : codeCard(b.code, null, b.stdin || [], b.lang || lesson.lang);
       case "quiz": return renderQuiz(b);
       case "order": return renderOrder(b);
       case "practice": return renderPractice(b);
       case "fill": return renderFill(b);
+      case "compare": return renderCompare(b);
+      case "visualize": return renderVisualize(b);
       case "exercise": return renderExercise(b, lesson);
       default: return el("div", "dim", "[未知块类型: " + b.type + "]");
     }
+  }
+
+  // ---------- 多语言对照 / 过程可视化 ----------
+  function renderCompare(b) {
+    var wrap = el("div", "blk-compare");
+    if (b.title) wrap.appendChild(el("div", "blk-heading", b.title));
+    (b.columns || []).forEach(function (col) {
+      var box = el("div", "cmp-col");
+      var head = el("div", "cmp-head");
+      head.appendChild(el("span", "cmp-lang", langLabel(col.lang)));
+      if (col.note) head.appendChild(el("span", "cmp-note", col.note));
+      box.appendChild(head);
+      box.appendChild(codeCard(col.code, null, [], col.lang));
+      wrap.appendChild(box);
+    });
+    return wrap;
+  }
+
+  function renderVisualize(b) {
+    var wrap = el("div", "blk-viz");
+    var frames = b.frames || [];
+    if (!frames.length) return wrap;
+    if (b.title) wrap.appendChild(el("div", "blk-heading", b.title));
+    if (b.caption) wrap.appendChild(el("div", "cmp-note", b.caption));
+    var idx = 0;
+    var stage = el("div", "viz-stage");
+    var counter = el("span", "run-tag", "");
+    function paint() {
+      clear(stage);
+      var f = frames[idx];
+      stage.appendChild(el("div", "viz-label", f.label || ""));
+      var hl = f.highlight || [];
+      (f.items || []).forEach(function (it) {
+        var changed = hl.indexOf(it.name) >= 0;
+        var row = el("div", "viz-row" + (changed ? " changed" : ""));
+        row.appendChild(el("span", "viz-name", it.name));
+        row.appendChild(el("span", "viz-val", it.value));
+        stage.appendChild(row);
+      });
+      counter.textContent = (idx + 1) + " / " + frames.length;
+    }
+    var bar = el("div", "code-bar");
+    var prev = el("button", "btn-ghost", "◀");
+    prev.type = "button";
+    var next = el("button", "btn-ghost", "▶");
+    next.type = "button";
+    var reset = el("button", "btn-ghost", "重置");
+    reset.type = "button";
+    prev.onclick = function () { if (idx > 0) { idx--; paint(); } };
+    next.onclick = function () { if (idx < frames.length - 1) { idx++; paint(); } };
+    reset.onclick = function () { idx = 0; paint(); };
+    bar.appendChild(prev); bar.appendChild(next); bar.appendChild(reset); bar.appendChild(counter);
+    wrap.appendChild(stage);
+    wrap.appendChild(bar);
+    paint();
+    return wrap;
   }
 
   // ---------- 页面：首页 ----------
@@ -715,7 +790,7 @@
     var active = "all";
     var filters = [["all", "全部 " + lessons.length]].concat(langs.map(function (lg) {
       var n = lessons.filter(function (l) { return (l.lang || "python") === lg; }).length;
-      return [lg, (lg === "python" ? "Python" : lg === "javascript" ? "JavaScript" : lg) + " " + n];
+      return [lg, langLabel(lg) + " " + n];
     }));
     filters.forEach(function (f) {
       var b = el("button", "chip" + (f[0] === active ? " on" : ""), f[1]);
