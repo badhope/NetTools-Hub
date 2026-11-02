@@ -101,13 +101,18 @@ fun PyNeonTheme(content: @Composable () -> Unit) {
 @Composable
 fun PyNeonTheme(
     appTheme: AppTheme,
+    visualStyle: VisualStyle = VisualStyle.DEFAULT,
+    fontScale: FontScale = FontScale.DEFAULT,
     content: @Composable () -> Unit
 ) {
     val tokens = appTheme.toNeonTokens()
-    CompositionLocalProvider(LocalNeonTokens provides tokens) {
+    CompositionLocalProvider(
+        LocalNeonTokens provides tokens,
+        LocalVisualStyle provides visualStyle
+    ) {
         MaterialTheme(
             colorScheme = createColorScheme(appTheme),
-            typography = AppTypography,
+            typography = typographyFor(fontScale),
             shapes = AppShapes,
             content = content
         )

@@ -30,3 +30,42 @@ val MonoCode = TextStyle(
     fontSize = 14.sp,
     lineHeight = 21.sp
 )
+
+/**
+ * 字号缩放档位（可访问性）。
+ *
+ * 为什么需要：课程正文是长文阅读，默认 16sp 对一部分用户偏小；而系统级字体
+ * 缩放会让等宽代码块错位。因此提供应用内三档缩放，只放大**阅读类文本**
+ * （正文/标题/标签），代码块与编辑器保持原始字号——保证缩进与对齐不被破坏。
+ */
+enum class FontScale(val id: String, val label: String, val factor: Float) {
+    COMPACT("compact", "紧凑", 0.9f),
+    NORMAL("normal", "标准", 1.0f),
+    COMFORT("comfort", "舒适", 1.15f),
+    LARGE("large", "大字", 1.3f);
+
+    companion object {
+        val DEFAULT = NORMAL
+        fun fromId(id: String?): FontScale = entries.firstOrNull { it.id == id } ?: DEFAULT
+    }
+}
+
+/**
+ * 按缩放档位生成排版。只缩放非等宽（阅读类）文本的字号与行高；
+ * 等宽标题保持原样以避免布局抖动。
+ */
+fun typographyFor(scale: FontScale): Typography {
+    if (scale == FontScale.NORMAL) return AppTypography
+    val f = scale.factor
+    fun TextStyle.scaled(): TextStyle = copy(
+        fontSize = (fontSize.value * f).sp,
+        lineHeight = (lineHeight.value * f).sp
+    )
+    // 只放大正文与小型标签；等宽标题（headline/title/label*）不动，
+    // 否则中文标题在窄屏会换行错位
+    return AppTypography.copy(
+        bodyLarge = AppTypography.bodyLarge.scaled(),
+        bodyMedium = AppTypography.bodyMedium.scaled(),
+        bodySmall = AppTypography.bodySmall.scaled()
+    )
+}

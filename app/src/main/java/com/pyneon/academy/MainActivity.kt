@@ -19,18 +19,25 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             var currentTheme by remember { mutableStateOf(ThemePreference.getCurrentTheme(this)) }
-            // 主题偏好变更即时生效（SharedPreferences 监听，无需重启应用）
+            var visualStyle by remember { mutableStateOf(ThemePreference.getVisualStyle(this)) }
+            var fontScale by remember { mutableStateOf(ThemePreference.getFontScale(this)) }
+            // 主题 / 风格偏好变更即时生效（SharedPreferences 监听，无需重启应用）
             DisposableEffect(Unit) {
                 val listener =
                     android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-                        if (key == ThemePreference.KEY_THEME_ID) {
-                            currentTheme = ThemePreference.getCurrentTheme(this@MainActivity)
+                        when (key) {
+                            ThemePreference.KEY_THEME_ID ->
+                                currentTheme = ThemePreference.getCurrentTheme(this@MainActivity)
+                            ThemePreference.KEY_VISUAL_STYLE ->
+                                visualStyle = ThemePreference.getVisualStyle(this@MainActivity)
+                            ThemePreference.KEY_FONT_SCALE ->
+                                fontScale = ThemePreference.getFontScale(this@MainActivity)
                         }
                     }
                 ThemePreference.registerListener(this@MainActivity, listener)
                 onDispose { ThemePreference.unregisterListener(this@MainActivity, listener) }
             }
-            PyNeonTheme(appTheme = currentTheme) {
+            PyNeonTheme(appTheme = currentTheme, visualStyle = visualStyle, fontScale = fontScale) {
                 AppRoot()
             }
         }

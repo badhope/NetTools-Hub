@@ -44,42 +44,65 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.TextUnitType
 import androidx.compose.ui.unit.dp
+import com.pyneon.academy.ui.theme.LocalVisualStyle
 import com.pyneon.academy.ui.theme.NeonCyan
 import com.pyneon.academy.ui.theme.NeonMagenta
 import com.pyneon.academy.ui.theme.SurfaceDark
 import com.pyneon.academy.ui.theme.TextHi
+import com.pyneon.academy.ui.theme.VisualStyle
 import kotlinx.coroutines.delay
 import kotlin.math.cos
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-fun Modifier.scanlines(): Modifier = drawBehind {
-    var y = 0f
-    while (y < size.height) {
-        drawRect(
-            color = Color.Black.copy(alpha = 0.028f),
-            topLeft = Offset(0f, y),
-            size = Size(size.width, 1f)
-        )
-        y += 4f
+/**
+ * 扫描线底纹。
+ *
+ * 标记为 @Composable 是为了读取 [LocalVisualStyle]：简洁风格下直接返回
+ * 未改动的 Modifier（不绘制、不产生 draw layer），调用点无需逐个判断风格。
+ * 调用点必须位于 Composable 作用域——现有 5 处（首页/开屏/终端/证书/角斗场）
+ * 都在 Composable 内，符合约束。
+ */
+@Composable
+fun Modifier.scanlines(): Modifier =
+    if (LocalVisualStyle.current.backdropEnabled) {
+        drawBehind {
+            var y = 0f
+            while (y < size.height) {
+                drawRect(
+                    color = Color.Black.copy(alpha = 0.028f),
+                    topLeft = Offset(0f, y),
+                    size = Size(size.width, 1f)
+                )
+                y += 4f
+            }
+        }
+    } else {
+        this
     }
-}
 
-fun Modifier.cyberGrid(color: Color, cell: Dp): Modifier = drawBehind {
-    val step = cell.toPx()
-    if (step > 1f) {
-        var x = 0f
-        while (x < size.width) {
-            drawLine(color, Offset(x, 0f), Offset(x, size.height), strokeWidth = 1f)
-            x += step
+/** 赛博网格底纹；简洁风格下不绘制（同 [scanlines]）。 */
+@Composable
+fun Modifier.cyberGrid(color: Color, cell: Dp): Modifier =
+    if (LocalVisualStyle.current.backdropEnabled) {
+        drawBehind {
+            val step = cell.toPx()
+            if (step > 1f) {
+                var x = 0f
+                while (x < size.width) {
+                    drawLine(color, Offset(x, 0f), Offset(x, size.height), strokeWidth = 1f)
+                    x += step
+                }
+                var y = 0f
+                while (y < size.height) {
+                    drawLine(color, Offset(0f, y), Offset(size.width, y), strokeWidth = 1f)
+                    y += step
+                }
+            }
         }
-        var y = 0f
-        while (y < size.height) {
-            drawLine(color, Offset(0f, y), Offset(size.width, y), strokeWidth = 1f)
-            y += step
-        }
+    } else {
+        this
     }
-}
 
 @Composable
 fun GlitchText(
@@ -88,6 +111,12 @@ fun GlitchText(
     modifier: Modifier = Modifier,
     color: Color = TextHi
 ) {
+    // 简洁风格：完全不创建无限动画，也不叠双层错位文字。
+    // 直接走纯 Text 分支，避免动画在后台持续请求帧（省电、省 GPU）。
+    if (!LocalVisualStyle.current.glitchEnabled) {
+        Text(text = text, style = style, color = color, modifier = modifier)
+        return
+    }
     val transition = rememberInfiniteTransition(label = "glitch")
     val phase by transition.animateFloat(
         initialValue = 0f,
@@ -162,6 +191,10 @@ fun BlinkingCursor(color: Color = NeonCyan, modifier: Modifier = Modifier) {
     )
 }
 
+/**
+ * 卡片描边：赛博风格为霓虹渐变，简洁风格为细实线（宽度更细、无渐变）。
+ * 非 Composable 的旧签名保留给不感知风格的调用点（如证书海报的绘制代码）。
+ */
 fun neonBorder(accent: Color): BorderStroke = BorderStroke(
     width = 1.dp,
     brush = Brush.linearGradient(
@@ -169,23 +202,34 @@ fun neonBorder(accent: Color): BorderStroke = BorderStroke(
     )
 )
 
+/** 感知视觉风格的描边：简洁风格用 1dp 实线、半透明，不做渐变。 */
+@Composable
+fun styleBorder(accent: Color): BorderStroke =
+    if (LocalVisualStyle.current.neonBorderEnabled) {
+        neonBorder(accent)
+    } else {
+        BorderStroke(1.dp, accent.copy(alpha = 0.28f))
+    }
+
 @Composable
 fun NeonCard(
     modifier: Modifier = Modifier,
     accent: Color = NeonCyan,
     filled: Boolean = false,
     elevation: Dp = 0.dp,
-    shape: Shape = androidx.compose.foundation.shape.CutCornerShape(14.dp),
+    shape: Shape = LocalVisualStyle.current.cardShape,
     backgroundColor: Color? = null,
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
 ): Unit {
+    val style = LocalVisualStyle.current
     val bg = backgroundColor ?: (if (filled) accent.copy(alpha = 0.10f) else SurfaceDark)
     val haptic = androidx.compose.ui.platform.LocalHapticFeedback.current
     val interaction = remember { androidx.compose.foundation.interaction.MutableInteractionSource() }
     val pressed by interaction.collectIsPressedAsState()
+    // 简洁风格不做按压回弹：直接固定 1f，动画不会被创建
     val scale by androidx.compose.animation.core.animateFloatAsState(
-        targetValue = if (pressed && onClick != null) 0.98f else 1f,
+        targetValue = if (pressed && onClick != null && style.pressAnimationEnabled) 0.98f else 1f,
         animationSpec = androidx.compose.animation.core.tween(90),
         label = "cardScale"
     )
@@ -194,7 +238,7 @@ fun NeonCard(
         .shadow(elevation, shape)
         .clip(shape)
         .background(bg)
-        .border(neonBorder(accent), shape)
+        .border(styleBorder(accent), shape)
     if (onClick != null) {
         base = base.clickable(interactionSource = interaction, indication = null) {
             haptic.performHapticFeedback(androidx.compose.ui.hapticfeedback.HapticFeedbackType.TextHandleMove)

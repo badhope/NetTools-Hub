@@ -1,16 +1,20 @@
 package com.pyneon.academy.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
@@ -45,10 +49,14 @@ import com.pyneon.academy.ui.theme.NeonGreen
 import com.pyneon.academy.ui.theme.NeonMagenta
 import com.pyneon.academy.ui.theme.SurfaceDark
 import com.pyneon.academy.ui.theme.TextDim
+import com.pyneon.academy.ui.theme.TextHi
 import com.pyneon.academy.ui.theme.TextMid
 import com.pyneon.academy.ui.theme.NeonYellow
+import com.pyneon.academy.ui.theme.FontScale
+import com.pyneon.academy.ui.theme.VisualStyle
 import com.pyneon.academy.utils.AppConstants
 import com.pyneon.academy.utils.ShareHelper
+import com.pyneon.academy.utils.ThemePreference
 import com.pyneon.academy.utils.UpdateChecker
 import kotlinx.coroutines.launch
 
@@ -60,6 +68,8 @@ fun SettingsScreen(onBack: () -> Unit) {
     var checkingUpdate by remember { mutableStateOf(false) }
     var updateMessage by remember { mutableStateOf<String?>(null) }
     var pendingRelease by remember { mutableStateOf<UpdateChecker.ReleaseInfo?>(null) }
+    var currentStyle by remember { mutableStateOf(ThemePreference.getVisualStyle(context)) }
+    var currentFontScale by remember { mutableStateOf(ThemePreference.getFontScale(context)) }
 
     Column(
         Modifier
@@ -81,7 +91,106 @@ fun SettingsScreen(onBack: () -> Unit) {
             )
             Column(Modifier.padding(start = 12.dp)) {
                 GlitchText("系统设置", style = MaterialTheme.typography.headlineSmall, color = NeonGreen)
-                Text("数据 · 更新 · 关于 · 联系方式", style = MaterialTheme.typography.labelSmall, color = TextDim)
+                Text("外观 · 数据 · 更新 · 关于", style = MaterialTheme.typography.labelSmall, color = TextDim)
+            }
+        }
+
+        ThemePickerSection()
+
+        SectionHeader("外观风格", accent = NeonCyan)
+        NeonCard(accent = NeonCyan) {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                Text(
+                    "配色与动效互相独立：喜欢霓虹配色但不想看故障字抖动，可以只把风格切到「简洁」。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextMid
+                )
+                VisualStyle.entries.forEach { style ->
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clickable {
+                                ThemePreference.saveVisualStyle(context, style)
+                                currentStyle = style
+                            }
+                            .border(
+                                width = if (currentStyle == style) 2.dp else 1.dp,
+                                color = if (currentStyle == style) NeonCyan else TextDim.copy(alpha = 0.3f),
+                                shape = RoundedCornerShape(8.dp)
+                            )
+                            .padding(12.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                style.label,
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = if (currentStyle == style) NeonCyan else TextHi
+                            )
+                            Text(
+                                style.description,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = TextDim
+                            )
+                        }
+                        if (currentStyle == style) {
+                            Text("✓", color = NeonCyan, style = MaterialTheme.typography.titleMedium)
+                        }
+                    }
+                }
+                Text(
+                    "配色主题见上方「配色主题」区块，7 套预设 + 自定义主色可自由搭配。",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = TextDim
+                )
+            }
+        }
+
+        SectionHeader("字号", accent = NeonYellow)
+        NeonCard(accent = NeonYellow) {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(
+                    "只放大课程正文与说明文字，代码块保持原字号——避免缩进和对齐被破坏。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextMid
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    FontScale.entries.forEach { scale ->
+                        Box(
+                            Modifier
+                                .weight(1f)
+                                .background(
+                                    if (currentFontScale == scale) NeonYellow.copy(alpha = 0.16f)
+                                    else SurfaceDark,
+                                    RoundedCornerShape(8.dp)
+                                )
+                                .border(
+                                    width = if (currentFontScale == scale) 2.dp else 1.dp,
+                                    color = if (currentFontScale == scale) NeonYellow
+                                    else TextDim.copy(alpha = 0.3f),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .clickable {
+                                    ThemePreference.saveFontScale(context, scale)
+                                    currentFontScale = scale
+                                }
+                                .padding(vertical = 10.dp),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                scale.label,
+                                style = MaterialTheme.typography.labelMedium,
+                                color = if (currentFontScale == scale) NeonYellow else TextHi
+                            )
+                        }
+                    }
+                }
+                // 实时预览：让用户当场看到效果再决定
+                Text(
+                    "预览：这是课程正文的显示效果，16sp × ${currentFontScale.factor}",
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = TextHi
+                )
             }
         }
 
