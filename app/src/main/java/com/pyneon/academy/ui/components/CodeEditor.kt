@@ -102,6 +102,8 @@ private fun createEditor(
         val scopeName = when (language) {
             "python" -> "source.python"
             "javascript" -> "source.js"
+            "typescript" -> "source.ts"
+            "c" -> "source.c"
             "lua" -> "source.lua"
             "sql" -> "source.sql"
             else -> "source.$language"

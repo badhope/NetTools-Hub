@@ -11,8 +11,10 @@ import android.content.Context
 object LanguageIds {
     const val PYTHON = "python"
     const val JAVASCRIPT = "javascript"
+    const val TYPESCRIPT = "typescript"
     const val LUA = "lua"
     const val SQL = "sql"
+    const val C = "c"
 
     /** 内置默认语言：任何回落路径都指向它 */
     const val DEFAULT = PYTHON
@@ -23,17 +25,26 @@ object LanguageIds {
      * 这些语言需要编译器或原生工具链（JVM / NDK / Go toolchain），
      * 无法以纯 JVM 或内嵌解释器方式随 APK 提供；UI 必须显示「暂不支持」，
      * 不得出现下载入口。
+     *
+     * 注意：本列表是**提示性**的，不参与「语言是否可学」的判定。真正的能力
+     * 判定只有一条：【是否有已注册且 isAvailable() 的运行时】。因此新增语言
+     * 时不必改动本列表，只需注册运行时 + 提供课程包即可。
      */
     val PLANNED: List<String> = listOf("java", "cpp", "go", "rust")
 
     /**
      * 显示名映射。注册表中没有对应运行时时也能给出可读名称。
+     *
+     * 新增语言只需在此补一行（大小写、连字符等展示差异都收敛在这里），
+     * 其余 UI 一律通过本函数取名字，不得到处硬编码。
      */
     fun displayNameOf(id: String): String = when (id) {
         PYTHON -> "Python"
         JAVASCRIPT -> "JavaScript"
         LUA -> "Lua"
         SQL -> "SQL"
+        "typescript" -> "TypeScript"
+        C -> "C"
         "java" -> "Java"
         "cpp" -> "C++"
         "go" -> "Go"

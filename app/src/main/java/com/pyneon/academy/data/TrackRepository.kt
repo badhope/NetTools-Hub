@@ -69,6 +69,11 @@ object TrackRepository {
             (1..6).map { "js%02d".format(it) }.toSet()
         ),
         Spec(
+            "ts", "TypeScript 启程", "6 讲：类型标注到 enum，转译后跑在 Rhino 上",
+            "编程语言", CYAN, "ts-basics", LanguageIds.TYPESCRIPT,
+            (1..6).map { "ts%02d".format(it) }.toSet()
+        ),
+        Spec(
             "dsa-basics", "DSA 算法基础", "5 讲：复杂度 / 双指针 / 哈希 / 栈队列 / 递归",
             "算法与数据结构", GREEN, "dsa-basics", LanguageIds.PYTHON,
             (1..5).map { "dsa%02d".format(it) }.toSet()
@@ -77,6 +82,11 @@ object TrackRepository {
             "dsa-mastery", "DSA 算法进阶", "5 讲：排序 / 二分 / 贪心 / 链表 / 最大子段和",
             "算法与数据结构", MAGENTA, "dsa-mastery", LanguageIds.PYTHON,
             (6..10).map { "dsa%02d".format(it) }.toSet()
+        ),
+        Spec(
+            "c", "C 启程", "6 讲：printf 到语言边界，设备端解释执行",
+            "编程语言", MAGENTA, "c-basics", LanguageIds.C,
+            (1..6).map { "c%02d".format(it) }.toSet()
         ),
         Spec(
             "lua", "Lua 启程", "6 讲：print 到 string 库，LuaJ 运行时",
