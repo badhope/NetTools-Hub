@@ -78,6 +78,8 @@ fun HistoryScreen(onBack: () -> Unit) {
                 contentDescription = "返回",
                 tint = TextMid,
                 modifier = Modifier
+                    // 触摸目标 48dp（无障碍最小值）：视觉 28dp + 四周 10dp padding
+                    .padding(10.dp)
                     .size(28.dp)
                     .clickable { onBack() }
             )

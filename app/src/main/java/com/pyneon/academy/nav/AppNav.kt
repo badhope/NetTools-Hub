@@ -51,6 +51,7 @@ import com.pyneon.academy.screens.AboutScreen
 import com.pyneon.academy.screens.BackupScreen
 import com.pyneon.academy.screens.HelpScreen
 import com.pyneon.academy.screens.HistoryScreen
+import com.pyneon.academy.screens.LicensesScreen
 import com.pyneon.academy.screens.ReviewScreen
 import com.pyneon.academy.screens.SettingsScreen
 import com.pyneon.academy.screens.PrivacyConsentDialog
@@ -258,7 +259,13 @@ fun AppRoot() {
             }
             composable("privacy") { PrivacyPolicyScreen(onBack = { navController.popBackStack() }) }
             composable("help") { HelpScreen(onBack = { navController.popBackStack() }) }
-            composable("about") { AboutScreen(onBack = { navController.popBackStack() }) }
+            composable("about") {
+                AboutScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenLicenses = { navController.navigate("licenses") }
+                )
+            }
+            composable("licenses") { LicensesScreen(onBack = { navController.popBackStack() }) }
         }
 
         if (showConsent) {

@@ -59,7 +59,7 @@ fun HelpScreen(onBack: () -> Unit) {
                 Icons.AutoMirrored.Outlined.ArrowBack,
                 contentDescription = "返回",
                 tint = TextMid,
-                modifier = Modifier.size(28.dp).clickable { onBack() }
+                modifier = Modifier.padding(10.dp).size(28.dp).clickable { onBack() }
             )
             Text(
                 "帮助中心",

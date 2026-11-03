@@ -35,7 +35,10 @@ import com.pyneon.academy.utils.AppConstants
 import com.pyneon.academy.utils.ShareHelper
 
 @Composable
-fun AboutScreen(onBack: () -> Unit) {
+fun AboutScreen(
+    onBack: () -> Unit,
+    onOpenLicenses: () -> Unit = {}
+) {
     val context = LocalContext.current
     Column(
         Modifier
@@ -51,7 +54,7 @@ fun AboutScreen(onBack: () -> Unit) {
                 Icons.AutoMirrored.Outlined.ArrowBack,
                 contentDescription = "返回",
                 tint = TextMid,
-                modifier = Modifier.size(28.dp).clickable { onBack() }
+                modifier = Modifier.padding(10.dp).size(28.dp).clickable { onBack() }
             )
             Box(Modifier.padding(start = 12.dp)) {
                 GlitchText("关于 // ABOUT", style = MaterialTheme.typography.headlineSmall, color = NeonMagenta)
@@ -80,6 +83,13 @@ fun AboutScreen(onBack: () -> Unit) {
                 "· 课程设计与码上视觉系统由开发团队原创",
             style = MaterialTheme.typography.bodySmall,
             color = TextMid
+        )
+
+        NeonButton(
+            label = "开源许可与第三方组件",
+            accent = NeonCyan,
+            onClick = onOpenLicenses,
+            modifier = Modifier.fillMaxWidth()
         )
 
         SectionHeader("链接", accent = NeonMagenta)

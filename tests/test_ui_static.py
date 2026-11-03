@@ -374,6 +374,79 @@ class AccessibilityTests(unittest.TestCase):
                       "自动播放按钮应受风格开关控制")
 
 
+class ReleaseReadinessTests(unittest.TestCase):
+    """发布前必备项（应用商店审核会检查）。"""
+
+    def test_licenses_screen_exists_and_covers_third_party(self):
+        """LGPL/MPL/Apache 都要求展示第三方组件许可，缺了会卡审核。"""
+        text = _read(JAVA, "screens", "LicensesScreen.kt")
+        for lib in ("Chaquopy", "Rhino", "LuaJ", "sora-editor", "AndroidX", "ZXing"):
+            self.assertIn(lib, text, f"许可页缺少组件：{lib}")
+        # LGPL 必须说明源码获取与可替换性
+        self.assertIn("LGPL", text)
+        self.assertIn("源码", text)
+        # 自身 MIT 全文
+        self.assertIn("Permission is hereby granted", text)
+
+    def test_licenses_route_reachable(self):
+        nav = _read(os.path.join(JAVA, "nav", "AppNav.kt"))
+        self.assertIn('composable("licenses")', nav, "许可页未注册路由")
+        about = _read(JAVA, "screens", "AboutScreen.kt")
+        self.assertIn("onOpenLicenses", about, "关于页缺少许可入口")
+
+    def test_privacy_policy_covers_diagnostics(self):
+        """新增的诊断日志必须在隐私政策里说明（合规硬要求）。"""
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        with open(os.path.join(root, "PRIVACY_POLICY.md"), encoding="utf-8") as f:
+            text = f.read()
+        self.assertIn("诊断日志", text, "隐私政策未说明诊断日志")
+        self.assertIn("不记录你的代码", text, "必须声明不记录用户代码")
+        self.assertIn("不会自动上传", text, "必须声明不上传")
+
+    def test_privacy_policy_covers_six_languages(self):
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        with open(os.path.join(root, "PRIVACY_POLICY.md"), encoding="utf-8") as f:
+            text = f.read()
+        for lang in ("Python", "JavaScript", "TypeScript", "Lua", "SQL"):
+            self.assertIn(lang, text, f"隐私政策未提及 {lang} 运行时")
+        self.assertIn("本机", text)
+
+    def test_back_buttons_meet_touch_target(self):
+        """返回按钮触摸区必须 ≥ 48dp（无障碍与商店审核项）。
+
+        视觉图标可以小，但必须用 padding 把可点区域撑开。
+        """
+        import glob
+        offenders = []
+        for path in glob.glob(os.path.join(JAVA, "screens", "*.kt")):
+            with open(path, encoding="utf-8") as f:
+                text = f.read()
+            # 找 .size(28.dp) 后紧跟 .clickable { onBack() } 且中间没有 padding
+            if ".size(28.dp)" in text and "clickable { onBack() }" in text:
+                seg_start = text.find(".size(28.dp)")
+                seg = text[max(0, seg_start - 200): seg_start + 100]
+                if "clickable { onBack() }" in seg and "padding(10.dp)" not in seg:
+                    offenders.append(os.path.basename(path))
+        self.assertEqual(offenders, [], f"这些页面的返回按钮触摸区不足 48dp：{offenders}")
+
+    def test_release_checklist_exists(self):
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        self.assertTrue(os.path.exists(os.path.join(root, "RELEASE_CHECKLIST.md")))
+        self.assertTrue(os.path.exists(os.path.join(root, "store", "listing.md")))
+
+    def test_no_extra_permissions(self):
+        """发布包只能申请 INTERNET，多申请会被商店要求逐项说明。"""
+        root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        with open(
+            os.path.join(root, "app", "src", "main", "AndroidManifest.xml"), encoding="utf-8"
+        ) as f:
+            text = f.read()
+        import re
+        perms = re.findall(r'uses-permission android:name="([^"]+)"', text)
+        self.assertEqual(perms, ["android.permission.INTERNET"],
+                         f"权限应只有 INTERNET，实际：{perms}")
+
+
 class DebugDiagnosticsTests(unittest.TestCase):
     """诊断能力：离线 App 没有服务端日志，必须有本地可导出的诊断链路。"""
 
