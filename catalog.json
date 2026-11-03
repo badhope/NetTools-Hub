@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-03",
-  "sha256": "e9d22425055aba8b346cb1b9021e59b3f2231a1f8175af0c9aeb008f59ec80bb",
+  "sha256": "25d0d9a368c0442c17e2221249e99b186e859cfd02981564f4490f4c3cecfbc0",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -16,7 +16,7 @@
       "name": "增补包 · DSA 算法基础",
       "version": 1,
       "description": "复杂度直觉 / 双指针 / 哈希表 / 栈与队列 / 递归记忆化：5 讲原创算法入门，每讲含闯关判题。",
-      "sha256": "620c654af92761639dc13eb64c9d9cc904c7d6acc50fde10f0a4f6b6c142c92c",
+      "sha256": "dc1f2f95ed54abb9d2d70c1d0661e4087494a6da804b6ce940cc813f3be26587",
       "kind": "course",
       "lang": "python"
     },
@@ -25,7 +25,7 @@
       "name": "增补包 · DSA 算法进阶",
       "version": 1,
       "description": "手写排序 / 二分查找 / 贪心找零 / 链表思维 / 最大子段和：5 讲原创算法进阶，对标竞赛入门。",
-      "sha256": "66d0d626bec7fa3dc0fc7f31a85590313ce8cc17ea5fe72918195a3638fa4c9b",
+      "sha256": "70b4e8ca56b6667d666439244c5a4b59c54d57d95d0746b4e95d269ea0633bc6",
       "kind": "course",
       "lang": "python"
     },
@@ -34,7 +34,7 @@
       "name": "语言包 · JavaScript 启程",
       "version": 1,
       "description": "6 讲 JavaScript 入门：console.log / Math 取整 / 字符串方法 / 分支守卫 / 数组循环 / 对象统计。与 Python 课一一对照，需要「JavaScript 运行时」（本版本已内置）。",
-      "sha256": "4be5cc5499775c19cafda7afcc14231599b6f3db2a3be2af7f31208906ffc6ee",
+      "sha256": "3b48643262efed7fadbfa89e6963b07a7d53adb973dbde459626f9f9462e9aaa",
       "kind": "course",
       "lang": "javascript"
     },
@@ -43,7 +43,7 @@
       "name": "语言包 · Lua 启程",
       "version": 1,
       "description": "6 讲 Lua 入门：print / 变量类型 / 控制流 / table / 多返回值 / string 库，全部在设备端 LuaJ 运行时离线执行。",
-      "sha256": "657a4fba4a73dd46a196291a8260f86e79b86ee139ca7e58c5fbec71f61b13d3",
+      "sha256": "b186cbfc6737221f7f8970adc440445f89abd00c1272e45dda3cd82cab1e49f4",
       "kind": "course",
       "lang": "lua"
     },
@@ -52,7 +52,7 @@
       "name": "语言包 · SQL 启程",
       "version": 1,
       "description": "6 讲 SQL 入门：SELECT / WHERE 排序 / 聚合分组 / JOIN / 写入约束 / 子查询与 NULL，使用设备端 SQLite 内存库。",
-      "sha256": "fd2f8d7899b04b1cb4f5d9abc6f5b510ae4f9cf13be01e12abc50ad42aa03f00",
+      "sha256": "7dce7d4045225280148b94e60fa944f98d3391a8a82ef2d6203747fbb24a1fc5",
       "kind": "course",
       "lang": "sql"
     },
@@ -61,7 +61,7 @@
       "name": "语言包 · TypeScript 启程",
       "version": 1,
       "description": "6 讲 TypeScript 入门：类型标注 / interface / 函数签名 / 联合类型收窄 / 泛型 / enum。类型在运行时被擦除，与 JS 同一套 Rhino 沙箱执行。",
-      "sha256": "db6c6fc32ff30e3c8aa0eb1419ecdb253a6ebff59ac0422da8f052ffe7380022",
+      "sha256": "8fb2f6c3f0dd1791a4aa613dd82f429ff6e7350fbb5c00589c82fbe172775e74",
       "kind": "course",
       "lang": "typescript"
     },
@@ -70,7 +70,7 @@
       "name": "语言包 · C 启程",
       "version": 1,
       "description": "6 讲 C 入门：printf / 类型 / 循环 / 数组 / 函数递归 / 语言边界。设备端教学子集解释器直接执行，无需 NDK。",
-      "sha256": "afa0a9f6649e3529675661a5560b21dc25f10deb3f814d6a556d762c844d4534",
+      "sha256": "69715babf026abf40c7eb1f114f2cfd7422fad274c2e8869466ed620eb5b87e4",
       "kind": "course",
       "lang": "c"
     }

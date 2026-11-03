@@ -221,6 +221,32 @@
         "text": "返回类型标成 `: number` 后，如果你写 `return 'abc'`，编辑器立刻报错。这是 TS 最大的价值：把错误提前到写代码那一刻。"
       },
       {
+        "type": "compare",
+        "title": "同一个函数，四种写法",
+        "columns": [
+          {
+            "lang": "python",
+            "code": "def double(n):\n    return n * 2\n\nprint(double(21))",
+            "note": "def 关键字"
+          },
+          {
+            "lang": "javascript",
+            "code": "function double(n) {\n  return n * 2;\n}\nconsole.log(double(21));",
+            "note": "function 关键字"
+          },
+          {
+            "lang": "typescript",
+            "code": "function double(n: number): number {\n  return n * 2;\n}\nconsole.log(double(21));",
+            "note": "多了类型标注"
+          },
+          {
+            "lang": "c",
+            "code": "int double_it(int n) {\n    return n * 2;\n}\n\nint main() {\n    printf(\"%d\", double_it(21));\n    return 0;\n}",
+            "note": "不能叫 double（保留字）"
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "`function f(a: number): string` 里，`: string` 标注的是什么？",
         "options": [

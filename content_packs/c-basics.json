@@ -342,6 +342,32 @@
         ]
       },
       {
+        "type": "compare",
+        "title": "同一个循环，四种写法",
+        "columns": [
+          {
+            "lang": "python",
+            "code": "total = 0\nfor i in range(1, 6):\n    total += i\nprint(total)",
+            "note": "缩进分块"
+          },
+          {
+            "lang": "javascript",
+            "code": "var total = 0;\nfor (var i = 1; i <= 5; i++) {\n  total += i;\n}\nconsole.log(total);",
+            "note": "花括号 + 分号"
+          },
+          {
+            "lang": "lua",
+            "code": "local total = 0\nfor i = 1, 5 do\n  total = total + i\nend\nprint(total)",
+            "note": "do...end 包块"
+          },
+          {
+            "lang": "c",
+            "code": "int main() {\n    int total = 0;\n    for (int i = 1; i <= 5; i++) {\n        total += i;\n    }\n    printf(\"%d\", total);\n    return 0;\n}",
+            "note": "必须写 main"
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "`for (int i = 0; i < 3; i++)` 循环几次？",
         "options": [

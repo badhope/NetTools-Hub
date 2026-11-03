@@ -216,6 +216,75 @@
       {
         "type": "warn",
         "text": "Jackie 没有跑步记录，INNER JOIN 后不会出现；想保留它要改用 LEFT JOIN。"
+      },
+      {
+        "type": "visualize",
+        "title": "INNER JOIN 怎么配对",
+        "caption": "heroes 与 runs 按 hero 字段配对，只保留两边都有的行",
+        "frames": [
+          {
+            "label": "heroes: V, Judy, Jackie；runs: V, Judy, Rogue",
+            "items": [
+              {
+                "name": "heroes",
+                "value": "V, Judy, Jackie"
+              },
+              {
+                "name": "runs",
+                "value": "V, Judy, Rogue"
+              }
+            ],
+            "highlight": []
+          },
+          {
+            "label": "V 两边都有 → 保留",
+            "items": [
+              {
+                "name": "配对",
+                "value": "V ✓"
+              },
+              {
+                "name": "剩余",
+                "value": "Judy, Jackie / Judy, Rogue"
+              }
+            ],
+            "highlight": [
+              "配对"
+            ]
+          },
+          {
+            "label": "Judy 两边都有 → 保留",
+            "items": [
+              {
+                "name": "配对",
+                "value": "V, Judy ✓"
+              },
+              {
+                "name": "剩余",
+                "value": "Jackie / Rogue"
+              }
+            ],
+            "highlight": [
+              "配对"
+            ]
+          },
+          {
+            "label": "Jackie 只在左、Rogue 只在右 → 丢弃",
+            "items": [
+              {
+                "name": "结果",
+                "value": "V, Judy"
+              },
+              {
+                "name": "丢弃",
+                "value": "Jackie, Rogue"
+              }
+            ],
+            "highlight": [
+              "结果"
+            ]
+          }
+        ]
       }
     ],
     "exercise": {

@@ -162,6 +162,32 @@
         "text": "Python 里 9 // 2 是整除得 4；JS 没有整除运算符，惯用写法是 Math.floor(9 / 2)。"
       },
       {
+        "type": "compare",
+        "title": "同一个函数，四种写法",
+        "columns": [
+          {
+            "lang": "python",
+            "code": "def double(n):\n    return n * 2\n\nprint(double(21))",
+            "note": "def 关键字"
+          },
+          {
+            "lang": "javascript",
+            "code": "function double(n) {\n  return n * 2;\n}\nconsole.log(double(21));",
+            "note": "function 关键字"
+          },
+          {
+            "lang": "typescript",
+            "code": "function double(n: number): number {\n  return n * 2;\n}\nconsole.log(double(21));",
+            "note": "多了类型标注"
+          },
+          {
+            "lang": "c",
+            "code": "int double_it(int n) {\n    return n * 2;\n}\n\nint main() {\n    printf(\"%d\", double_it(21));\n    return 0;\n}",
+            "note": "不能叫 double（保留字）"
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "Math.floor(7 / 2) 的结果是？",
         "options": [
@@ -435,6 +461,78 @@
       {
         "type": "tip",
         "text": "空数组要先守卫再访问 values[0]，否则 best 会是 undefined。JS 里 undefined 不是报错，而是「没这个东西」的标记。"
+      },
+      {
+        "type": "visualize",
+        "title": "for 循环遍历数组",
+        "caption": "nums = [3,7,2]，看 i 和 max 怎么变",
+        "frames": [
+          {
+            "label": "开始：max 先设成第一个元素",
+            "items": [
+              {
+                "name": "i",
+                "value": "0"
+              },
+              {
+                "name": "max",
+                "value": "3"
+              }
+            ],
+            "highlight": [
+              "max"
+            ]
+          },
+          {
+            "label": "i=1，7 > 3 → 更新 max",
+            "items": [
+              {
+                "name": "i",
+                "value": "1"
+              },
+              {
+                "name": "max",
+                "value": "7"
+              }
+            ],
+            "highlight": [
+              "i",
+              "max"
+            ]
+          },
+          {
+            "label": "i=2，2 < 7 → 不变",
+            "items": [
+              {
+                "name": "i",
+                "value": "2"
+              },
+              {
+                "name": "max",
+                "value": "7"
+              }
+            ],
+            "highlight": [
+              "i"
+            ]
+          },
+          {
+            "label": "循环结束，最大值是 7",
+            "items": [
+              {
+                "name": "i",
+                "value": "3"
+              },
+              {
+                "name": "max",
+                "value": "7"
+              }
+            ],
+            "highlight": [
+              "i"
+            ]
+          }
+        ]
       },
       {
         "type": "quiz",

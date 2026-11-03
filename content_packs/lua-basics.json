@@ -162,6 +162,32 @@
         "text": "sum\t55\nn\t3"
       },
       {
+        "type": "compare",
+        "title": "同一个循环，四种写法",
+        "columns": [
+          {
+            "lang": "python",
+            "code": "total = 0\nfor i in range(1, 6):\n    total += i\nprint(total)",
+            "note": "缩进分块"
+          },
+          {
+            "lang": "javascript",
+            "code": "var total = 0;\nfor (var i = 1; i <= 5; i++) {\n  total += i;\n}\nconsole.log(total);",
+            "note": "花括号 + 分号"
+          },
+          {
+            "lang": "lua",
+            "code": "local total = 0\nfor i = 1, 5 do\n  total = total + i\nend\nprint(total)",
+            "note": "do...end 包块"
+          },
+          {
+            "lang": "c",
+            "code": "int main() {\n    int total = 0;\n    for (int i = 1; i <= 5; i++) {\n        total += i;\n    }\n    printf(\"%d\", total);\n    return 0;\n}",
+            "note": "必须写 main"
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "for i = 1, 5 do 会循环几次？",
         "options": [
@@ -227,6 +253,99 @@
         "code": "local t = {'a', 'b', 'c'}\nfor i, v in ipairs(t) do\n  print(i, v)\nend",
         "output": "1\ta\n2\tb\n3\tc",
         "hint": "ipairs 按 1..n 顺序遍历，pairs 顺序不保证。"
+      },
+      {
+        "type": "visualize",
+        "title": "ipairs 遍历 table",
+        "caption": "t = {10,20,30}，下标从 1 开始",
+        "frames": [
+          {
+            "label": "i=1，取到 t[1]",
+            "items": [
+              {
+                "name": "i",
+                "value": "1"
+              },
+              {
+                "name": "v",
+                "value": "10"
+              },
+              {
+                "name": "sum",
+                "value": "10"
+              }
+            ],
+            "highlight": [
+              "i",
+              "v",
+              "sum"
+            ]
+          },
+          {
+            "label": "i=2，取到 t[2]",
+            "items": [
+              {
+                "name": "i",
+                "value": "2"
+              },
+              {
+                "name": "v",
+                "value": "20"
+              },
+              {
+                "name": "sum",
+                "value": "30"
+              }
+            ],
+            "highlight": [
+              "i",
+              "v",
+              "sum"
+            ]
+          },
+          {
+            "label": "i=3，取到 t[3]",
+            "items": [
+              {
+                "name": "i",
+                "value": "3"
+              },
+              {
+                "name": "v",
+                "value": "30"
+              },
+              {
+                "name": "sum",
+                "value": "60"
+              }
+            ],
+            "highlight": [
+              "i",
+              "v",
+              "sum"
+            ]
+          },
+          {
+            "label": "i=4 超出范围，遍历结束",
+            "items": [
+              {
+                "name": "i",
+                "value": "4"
+              },
+              {
+                "name": "v",
+                "value": "nil"
+              },
+              {
+                "name": "sum",
+                "value": "60"
+              }
+            ],
+            "highlight": [
+              "i"
+            ]
+          }
+        ]
       }
     ],
     "exercise": {

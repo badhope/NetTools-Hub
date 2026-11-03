@@ -87,6 +87,53 @@
         "text": "每轮把搜索区间砍半，n=100 万也只要约 20 次即可命中——这就是 O(log n)。写二分最容易错的地方是循环条件 `lo <= hi`（闭区间）与更新 `lo = mid + 1 / hi = mid - 1`（防止死循环）。"
       },
       {
+        "type": "visualize",
+        "title": "二分查找：每次砍掉一半",
+        "caption": "在 [1,3,5,7,9,11,13] 里找 11，看搜索区间怎么收缩",
+        "frames": [
+          {
+            "label": "lo=0, mid=3(值7), 7 < 11 → 往右找",
+            "items": [
+              {
+                "name": "lo",
+                "value": "0 → 4"
+              },
+              {
+                "name": "hi",
+                "value": "6"
+              },
+              {
+                "name": "mid",
+                "value": "3 (值 7)"
+              }
+            ],
+            "highlight": [
+              "lo"
+            ]
+          },
+          {
+            "label": "lo=4, mid=5(值11), 11 == 11 ✓ 命中",
+            "items": [
+              {
+                "name": "lo",
+                "value": "4"
+              },
+              {
+                "name": "hi",
+                "value": "6"
+              },
+              {
+                "name": "mid",
+                "value": "5 (值 11)"
+              }
+            ],
+            "highlight": [
+              "mid"
+            ]
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "对一个长度为 1_000_000 的有序列表二分查找，大约需要比较多少次？",
         "options": [

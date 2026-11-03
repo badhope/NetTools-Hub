@@ -90,6 +90,75 @@
         "text": "为什么能跳过中间很多组合？因为序列有序——左边太小就往右动一个，右边太大就往左动一个，每次排除一整行候选，绝不回退。"
       },
       {
+        "type": "visualize",
+        "title": "双指针怎么逼近目标",
+        "caption": "有序数组 [1,2,4,7,11]，找两数之和为 9：i 从左、j 从右，和偏小就右移 i，偏大就左移 j",
+        "frames": [
+          {
+            "label": "初始：i=0(1), j=4(11)，和=12 > 9 → j 左移",
+            "items": [
+              {
+                "name": "i",
+                "value": "0 → 1"
+              },
+              {
+                "name": "j",
+                "value": "4 → 3"
+              },
+              {
+                "name": "sum",
+                "value": "12"
+              }
+            ],
+            "highlight": [
+              "j",
+              "sum"
+            ]
+          },
+          {
+            "label": "i=0(1), j=3(7)，和=8 < 9 → i 右移",
+            "items": [
+              {
+                "name": "i",
+                "value": "0 → 1"
+              },
+              {
+                "name": "j",
+                "value": "3"
+              },
+              {
+                "name": "sum",
+                "value": "8"
+              }
+            ],
+            "highlight": [
+              "i",
+              "sum"
+            ]
+          },
+          {
+            "label": "i=1(2), j=3(7)，和=9 == 9 ✓ 找到",
+            "items": [
+              {
+                "name": "i",
+                "value": "1"
+              },
+              {
+                "name": "j",
+                "value": "3"
+              },
+              {
+                "name": "sum",
+                "value": "9"
+              }
+            ],
+            "highlight": [
+              "sum"
+            ]
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "双指针能成立的一个关键前提是什么？",
         "options": [
