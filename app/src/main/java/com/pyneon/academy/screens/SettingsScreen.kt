@@ -61,7 +61,10 @@ import com.pyneon.academy.utils.UpdateChecker
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(onBack: () -> Unit) {
+fun SettingsScreen(
+    onBack: () -> Unit,
+    onOpenDiagnostics: () -> Unit = {}
+) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     var confirmClearHistory by remember { mutableStateOf(false) }
@@ -277,6 +280,23 @@ fun SettingsScreen(onBack: () -> Unit) {
                         modifier = Modifier.weight(1f)
                     )
                 }
+            }
+        }
+
+        SectionHeader("开发者", accent = TextDim)
+        NeonCard(accent = TextDim) {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text(
+                    "遇到问题时，先把诊断日志复制或导出，能大幅缩短定位时间。日志只留在本机，不上传。",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextMid
+                )
+                NeonButton(
+                    label = "开发者诊断",
+                    accent = NeonCyan,
+                    onClick = onOpenDiagnostics,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
         }
 

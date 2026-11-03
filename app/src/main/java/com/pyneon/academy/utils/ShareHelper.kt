@@ -19,6 +19,17 @@ object ShareHelper {
     /**
      * 发送邮件（隐私咨询/联系我们）
      */
+    /**
+     * 复制文本到剪贴板。
+     *
+     * 用于「开发者诊断」导出日志——用户可以直接粘贴到反馈里，
+     * 不需要授予存储权限，也不产生文件残留。
+     */
+    fun copyText(context: Context, text: String) {
+        val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
+        cm.setPrimaryClip(android.content.ClipData.newPlainText("Mashang", text))
+    }
+
     fun sendEmail(context: Context, email: String, subject: String = "") {
         val intent = Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:$email")).apply {
             putExtra(Intent.EXTRA_SUBJECT, subject)

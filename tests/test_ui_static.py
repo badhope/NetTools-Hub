@@ -346,12 +346,83 @@ class AccessibilityTests(unittest.TestCase):
         self.assertIn("FontScale.entries", text)
         self.assertIn("saveFontScale", text)
 
+    def test_default_theme_is_light(self):
+        """默认主题必须是亮色（2026-11 决策：长文阅读更舒适）。"""
+        text = _read(JAVA, "utils", "ThemePreference.kt")
+        self.assertIn('DEFAULT_THEME_ID = "paper_light"', text, "默认主题应为白纸模式")
+        self.assertIn("getString(KEY_THEME_ID, DEFAULT_THEME_ID)", text)
+
+    def test_editor_theme_follows_light_dark(self):
+        """编辑器配色必须跟随主题明暗，否则白纸模式下出现深色代码框。"""
+        text = _read(JAVA, "ui", "components", "CodeEditor.kt")
+        self.assertIn("PYNEON_THEME_LIGHT_JSON", text, "缺少亮色编辑器配色")
+        self.assertIn("if (isLight)", text, "必须按明暗选择配色")
+        self.assertIn("remember(context, language, isLight)", text,
+                      "isLight 必须参与 remember key，否则切主题不刷新")
+
+    def test_light_tokens_marked(self):
+        text = _read(JAVA, "ui", "theme", "Color.kt")
+        self.assertIn("val isLight: Boolean = false", text)
+        seg = text[text.index("val LightTokens"):][:600]
+        self.assertIn("isLight = true", seg, "LightTokens 必须标记 isLight")
+
     def test_minimal_style_disables_autoplay(self):
         """简洁风格下可视化块不应自动播放（避免持续动画干扰阅读）。"""
         text = _read(JAVA, "screens", "LessonBlockCards.kt")
         seg = text[text.index("fun VisualizeCard"):]
         self.assertIn("pressAnimationEnabled", seg,
                       "自动播放按钮应受风格开关控制")
+
+
+class DebugDiagnosticsTests(unittest.TestCase):
+    """诊断能力：离线 App 没有服务端日志，必须有本地可导出的诊断链路。"""
+
+    def test_debug_log_is_bounded_and_private(self):
+        text = _read(JAVA, "debug", "DebugLog.kt")
+        self.assertIn("MAX_ENTRIES", text, "日志必须有内存上限")
+        self.assertIn("MAX_FILE_BYTES", text, "日志文件必须有体积上限")
+        self.assertIn("不记录用户代码", text, "必须明确不记录用户代码")
+        # 不得出现任何网络上报
+        for bad in ("HttpURLConnection", "OkHttp", "URL("):
+            self.assertNotIn(bad, text, f"日志不得联网上报：{bad}")
+
+    def test_diagnostics_screen_shows_runtime_and_logs(self):
+        text = _read(JAVA, "screens", "DiagnosticsScreen.kt")
+        for needle in ("运行时状态", "运行日志", "运行环境", "内容状态"):
+            self.assertIn(needle, text, f"诊断页缺少「{needle}」")
+        self.assertIn("DebugLog.export()", text, "必须能导出日志")
+        self.assertIn("copyText", text, "必须能复制日志")
+
+    def test_diagnostics_route_registered(self):
+        nav = _read(os.path.join(JAVA, "nav", "AppNav.kt"))
+        self.assertIn('composable("diagnostics")', nav, "诊断页未注册路由")
+        settings = _read(JAVA, "screens", "SettingsScreen.kt")
+        self.assertIn("开发者诊断", settings, "设置页缺少诊断入口")
+
+    def test_key_paths_are_instrumented(self):
+        """启动、执行失败、内容下载三条关键路径必须有日志。"""
+        app = _read(os.path.join(JAVA, "PyNeonApp.kt"))
+        self.assertIn("DebugLog.i", app, "启动未打点")
+        lesson = _read(JAVA, "screens", "LessonDetailScreen.kt")
+        self.assertIn("DebugLog.w", lesson, "执行失败未打点")
+        center = _read(JAVA, "screens", "LanguageCenterScreen.kt")
+        self.assertIn("DebugLog", center, "内容下载未打点")
+
+
+class FeedbackStateTests(unittest.TestCase):
+    """反馈体验：执行异常不得崩溃，必须转成可读错误。"""
+
+    def test_runtime_exception_is_caught(self):
+        text = _read(JAVA, "screens", "LessonDetailScreen.kt")
+        self.assertIn("RuntimeCrash", text, "运行时异常必须有兜底类型")
+        # 至少两处（代码块运行 + 判题）
+        self.assertGreaterEqual(text.count("catch (t: Throwable)"), 2,
+                                "代码运行与判题都要有异常兜底")
+
+    def test_error_message_is_user_readable(self):
+        text = _read(JAVA, "screens", "LessonDetailScreen.kt")
+        self.assertIn("运行时异常", text, "兜底错误要有中文可读提示")
+        self.assertIn("判题异常", text)
 
 
 if __name__ == "__main__":

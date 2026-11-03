@@ -45,6 +45,7 @@ import com.pyneon.academy.ai.CoachTip
 import com.pyneon.academy.data.Block
 import com.pyneon.academy.data.Clock
 import com.pyneon.academy.data.LessonRepository
+import com.pyneon.academy.debug.DebugLog
 import com.pyneon.academy.data.MistakeViewModel
 import com.pyneon.academy.data.Progress
 import com.pyneon.academy.data.ProgressStore
@@ -226,13 +227,33 @@ fun LessonDetailScreen(lessonId: String, onBack: () -> Unit, onNextLesson: ((Str
                         onRun = {
                             scope.launch {
                                 runningKey = index
-                                val r = withContext(Dispatchers.Default) {
-                                    // 代码块可自带 lang 覆盖（对比教学）；否则沿用本讲语言
-                                    LanguageRegistry.get(block.lang.ifBlank { lesson.lang })
-                                        .runCode(block.code, block.stdin)
+                                // 兜底：运行时若抛未捕获异常（如底层 JNI 崩溃），
+                                // 不能让整个界面跟着挂掉——转成可读错误显示。
+                                val r = try {
+                                    withContext(Dispatchers.Default) {
+                                        // 代码块可自带 lang 覆盖（对比教学）；否则沿用本讲语言
+                                        LanguageRegistry.get(block.lang.ifBlank { lesson.lang })
+                                            .runCode(block.code, block.stdin)
+                                    }
+                                } catch (t: Throwable) {
+                                    DebugLog.e("Run", "运行时异常 lesson=${lesson.id}", t)
+                                    RunResult(
+                                        ok = false, stdout = "", stderr = "",
+                                        errorType = "RuntimeCrash",
+                                        errorMessage = "运行时异常：${t.javaClass.simpleName}",
+                                        traceback = null, durationMs = 0L,
+                                        variables = emptyList(), passed = null
+                                    )
                                 }
                                 runResults[index] = r
                                 runningKey = null
+                                if (!r.ok) {
+                                    DebugLog.w(
+                                        "Run",
+                                        "代码块执行失败 lesson=${lesson.id} lang=${block.lang.ifBlank { lesson.lang }}" +
+                                            " type=${r.errorType} msg=${r.errorMessage?.take(120)}"
+                                    )
+                                }
                                 recordSideEffects(context, r)
                             }
                         }
@@ -269,12 +290,29 @@ fun LessonDetailScreen(lessonId: String, onBack: () -> Unit, onNextLesson: ((Str
                                 scope.launch {
                                     checking = true
                                     checkResult = null
-                                    val r = withContext(Dispatchers.Default) {
-                                        LanguageRegistry.get(lesson.lang)
-                                            .checkExercise(editorValue, exercise.tests, exercise.stdin)
+                                    val r = try {
+                                        withContext(Dispatchers.Default) {
+                                            LanguageRegistry.get(lesson.lang)
+                                                .checkExercise(editorValue, exercise.tests, exercise.stdin)
+                                        }
+                                    } catch (t: Throwable) {
+                                        DebugLog.e("Judge", "判题异常 lesson=${lesson.id}", t)
+                                        RunResult(
+                                            ok = false, stdout = "", stderr = "",
+                                            errorType = "RuntimeCrash",
+                                            errorMessage = "判题异常：${t.javaClass.simpleName}",
+                                            traceback = null, durationMs = 0L,
+                                            variables = emptyList(), passed = false
+                                        )
                                     }
                                     checkResult = r
                                     checking = false
+                                    if (r.passed != true) {
+                                        DebugLog.i(
+                                            "Judge",
+                                            "判题未通过 lesson=${lesson.id} type=${r.errorType}"
+                                        )
+                                    }
                                     recordSideEffects(context, r)
                                     if (r.passed == true) {
                                         if (solvedKey !in progress.solvedKeys) {

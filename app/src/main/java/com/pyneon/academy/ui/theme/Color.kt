@@ -26,7 +26,14 @@ data class NeonTokens(
     val success: Color,      // 成功绿
     val danger: Color,       // 错误红
     val gold: Color,         // 金色（任务/奖励）
-    val purple: Color        // 紫色（进阶）
+    val purple: Color,       // 紫色（进阶）
+    /**
+     * 是否为亮色主题。
+     *
+     * 代码编辑器需要据此切换配色——否则白纸模式下会出现深色代码框
+     * 浮在白色界面上（2026-11 实测）。
+     */
+    val isLight: Boolean = false
 )
 
 /** 深色（默认）Token：赛博霓虹深空配色 */
@@ -62,7 +69,8 @@ val LightTokens = NeonTokens(
     success = Color(0xFF00965C),
     danger = Color(0xFFC62828),
     gold = Color(0xFFB08900),
-    purple = Color(0xFF7B1FA2)
+    purple = Color(0xFF7B1FA2),
+    isLight = true
 )
 
 val LocalNeonTokens = staticCompositionLocalOf { DarkTokens }

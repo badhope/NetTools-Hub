@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.pyneon.academy.data.ContentCatalog
 import com.pyneon.academy.data.ContentCenter
 import com.pyneon.academy.data.LessonRepository
+import com.pyneon.academy.debug.DebugLog
 import com.pyneon.academy.lang.LanguageIds
 import com.pyneon.academy.lang.LanguageRegistry
 import com.pyneon.academy.ui.components.NeonButton
@@ -192,8 +193,10 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
                                             withContext(Dispatchers.IO) { center.download(context, pack, catalogBase) }
                                             installed = center.installedVersions(context)
                                             LessonRepository.invalidateCache()
+                                            DebugLog.i("Content", "课程包安装成功 ${pack.id} v${pack.version}")
                                             message = "安装完成，课程列表已刷新"
                                         } catch (e: Exception) {
+                                            DebugLog.e("Content", "课程包下载失败 ${pack.id}", e)
                                             message = "下载失败：${e.message?.take(50)}"
                                         }
                                     }

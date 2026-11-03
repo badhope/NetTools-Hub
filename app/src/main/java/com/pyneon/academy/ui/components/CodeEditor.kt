@@ -20,6 +20,7 @@ import io.github.rosemoe.sora.langs.textmate.TextMateColorScheme
 import io.github.rosemoe.sora.langs.textmate.TextMateLanguage
 import io.github.rosemoe.sora.langs.textmate.registry.model.DefaultGrammarDefinition
 import io.github.rosemoe.sora.widget.CodeEditor as SoraCodeEditor
+import com.pyneon.academy.ui.theme.LocalNeonTokens
 import io.github.rosemoe.sora.widget.schemes.EditorColorScheme
 import kotlinx.coroutines.awaitCancellation
 import org.eclipse.tm4e.core.registry.IGrammarSource
@@ -76,6 +77,52 @@ private val PYNEON_THEME_JSON: String =
 }
 """.trimIndent()
 
+
+/**
+ * 亮色代码配色（白底可读）。
+ *
+ * 为什么需要：此前编辑器主题写死深色，用户切到「白纸模式」后会出现
+ * 深色代码框浮在白色界面上——刺眼且割裂。现在按 AppTheme.isLight 选择配色。
+ * token scope 与暗色方案完全一致，只换色值，保证高亮语义统一。
+ */
+private val PYNEON_THEME_LIGHT_JSON: String =
+    """
+{
+  "name": "PyNeon Light",
+  "type": "light",
+  "colors": {
+    "editor.background": "#FFFFFF",
+    "editor.foreground": "#1A2332",
+    "editor.lineHighlightBackground": "#F1F5FA",
+    "editorLineNumber.foreground": "#9AA9BA",
+    "editorLineNumber.activeForeground": "#007E96",
+    "editorCursor.foreground": "#007E96",
+    "editor.selectionBackground": "#CDE9EF",
+    "editorIndentGuide.background": "#E4EAF2",
+    "editorIndentGuide.activeBackground": "#007E96",
+    "editorWhitespace.foreground": "#D6DEE8",
+    "editor.findMatchBackground": "#FFE9A8",
+    "editorSuggestWidget.background": "#FFFFFF",
+    "editorSuggestWidget.foreground": "#1A2332",
+    "editorSuggestWidget.selectedBackground": "#F1F5FA",
+    "editorSuggestWidget.highlightForeground": "#B08900"
+  },
+  "tokenColors": [
+    { "scope": "comment", "settings": { "foreground": "#6B7C8F", "fontStyle": "italic" } },
+    { "scope": "keyword", "settings": { "foreground": "#007E96", "fontStyle": "bold" } },
+    { "scope": "keyword.operator", "settings": { "foreground": "#007E96" } },
+    { "scope": "storage.type", "settings": { "foreground": "#007E96", "fontStyle": "bold" } },
+    { "scope": "string", "settings": { "foreground": "#1F7A3D" } },
+    { "scope": "constant.numeric", "settings": { "foreground": "#8A6D00" } },
+    { "scope": "constant.language", "settings": { "foreground": "#7B2FBE", "fontStyle": "bold" } },
+    { "scope": "entity.name.function", "settings": { "foreground": "#C2185B" } },
+    { "scope": "support.function.builtin", "settings": { "foreground": "#7B2FBE" } },
+    { "scope": "support.type.python", "settings": { "foreground": "#7B2FBE" } },
+    { "scope": "variable.language", "settings": { "foreground": "#7B2FBE" } }
+  ]
+}
+""".trimIndent()
+
 private const val TAG = "PyNeonCodeEditor"
 
 /**
@@ -86,7 +133,8 @@ private const val TAG = "PyNeonCodeEditor"
  */
 private fun createEditor(
     context: android.content.Context,
-    language: String
+    language: String,
+    isLight: Boolean
 ): SoraCodeEditor {
     val editor = SoraCodeEditor(context)
     try {
@@ -117,7 +165,7 @@ private fun createEditor(
 
         val themeSource = org.eclipse.tm4e.core.registry.IThemeSource.fromString(
             org.eclipse.tm4e.core.registry.IThemeSource.ContentType.JSON,
-            PYNEON_THEME_JSON
+            if (isLight) PYNEON_THEME_LIGHT_JSON else PYNEON_THEME_JSON
         )
         val scheme = TextMateColorScheme.create(themeSource)
         editor.setColorScheme(scheme)
@@ -161,8 +209,10 @@ fun CodeEditor(
     language: String = "python"
 ) {
     val context = LocalContext.current
-    // 编辑器实例 + 语法/主题只创建一次；sora 支持增量高亮，不必随文本重建
-    val editor = remember(context, language) { createEditor(context, language) }
+    // 主题明暗参与 remember key：切换亮/暗主题时必须重建编辑器，
+    // 否则代码区会保持旧配色（白纸模式下出现深色代码框）。
+    val isLight = LocalNeonTokens.current.isLight
+    val editor = remember(context, language, isLight) { createEditor(context, language, isLight) }
     var listener by remember { mutableStateOf<((String) -> Unit)?>(null) }
 
     LaunchedEffect(editor) {

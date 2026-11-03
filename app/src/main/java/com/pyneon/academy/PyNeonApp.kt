@@ -5,6 +5,7 @@ import android.util.Log
 import com.chaquo.python.Python
 import com.chaquo.python.android.AndroidPlatform
 import com.pyneon.academy.c.CBridge
+import com.pyneon.academy.debug.DebugLog
 import com.pyneon.academy.js.JsBridge
 import com.pyneon.academy.lang.LanguageRegistry
 import com.pyneon.academy.lua.LuaBridge
@@ -22,12 +23,16 @@ class PyNeonApp : Application() {
         LanguageRegistry.register(CBridge)
         LanguageRegistry.register(LuaBridge)
         LanguageRegistry.register(SqlBridge)
+        DebugLog.i("App", "启动 v" + com.pyneon.academy.utils.AppConstants.VERSION_NAME +
+            " · 已注册运行时 " + LanguageRegistry.ids().joinToString(","))
         try {
             if (!Python.isStarted()) {
                 Python.start(AndroidPlatform(this))
+                DebugLog.i("Python", "解释器启动成功")
             }
         } catch (t: Throwable) {
             Log.e("PyNeon", "Python runtime failed to start", t)
+            DebugLog.e("Python", "解释器启动失败", t)
         }
     }
 }

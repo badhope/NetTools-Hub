@@ -37,6 +37,7 @@ import com.pyneon.academy.screens.BootScreen
 import com.pyneon.academy.screens.CertificateScreen
 import com.pyneon.academy.screens.ChallengeDetailScreen
 import com.pyneon.academy.screens.ContentHubScreen
+import com.pyneon.academy.screens.DiagnosticsScreen
 import com.pyneon.academy.screens.HomeScreen
 import com.pyneon.academy.screens.LessonDetailScreen
 import com.pyneon.academy.screens.LanguageCenterScreen
@@ -234,7 +235,13 @@ fun AppRoot() {
             }
             composable("review") { ReviewScreen(onBack = { navController.popBackStack() }) }
             composable("history") { HistoryScreen(onBack = { navController.popBackStack() }) }
-            composable("settings") { SettingsScreen(onBack = { navController.popBackStack() }) }
+            composable("settings") {
+                SettingsScreen(
+                    onBack = { navController.popBackStack() },
+                    onOpenDiagnostics = { navController.navigate("diagnostics") }
+                )
+            }
+            composable("diagnostics") { DiagnosticsScreen(onBack = { navController.popBackStack() }) }
             composable("mistakes") {
                 MistakeScreen(
                     onBack = { navController.popBackStack() },

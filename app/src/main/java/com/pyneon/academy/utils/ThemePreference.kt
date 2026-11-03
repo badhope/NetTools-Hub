@@ -59,9 +59,19 @@ object ThemePreference {
     /**
      * 获取当前主题 ID
      */
+    /**
+     * 默认主题：白纸模式（亮色）。
+     *
+     * 2026-11 决策：默认亮色，因为长文阅读场景下亮底更省眼、更接近常见阅读器；
+     * 赛博霓虹仍完整保留，用户在「我的 → 配色主题」一键切回。
+     * 首次安装取 [DEFAULT_THEME_ID]；已选过主题的用户不受影响。
+     */
     fun getCurrentThemeId(context: Context): String {
-        return getPrefs(context).getString(KEY_THEME_ID, AppThemes.cyberNeon.id) ?: AppThemes.cyberNeon.id
+        return getPrefs(context).getString(KEY_THEME_ID, DEFAULT_THEME_ID) ?: DEFAULT_THEME_ID
     }
+
+    /** 首次安装的默认主题 id */
+    const val DEFAULT_THEME_ID = "paper_light"
 
     /** 获取自定义主色（hex，如 "#00E5FF"） */
     fun getCustomColor(context: Context): String {
