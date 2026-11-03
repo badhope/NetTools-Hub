@@ -93,10 +93,20 @@ the same function written in four languages, each column runnable for instant ou
 
 Cyberpunk is the default personality, not the only option.
 
+- **Light by default** — ships with Paper White for comfortable long-form reading; the six dark palettes are one tap away
 - **Two styles** — Cyber (glitch text / scanlines / neon borders / cut corners) and Minimal (static type / hairline borders / rounded cards). Switch in Settings → Appearance.
 - **Seven palettes** — Cyber Neon / Deep Space / Aurora Green / Twilight Purple / Sunset Orange / Soft Eye-Care / Paper White, plus custom accent color
 - **Four font sizes** — Compact / Normal / Comfortable / Large. Scales lesson prose only; code blocks keep their size so indentation stays aligned
 - Palette, style and font size are **independent** — combine freely
+
+---
+
+## When something goes wrong
+
+An offline app has no server logs. **Settings → Developer Diagnostics** surfaces the environment,
+all six runtime states, installed content packs and the runtime log, with copy and export buttons.
+
+Logs stay on device, are never uploaded, and never contain your code — only event types and error summaries.
 
 ---
 
@@ -132,8 +142,9 @@ This is a learning sandbox, not a security container — see [SECURITY.md](SECUR
 ```bash
 ./gradlew :app:assembleDebug        # Debug APK
 ./gradlew :app:assembleRelease      # needs KEYSTORE_PATH and 3 more env vars
-python -m unittest discover -s tests  # 207 tests
+python -m unittest discover -s tests  # full unit suite
 python tests/validate_content.py     # validates all 79 lessons
+bash scripts/ci/check_all.sh         # one-shot gate (11 checks)
 ```
 
 ---
@@ -142,7 +153,8 @@ python tests/validate_content.py     # validates all 79 lessons
 
 | Gate | Command | What it proves |
 |---|---|---|
-| Engine + content | `python -m unittest discover -s tests` | 207 tests: sandbox, timeouts, grading, concurrency, content structure, doc claims |
+| One-shot | `bash scripts/ci/check_all.sh` | 11 gates in sequence, failures summarised at the end |
+| Engine + content | `python -m unittest discover -s tests` | sandbox, timeouts, grading, concurrency, content structure, doc claims |
 | Lessons × answers | `python tests/validate_content.py` | Every language's reference answers pass end-to-end |
 | Real execution | per-language suites | Python/JS/TS/Lua/SQL/C all verified by actually running code |
 | Android | `./gradlew :app:lintDebug :app:testDebugUnitTest` | 0 lint errors + JVM unit tests |

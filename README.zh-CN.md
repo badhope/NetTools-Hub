@@ -85,10 +85,19 @@ for 循环求 1+2+3+4+5：
 
 赛博朋克是默认个性，但不是唯一选择。
 
+- **默认亮色** —— 首装为「白纸模式」，长文阅读更省眼；赛博霓虹等 6 套暗色主题随时切回
 - **双风格** —— 赛博（故障字/扫描线/霓虹描边/切角卡片）与简洁（静态排版/细描边/圆角卡片），在「设置 → 外观风格」一键切换
 - **七套配色** —— 赛博霓虹 / 深空灰 / 极光绿 / 暮光紫 / 暮光橙 / 柔光护眼 / 白纸模式，另有自定义主色
 - **四档字号** —— 紧凑 / 标准 / 舒适 / 大字，只放大课程正文，代码块保持原样不破坏缩进
 - 配色与风格、字号**互相独立**，可任意组合
+
+---
+
+## 出问题怎么办
+
+离线 App 没有服务端日志。「设置 → 开发者诊断」把环境、六个运行时状态、内容包、运行日志摊开，可一键复制或导出。
+
+日志只留在本机、不上传、不记录你的代码内容——只有事件类型与错误摘要。
 
 ---
 
@@ -120,8 +129,9 @@ SqlBridge(sqlite3) ──► SQL（内存库，拒 ATTACH）
 ```bash
 ./gradlew :app:assembleDebug        # Debug APK
 ./gradlew :app:assembleRelease      # 需 KEYSTORE_PATH 等 4 个环境变量
-python -m unittest discover -s tests  # 207 条测试
+python -m unittest discover -s tests  # 全部单元测试
 python tests/validate_content.py     # 79 讲内容全量校验
+bash scripts/ci/check_all.sh         # 一键全量门禁（11 项）
 ```
 
 ---
@@ -130,7 +140,8 @@ python tests/validate_content.py     # 79 讲内容全量校验
 
 | 门禁 | 命令 | 证明什么 |
 |---|---|---|
-| 引擎 + 内容 | `python -m unittest discover -s tests` | 207 条测试：沙箱、超时、判题、并发、内容结构、文档口径 |
+| 一键全量 | `bash scripts/ci/check_all.sh` | 11 项门禁串跑，失败即汇总报告 |
+| 引擎 + 内容 | `python -m unittest discover -s tests` | 沙箱、超时、判题、并发、内容结构、文档口径 |
 | 课程 × 答案 | `python tests/validate_content.py` | 全语言参考答案端到端跑通 |
 | 多语言真执行 | 各语言专属测试 | Python/JS/TS/Lua/SQL/C 全部真实执行验证 |
 | Android | `./gradlew :app:lintDebug :app:testDebugUnitTest` | 0 lint error + JVM 单测 |
