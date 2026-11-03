@@ -28,8 +28,8 @@
 | 简短描述 | ≤ 80 字符 | ✅ 见 `store/listing.md` |
 | 完整描述 | ≤ 4000 字符 | ✅ 见 `store/listing.md` |
 | 应用图标 | 512×512 PNG（Play）+ 各密度 launcher | ✅ 自适应图标（vector，任意密度） |
-| 特色图片 | 1024×500（Play） | ⬜ 需设计导出 |
-| 截图 | 手机 ≥ 2 张，≤ 8 张（16:9 或 9:16） | ✅ 已有 16 张 `demo/app/` |
+| 特色图片 | 1024×500（Play） | ✅ `docs/assets/feature-graphic-1024x500.png` |
+| 截图 | 手机 ≥ 2 张，≤ 8 张（16:9 或 9:16） | ⚠️ 现有为 v0.4.0 旧版，**必须重拍** |
 | 分类 | 教育 / 工具 | ✅ 教育 |
 | 联系方式 | 开发者邮箱 | ✅ bigbad338@outlook.com |
 | 隐私政策 URL | 公网可访问 | ✅ GitHub Pages |
@@ -115,7 +115,7 @@ python tests/ci_apk_probe.py app/build/outputs/apk/release/*.apk --require-relea
 
 | 项 | 原因 | 建议 |
 |---|---|---|
-| 特色图片 1024×500 | 需设计导出，仓库暂无 | 用 `demo/promo-poster.jpg` 裁剪或重做 |
+| **截图重拍** | 现有截图是 v0.4.0，与 v0.6.0 不符 | 需在真机/模拟器上重拍（本机无法启动模拟器） |
 | 商店截图文案 | 现有截图无标注文字 | 可用 `tools/make_brand_assets.py` 加标题条 |
 | 各市场开发者账号 | 需实名认证与费用 | 由发布者自行注册 |
 | 应用签名密钥备份 | 丢失将无法更新 | 离线保存 keystore + 密码 |

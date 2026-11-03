@@ -82,16 +82,16 @@ def banner():
     grid(d, w, h, 64, (0, 229, 255, 20))
     corners(d, w, h, pad=34, length=90)
 
-    d.text((110, 92), "M A S H A N G   ·   O F F L I N E   C O D I N G   T E R M I N A L",
+    d.text((110, 92), "M A S H A N G   ·   S I X   L A N G U A G E S   ·   O F F L I N E",
            font=font(FONT_MONO_REG, 30), fill=GREEN)
     d.text((104, 170), "码上", font=font(FONT_CN, 200), fill=CYAN)
     d.text((520, 208), "MASHANG", font=font(FONT_MONO, 120), fill=MAGENTA)
-    d.text((112, 420), "码上，就是马上。把真实的编程终端装进口袋",
+    d.text((112, 420), "码上，就是马上。六门语言，真跑，全离线",
            font=font(FONT_CN, 62), fill=TEXT_HI)
-    d.text((112, 510), "CPython 3.13 + JavaScript runtime  ·  38 lessons  ·  assert-judged  ·  fully offline core",
+    d.text((112, 510), "Python · JavaScript · TypeScript · C · Lua · SQL  ·  79 lessons  ·  assert-judged",
            font=font(FONT_MONO_REG, 30), fill=TEXT_MID)
 
-    chips = [("离线 CPython 3.13", CYAN), ("38 讲闯关", GREEN), ("assert 自动判题", CYAN), ("MIT 开源", YELLOW)]
+    chips = [("六门语言真实运行", CYAN), ("79 讲闯关", GREEN), ("assert 自动判题", CYAN), ("MIT 开源", YELLOW)]
     x = 112
     for label, color in chips:
         f = font(FONT_CN_REG, 30)
@@ -101,7 +101,7 @@ def banner():
         d.text((x + 26, 610), label, font=f, fill=color)
         x = box[2] + 22
 
-    d.text((2330, 700), "38 LESSONS · 8 CHALLENGES · PYTHON + JAVASCRIPT",
+    d.text((2330, 700), "79 LESSONS · 8 CHALLENGES · 6 LANGUAGES",
            font=font(FONT_MONO_REG, 24), fill=(90, 105, 130), anchor="ra")
     img.save(DOCS / "banner.png", optimize=True)
     print("docs/banner.png", img.size)
@@ -161,12 +161,150 @@ def og_image():
     print("docs/assets/og.jpg", img.size)
 
 
+def feature_graphic():
+    """Google Play 特色图片 1024x500（多数市场的通用横幅尺寸）。
+
+    Play 规范要点：文字要在缩略图下仍可辨认、不得有大面积留白、
+    不得出现与应用无关的误导性内容。
+
+    布局（实测调整过两轮）：
+      - 左侧：主标题 + 副标题 + 六语言标签，宽度限制在 660px 内
+      - 右侧：独立数据卡片（x=690 起），避免与主标题重叠
+      - 主标题字号按实测宽度收敛，宁小不溢出
+    """
+    w, h = 1024, 500
+    img = vertical_gradient(w, h)
+    d = ImageDraw.Draw(img, "RGBA")
+    grid(d, w, h, 48, (0, 229, 255, 16))
+    corners(d, w, h, pad=22, length=56)
+
+    LEFT_RIGHT = 656  # 左栏可用右边界
+
+    # 主标题：先量宽度，超了就降字号（避免压到右侧卡片）
+    title_font_size = 76
+    while title_font_size > 40:
+        f = font(FONT_CN, title_font_size)
+        if d.textlength("码上 MASHANG", font=f) <= LEFT_RIGHT - 60:
+            break
+        title_font_size -= 4
+    d.text((60, 86), "码上 MASHANG", font=font(FONT_CN, title_font_size), fill=CYAN)
+
+    d.text((62, 200), "六门语言，真跑，全离线", font=font(FONT_CN, 42), fill=TEXT_HI)
+    d.text((62, 262), "断网也能写代码、判题、升级", font=font(FONT_CN_REG, 25), fill=TEXT_MID)
+
+    # 六语言标签（两行，宽度不越过左栏）
+    langs = [("Python", CYAN), ("JavaScript", YELLOW), ("TypeScript", CYAN),
+             ("C", GREEN), ("Lua", GREEN), ("SQL", MAGENTA)]
+    x, y = 62, 330
+    for name, color in langs:
+        f = font(FONT_MONO, 20)
+        tw = d.textlength(name, font=f)
+        box_w = tw + 26
+        if x + box_w > LEFT_RIGHT:
+            x, y = 62, y + 46
+        box = (x, y, x + box_w, y + 36)
+        d.rounded_rectangle(box, radius=18, outline=color, width=2,
+                            fill=(color[0], color[1], color[2], 26))
+        d.text((x + 13, y + 7), name, font=f, fill=color)
+        x = box[2] + 10
+
+    # 右侧数据卡片
+    bx0, by0, bx1, by1 = 690, 96, 984, 404
+    d.rounded_rectangle((bx0, by0, bx1, by1), radius=18,
+                        outline=(0, 229, 255, 90), width=2, fill=(11, 18, 32, 210))
+
+    # 三行数据：卡片高度 308，留出底部 46px 给脚注
+    # 行高 80，起点 by0+28 → 三行占 240，脚注在 by1-42，不重叠
+    stats = [("79", "讲课程"), ("6", "门语言"), ("0", "广告 · 账号")]
+    sy = by0 + 28
+    for num, label in stats:
+        d.text((bx0 + 30, sy), num, font=font(FONT_MONO, 46), fill=CYAN)
+        d.text((bx0 + 108, sy + 14), label, font=font(FONT_CN_REG, 22), fill=TEXT_MID)
+        sy += 78
+
+    # 脚注单独一行，与上方数字保持 20px 以上间距
+    d.text((bx0 + 30, by1 - 40), "MIT 开源 · 数据不出手机",
+           font=font(FONT_CN_REG, 18), fill=GREEN)
+
+    out = DOCS / "assets" / "feature-graphic-1024x500.png"
+    img.save(out, optimize=True)
+    print("docs/assets/feature-graphic-1024x500.png", img.size)
+
+
 def main():
     (DOCS / "assets").mkdir(parents=True, exist_ok=True)
     banner()
+    feature_graphic()
     promo_poster()
     og_image()
 
 
 if __name__ == "__main__":
     main()
+
+
+# ===== 商店截图（带标题标注） =====
+# Play / 各市场要求截图能一眼看懂卖点；纯界面截图信息密度太高。
+# 做法：把原截图等比缩放放进画布，顶部留出标题条，底部留白。
+STORE_SHOTS = [
+    ("home.png", "六门语言，一个终端", "Six languages, one terminal"),
+    ("lessons.png", "79 讲课程，从入门到实战", "79 lessons, beginner to capstone"),
+    ("lesson_detail.png", "每讲都有讲解、图解、随堂问", "Explanations, diagrams, inline quizzes"),
+    ("lesson_exercise.png", "写完就跑，跑完就判", "Write, run, get judged"),
+    ("judge_pass.png", "用例全过才放行", "All tests must pass"),
+    ("judge_fail.png", "失败时告诉你哪条断言没过", "Told exactly which assertion failed"),
+    ("terminal.png", "内置终端，随时试验", "Built-in terminal, experiment freely"),
+    ("tracks.png", "真实课程路线，不掺水分", "Real curriculum, no filler"),
+    ("contenthub.png", "语言中心，按需下载", "Language Center, on-demand packs"),
+    ("settings.png", "外观、字号、诊断都能调", "Appearance, font size, diagnostics"),
+]
+
+
+def store_screenshots():
+    """生成商店用截图：1080x1920 画布 + 顶部标题条。
+
+    输出到 store/screenshots/，文件名带序号便于按顺序上传。
+    """
+    out_dir = ROOT / "store" / "screenshots"
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    CW, CH = 1080, 1920
+    TOP_H = 210          # 标题条高度
+    PAD = 40             # 内容左右留白
+
+    for idx, (fname, zh, en) in enumerate(STORE_SHOTS, start=1):
+        src_path = DEMO / "app" / fname
+        if not src_path.exists():
+            print(f"  跳过（缺文件）：{fname}")
+            continue
+
+        canvas = vertical_gradient(CW, CH)
+        d = ImageDraw.Draw(canvas, "RGBA")
+        grid(d, CW, CH, 60, (0, 229, 255, 12))
+
+        # 顶部标题
+        d.text((PAD, 54), zh, font=font(FONT_CN, 54), fill=TEXT_HI)
+        d.text((PAD, 132), en, font=font(FONT_MONO_REG, 22), fill=TEXT_MID)
+
+        # 截图等比缩放进剩余空间
+        shot = Image.open(src_path).convert("RGB")
+        avail_h = CH - TOP_H - PAD
+        avail_w = CW - PAD * 2
+        scale = min(avail_w / shot.width, avail_h / shot.height)
+        nw, nh = int(shot.width * scale), int(shot.height * scale)
+        shot = shot.resize((nw, nh), Image.LANCZOS)
+
+        x = (CW - nw) // 2
+        y = TOP_H
+        # 截图加细边框，避免与背景糊在一起
+        d.rounded_rectangle((x - 3, y - 3, x + nw + 3, y + nh + 3),
+                            radius=18, outline=(0, 229, 255, 70), width=2)
+        canvas.paste(shot, (x, y))
+
+        out = out_dir / f"{idx:02d}-{fname.replace('.png', '')}.png"
+        canvas.convert("RGB").save(out, optimize=True, quality=92)
+        print(f"  store/screenshots/{out.name}")
+
+
+if __name__ == "__main__":
+    store_screenshots()
