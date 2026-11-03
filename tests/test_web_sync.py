@@ -369,6 +369,17 @@ class WebMultiLanguageTests(unittest.TestCase):
         self.assertIn("langRunnable", seg, "codeCard 必须按语言判断是否可运行")
         self.assertIn("App 内运行", seg, "必须提示该代码需在 App 内运行")
 
+    def test_exercise_blocks_guard_non_python_languages(self):
+        """非 Python 课程的判题不得调用 Pyodide（会给出错误结果）。
+
+        2026-11 实测缺陷：renderExercise 无条件调用 checkExercise，
+        导致 C/JS/Lua/SQL 的判题在网页端跑进 Python 引擎。
+        """
+        js = _read(os.path.join(ROOT, "web", "app.js"))
+        seg = js[js.index("function renderExercise"):][:800]
+        self.assertIn("langRunnable", seg, "renderExercise 必须按语言判断")
+        self.assertIn("App 内进行", seg, "必须提示改到 App 内判题")
+
     def test_web_renders_compare_and_visualize(self):
         js = _read(os.path.join(ROOT, "web", "app.js"))
         self.assertIn('case "compare"', js, "网页端缺少 compare 块渲染")

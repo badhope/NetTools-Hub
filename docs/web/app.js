@@ -560,6 +560,19 @@
     var c = el("div", "card exercise-card");
     c.appendChild(el("div", "blk-heading", "◢ 实战判题 · " + (b.title || "")));
     if (b.brief) c.appendChild(el("div", "brief", b.brief));
+
+    // 非 Python 语言：网页端没有对应运行时，判题会调用错误的引擎。
+    // 改为只读展示参考答案 + 明确指引，绝不给出假判题结果。
+    var exLang = (lesson && lesson.lang) || "python";
+    if (!langRunnable(exLang)) {
+      var pre = el("pre", "term");
+      pre.textContent = b.starterCode || "";
+      c.appendChild(pre);
+      if (b.hint) c.appendChild(el("div", "hint", "💡 " + b.hint));
+      c.appendChild(el("div", "run-tag",
+        langLabel(exLang) + " · 网页端仅有 Python 引擎，判题请在「码上」App 内进行"));
+      return c;
+    }
     var ta = el("textarea", "code-area");
     ta.value = b.starterCode || "";
     ta.spellcheck = false;
