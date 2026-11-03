@@ -211,4 +211,57 @@ int main() { return 0; }""")
         assertTrue(r.errorMessage ?: "", r.ok)
         assertEquals("42|A|hi|3.1|%\n", r.stdout)
     }
+
+    // ===== REPL 会话语义（LanguageRuntime 契约要求） =====
+
+    @Test
+    fun `session keeps variables across pushes`() {
+        val s = CInterpreter.Session()
+        s.push("int x = 5;")
+        val (more, out) = s.push("printf(\"%d\\n\", x + 3);")
+        assertFalse(more)
+        assertEquals("8\n", out)
+    }
+
+    @Test
+    fun `session keeps function definitions`() {
+        val s = CInterpreter.Session()
+        s.push("int twice(int n) { return n * 2; }")
+        val (_, out) = s.push("printf(\"%d\\n\", twice(21));")
+        assertEquals("42\n", out)
+    }
+
+    @Test
+    fun `session does not require main`() {
+        val s = CInterpreter.Session()
+        val (_, out) = s.push("printf(\"hi\");")
+        assertEquals("hi", out)
+    }
+
+    @Test
+    fun `session requests continuation on open brace`() {
+        val s = CInterpreter.Session()
+        val (more, _) = s.push("int f() {")
+        assertTrue("未闭合花括号应请求续行", more)
+    }
+
+    @Test
+    fun `session reports variables`() {
+        val s = CInterpreter.Session()
+        s.push("int a = 1;")
+        s.push("double b = 2.5;")
+        val vars = s.variables().associate { it.first to it.second }
+        assertEquals("int", vars["a"])
+        assertEquals("double", vars["b"])
+    }
+
+    @Test
+    fun `session reset clears state`() {
+        val s = CInterpreter.Session()
+        s.push("int x = 1;")
+        s.reset()
+        val (_, out) = s.push("printf(\"%d\", x);")
+        assertTrue("重置后 x 应不存在：$out", out.contains("未声明"))
+    }
+
 }

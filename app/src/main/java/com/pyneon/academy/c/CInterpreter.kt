@@ -245,6 +245,52 @@ object CInterpreter {
             return funcs
         }
 
+        /** 会话模式解析结果：函数定义与顶层语句分开返回 */
+        class SessionParse(val funcs: Map<String, FuncDef>, val statements: List<Stmt>)
+
+        /**
+         * 会话模式：一段输入里可以既有函数定义，也有直接语句。
+         *
+         * 判定规则：`类型 名字 (` 形式（后面跟 `)` 或 `,` 的参数表）视为函数定义，
+         * 否则按语句解析。这让 REPL 里既能 `int add(int a,int b){...}`，
+         * 也能直接 `printf("%d", 1);`。
+         */
+        fun parseProgramInSession(): SessionParse {
+            val stmts = mutableListOf<Stmt>()
+            while (!atEnd()) {
+                if (isTypeToken() && looksLikeFunctionDef()) {
+                    parseFunction()
+                } else if (isTypeToken()) {
+                    stmts.add(parseDecl())
+                } else {
+                    stmts.add(parseStmt())
+                }
+            }
+            return SessionParse(funcs.toMap(), stmts)
+        }
+
+        /** 前瞻判断「类型 名字 ( ... ) {」是否为函数定义 */
+        private fun looksLikeFunctionDef(): Boolean {
+            var i = p
+            // 跳过类型
+            if (i >= tokens.size || tokens[i].type != T.KEYWORD) return false
+            i++
+            if (i >= tokens.size || tokens[i].type != T.IDENT) return false
+            i++
+            if (i >= tokens.size || tokens[i].text != "(") return false
+            // 找到匹配的右括号，再看后面是否紧跟 '{'
+            var depth = 0
+            while (i < tokens.size) {
+                if (tokens[i].text == "(") depth++
+                if (tokens[i].text == ")") {
+                    depth--
+                    if (depth == 0) { i++; break }
+                }
+                i++
+            }
+            return i < tokens.size && tokens[i].text == "{"
+        }
+
         private fun isTypeToken(): Boolean =
             checkKeyword("int") || checkKeyword("double") || checkKeyword("char") ||
                 checkKeyword("void") || checkKeyword("long") || checkKeyword("float")
@@ -526,9 +572,40 @@ object CInterpreter {
         private var steps = 0
         private val maxSteps = 2_000_000
 
+        /** 会话模式：接管外部传入的作用域，使变量跨 push 保留 */
+        fun adoptScope(shared: Scope) {
+            scopes = mutableListOf(shared)
+        }
+
         fun callEntry(entry: String): Value {
             val fn = funcs[entry] ?: throw CError("运行时错误", "缺少 $entry 函数")
             return invoke(fn, emptyList())
+        }
+
+        /**
+         * 会话式执行：把一段语句（不是完整程序）当作 main 的函数体跑。
+         *
+         * REPL 需要这个入口——用户在终端里敲 `int x = 5;` 时不该被迫写
+         * `int main() { ... }`，也不该每行都重新开始（变量必须跨行保留）。
+         */
+        fun runStatements(stmts: List<Stmt>) {
+            // 会话模式：沿用 adoptScope 接管的作用域，不新建也不恢复，
+            // 这样变量与函数定义才能跨 push 保留（REPL 的核心语义）。
+            for (s in stmts) exec(s)
+        }
+
+        /** 会话中的全局变量快照（供 REPL 展示） */
+        fun globalVars(): List<Triple<String, String, String>> =
+            scopes.firstOrNull()?.vars?.map { (k, v) ->
+                Triple(k, typeName(v), v.display())
+            } ?: emptyList()
+
+        private fun typeName(v: Value): String = when (v) {
+            is Value.Num -> "int"
+            is Value.Real -> "double"
+            is Value.Str -> "char[]"
+            is Value.Arr -> "array"
+            Value.Void -> "void"
         }
 
         /**
@@ -952,6 +1029,68 @@ object CInterpreter {
             val hit = pattern.find(source) ?: continue
             val line = source.substring(0, hit.range.first).count { it == '\n' } + 1
             throw CError("不支持", "暂不支持 $label（第 $line 行）。本课程是 C 教学子集，不是完整 gcc。")
+        }
+    }
+
+    /**
+     * 有状态会话（REPL 用）。
+     *
+     * 与 [run] 的区别：run 每次都是全新程序（要求有 main），会话则把每次输入
+     * 当作「追加到当前程序」——函数定义会保留，全局变量会保留，变量快照可查。
+     * 这正是 `LanguageRuntime.replPush` 契约要求的语义。
+     */
+    class Session {
+        private val out = StringBuilder()
+        private var funcs = linkedMapOf<String, FuncDef>()
+        private val scope = Scope(null)
+        private var interpreter: Interpreter? = null
+
+        /** 推入一行/一段代码；返回 (是否继续等待, 输出文本) */
+        fun push(source: String): Pair<Boolean, String> {
+            out.setLength(0)
+            val trimmed = source.trim()
+            if (trimmed.isEmpty()) return false to ""
+
+            // 未闭合的花括号 → 请求续行
+            val open = trimmed.count { it == '{' } - trimmed.count { it == '}' }
+            if (open > 0) return true to ""
+
+            return try {
+                rejectUnsupported(trimmed)
+                val tokens = Lexer(trimmed).tokenize()
+                val parser = Parser(tokens)
+                // 完整函数定义 → 并入函数表
+                val parsed = parser.parseProgramInSession()
+                funcs.putAll(parsed.funcs)
+                if (parsed.statements.isNotEmpty()) {
+                    val interp = Interpreter(funcs, out, ArrayDeque())
+                    interp.adoptScope(scope)
+                    interp.runStatements(parsed.statements)
+                }
+                false to out.toString()
+            } catch (e: CError) {
+                false to "${e.type}: ${e.message}"
+            } catch (e: Throwable) {
+                false to "InternalError: ${e.message}"
+            }
+        }
+
+        /** 当前会话的变量快照 */
+        fun variables(): List<Triple<String, String, String>> =
+            scope.vars.map { (k, v) -> Triple(k, typeNameOf(v), v.display()) }
+
+        fun reset() {
+            funcs = linkedMapOf()
+            scope.vars.clear()
+            out.setLength(0)
+        }
+
+        private fun typeNameOf(v: Value): String = when (v) {
+            is Value.Num -> "int"
+            is Value.Real -> "double"
+            is Value.Str -> "char[]"
+            is Value.Arr -> "array"
+            Value.Void -> "void"
         }
     }
 

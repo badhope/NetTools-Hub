@@ -53,17 +53,27 @@ object CBridge : LanguageRuntime {
 
     override fun warmup(): Boolean = true
 
-    // C 是编译型语言，没有 REPL 语义；这里提供「单次执行」的等价体验。
-    override fun replStart() = Unit
+    /**
+     * C 的交互会话。
+     *
+     * 早期实现是「每行独立执行一次完整程序」，有两个致命问题：
+     *   1. 变量不跨行保留（`int x = 5;` 之后写 `x` 会报未声明）
+     *   2. 每行都要求有 main（`printf(...)` 直接报「缺少 main」）
+     * 这违反 LanguageRuntime.replPush 的会话语义。现改为有状态的
+     * [CInterpreter.Session]：函数定义保留、全局变量保留、未闭合花括号请求续行。
+     */
+    @Volatile
+    private var session: CInterpreter.Session? = null
 
-    override fun replPush(line: String): Pair<Boolean, String> {
-        val r = CInterpreter.run(line)
-        val text = buildString {
-            append(r.stdout)
-            if (!r.ok) append("\n${r.errorType}: ${r.errorMessage}")
-        }
-        return false to text
+    private fun sessionLocked(): CInterpreter.Session =
+        session ?: CInterpreter.Session().also { session = it }
+
+    override fun replStart() {
+        session = CInterpreter.Session()
     }
+
+    override fun replPush(line: String): Pair<Boolean, String> =
+        synchronized(this) { sessionLocked().push(line) }
 
     private fun toRunResult(r: CInterpreter.Result, startedAt: Long): RunResult = RunResult(
         ok = r.ok,
