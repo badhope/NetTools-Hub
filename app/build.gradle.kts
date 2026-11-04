@@ -76,6 +76,10 @@ android {
     testOptions {
         // Instrumented 测试里禁用动画，避免 UI 断言因动画竞态而闪失败
         animationsDisabled = true
+        unitTests {
+            // Robolectric 需要访问 android 资源与 manifest 才能渲染真实 UI
+            isIncludeAndroidResources = true
+        }
     }
 }
 
@@ -131,6 +135,16 @@ dependencies {
 
     // JVM 单元测试（纯 JVM，不需要 Android 设备）：JUnit4 + Kotlin 断言
     testImplementation("junit:junit:4.13.2")
+
+    // Robolectric：在 JVM 上跑真实 Android 运行时（不需要模拟器/虚拟化）。
+    // 用于验证 Compose 页面能否真正创建、渲染、响应点击——这是本机唯一可行的
+    // UI 验证路径（CPU 不支持 VT-x，模拟器无法启动）。
+    testImplementation("org.robolectric:robolectric:4.13")
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("androidx.test.ext:junit:1.2.1")
+    testImplementation(platform("androidx.compose:compose-bom:2024.09.03"))
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
     // Instrumented UI 测试：Compose 语义树 + Activity 场景
     androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.03"))

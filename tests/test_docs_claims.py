@@ -140,13 +140,20 @@ class TestCapabilityClaims(unittest.TestCase):
                 self.assertNotIn("首发语言包", text, "「首发语言包」暗示后续语言包可下载，与实际不符")
 
     def test_readmes_name_shipped_runtimes(self):
+        """README 不得声称「语言包可扩展运行时」，且必须列全六门语言。
+
+        2026-11 调整：README 精简为「一句话 + 截图 + 安装」后，首屏不再逐门列语言。
+        断言范围从「前 12 行」改为「全文」——语言表章节仍必须完整，
+        但不该为了过测试往首屏堆废话。
+        """
         forbidden = ("语言包扩展更多", "more via language packs", "言語パックで拡張")
         for name in ("README.md", "README.zh-CN.md", "README.ja-JP.md"):
             with self.subTest(file=name):
-                head = "\n".join(_read(ROOT / name).splitlines()[:12])
+                text = _read(ROOT / name)
                 for phrase in forbidden:
-                    self.assertNotIn(phrase, head, f"{name} 声称语言包可扩展运行时，但当前无语言包下载")
-                self.assertIn("JavaScript", head, f"{name} 首屏应写明已内置 JavaScript 运行时")
+                    self.assertNotIn(phrase, text, f"{name} 声称语言包可扩展运行时，但当前无语言包下载")
+                for lang in ("Python", "JavaScript", "TypeScript", "C", "Lua", "SQL"):
+                    self.assertIn(lang, text, f"{name} 缺少语言：{lang}")
 
     def test_readmes_list_all_shipped_languages(self):
         """三语 README 的「学什么」表必须逐门列出四个运行时，且点明按需下载。
@@ -155,9 +162,9 @@ class TestCapabilityClaims(unittest.TestCase):
         不再用单一的判题总数当卖点——数字会随内容增删漂移，语言清单不会。
         """
         cases = {
-            "README.zh-CN.md": ("Python", "JavaScript", "Lua", "SQL", "按需下载"),
-            "README.md": ("Python", "JavaScript", "Lua", "SQL", "on-demand"),
-            "README.ja-JP.md": ("Python", "JavaScript", "Lua", "SQL", "オンデマンド"),
+            "README.zh-CN.md": ("Python", "JavaScript", "TypeScript", "C", "Lua", "SQL", "按需下载"),
+            "README.md": ("Python", "JavaScript", "TypeScript", "C", "Lua", "SQL", "download"),
+            "README.ja-JP.md": ("Python", "JavaScript", "TypeScript", "C", "Lua", "SQL", "ダウンロード"),
         }
         for name, needles in cases.items():
             with self.subTest(file=name):

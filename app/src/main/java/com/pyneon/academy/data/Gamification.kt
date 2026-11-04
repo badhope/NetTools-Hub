@@ -39,6 +39,12 @@ enum class Achievement(val title: String, val desc: String) {
     ARENA_WINNER("角斗士", "通过任意一个挑战")
 }
 
+/**
+ * 计算已解锁成就。
+ *
+ * @param totalLessons 毕业所需课时数——必须传「内置主线 38 讲」，不能传全部课程数。
+ *   传全部会让「30 讲 Python + 8 讲 JS」凑够 38 就提前解锁毕业徽章（2026-11 实测）。
+ */
 fun unlockedAchievements(progress: Progress, totalLessons: Int): Set<Achievement> {
     val unlocked = mutableSetOf<Achievement>()
     if (progress.firstRunDone) unlocked += Achievement.CODE_RUNNER
@@ -46,7 +52,13 @@ fun unlockedAchievements(progress: Progress, totalLessons: Int): Set<Achievement
     if (progress.nightOwl) unlocked += Achievement.NIGHT_OWL
     if (progress.streakDays >= 3) unlocked += Achievement.STREAK_3
     if (progress.solvedKeys.size >= 5) unlocked += Achievement.EXERCISE_5
-    if (totalLessons > 0 && progress.completedLessons.size >= totalLessons) unlocked += Achievement.GRADUATE
+    // 毕业徽章：只统计「主线内」的完成数，避免学了语言包就提前毕业。
+    // 调用方应传 mainline 的 id 集合大小；这里用 completedLessons 的交集再判一次，
+    // 保证即使调用方传错也不会出现「学 8 讲 JS 就毕业」。
+    if (totalLessons > 0) {
+        val doneInMainline = progress.completedLessons.count { it.matches(Regex("""^l\d{2}$""")) }
+        if (doneInMainline >= totalLessons) unlocked += Achievement.GRADUATE
+    }
     if (progress.terminalHead) unlocked += Achievement.TERMINAL_HEAD
     if (progress.solvedKeys.any { it.startsWith("chal_") }) unlocked += Achievement.ARENA_WINNER
     return unlocked

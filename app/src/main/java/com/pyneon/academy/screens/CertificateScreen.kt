@@ -103,7 +103,7 @@ fun CertificateScreen(onBack: () -> Unit) {
                 Spacer(Modifier.height(10.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(18.dp)) {
                     CertStat("${progress.xpTotal}", "XP")
-                    CertStat("${progress.completedLessons.size}/${lessons.size}", "课时")
+                    CertStat("${lessons.count { it.id in progress.completedLessons }}/${lessons.size}", "课时")
                     CertStat("${unlocked.size}", "徽章")
                 }
                 Spacer(Modifier.height(12.dp))

@@ -1,0 +1,7 @@
+c01 code block 3 runnable=True
+c02 code block 2 runnable=True
+c03 code block 2 runnable=True
+c03 compare block 7 col 3
+c04 code block 2 runnable=True
+c05 code block 2 runnable=True
+c06 code block 4 runnable=True

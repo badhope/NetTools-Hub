@@ -1,6 +1,6 @@
 {
-  "updated_at": "2026-11-03",
-  "sha256": "25d0d9a368c0442c17e2221249e99b186e859cfd02981564f4490f4c3cecfbc0",
+  "updated_at": "2026-11-05",
+  "sha256": "5b1810bb1c12838ee8829dd73f4274550397044fd955cf3421e2200d67a8a184",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -61,7 +61,7 @@
       "name": "语言包 · TypeScript 启程",
       "version": 1,
       "description": "6 讲 TypeScript 入门：类型标注 / interface / 函数签名 / 联合类型收窄 / 泛型 / enum。类型在运行时被擦除，与 JS 同一套 Rhino 沙箱执行。",
-      "sha256": "8fb2f6c3f0dd1791a4aa613dd82f429ff6e7350fbb5c00589c82fbe172775e74",
+      "sha256": "d16f5b7dc9e7aebb4112d7f7b0a741b679c401a35cf4080a34428155991a1e6c",
       "kind": "course",
       "lang": "typescript"
     },

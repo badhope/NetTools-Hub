@@ -33,14 +33,26 @@ import com.pyneon.academy.ui.theme.NeonCyan
 import com.pyneon.academy.ui.theme.NeonGreen
 import com.pyneon.academy.ui.theme.NeonMagenta
 import com.pyneon.academy.ui.theme.TextDim
+import com.pyneon.academy.ui.theme.TextMid
 import kotlinx.coroutines.delay
 
 @Composable
-fun BootScreen(onDone: () -> Unit) {
+fun BootScreen(
+    onDone: () -> Unit,
+    /**
+     * 用户是否已同意隐私政策。
+     *
+     * 合规要求（个保法 / 商店审核）：未取得同意前不得处理任何用户数据。
+     * 因此为 false 时本页只播动画，**不预热运行时、不写连击、不记日志**。
+     */
+    consented: Boolean = true
+) {
     val context = LocalContext.current
     val streakVm: com.pyneon.academy.data.StreakViewModel =
         androidx.lifecycle.viewmodel.compose.viewModel()
     var pyStatus by remember { mutableStateOf("RUN") }
+    // S7: 运行时预热失败时置 true，停在恢复页而不是硬着头皮进首页
+    var bootFailed by remember { mutableStateOf(false) }
     
     // Use current release version
     val appVersion = "v${com.pyneon.academy.utils.AppConstants.VERSION_NAME}"
@@ -67,14 +79,29 @@ fun BootScreen(onDone: () -> Unit) {
         delay(170L)
         shown = 2
         delay(170L)
-        val runtime = LanguageRegistry.current(context)
-        runtime.ensureStarted(context)
-        val ok = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-            runtime.warmup()
+
+        if (consented) {
+            // 只在已同意后才初始化运行时、写连击数据
+            val runtime = LanguageRegistry.current(context)
+            runtime.ensureStarted(context)
+            val ok = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                runtime.warmup()
+            }
+            pyStatus = if (ok) "OK" else "FAIL"
+            if (ok) {
+                streakVm.onAppOpen()
+            } else {
+                // S7: 预热失败不能静默进首页——用户会看到「Python 3.x 就绪」的假象，
+                // 之后每次运行都报错却不知原因。停在恢复页，给出可操作的出口。
+                bootFailed = true
+                return@LaunchedEffect
+            }
+        } else {
+            // 未同意：跳过一切数据处理，直接交给上层继续弹同意框
+            pyStatus = "SKIP"
         }
-        pyStatus = if (ok) "OK" else "FAIL"
+
         shown = 3
-        streakVm.onAppOpen()
         for (i in 3 until bootLines.size) {
             shown = i + 1
             delay(190L)
@@ -111,13 +138,40 @@ fun BootScreen(onDone: () -> Unit) {
                 }
             }
             Spacer(Modifier.height(24.dp))
-            val fraction = if (bootLines.isEmpty()) 0f else shown.toFloat() / bootLines.size
-            LinearProgressIndicator(
-                progress = { fraction },
-                modifier = Modifier.fillMaxWidth(),
-                color = NeonCyan,
-                trackColor = NeonCyan.copy(alpha = 0.12f)
-            )
+            if (bootFailed) {
+                // 运行时初始化失败的恢复出口：不能只显示一行 FAIL 就把用户放进主界面
+                Text(
+                    "运行时初始化失败，无法执行代码。",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = NeonMagenta
+                )
+                Text(
+                    "可尝试：重启应用 / 查看诊断日志 / 反馈给开发者",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = TextMid,
+                    modifier = Modifier.padding(top = 6.dp)
+                )
+                Spacer(Modifier.height(12.dp))
+                com.pyneon.academy.ui.components.NeonButton(
+                    label = "重试",
+                    accent = NeonCyan,
+                    onClick = { bootFailed = false; pyStatus = "RUN" }
+                )
+                Spacer(Modifier.height(8.dp))
+                com.pyneon.academy.ui.components.NeonButton(
+                    label = "仍要继续（可能无法运行代码）",
+                    accent = TextDim,
+                    onClick = { onDone() }
+                )
+            } else {
+                val fraction = if (bootLines.isEmpty()) 0f else shown.toFloat() / bootLines.size
+                LinearProgressIndicator(
+                    progress = { fraction },
+                    modifier = Modifier.fillMaxWidth(),
+                    color = NeonCyan,
+                    trackColor = NeonCyan.copy(alpha = 0.12f)
+                )
+            }
         }
         Row(
             Modifier

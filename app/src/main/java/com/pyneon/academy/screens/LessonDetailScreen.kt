@@ -114,11 +114,21 @@ fun LessonDetailScreen(lessonId: String, onBack: () -> Unit, onNextLesson: ((Str
     }
 
     // U4: 提升到函数级作用域，供顶部进度条与完成弹窗的「下一课」入口共用。
-    // 进度口径必须按【当前课程所属语言】统计：全部课程是混合列表（Python 38 + JS 6），
-    // 直接用它会让 JS 第 1 讲显示「39 / 44 · 88%」，与用户认知完全不符。
-    val allLessons = remember(lessonId) {
-        if ((lesson?.lang ?: "python") == "python") LessonRepository.mainline(context)
-        else LessonRepository.lessonsByLang(context, lesson?.lang ?: "python")
+    //
+    // 进度口径按【当前课程所属的章节（=课程包）】统计，而不是按语言：
+    // 按语言分会让 DSA（lang=python）被当成 Python 主线，导致 10 讲 DSA + 彩蛋课
+    // 的 lessonIdx = -1（进度条消失），完成后「下一课」还会跳回 l01（2026-11 实测）。
+    // 章节名在同一包内唯一（chapterName = "语言包 · C 启程" 等），用它分组最稳。
+    val allLessons = remember(lessonId, lesson?.chapterName) {
+        val chapter = lesson?.chapterName.orEmpty()
+        if (chapter.isBlank()) {
+            LessonRepository.mainline(context)
+        } else {
+            val sameChapter = LessonRepository.lessons(context)
+                .filter { it.chapterName == chapter }
+            // 章节内课程数异常（数据缺失）时回落到主线，避免进度条算出 0/0
+            sameChapter.ifEmpty { LessonRepository.mainline(context) }
+        }
     }
     val lessonIdx = allLessons.indexOfFirst { it.id == lessonId }
     // 完成度按已通关讲数统计（而不是「当前是第几讲」），与「我的」页口径一致

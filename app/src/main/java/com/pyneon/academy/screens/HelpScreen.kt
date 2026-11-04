@@ -36,8 +36,10 @@ import com.pyneon.academy.utils.ShareHelper
 @Composable
 fun HelpScreen(onBack: () -> Unit) {
     val context = LocalContext.current
-    // 毕业口径 = 内置 Python 主线（与首页/档案页一致）；下载的语言包不计入
-    val totalLessons = LessonRepository.lessonsByLang(context, "python").size
+    // 毕业口径 = 内置 Python 主线 38 讲（与「我的」页、证书页、毕业徽章保持同一事实源）。
+    // 不能用 lessonsByLang("python")——下载 DSA/彩蛋后它会变成 49，导致帮助页说
+    // 「通关 49 讲才毕业」而「我的」页按 38 计（2026-11 实测口径冲突）。
+    val totalLessons = LessonRepository.mainline(context).size
     val totalChallenges = remember {
         runCatching {
             context.assets.open("challenges.json").bufferedReader(Charsets.UTF_8).use { r ->

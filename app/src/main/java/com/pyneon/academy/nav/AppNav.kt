@@ -142,17 +142,22 @@ fun AppRoot() {
             }
         ) {
             composable("boot") {
-                BootScreen(onDone = {
-                    if (showWelcome.value) {
-                        navController.navigate("welcome") {
-                            popUpTo("boot") { inclusive = true }
-                        }
-                    } else {
-                        navController.navigate("home") {
-                            popUpTo("boot") { inclusive = true }
+                // 合规：未同意隐私政策前不初始化运行时、不写任何学习数据。
+                // BootScreen 内部据此跳过预热与连击记录（个保法 / 商店审核要求）。
+                BootScreen(
+                    consented = !showConsent,
+                    onDone = {
+                        if (showWelcome.value) {
+                            navController.navigate("welcome") {
+                                popUpTo("boot") { inclusive = true }
+                            }
+                        } else {
+                            navController.navigate("home") {
+                                popUpTo("boot") { inclusive = true }
+                            }
                         }
                     }
-                })
+                )
             }
             
             composable("welcome") {

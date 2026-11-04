@@ -98,8 +98,18 @@ fun LessonsScreen(openLesson: (String) -> Unit) {
                 // 章节名来自课程数据本身（chapterName），不再依赖 UI 硬编码映射，
                 // 新增课程包（DSA/彩蛋等）也能正确分组。
                 val showHeader = index == 0 || lessons[index - 1].chapterName != lesson.chapterName
-                val locked = index > 0 && lessons[index - 1].id !in progress.completedLessons
-                val prevLesson = if (index > 0) lessons[index - 1] else null
+
+                // 解锁与序号都按「章节（=课程包）」内部计算，而不是全局列表位置。
+                // 原因：各内容包的 order 是跳跃的（DSA 100 / 彩蛋 200 / JS 300 / …），
+                // 用全局 index-1 会导致「下载了 C 语言，第一讲却被 Python 的 l38 锁住」，
+                // 每门语言必须先学完上一门——这与「六门语言任选」的定位矛盾。
+                // 现在：每个包的第一讲默认解锁，包内逐讲推进；序号显示包内 01..N。
+                val chapterStart = lessons.indexOfFirst { it.chapterName == lesson.chapterName }
+                val indexInChapter = index - chapterStart
+                val locked = indexInChapter > 0 &&
+                    lessons[index - 1].id !in progress.completedLessons
+                val prevLesson = if (indexInChapter > 0) lessons[index - 1] else null
+                val displayOrder = indexInChapter + 1
                 val done = lesson.id in progress.completedLessons
                 Column {
                     if (showHeader && lesson.chapterName.isNotBlank()) {
@@ -111,7 +121,7 @@ fun LessonsScreen(openLesson: (String) -> Unit) {
                         )
                     }
                 LessonRow(
-                    order = lesson.order,
+                    order = displayOrder,
                     title = lesson.title,
                     subtitle = lesson.subtitle,
                     xp = lesson.xp,
