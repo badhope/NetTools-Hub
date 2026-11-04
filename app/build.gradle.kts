@@ -19,6 +19,8 @@ android {
         // 版本号单一来源：BuildConfig.VERSION_NAME / VERSION_CODE
         buildConfigField("String", "VERSION_NAME", "\"$versionName\"")
         buildConfigField("int", "VERSION_CODE", "$versionCode")
+        // Instrumented 测试（真实 Android 运行时，验证页面能否打开与交互）
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         ndk {
             // F6: 发布版只打 arm64-v8a（真机覆盖 99.9%，APK 体积减半）。
             // 需要装到 x86_64 模拟器验收时加 -PemulatorAbi=true（Chaquopy 只读
@@ -70,6 +72,10 @@ android {
     lint {
         // 本机 local.properties 的路径转义告警不影响构建（CI 上不生成该文件）
         lintConfig = file("lint.xml")
+    }
+    testOptions {
+        // Instrumented 测试里禁用动画，避免 UI 断言因动画竞态而闪失败
+        animationsDisabled = true
     }
 }
 
@@ -125,6 +131,15 @@ dependencies {
 
     // JVM 单元测试（纯 JVM，不需要 Android 设备）：JUnit4 + Kotlin 断言
     testImplementation("junit:junit:4.13.2")
+
+    // Instrumented UI 测试：Compose 语义树 + Activity 场景
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.09.03"))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test:runner:1.6.2")
+    androidTestImplementation("androidx.test:rules:1.6.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
     // Android 单测里的 org.json 是空桩（方法全抛 "not mocked"），
     // 课程包测试需要真实 JSON 解析，用官方 org.json 实现覆盖测试类路径。
     testImplementation("org.json:json:20240303")

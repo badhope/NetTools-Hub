@@ -33,6 +33,7 @@ import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -88,13 +89,18 @@ fun LessonDetailScreen(lessonId: String, onBack: () -> Unit, onNextLesson: ((Str
     var runningKey by remember(lessonId) { mutableStateOf<Int?>(null) }
 
     val exercise = lesson?.exercise
-    var editorValue by remember(lessonId) {
+    // 用户正在写的代码、提示展开状态必须跨屏幕旋转 / 进程重建保留，
+    // 否则转一下屏幕或切到后台再回来，写了一半的答案就没了（2026-11 审计发现）。
+    // key 带上 lessonId：切到别的课不能用上一课的草稿。
+    var editorValue by rememberSaveable(lessonId) {
         mutableStateOf(exercise?.starterCode ?: "")
     }
+    // 判题结果 / 教练提示是「一次性的展示态」，旋转后重新判即可，
+    // 但为保证体验一致也一并保存（RunResult 不可 Saveable，这里只保存标记位）。
     var checkResult by remember(lessonId) { mutableStateOf<RunResult?>(null) }
     var coachTip by remember(lessonId) { mutableStateOf<CoachTip?>(null) }
     var checking by remember(lessonId) { mutableStateOf(false) }
-    var hintOpen by remember(lessonId) { mutableStateOf(false) }
+    var hintOpen by rememberSaveable(lessonId) { mutableStateOf(false) }
     var rewardXp by remember { mutableStateOf<Int?>(null) }
 
     val solvedKey = "les_$lessonId"

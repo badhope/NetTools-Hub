@@ -23,6 +23,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -119,7 +120,7 @@ fun ChallengeDetailScreen(challengeId: String, onBack: () -> Unit) {
     val challenge = remember(challengeId) { LessonRepository.challenge(context, challengeId) }
     val progress by ProgressStore.flow(context).collectAsState(initial = com.pyneon.academy.data.Progress())
 
-    var editorValue by remember(challengeId) {
+    var editorValue by rememberSaveable(challengeId) {
         mutableStateOf(TextFieldValue(challenge?.starterCode ?: ""))
     }
     var result by remember(challengeId) { mutableStateOf<RunResult?>(null) }

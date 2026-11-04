@@ -33,6 +33,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -73,13 +74,20 @@ fun TerminalScreen() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val lines = remember { mutableStateListOf<TermLine>() }
-    var input by remember { mutableStateOf(TextFieldValue("")) }
+    // TextFieldValue 内含 Selection，不能直接 Saveable；用只存文本的 Saver，
+    // 旋转/重建后恢复输入内容（光标回到末尾即可，不必精确复原选区）。
+    var input by rememberSaveable(
+        stateSaver = androidx.compose.runtime.saveable.Saver<TextFieldValue, String>(
+            save = { it.text },
+            restore = { TextFieldValue(it, selection = TextRange(it.length)) }
+        )
+    ) { mutableStateOf(TextFieldValue("")) }
     var morePending by remember { mutableStateOf(false) }
     val history = remember { mutableStateListOf<String>() }
     var historyIndex by remember { mutableStateOf(-1) }
     var busy by remember { mutableStateOf(false) }
     var lastErr by remember { mutableStateOf("") }
-    var currentLang by remember { mutableStateOf(LanguageRegistry.currentId(context)) }
+    var currentLang by rememberSaveable { mutableStateOf(LanguageRegistry.currentId(context)) }
     val langOptions = remember {
         LanguageRegistry.all().filter { it.isAvailable() }.map { it.id to it.displayName }
     }

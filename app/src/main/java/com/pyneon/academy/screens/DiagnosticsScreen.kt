@@ -34,6 +34,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import com.pyneon.academy.data.ContentCenter
 import com.pyneon.academy.data.LessonRepository
+import com.pyneon.academy.debug.CrashHandler
 import com.pyneon.academy.debug.DebugLog
 import com.pyneon.academy.lang.LanguageRegistry
 import com.pyneon.academy.ui.components.NeonButton
@@ -144,6 +145,40 @@ fun DiagnosticsScreen(onBack: () -> Unit) {
             DiagRow("课程总数", if (lessonCount >= 0) "$lessonCount 讲" else "解析失败")
             DiagRow("Python 主线", if (mainlineCount >= 0) "$mainlineCount 讲" else "解析失败")
             DiagRow("已装语言包", if (packs.isEmpty()) "无" else packs.entries.joinToString { "${it.key} v${it.value}" })
+        }
+
+        // ===== 上次崩溃 =====
+        val lastCrash = remember(refreshKey) { CrashHandler.lastCrash(context) }
+        if (lastCrash != null) {
+            SectionHeader("上次异常退出", accent = NeonMagenta)
+            NeonCard(accent = NeonMagenta) {
+                Text(
+                    "${lastCrash.type}: ${lastCrash.message}",
+                    style = MaterialTheme.typography.bodySmall,
+                    color = NeonMagenta
+                )
+                Spacer(Modifier.height(6.dp))
+                Text(
+                    lastCrash.stackHead.take(600),
+                    style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
+                    color = TextDim
+                )
+                Spacer(Modifier.height(10.dp))
+                Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
+                    NeonButton(
+                        label = "发送崩溃报告",
+                        accent = NeonMagenta,
+                        onClick = { CrashHandler.shareByEmail(context, AppConstants.CONTACT_EMAIL) },
+                        modifier = Modifier.weight(1f)
+                    )
+                    NeonButton(
+                        label = "忽略",
+                        accent = TextDim,
+                        onClick = { CrashHandler.clear(context); refreshKey++ },
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
         }
 
         // ===== 日志 =====

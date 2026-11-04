@@ -31,6 +31,8 @@ object CoachEngine {
         // 旧实现取最后一个匹配，命中的往往是库内部帧而非用户出错的行。
         val lineRef = LINE_PATTERN.findAll(traceback ?: "").firstOrNull()
             ?.groupValues?.get(1)?.toIntOrNull()
+        // 让所有分支的 tip() 都能带上行号，无需逐个传参
+        currentLineRef = lineRef
 
         // 判题不过：只给自查清单，不给答案
         if (type == "TestFailed" || message.contains("用例未通过") || type == "AssertionError") {
@@ -257,6 +259,17 @@ object CoachEngine {
         }
     }
 
+    /**
+     * 当前分析上下文里的出错行号。
+     *
+     * 为什么用字段而不是给每个调用点加参数：analyze 里有 15 个分支，
+     * 逐个传 lineRef 既啰嗦又容易漏（2026-11 实测：15 个调用点一个都没传，
+     * 导致「定位到第 N 行」的功能实际上从未生效）。
+     * analyze 是单线程同步调用，用一个 @Volatile 字段足够。
+     */
+    @Volatile
+    private var currentLineRef: Int? = null
+
     private fun tip(
         title: String,
         summary: String,
@@ -268,6 +281,6 @@ object CoachEngine {
         summary = summary,
         steps = steps,
         example = example,
-        lineRef = lineRef
+        lineRef = lineRef ?: currentLineRef
     )
 }

@@ -105,6 +105,13 @@ if [ "$FAST" -eq 0 ]; then
   else
     bad "APK 探针"
   fi
+
+  printf '\n>> Instrumented 测试编译（执行需真机/模拟器）\n'
+  if ./gradlew :app:assembleDebugAndroidTest --no-daemon -q; then
+    ok "androidTest 编译"
+  else
+    bad "androidTest 编译"
+  fi
 fi
 
 printf '\n========== 汇总 ==========\n'
