@@ -47,7 +47,7 @@ C と TypeScript は学習用サブセットです（C はポインタ・構造�
 ## インストール
 
 - **すぐ使う**：[GitHub Releases](https://github.com/badhope/mashang/releases/latest) から `mashang-*.apk` を取得
-- Android 7.0+、arm64-v8a
+- Android 10（API 29）以上、arm64-v8a
 
 ソースからビルド：
 

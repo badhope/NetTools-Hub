@@ -374,6 +374,49 @@ class AccessibilityTests(unittest.TestCase):
                       "自动播放按钮应受风格开关控制")
 
 
+class PlatformDecisionTests(unittest.TestCase):
+    """平台策略决策（2026-11）：只支持 Android 10+，主发国内渠道。
+
+    这两条一旦被无意改回去，会连带破坏备份/证书保存路径与更新检查可达性。
+    """
+
+    def test_min_sdk_is_29(self):
+        gradle = _read(os.path.join(ROOT, "app", "build.gradle.kts"))
+        self.assertIn("minSdk = 29", gradle,
+                      "minSdk 应为 29（放弃 Android 7-9，备份/海报统一走 MediaStore）")
+        self.assertNotIn("minSdk = 24", gradle)
+
+    def test_no_pre_q_storage_branches(self):
+        """minSdk 29 后不应再有 pre-Q 的存储分支（死代码 + 缺权限风险）。"""
+        for rel in (("data", "BackupUtil.kt"), ("screens", "CertificatePoster.kt")):
+            with self.subTest(file=rel[-1]):
+                text = _read(JAVA, *rel)
+                self.assertNotIn("getExternalStoragePublicDirectory", text,
+                                 f"{rel[-1]} 仍含 pre-Q 公共存储路径")
+                # 只检查实际调用（sendBroadcast(...ACTION_MEDIA_SCANNER...)），
+                # 注释里说明"旧实现曾用该常量"是正常文档
+                self.assertNotIn("sendBroadcast", text,
+                                 f"{rel[-1]} 仍含手动扫描广播调用")
+
+    def test_update_source_prefers_domestic(self):
+        """更新检查必须国内源优先——GitHub 直连在国内经常超时。"""
+        text = _read(JAVA, "utils", "UpdateChecker.kt")
+        seg = text[text.index("SOURCES"):][:300]
+        self.assertIn("gitcode.com", seg, "更新源应包含 GitCode")
+        # GitCode 必须排在 GitHub 之前
+        self.assertLess(seg.index("gitcode.com"), seg.index("github.com"),
+                        "GitCode 应作为首选源排在 GitHub 之前")
+
+    def test_in_app_urls_are_domestic(self):
+        """应用内跳转（源码/隐私政策/协议）不能指向国内打不开的地址。"""
+        text = _read(JAVA, "utils", "AppConstants.kt")
+        self.assertIn('REPO_URL = "https://gitcode.com', text,
+                      "REPO_URL 应指向 GitCode")
+        # 隐私政策 URL 由 REPO_URL 拼接，不能硬编码 GitHub Pages
+        self.assertNotIn("badhope.github.io/mashang/privacy", text,
+                         "隐私政策 URL 不应依赖 GitHub Pages")
+
+
 class ReleaseReadinessTests(unittest.TestCase):
     """发布前必备项（应用商店审核会检查）。"""
 

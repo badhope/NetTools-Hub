@@ -47,7 +47,7 @@ C and TypeScript are teaching subsets (C has no pointers/structs; TypeScript has
 ## Install
 
 - **Just install**: grab `mashang-*.apk` from [GitHub Releases](https://github.com/badhope/mashang/releases/latest)
-- Android 7.0+, arm64-v8a
+- Android 10 (API 29)+, arm64-v8a
 
 Build from source:
 

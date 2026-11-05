@@ -128,7 +128,7 @@ def main():
 
     if require_release:
         # release 特有：R8 处理后仍有 dex，且 APK 带 v2+ 签名块。
-        # minSdk 24 且 AGP 8 默认只出 v2 签名（不写 META-INF/*.RSA），
+        # minSdk 29 且 AGP 8 默认只出 v2 签名（不写 META-INF/*.RSA），
         # 因此用 APK Signing Block 魔数判断，而不是找 JAR 签名文件。
         dexes = [n for n in names if n.endswith(".dex")]
         if not dexes:

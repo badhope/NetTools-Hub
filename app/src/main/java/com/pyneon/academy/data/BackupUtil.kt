@@ -286,13 +286,8 @@ object BackupUtil {
         file.writeText(json.toString())
     }
 
-    private fun saveToStorage(context: Context, jsonString: String, fileName: String): Uri {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            saveToMediaStoreQ(context, jsonString, fileName)
-        } else {
-            saveToFilePreQ(context, jsonString, fileName)
-        }
-    }
+    private fun saveToStorage(context: Context, jsonString: String, fileName: String): Uri =
+        saveToMediaStoreQ(context, jsonString, fileName)
 
     @RequiresApi(Build.VERSION_CODES.Q)
     private fun saveToMediaStoreQ(context: Context, jsonString: String, fileName: String): Uri {
@@ -314,17 +309,8 @@ object BackupUtil {
         values.clear()
         values.put(MediaStore.Downloads.IS_PENDING, 0)
         resolver.update(uri, values, null, null)
-
-        context.sendBroadcast(Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri))
+        // MediaStore 写入完成后系统自动索引，无需手动发扫描广播
         return uri
-    }
-
-    private fun saveToFilePreQ(context: Context, jsonString: String, fileName: String): Uri {
-        val dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
-        val pyneonDir = java.io.File(dir, "Mashang").apply { if (!exists()) mkdirs() }
-        val file = java.io.File(pyneonDir, fileName)
-        file.writeText(jsonString)
-        return Uri.fromFile(file)
     }
 
     // Launch file picker for import

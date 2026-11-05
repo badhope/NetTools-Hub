@@ -3,7 +3,6 @@ package com.pyneon.academy.screens
 import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
@@ -249,7 +248,7 @@ object CertificatePoster {
             textAlign = Paint.Align.CENTER
         }
         canvas.drawText("码上 · 离线优先 · 零上传", WIDTH / 2f, (HEIGHT - MARGIN - 40).toFloat(), footerPaint)
-        canvas.drawText("github.com/badhope/mashang", WIDTH / 2f, (HEIGHT - MARGIN - 15).toFloat(), footerPaint)
+        canvas.drawText("gitcode.com/badhope/mashang", WIDTH / 2f, (HEIGHT - MARGIN - 15).toFloat(), footerPaint)
 
         // Glitch accent lines
         val glitchPaint = Paint().apply {
@@ -280,29 +279,23 @@ object CertificatePoster {
         val values = ContentValues().apply {
             put(MediaStore.Images.Media.DISPLAY_NAME, "Mashang_Certificate_${System.currentTimeMillis()}.png")
             put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/Mashang")
-                put(MediaStore.Images.Media.IS_PENDING, 1)
-            }
+            // minSdk 29 起 MediaStore 的 RELATIVE_PATH / IS_PENDING 全版本可用，
+            // 不再需要 pre-Q 分支
+            put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES + "/Mashang")
+            put(MediaStore.Images.Media.IS_PENDING, 1)
         }
 
         val uri: Uri? = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)?.also { insertedUri ->
             resolver.openOutputStream(insertedUri)?.use { outputStream ->
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream!!)
             }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                values.clear()
-                values.put(MediaStore.Images.Media.IS_PENDING, 0)
-                resolver.update(insertedUri, values, null, null)
-            }
+            values.clear()
+            values.put(MediaStore.Images.Media.IS_PENDING, 0)
+            resolver.update(insertedUri, values, null, null)
         }
 
-        // Also broadcast to gallery
-        if (uri != null) {
-            val intent = Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri)
-            context.sendBroadcast(intent)
-        }
-
+        // MediaStore 写入（清除 IS_PENDING）后系统自动索引到相册，无需手动扫描广播。
+        // 旧实现在这里发 ACTION_MEDIA_SCANNER_SCAN_FILE，该常量自 API 29 起已废弃。
         return uri
     }
 }

@@ -47,7 +47,7 @@ C 和 TypeScript 是教学子集（C 无指针/结构体，TS 无装饰器/命�
 ## 安装
 
 - **直接装**：[GitHub Releases](https://github.com/badhope/mashang/releases/latest) 下载 `mashang-*.apk`
-- Android 7.0+，arm64-v8a
+- Android 10（API 29）及以上，arm64-v8a
 
 从源码构建：
 

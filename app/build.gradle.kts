@@ -12,7 +12,14 @@ android {
 
     defaultConfig {
         applicationId = "com.pyneon.academy"
-        minSdk = 24
+        // minSdk 29（Android 10）：放弃 Android 7-9。
+        // 决策依据（2026-11）：
+        //   1. 这几个版本上的备份/证书保存需要 WRITE_EXTERNAL_STORAGE 运行时权限，
+        //      与「最小权限」和 Scoped Storage 方向冲突；
+        //   2. Android 9 及以下在国内活跃设备占比已很低；
+        //   3. 维护两套存储分支的测试成本高于收益。
+        // 提升后备份/海报统一走 MediaStore（API 29+ 唯一路径），代码与测试都更简单。
+        minSdk = 29
         targetSdk = 35
         versionCode = 18
         versionName = "0.6.0"

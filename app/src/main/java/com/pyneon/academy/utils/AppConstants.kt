@@ -17,8 +17,11 @@ object AppConstants {
     const val APP_NAME_CN = "Mashang"
     const val APP_NAME_EN = "Mashang"
     
-    // 项目主页（GitHub 主仓，含 Releases 与 Pages；GitCode / Gitee 为镜像）
-    const val REPO_URL = "https://github.com/badhope/mashang"
+    // 项目主页：主发国内渠道，GitCode 作为主入口（国内直连稳定）。
+    // GitHub 保留为镜像，不作为应用内默认跳转目标——国内网络常打不开，
+    // 会让「查看源码 / 隐私政策」等按钮直接失败。
+    const val REPO_URL = "https://gitcode.com/badhope/mashang"
+    const val REPO_URL_GITHUB = "https://github.com/badhope/mashang"
     const val SITE_URL = "https://badhope.github.io/mashang/"
 
     // 分享标签（2026-10 品牌重塑：PY_NOW 已退役，统一为「码上 / Mashang」）
@@ -33,9 +36,11 @@ object AppConstants {
 
     // 注：开发者地址/客服信息在华为开发者后台填写并公开展示，无需在本仓库硬编码。
 
-    // 隐私政策与用户协议（托管于 GitHub 主仓 raw，可作应用市场隐私政策 URL）
+    // 隐私政策与用户协议：优先指向 GitCode 仓库内文件（国内可达）。
+    // 应用市场后台填写隐私政策 URL 时，建议用 GitCode 的 raw 链接或自建域名，
+    // 不要用 GitHub Pages —— 国内审核员可能打不开，导致审核被驳回。
     const val PRIVACY_POLICY_URL =
-        "https://badhope.github.io/mashang/privacy/"
+        "$REPO_URL/blob/main/PRIVACY_POLICY.md"
     const val TERMS_URL =
-        "https://badhope.github.io/mashang/terms/"
+        "$REPO_URL/blob/main/TERMS_OF_SERVICE.md"
 }
