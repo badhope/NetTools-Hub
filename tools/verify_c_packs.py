@@ -27,6 +27,7 @@ Python 无法直接调用。可行且与 App 内判题语义完全一致的路�
 """
 
 import argparse
+import datetime
 import json
 import os
 import re
@@ -355,6 +356,23 @@ class TempCoursePackVerificationTest {
 '''
 
 
+def default_gradle_home() -> str:
+    """本机默认 GRADLE_USER_HOME 的 init 脚本可能损坏，优先用已知可用的隔离目录。"""
+    env = os.environ.get("GRADLE_USER_HOME")
+    if env:
+        return env
+    candidate = Path(r"C:\Dev\gradle-home-mashang")
+    return str(candidate) if candidate.exists() else ""
+
+
+def default_android_home() -> str:
+    env = os.environ.get("ANDROID_HOME") or os.environ.get("ANDROID_SDK_ROOT")
+    if env:
+        return env
+    candidate = Path("C:" + chr(92) + "Dev" + chr(92) + "android-sdk")
+    return str(candidate) if candidate.exists() else ""
+
+
 def find_gradle_root() -> Path:
     for name in ("gradlew.bat", "gradlew"):
         candidate = ROOT / name
@@ -365,7 +383,7 @@ def find_gradle_root() -> Path:
 
 def run_gradle(args) -> int:
     gradlew = find_gradle_root()
-    cmd = [str(gradlew)] if os.name != "nt" or gradlew.suffix != ".bat" else [str(gradlew)]
+    cmd = [str(gradlew)]
     cmd += [
         ":app:testDebugUnitTest",
         "--tests", "com.pyneon.academy.c.CCoursePacksTest",
@@ -406,9 +424,9 @@ def report_test_results() -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="C 三包课程结构校验与真实解释器验证")
     parser.add_argument("--skip-gradle", action="store_true", help="只做结构校验")
-    parser.add_argument("--gradle-home", default=os.environ.get("GRADLE_USER_HOME") or "",
+    parser.add_argument("--gradle-home", default=default_gradle_home(),
                         help="GRADLE_USER_HOME（本机默认目录的 init 脚本有问题时指定）")
-    parser.add_argument("--android-home", default=os.environ.get("ANDROID_HOME") or "",
+    parser.add_argument("--android-home", default=default_android_home(),
                         help="Android SDK 路径")
     args = parser.parse_args()
 
@@ -431,7 +449,14 @@ def main() -> int:
         print(f"警告：临时测试已存在，先删除 {TEMP_TEST}")
         TEMP_TEST.unlink()
     TEMP_TEST.parent.mkdir(parents=True, exist_ok=True)
-    TEMP_TEST.write_text(TEMP_TEST_SOURCE, encoding="utf-8", newline="\n")
+    # 带时间戳的注释让 Gradle 每次都把它当成新输入，避免测试任务被判为 up-to-date 而跳过。
+    stamp = datetime.datetime.now().isoformat(timespec="seconds")
+    source = TEMP_TEST_SOURCE.replace(
+        "class TempCoursePackVerificationTest {",
+        "// generated at " + stamp + "\nclass TempCoursePackVerificationTest {",
+        1,
+    )
+    TEMP_TEST.write_text(source, encoding="utf-8", newline="\n")
     print(f"已生成临时测试: {TEMP_TEST.relative_to(ROOT)}")
     code = 2
     try:
