@@ -37,7 +37,7 @@
 | **TypeScript** | type erasure to Rhino | 38 (basic / core / advanced / expert packs) |
 | **C** | built-in interpreter | 38 (basic / core / advanced / expert packs) |
 | **Lua** | LuaJ 3.0.1 | 38 (basic / core / advanced / expert packs) |
-| **SQL** | SQLite | 30 (basic / core / advanced packs) |
+| **SQL** | SQLite | 38 (basic / core / advanced / expert packs) |
 
 The Python mainline ships inside the APK. The other five download on demand from the Language Center. First install ~39 MB.
 
