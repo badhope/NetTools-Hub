@@ -17,8 +17,8 @@ import unittest
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 # 2026-11-06 CodeLearning 品牌重塑后的品牌图指纹（banner 2560x800 / poster 1080x1920）
-BANNER_SHA = "420754479cc70dad8ee1b75e59347907ba7c3feceaedf64dcd7e3950faf9aa3d"
-POSTER_SHA = "bbef9632a920b90b633a0e219d472bee2792a7cf684565ea26a2e086c5b754c6"
+BANNER_SHA = "5fd2ecad79d7cc4f4be198aa31070dfdfe89759a93518df20ac6d160f80a69d4"
+POSTER_SHA = "e29b59100e14f87c83a1448338e36dab35cddab724afcc92d8e4c4b44f8dd684"
 ASSETS = os.path.join(ROOT, "app", "src", "main", "assets")
 WEB = os.path.join(ROOT, "web")
 

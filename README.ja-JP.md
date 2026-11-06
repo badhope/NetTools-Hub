@@ -2,12 +2,12 @@
 
 <img src="docs/banner.png" alt="CodeLearning · 码上" width="830"/>
 
-**CodeLearning · 码上 —— スマホでコードを書く。6 言語、各 30 レッスン、すべてオフライン。**
+**CodeLearning · 码上 —— スマホでコードを書く。6 言語、230+ レッスン、すべてオフライン。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00E5FF.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-7.0%2B-00E5FF.svg)]()
 [![Languages](https://img.shields.io/badge/Languages-6-00FF9C.svg)]()
-[![Lessons](https://img.shields.io/badge/Lessons-180%2B-F7FF00.svg)]()
+[![Lessons](https://img.shields.io/badge/Lessons-230%2B-F7FF00.svg)]()
 [![Download](https://img.shields.io/badge/Download-APK-FF2D78.svg)](https://github.com/badhope/mashang/releases/latest)
 
 [English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
@@ -33,10 +33,10 @@
 | 言語 | ランタイム | レッスン |
 |---|---|---|
 | **Python** | CPython 3.13 | 38（内蔵メインライン）+ DSA + 組み込み関数 |
-| **JavaScript** | Rhino 1.7.15 | 30（基礎 / コア / 上級パック） |
-| **TypeScript** | 型消去 → Rhino | 30（基礎 / コア / 上級パック） |
-| **C** | 内蔵インタプリタ | 30（基礎 / コア / 上級パック） |
-| **Lua** | LuaJ 3.0.1 | 30（基礎 / コア / 上級パック） |
+| **JavaScript** | Rhino 1.7.15 | 38（基礎 / コア / 上級 / 専門パック） |
+| **TypeScript** | 型消去 → Rhino | 38（基礎 / コア / 上級 / 専門パック） |
+| **C** | 内蔵インタプリタ | 38（基礎 / コア / 上級 / 専門パック） |
+| **Lua** | LuaJ 3.0.1 | 38（基礎 / コア / 上級 / 専門パック） |
 | **SQL** | SQLite | 30（基礎 / コア / 上級パック） |
 
 Python メインラインは APK に内蔵。残り 5 言語は「言語センター」からオンデマンドでダウンロード。初回インストール約 39 MB。

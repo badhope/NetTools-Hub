@@ -4,7 +4,7 @@
 
 品牌口径（2026-11 品牌重塑）：
   CodeLearning（英文，一个词，C 与 L 大写）/ 中文名「码上」保留
-  课程口径：6 门语言 · 每门 30 讲 · 共 180+ 讲
+  课程口径：6 门语言 · 每门 38 讲 · 共 230+ 讲
 
 产物：
   docs/banner.png                         2560x800  仓库头图（README 顶部）
@@ -29,8 +29,8 @@ BRAND = "CodeLearning"
 BRAND_CN = "码上"
 BRAND_FULL = "CodeLearning · 码上"
 TAGLINE = "码上 · 离线编程学习终端"
-COURSE_LINE = "6 门语言 · 每门 30 讲 · 共 180+ 讲"
-COURSE_LINE_EN = "6 LANGUAGES · 30 LESSONS EACH · 180+ TOTAL"
+COURSE_LINE = "6 门语言 · 每门 38 讲 · 共 230+ 讲"
+COURSE_LINE_EN = "6 LANGUAGES · 38 LESSONS EACH · 230+ TOTAL"
 
 CYAN = (0, 229, 255)
 GREEN = (0, 255, 156)
@@ -133,7 +133,7 @@ def banner():
            "·  Python · JavaScript · TypeScript · C · Lua · SQL",
            font=font(FONT_MONO_REG, 27), fill=TEXT_MID)
 
-    chips = [("六门语言真实运行", CYAN), ("180+ 讲闯关", GREEN), ("assert 自动判题", CYAN), ("MIT 开源", YELLOW)]
+    chips = [("六门语言真实运行", CYAN), ("230+ 讲闯关", GREEN), ("assert 自动判题", CYAN), ("MIT 开源", YELLOW)]
     x = 112
     for label, color in chips:
         f = font(FONT_CN_REG, 30)
@@ -143,7 +143,7 @@ def banner():
         d.text((x + 26, 614), label, font=f, fill=color)
         x = box[2] + 22
 
-    d.text((2448, 700), "180+ LESSONS · 8 CHALLENGES · 6 LANGUAGES",
+    d.text((2448, 700), "230+ LESSONS · 8 CHALLENGES · 6 LANGUAGES",
            font=font(FONT_MONO_REG, 24), fill=(120, 136, 160), anchor="ra")
     img.save(DOCS / "banner.png", optimize=True)
     print("docs/banner.png", img.size)
@@ -174,7 +174,7 @@ def promo_poster():
     d.text((72, 356), "就是马上。", font=font(FONT_CN, 116), fill=CYAN)
     d.text((76, 512), "装进口袋的赛博朋克编程学习终端",
            font=font(FONT_CN_REG, 40), fill=TEXT_MID)
-    d.text((76, 574), "6 门语言 · 每门 30 讲 · 共 180+ 讲 · assert 判题 · 全离线",
+    d.text((76, 574), "6 门语言 · 每门 38 讲 · 共 230+ 讲 · assert 判题 · 全离线",
            font=font(FONT_CN_REG, 27), fill=GREEN)
 
     home = DEMO / "app" / "home.png"
@@ -205,7 +205,7 @@ def og_image():
     d.text((174, 118), BRAND_CN + " · 离线编程学习终端", font=font(FONT_CN_REG, 24), fill=GREEN)
 
     d.text((56, 186), "码上，就是马上。", font=font(FONT_CN, 74), fill=TEXT_HI)
-    d.text((58, 292), "6 门语言 · 每门 30 讲 · 共 180+ 讲", font=font(FONT_CN_REG, 29), fill=TEXT_MID)
+    d.text((58, 292), "6 门语言 · 每门 38 讲 · 共 230+ 讲", font=font(FONT_CN_REG, 29), fill=TEXT_MID)
     d.text((58, 336), "assert 判题 · 变量快照 · 全离线", font=font(FONT_CN_REG, 29), fill=TEXT_MID)
 
     shot = DEMO / "app" / "lesson_exercise.png"
@@ -274,7 +274,7 @@ def feature_graphic():
     d.rounded_rectangle((bx0, by0, bx1, by1), radius=18,
                         outline=(0, 229, 255, 90), width=2, fill=(11, 18, 32, 210))
 
-    stats = [("180+", "讲课程"), ("6", "门语言"), ("0", "广告 · 账号")]
+    stats = [("230+", "讲课程"), ("6", "门语言"), ("0", "广告 · 账号")]
     sy = by0 + 28
     for num, label in stats:
         d.text((bx0 + 30, sy), num, font=font(FONT_MONO, 42), fill=CYAN)
@@ -306,7 +306,7 @@ if __name__ == "__main__":
 # 做法：把原截图等比缩放放进画布，顶部留出标题条，底部留白。
 STORE_SHOTS = [
     ("home.png", "六门语言，一个终端", "Six languages, one terminal"),
-    ("lessons.png", "180+ 讲课程，从入门到实战", "180+ lessons, beginner to capstone"),
+    ("lessons.png", "230+ 讲课程，从入门到实战", "230+ lessons, beginner to capstone"),
     ("lesson_detail.png", "每讲都有讲解、图解、随堂问", "Explanations, diagrams, inline quizzes"),
     ("lesson_exercise.png", "写完就跑，跑完就判", "Write, run, get judged"),
     ("judge_pass.png", "用例全过才放行", "All tests must pass"),

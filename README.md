@@ -2,12 +2,12 @@
 
 <img src="docs/banner.png" alt="CodeLearning" width="830"/>
 
-**CodeLearning · 码上 — write code on your phone. Six languages, 30 lessons each, all offline.**
+**CodeLearning · 码上 — write code on your phone. Six languages, 230+ lessons, all offline.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00E5FF.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-7.0%2B-00E5FF.svg)]()
 [![Languages](https://img.shields.io/badge/Languages-6-00FF9C.svg)]()
-[![Lessons](https://img.shields.io/badge/Lessons-180%2B-F7FF00.svg)]()
+[![Lessons](https://img.shields.io/badge/Lessons-230%2B-F7FF00.svg)]()
 [![Download](https://img.shields.io/badge/Download-APK-FF2D78.svg)](https://github.com/badhope/mashang/releases/latest)
 
 [English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
@@ -33,10 +33,10 @@
 | Language | Runtime | Lessons |
 |---|---|---|
 | **Python** | CPython 3.13 | 38 built-in mainline + DSA + builtins |
-| **JavaScript** | Rhino 1.7.15 | 30 (basic / core / advanced packs) |
-| **TypeScript** | type erasure to Rhino | 30 (basic / core / advanced packs) |
-| **C** | built-in interpreter | 30 (basic / core / advanced packs) |
-| **Lua** | LuaJ 3.0.1 | 30 (basic / core / advanced packs) |
+| **JavaScript** | Rhino 1.7.15 | 38 (basic / core / advanced / expert packs) |
+| **TypeScript** | type erasure to Rhino | 38 (basic / core / advanced / expert packs) |
+| **C** | built-in interpreter | 38 (basic / core / advanced / expert packs) |
+| **Lua** | LuaJ 3.0.1 | 38 (basic / core / advanced / expert packs) |
 | **SQL** | SQLite | 30 (basic / core / advanced packs) |
 
 The Python mainline ships inside the APK. The other five download on demand from the Language Center. First install ~39 MB.

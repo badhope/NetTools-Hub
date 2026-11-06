@@ -17,10 +17,10 @@
 ### Taglines
 
 #### Primary (English)
-> "Code now, learn anywhere. Six languages, 30 lessons each — all offline."
+> "Code now, learn anywhere. Six languages, 230+ lessons — all offline."
 
 #### Primary (Chinese)
-> "码上 · 离线编程学习终端 —— 六门语言，每门 30 讲，真跑，全离线。"
+> "码上 · 离线编程学习终端 —— 六门语言，共 230+ 讲，真跑，全离线。"
 
 #### Secondary Options
 - "Your pocket-sized cyberpunk coding terminal"
@@ -184,7 +184,7 @@
 CodeLearning v0.6 just dropped!
 
 ✓ Embedded CPython 3.13
-✓ 6 languages, 30 lessons each (180+)
+✓ 6 languages, 230+ lessons
 ✓ Fully offline - no internet needed
 ✓ Cyberpunk neon UI
 
@@ -198,7 +198,7 @@ Excited to share CodeLearning (码上) v0.6 - an open-source Android app that te
 
 Built with Kotlin, Jetpack Compose, and Chaquopy (embedded CPython 3.13), it features:
 • Six device-side runtimes: CPython 3.13, Rhino, TypeScript, C, LuaJ, SQLite
-• 180+ lessons with assert-based auto-grading
+• 230+ lessons with assert-based auto-grading
 • Unique variable visualization panel
 • Gamified progression system
 
