@@ -1,5 +1,6 @@
 import json
 import os
+import pathlib
 import sys
 
 sys.path.insert(
@@ -782,12 +783,13 @@ def main():
     for name in LESSON_FILES:
         with open(os.path.join(APP_ASSETS, name), encoding="utf-8") as f:
             lessons.extend(json.load(f))
-    pack_path = os.path.join(
-        os.path.dirname(__file__), "..", "content_packs", "bonus-builtin.json"
-    )
-    with open(pack_path, encoding="utf-8") as f:
-        lessons.extend(json.load(f))
-    for pack in ("dsa-basics.json", "dsa-mastery.json", "js-basics.json", "ts-basics.json", "c-basics.json", "lua-basics.json", "sql-basics.json"):
+    # 内容包目录整体扫描：新增语言包/分层包不必再回来改这份清单
+    for pack in sorted(
+        p.name
+        for p in (
+            pathlib.Path(os.path.dirname(__file__)).resolve().parent / "content_packs"
+        ).glob("*.json")
+    ):
         pack_path = os.path.join(os.path.dirname(__file__), "..", "content_packs", pack)
         with open(pack_path, encoding="utf-8") as f:
             lessons.extend(json.load(f))
