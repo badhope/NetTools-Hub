@@ -1,17 +1,29 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "",
+  "sha256": "66d334ccfb33eca708ed2d86b0eff75239ecb0b5c2971d5a7ce3b38869730f94",
   "packs": [
     {
       "id": "bonus-builtin",
       "name": "彩蛋课 · 内置函数巡礼",
       "version": 2,
       "description": "Python 城市公共服务一次逛完：len/sorted/enumerate/zip/any/all…附随堂一问与判题实战。",
-      "sha256": "00fa85b2967a631ed97d31ba892d48a1920290a49fa2fc473fc67769de5fabfa",
+      "sha256": "6873777ff8eed32ef7bbc16df67385d6fbeffd45ed0431335c8cd6db2b1afc9d",
       "kind": "course",
       "lang": "python",
       "lessons": 1,
       "bytes": 5246
+    },
+    {
+      "id": "c-basics",
+      "name": "C · 基础篇",
+      "version": 2,
+      "description": "10 讲：main/printf 到字符串与作用域，设备端解释执行。",
+      "sha256": "69715babf026abf40c7eb1f114f2cfd7422fad274c2e8869466ed620eb5b87e4",
+      "kind": "course",
+      "lang": "c",
+      "lessons": 6,
+      "bytes": 22958,
+      "tier": "basics"
     },
     {
       "id": "dsa-basics",
@@ -34,6 +46,18 @@
       "lang": "python",
       "lessons": 5,
       "bytes": 14638
+    },
+    {
+      "id": "js-advanced",
+      "name": "JavaScript · 进阶篇",
+      "version": 2,
+      "description": "10 讲：原型链 / this / 生成器 / Promise / 不可变数据 / 项目实战。",
+      "sha256": "3d1151b7d48be764f7dd2c10ea20cfb9086b6bf2e5a74815a122ec808eb095b5",
+      "kind": "course",
+      "lang": "javascript",
+      "lessons": 10,
+      "bytes": 88845,
+      "tier": "advanced"
     },
     {
       "id": "js-basics",
@@ -60,64 +84,16 @@
       "tier": "core"
     },
     {
-      "id": "js-advanced",
-      "name": "JavaScript · 进阶篇",
+      "id": "lua-advanced",
+      "name": "Lua · 进阶篇",
       "version": 2,
-      "description": "10 讲：原型链 / this / 生成器 / Promise / 不可变数据 / 项目实战。",
-      "sha256": "3d1151b7d48be764f7dd2c10ea20cfb9086b6bf2e5a74815a122ec808eb095b5",
+      "description": "10 讲：元表 / 继承 / 协程 / 模式匹配 / 函数式 / 项目实战。",
+      "sha256": "e17242cc219f6fc8e3b3d40a52f3e5aba40fd011eed29d697520069400b8e719",
       "kind": "course",
-      "lang": "javascript",
+      "lang": "lua",
       "lessons": 10,
-      "bytes": 88845,
+      "bytes": 83903,
       "tier": "advanced"
-    },
-    {
-      "id": "ts-basics",
-      "name": "TypeScript · 基础篇",
-      "version": 2,
-      "description": "10 讲：类型擦除 / 基础类型 / 数组元组 / 函数签名 / interface / 联合类型。",
-      "sha256": "550ff4171cdb094a74f912671f0124054093a589194a1234515d7da59b631f3d",
-      "kind": "course",
-      "lang": "typescript",
-      "lessons": 10,
-      "bytes": 76886,
-      "tier": "basics"
-    },
-    {
-      "id": "ts-core",
-      "name": "TypeScript · 核心篇",
-      "version": 2,
-      "description": "10 讲：泛型入门 / 可选与 readonly / 索引签名 / 类型断言 / 从 JS 迁移。",
-      "sha256": "eb7642606be4a50fa68058017a78ab63cba35c510c0b04e6720ee877b1aef5d9",
-      "kind": "course",
-      "lang": "typescript",
-      "lessons": 10,
-      "bytes": 82232,
-      "tier": "core"
-    },
-    {
-      "id": "ts-advanced",
-      "name": "TypeScript · 进阶篇",
-      "version": 2,
-      "description": "10 讲：类型守卫 / 工具类型 / 可辨识联合 / 声明文件 / tsconfig / 综合项目。",
-      "sha256": "09cb055b0852138e6abc63847deea497e4e74cf99d5a8ec2fd374128b35f88e3",
-      "kind": "course",
-      "lang": "typescript",
-      "lessons": 10,
-      "bytes": 88573,
-      "tier": "advanced"
-    },
-    {
-      "id": "c-basics",
-      "name": "C · 基础篇",
-      "version": 2,
-      "description": "10 讲：main/printf 到字符串与作用域，设备端解释执行。",
-      "sha256": "69715babf026abf40c7eb1f114f2cfd7422fad274c2e8869466ed620eb5b87e4",
-      "kind": "course",
-      "lang": "c",
-      "lessons": 6,
-      "bytes": 22958,
-      "tier": "basics"
     },
     {
       "id": "lua-basics",
@@ -144,15 +120,15 @@
       "tier": "core"
     },
     {
-      "id": "lua-advanced",
-      "name": "Lua · 进阶篇",
+      "id": "sql-advanced",
+      "name": "SQL · 进阶篇",
       "version": 2,
-      "description": "10 讲：元表 / 继承 / 协程 / 模式匹配 / 函数式 / 项目实战。",
-      "sha256": "e17242cc219f6fc8e3b3d40a52f3e5aba40fd011eed29d697520069400b8e719",
+      "description": "10 讲：CTE / 窗口函数 / 事务 / 索引 / 触发器 / 查询优化 / 项目实战。",
+      "sha256": "a22166ea1ba6fd7e960d01a062aa31618002873b71b84b9fd119307c48ae9aa5",
       "kind": "course",
-      "lang": "lua",
+      "lang": "sql",
       "lessons": 10,
-      "bytes": 83903,
+      "bytes": 80710,
       "tier": "advanced"
     },
     {
@@ -180,16 +156,40 @@
       "tier": "core"
     },
     {
-      "id": "sql-advanced",
-      "name": "SQL · 进阶篇",
+      "id": "ts-advanced",
+      "name": "TypeScript · 进阶篇",
       "version": 2,
-      "description": "10 讲：CTE / 窗口函数 / 事务 / 索引 / 触发器 / 查询优化 / 项目实战。",
-      "sha256": "a22166ea1ba6fd7e960d01a062aa31618002873b71b84b9fd119307c48ae9aa5",
+      "description": "10 讲：类型守卫 / 工具类型 / 可辨识联合 / 声明文件 / tsconfig / 综合项目。",
+      "sha256": "09cb055b0852138e6abc63847deea497e4e74cf99d5a8ec2fd374128b35f88e3",
       "kind": "course",
-      "lang": "sql",
+      "lang": "typescript",
       "lessons": 10,
-      "bytes": 80710,
+      "bytes": 88573,
       "tier": "advanced"
+    },
+    {
+      "id": "ts-basics",
+      "name": "TypeScript · 基础篇",
+      "version": 2,
+      "description": "10 讲：类型擦除 / 基础类型 / 数组元组 / 函数签名 / interface / 联合类型。",
+      "sha256": "550ff4171cdb094a74f912671f0124054093a589194a1234515d7da59b631f3d",
+      "kind": "course",
+      "lang": "typescript",
+      "lessons": 10,
+      "bytes": 76886,
+      "tier": "basics"
+    },
+    {
+      "id": "ts-core",
+      "name": "TypeScript · 核心篇",
+      "version": 2,
+      "description": "10 讲：泛型入门 / 可选与 readonly / 索引签名 / 类型断言 / 从 JS 迁移。",
+      "sha256": "eb7642606be4a50fa68058017a78ab63cba35c510c0b04e6720ee877b1aef5d9",
+      "kind": "course",
+      "lang": "typescript",
+      "lessons": 10,
+      "bytes": 82232,
+      "tier": "core"
     }
   ]
 }

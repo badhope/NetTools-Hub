@@ -10,13 +10,12 @@ object AppConstants {
     val VERSION_NAME: String = BuildConfig.VERSION_NAME
     val VERSION_CODE: Int = BuildConfig.VERSION_CODE
     
-    // 应用名称（2026-10 品牌重塑：去除 Python 专属命名，扩展为多语言学习终端）
-    const val APP_NAME = "码上"
-    // APP_NAME_CN 用作「码上（X）」里的括号内容，与 APP_NAME 相同会导致
-    // 「码上（码上）」这类重复品牌；中文名已在 APP_NAME，这里用英文名。
-    const val APP_NAME_CN = "Mashang"
-    const val APP_NAME_EN = "Mashang"
-    
+    // 应用名称（2026-11 品牌升级：CodeLearning；中文名保留「码上」）
+    const val APP_NAME = "CodeLearning"
+    // 括号里的中文名：中文语境显示「CodeLearning（码上）」
+    const val APP_NAME_CN = "码上"
+    const val APP_NAME_EN = "CodeLearning"
+
     // 项目主页：主发国内渠道，GitCode 作为主入口（国内直连稳定）。
     // GitHub 保留为镜像，不作为应用内默认跳转目标——国内网络常打不开，
     // 会让「查看源码 / 隐私政策」等按钮直接失败。
@@ -24,8 +23,8 @@ object AppConstants {
     const val REPO_URL_GITHUB = "https://github.com/badhope/mashang"
     const val SITE_URL = "https://badhope.github.io/mashang/"
 
-    // 分享标签（2026-10 品牌重塑：PY_NOW 已退役，统一为「码上 / Mashang」）
-    const val SHARE_HASHTAG = "#码上 #Mashang #编程学习"
+    // 分享标签（2026-11 品牌升级：CodeLearning · 码上）
+    const val SHARE_HASHTAG = "#CodeLearning #码上 #编程学习"
 
     // ===== 法律主体与合规信息（上架前请将占位符替换为实名信息）=====
     // 上架开发者/运营者名称（华为应用市场公开显示）

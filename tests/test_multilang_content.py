@@ -30,7 +30,7 @@ LESSON_FILES = [
 CHALLENGE_FILES = ["challenges.json"]
 
 # 与 Kotlin LanguageIds 保持一致
-IMPLEMENTED_LANGS = {"python", "javascript", "lua", "sql"}
+IMPLEMENTED_LANGS = {"python", "javascript", "typescript", "c", "lua", "sql"}
 PLANNED_LANGS = {"java", "cpp", "go", "rust"}
 KNOWN_LANGS = IMPLEMENTED_LANGS | PLANNED_LANGS
 
