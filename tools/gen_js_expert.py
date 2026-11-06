@@ -46,7 +46,7 @@ def paragraph(text):
 
 def _flow(text):
     """把长段落按句号切成 3 个子段，贴近既有课程的排版（不改变汉字总量）。"""
-    if chr(10) + chr(10) in text or len(text) <= 300:
+    if "\n\n" in text or len(text) <= 300:
         return text
     sentences = re.findall(r"[^。！？]*[。！？]", text)
     if "".join(sentences) != text:
@@ -62,7 +62,7 @@ def _flow(text):
             chunks.append(current)
             current = ""
     chunks.append(current)
-    return (chr(10) + chr(10)).join(chunks)
+    return "\n\n".join(chunks)
 
 
 def code(src):
