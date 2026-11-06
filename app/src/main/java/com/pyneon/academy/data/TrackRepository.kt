@@ -140,13 +140,20 @@ object TrackRepository {
                 category = s.category,
                 status = if (available) TrackStatus.READY else TrackStatus.NOT_INSTALLED,
                 accentArgb = s.accent,
-                lessonCount = if (present.isEmpty()) s.expectedCount else present.size,
+                // 分母固定为整门语言的总讲数（38），不能用「当前已装包里的讲数」：
+                // 否则只装基础篇时进度 10/10=100%，装了核心篇立刻跌回 10/20=50%，
+                // 用户会以为进度倒退（2026-11 审查发现）。
+                // 单包路线（DSA / 彩蛋）仍按实际内容数显示。
+                lessonCount = if (s.packIds.size > 1) s.expectedCount
+                             else if (present.isEmpty()) s.expectedCount else present.size,
                 doneCount = present.count { it.id in done },
                 packId = s.packId,
                 lang = s.lang,
                 packIds = s.packIds
             ).let { t ->
-                if (!complete && s.packIds.isNotEmpty()) {
+                // 只有真正装过至少一个包才提示「已装 x/y 包」，
+                // 否则全新安装每条路线都挂一句「已装 0/4 包」，噪音且误导。
+                if (installedPacks > 0 && !complete) {
                     t.copy(subtitle = t.subtitle + " · 已装 $installedPacks/${s.packIds.size} 包")
                 } else t
             }

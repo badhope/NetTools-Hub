@@ -194,11 +194,33 @@ object LanguageRegistry {
     fun has(id: String): Boolean = runtimes.containsKey(id)
 
     /**
-     * 取运行时，永不返回 null：未知 id → 默认语言 → [UnsupportedRuntime]。
-     * 这样 UI 层可以直接 `.runCode(...)` 而不必判空。
+     * 取运行时，永不返回 null。
+     *
+     * 只有「id 为空」才回落到默认语言；**非空但未注册**的 id 必须返回
+     * [UnsupportedRuntime]，而不是悄悄用 Python 顶上。
+     * 旧实现无条件回落默认语言，导致「一门没做运行时的语言」被判成可用：
+     * 语言中心显示「可离线运行」，用户写完代码后由 Python 报出一堆语法错误，
+     * 排查方向完全错（2026-11 审查发现）。
      */
-    fun get(id: String): LanguageRuntime =
-        runtimes[id] ?: runtimes[LanguageIds.DEFAULT] ?: UnsupportedRuntime(id)
+    fun get(id: String): LanguageRuntime = resolveRuntime(id, runtimes)
+
+    /**
+     * 纯函数版的回落规则，便于单测（[LanguageRegistry] 是全局 object，
+     * 直接测会污染其他用例）。
+     *
+     * 规则：
+     *  - id 为空 → 默认语言（没有默认语言时才 Unsupported）
+     *  - id 非空且已注册 → 该运行时
+     *  - id 非空但未注册 → UnsupportedRuntime（绝不拿别的语言顶替）
+     */
+    internal fun resolveRuntime(
+        id: String,
+        runtimes: Map<String, LanguageRuntime>
+    ): LanguageRuntime = when {
+        id.isBlank() ->
+            runtimes[LanguageIds.DEFAULT] ?: UnsupportedRuntime(id.ifBlank { LanguageIds.DEFAULT })
+        else -> runtimes[id] ?: UnsupportedRuntime(id)
+    }
 
     /** 当前语言 id；若首选项里残留了已不可用的语言，自动回落默认语言 */
     fun currentId(context: Context): String {

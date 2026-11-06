@@ -67,7 +67,7 @@ CodeLearning（码上）是一台「课程 + 判题 + 运行环境」打包在�
 ```bash
 ./gradlew :app:assembleDebug          # Debug APK
 ./gradlew :app:assembleRelease        # 需 KEYSTORE_PATH 等 4 个环境变量
-python -m unittest discover -s tests  # 234 条测试
+python -m unittest discover -s tests  # 239 条测试
 python tests/validate_content.py      # 55 个 Python 判题项 / 201 用例
 ```
 

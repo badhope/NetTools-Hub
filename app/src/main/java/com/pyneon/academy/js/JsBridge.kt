@@ -90,10 +90,35 @@ object JsBridge : LanguageRuntime {
     private val lock = Any()
 
     // ===== 输出槽：print/console 写 main；判题期间切到 test 缓冲 =====
+    /**
+     * 输出缓冲：写入侧做硬上限，而不是等执行结束再截断。
+     *
+     * 只截断不拦截挡不住内存问题：`while (true) console.log('x'.repeat(10000))`
+     * 在 8 秒超时前就能把 StringBuilder 撑到几百 MB，低端机会被系统杀掉
+     * （2026-11 审查发现）。这里超限直接抛 JsTimeoutException 中断脚本。
+     */
+    private class BoundedSink(private val hardLimit: Int = MAX_OUTPUT * 4) {
+        private val sb = StringBuilder()
+        var length: Int = 0
+            private set
+
+        fun append(s: String): BoundedSink {
+            length += s.length
+            if (length > hardLimit) throw JsTimeoutException()
+            sb.append(s)
+            return this
+        }
+
+        fun append(c: Char): BoundedSink = append(c.toString())
+        /** 从 [mark] 位置到末尾的文本（REPL 增量输出用）。 */
+        fun from(mark: Int): String = if (mark >= sb.length) "" else sb.substring(mark)
+        override fun toString(): String = sb.toString()
+    }
+
     private class OutputSink {
-        val main: StringBuilder = StringBuilder()
-        val err: StringBuilder = StringBuilder()
-        var test: StringBuilder? = null
+        val main: BoundedSink = BoundedSink()
+        val err: BoundedSink = BoundedSink()
+        var test: BoundedSink? = null
     }
 
     private class InputQueue(private val lines: List<String>) {
@@ -151,8 +176,8 @@ object JsBridge : LanguageRuntime {
         if (line.isNotBlank()) replBuffer.append(line).append('\n')
         val source = replBuffer.toString().trim()
 
-        if (source.isEmpty()) return@synchronized false to mainOut.substring(mark)
-        if (!bracketsBalanced(source)) return@synchronized true to mainOut.substring(mark)
+        if (source.isEmpty()) return@synchronized false to mainOut.from(mark)
+        if (!bracketsBalanced(source)) return@synchronized true to mainOut.from(mark)
         replBuffer.setLength(0)
 
         deadlineNanos = System.nanoTime() + (DEFAULT_TIMEOUT * 1e9).toLong()
@@ -168,7 +193,7 @@ object JsBridge : LanguageRuntime {
             JsContext.exit()
             deadlineNanos = Long.MAX_VALUE
         }
-        false to mainOut.substring(mark)
+        false to mainOut.from(mark)
     }
 
     // ===== 内部实现 =====
@@ -260,7 +285,7 @@ object JsBridge : LanguageRuntime {
             val failures = mutableListOf<String>()
             val testOutputs = StringBuilder()
             tests.forEachIndexed { index, test ->
-                sink.test = StringBuilder()
+                sink.test = BoundedSink()
                 deadlineNanos = System.nanoTime() + (TEST_TIMEOUT * 1e9).toLong()
                 try {
                     cx.evaluateString(scope, test, "<neon-test-${index + 1}>", 1, null)

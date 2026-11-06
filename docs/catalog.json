@@ -1,17 +1,17 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "45fa71fca0f4e4933be7103660ebf6d96b4a23a58d255de5281944b6ad8d4ec0",
+  "sha256": "97e0449e106f65365787a1ed07ad7d38f4577a91c2dc6f5a688bf7f14aa2bfe5",
   "packs": [
     {
       "id": "bonus-builtin",
       "name": "彩蛋课 · 内置函数巡礼",
       "version": 2,
       "description": "Python 城市公共服务一次逛完：len/sorted/enumerate/zip/any/all…附随堂一问与判题实战。",
-      "sha256": "6873777ff8eed32ef7bbc16df67385d6fbeffd45ed0431335c8cd6db2b1afc9d",
+      "sha256": "53bedd361be255171c6ce53ebb75629398e2a473b5ec5075a8e2a3a1c93c2e25",
       "kind": "course",
       "lang": "python",
       "lessons": 1,
-      "bytes": 5246
+      "bytes": 5249
     },
     {
       "id": "c-advanced",

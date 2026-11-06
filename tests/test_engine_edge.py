@@ -199,3 +199,28 @@ class EngineEdgeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class OutputBoundTests(unittest.TestCase):
+    """输出硬上限：死循环打印不能把进程内存吃爆（2026-11 发布前审计）。"""
+
+    def test_runaway_print_is_interrupted_early(self):
+        import time
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "app", "src", "main", "python"))
+        import runner
+
+        started = time.time()
+        result = runner.run_code("while True:\n    print('x' * 10000)\n", [], 8.0)
+        elapsed = time.time() - started
+        self.assertFalse(result["ok"], "死循环打印必须被中断")
+        self.assertEqual("OutputTooLong", result["error"]["type"])
+        self.assertLess(elapsed, 3.0, f"应在写入侧就中断，实际耗时 {elapsed:.1f}s")
+        self.assertLess(len(result["stdout"]), 5 * 1024 * 1024, "保留的输出不应超过硬上限")
+
+    def test_normal_large_output_still_works(self):
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "app", "src", "main", "python"))
+        import runner
+
+        result = runner.run_code("print('a' * 100000)\n", [], 8.0)
+        self.assertTrue(result["ok"])
+        self.assertEqual(100001, len(result["stdout"]))

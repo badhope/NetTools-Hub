@@ -140,7 +140,7 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
 
         SectionHeader("课程包（按需下载）", accent = NeonYellow)
         Text(
-            "每门语言 30 讲，拆成基础 / 核心 / 进阶三包。点哪包下哪包，也可以整门一次装齐。",
+            "每门语言 38 讲，拆成基础 / 核心 / 进阶 / 专业四包。点哪包下哪包，也可以整门一次装齐。",
             style = MaterialTheme.typography.bodySmall,
             color = TextDim
         )
@@ -172,10 +172,18 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
                 throw e
             }
 
-            // 按语言分组：一门语言的三个包排在一起，先看得到「整门 30 讲」的规模
-            val grouped = cat.packs.groupBy { it.lang }
+            // 按「语言 + 产品线」分组：正式语言四包（基础/核心/进阶/专业）合成一张卡，
+            // 增补包（彩蛋 / DSA）单独成卡。旧实现只按 lang 分组，会把「彩蛋 + DSA 基础
+            // + DSA 进阶」并进「Python · 全阶课程 11 讲」，批量下载时混装三个不相关包
+            // （2026-11 审查发现）。
+            val isTierPack: (ContentPack) -> Boolean = { it.tier.isNotBlank() }
+            val grouped = cat.packs.groupBy { pack ->
+                if (isTierPack(pack)) "lang:${pack.lang}" else "extra:${pack.id}"
+            }
 
-            grouped.forEach { (lang, packs) ->
+            grouped.forEach { (groupKey, packs) ->
+                val lang = packs.first().lang
+                val isExtra = !isTierPack(packs.first())
                 val runtime = if (lang.isBlank()) null else LanguageRegistry.get(lang)
                 val runtimeReady = runtime == null || runtime.isAvailable()
 
@@ -188,7 +196,11 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(
-                                if (lang.isBlank()) "通用资源" else "${LanguageIds.displayNameOf(lang)} · 全阶课程",
+                                when {
+                                    lang.isBlank() -> "通用资源"
+                                    isExtra -> packs.first().name
+                                    else -> "${LanguageIds.displayNameOf(lang)} · 全阶课程"
+                                },
                                 style = MaterialTheme.typography.titleMedium,
                                 color = TextHi
                             )
@@ -233,17 +245,25 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
                                 onClick = {
                                     scope.launch {
                                         var ok = 0
+                                        var failed: String? = null
                                         for (pack in missing) {
                                             message = "下载中 ${pack.name}…"
                                             try {
                                                 withContext(Dispatchers.IO) { downloadPack(pack) }
                                                 ok++
                                             } catch (e: Exception) {
-                                                message = "下载失败 ${pack.name}：${e.message?.take(40)}"
+                                                failed = "${pack.name}：${e.message?.take(40)}"
                                                 break
                                             }
                                         }
-                                        if (ok > 0) message = "已安装 $ok 个包，课程列表已刷新"
+                                        // 失败必须压过成功提示：旧实现只要成功过一个包
+                                        // 就把「下载失败」覆盖成「已安装 N 个包」，
+                                        // 用户会以为整门都装好了（2026-11 审查发现）。
+                                        message = if (failed != null) {
+                                            "已装 $ok/${missing.size} 包，失败：$failed（可重试）"
+                                        } else {
+                                            "已安装 $ok 个包，课程列表已刷新"
+                                        }
                                     }
                                 }
                             )

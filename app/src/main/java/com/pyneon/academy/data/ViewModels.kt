@@ -86,6 +86,9 @@ class StreakViewModel(app: Application) : AndroidViewModel(app) {
                 ProgressStore.touchStreak(context, today)
                 // Set initial longest and total
                 updateProgressForNewStreak(context, today)
+                // 首日也要发 first_day 徽章（旧实现走这条路时不调用 updateBadges，
+                // 用户第一次打开永远拿不到首日徽章 —— 2026-11 审查发现）
+                updateBadges(context, 1)
                 loadStreak()
                 return@launch
             }
@@ -98,7 +101,7 @@ class StreakViewModel(app: Application) : AndroidViewModel(app) {
                     // Increment total active days and possibly longest
                     val newCurrent = progress.streakDays + 1
                     updateLongestAndTotal(context, newCurrent, progress.totalActiveDays + 1)
-                    updateBadges(newCurrent)
+                    updateBadges(context, newCurrent)
                     loadStreak()
                 }
                 else -> {
@@ -123,15 +126,26 @@ class StreakViewModel(app: Application) : AndroidViewModel(app) {
         ProgressStore.updateStreakStats(context, newCurrent, newLongest, newTotal)
     }
 
-    private suspend fun updateBadges(current: Int) {
-        val badges = mutableSetOf<String>()
-        if (current >= 1) badges.add("first_day")
-        if (current >= 3) badges.add("three_days")
-        if (current >= 7) badges.add("week_warrior")
-        if (current >= 14) badges.add("fortnight")
-        if (current >= 30) badges.add("month_master")
-        if (current >= 100) badges.add("centurion")
-        ProgressStore.setBadges(getApplication(), badges)
+    /**
+     * 补发连击徽章。
+     *
+     * 旧实现每次新建一个空集合并整体覆盖，导致「曾连击 30 天、断档后重新开始」
+     * 会把 week_warrior / month_master / centurion 永久抹掉（2026-11 审查发现）。
+     * 正确语义是：徽章是历史成就，只增不减。这里按历史最长连击补发，
+     * 并与已存徽章取并集。
+     */
+    private suspend fun updateBadges(context: Application, current: Int) {
+        val progress = ProgressStore.snapshot(context)
+        // 断档后 current 会重置为 1，但历史最长连击仍保留在 longestStreak 里
+        val peak = maxOf(current, progress.longestStreak)
+        val badges = progress.badges.toMutableSet()
+        if (peak >= 1) badges.add("first_day")
+        if (peak >= 3) badges.add("three_days")
+        if (peak >= 7) badges.add("week_warrior")
+        if (peak >= 14) badges.add("fortnight")
+        if (peak >= 30) badges.add("month_master")
+        if (peak >= 100) badges.add("centurion")
+        ProgressStore.setBadges(context, badges)
     }
 
     suspend fun getDueReviewCount(): Int {

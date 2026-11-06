@@ -64,4 +64,12 @@ fun unlockedAchievements(progress: Progress, totalLessons: Int): Set<Achievement
     return unlocked
 }
 
-fun dailyMissionDone(progress: Progress): Boolean = progress.dailyCount > 0
+/**
+ * 每日任务是否已完成。
+ *
+ * 必须同时校验日期：只判断 dailyCount > 0 会让昨天完成的任务在今天依然打勾，
+ * 任务面板与实际状态脱节（2026-11 审查发现）。todayEpochDay 默认取系统当天，
+ * 便于测试注入固定日期。
+ */
+fun dailyMissionDone(progress: Progress, todayEpochDay: Long = Clock.todayEpochDay()): Boolean =
+    progress.dailyCount > 0 && progress.dailyDate == todayEpochDay

@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
@@ -92,6 +93,12 @@ fun AppRoot() {
     val showWelcome = remember { mutableStateOf(AppPrefs.isFirstLaunch(context)) }
     // 首次启动必须明示同意隐私政策（华为/工信部合规）
     var showConsent by remember { mutableStateOf(!AppPrefs.isPrivacyConsented(context)) }
+    // 同意后要让 BootScreen 以 consented=true 重来一遍，否则运行时永远不初始化。
+    // 旧实现只把 showConsent 置 false，而 BootScreen 的 LaunchedEffect 早已在
+    // consented=false 时跑完并导航离开，Python/SQL 从此不会 start，判题全部报错
+    // （2026-11 审查发现，发布阻断级）。做法：同意时把回退栈清回 boot，并用
+    // consentEpoch 作为 key 强制重建 BootScreen。
+    var consentEpoch by remember { mutableIntStateOf(0) }
 
     // 崩溃后首次启动提示：CrashHandler 在崩溃时已把记录写入本机，
     // 但普通用户不会进「开发者诊断」，所以这里主动问一次（一次性，处理后即清除标记）。
@@ -155,20 +162,22 @@ fun AppRoot() {
             composable("boot") {
                 // 合规：未同意隐私政策前不初始化运行时、不写任何学习数据。
                 // BootScreen 内部据此跳过预热与连击记录（个保法 / 商店审核要求）。
-                BootScreen(
-                    consented = !showConsent,
-                    onDone = {
-                        if (showWelcome.value) {
-                            navController.navigate("welcome") {
-                                popUpTo("boot") { inclusive = true }
-                            }
-                        } else {
-                            navController.navigate("home") {
-                                popUpTo("boot") { inclusive = true }
+                androidx.compose.runtime.key(consentEpoch) {
+                    BootScreen(
+                        consented = !showConsent,
+                        onDone = {
+                            if (showWelcome.value) {
+                                navController.navigate("welcome") {
+                                    popUpTo("boot") { inclusive = true }
+                                }
+                            } else {
+                                navController.navigate("home") {
+                                    popUpTo("boot") { inclusive = true }
+                                }
                             }
                         }
-                    }
-                )
+                    )
+                }
             }
             
             composable("welcome") {
@@ -290,6 +299,13 @@ fun AppRoot() {
                 onConsent = {
                     AppPrefs.setPrivacyConsented(context, true)
                     showConsent = false
+                    // 关键：把导航栈清回 boot，并递增 key 重建 BootScreen，
+                    // 让它这次以 consented=true 真正初始化运行时。
+                    consentEpoch += 1
+                    navController.navigate("boot") {
+                        popUpTo(navController.graph.id) { inclusive = true }
+                        launchSingleTop = true
+                    }
                 },
                 onDecline = { finishApp(context) }
             )

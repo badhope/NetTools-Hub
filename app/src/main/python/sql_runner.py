@@ -1,3 +1,10 @@
+"""SQL 执行与判题引擎（设备端 SQLite 内存库）。
+
+超时策略（2026-11 修复）：SQLite 的 execute 是同步阻塞调用，死循环 CTE
+（如漏写终止条件的 WITH RECURSIVE）会把调用线程永久占住，UI 卡在「运行中」。
+这里用 sqlite3 的 set_progress_handler 做指令级看门狗：每 N 条虚拟机指令回调
+一次，超过截止时间就返回非 0，SQLite 会中断当前语句并抛 OperationalError。
+"""
 import json
 import sqlite3
 import time
@@ -6,6 +13,9 @@ import traceback
 DEFAULT_TIMEOUT = 8.0
 MAX_OUTPUT = 1_048_576
 MAX_ROWS = 200
+# 每多少条 SQLite 虚拟机指令检查一次时钟。数值越小越及时、开销越大；
+# 1000 在低端机上对常见查询的开销可忽略，中断粒度约毫秒级。
+_PROGRESS_STEPS = 1000
 
 _DENIED_ACTIONS = {
     getattr(sqlite3, "SQLITE_ATTACH", 24),
@@ -70,14 +80,26 @@ def _format_table(cursor):
     return columns, rows, "\n".join(lines)
 
 
-def _execute(sql):
+def _execute(sql, timeout=None):
     started = time.perf_counter()
+    budget = DEFAULT_TIMEOUT if timeout is None else float(timeout)
+    deadline = started + budget
+    timed_out = {"hit": False}
+
+    def _watchdog():
+        """SQLite 每执行 _PROGRESS_STEPS 条指令回调一次；返回非 0 中断语句。"""
+        if time.perf_counter() > deadline:
+            timed_out["hit"] = True
+            return 1
+        return 0
+
     # isolation_level=None 关闭 Python 的隐式事务管理：否则 sqlite3 会在每条语句前
     # 自动 BEGIN，用户写的 BEGIN / COMMIT / ROLLBACK 会直接报
     # 「cannot start a transaction within a transaction」。
     # 关闭后行为与 sqlite3 命令行一致，事务控制权完全交给 SQL 本身。
     conn = sqlite3.connect(":memory:", isolation_level=None)
     conn.set_authorizer(_authorizer)
+    conn.set_progress_handler(_watchdog, _PROGRESS_STEPS)
     out = []
     error = None
     last = None
@@ -101,11 +123,20 @@ def _execute(sql):
             pass
         etype, evalue, tb = __import__("sys").exc_info()
         trimmed = tb.tb_next if tb is not None else None
-        error = {
-            "type": getattr(etype, "__name__", "Error"),
-            "message": str(evalue),
-            "traceback": "".join(traceback.format_exception(etype, evalue, trimmed)).strip(),
-        }
+        if timed_out["hit"]:
+            # SQLite 被中断时抛的是 OperationalError('interrupted')；对外统一报超时，
+            # 否则用户只会看到一句看不懂的 interrupted（2026-11 审查发现）。
+            error = {
+                "type": "Timeout",
+                "message": "执行超过 %.1f 秒上限，已中断（疑似死循环或超大查询）" % budget,
+                "traceback": "",
+            }
+        else:
+            error = {
+                "type": getattr(etype, "__name__", "Error"),
+                "message": str(evalue),
+                "traceback": "".join(traceback.format_exception(etype, evalue, trimmed)).strip(),
+            }
     finally:
         conn.close()
     text = "\n".join(out)
@@ -121,8 +152,8 @@ def _execute(sql):
     }
 
 
-def run_sql(sql):
-    core = _execute(sql)
+def run_sql(sql, timeout=None):
+    core = _execute(sql, timeout)
     return {
         "ok": core["ok"],
         "stdout": core["stdout"],
@@ -133,8 +164,8 @@ def run_sql(sql):
     }
 
 
-def check_sql(sql, tests):
-    core = _execute(sql)
+def check_sql(sql, tests, timeout=None):
+    core = _execute(sql, timeout)
     if core["error"] is not None:
         return {
             "ok": False,
@@ -180,13 +211,17 @@ def check_sql(sql, tests):
 
 def run_sql_json(payload_json):
     payload = json.loads(payload_json)
-    return json.dumps(run_sql(payload.get("code", "")), ensure_ascii=False)
+    return json.dumps(
+        run_sql(payload.get("code", ""), payload.get("timeout")),
+        ensure_ascii=False,
+    )
 
 
 def check_sql_json(payload_json):
     payload = json.loads(payload_json)
     return json.dumps(
-        check_sql(payload.get("code", ""), payload.get("tests") or []), ensure_ascii=False
+        check_sql(payload.get("code", ""), payload.get("tests") or [], payload.get("timeout")),
+        ensure_ascii=False,
     )
 
 

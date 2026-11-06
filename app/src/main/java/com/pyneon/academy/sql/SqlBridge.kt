@@ -26,6 +26,9 @@ object SqlBridge : LanguageRuntime {
     override val displayName: String = "SQL"
     override val fileExtension: String = "sql"
     override val grammarScope: String = "source.sql"
+
+    /** 判题超时（秒）：与 runner.py / JsBridge 的默认值对齐。 */
+    private const val DEFAULT_TIMEOUT = 8.0
     override val version: String
         get() = try {
             val obj = JSONObject(module().callAttr("info_json").toString())
@@ -47,7 +50,10 @@ object SqlBridge : LanguageRuntime {
         stdinLines: List<String>,
         timeoutSec: Double
     ): RunResult {
-        val payload = JSONObject().apply { put("code", code) }
+        val payload = JSONObject().apply {
+            put("code", code)
+            put("timeout", timeoutSec)
+        }
         return parse(module().callAttr("run_sql_json", payload.toString()).toString())
     }
 
@@ -59,6 +65,9 @@ object SqlBridge : LanguageRuntime {
         val payload = JSONObject().apply {
             put("code", code)
             put("tests", JSONArray(tests))
+            // 判题超时与 runCode 一致：死循环 CTE 必须在执行阶段就被中断，
+            // 否则 UI 会永远停在「运行中」（2026-11 审查发现）。
+            put("timeout", DEFAULT_TIMEOUT)
         }
         return parse(module().callAttr("check_sql_json", payload.toString()).toString())
     }

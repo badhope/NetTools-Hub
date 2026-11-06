@@ -53,6 +53,13 @@ fun BootScreen(
     var pyStatus by remember { mutableStateOf("RUN") }
     // S7: 运行时预热失败时置 true，停在恢复页而不是硬着头皮进首页
     var bootFailed by remember { mutableStateOf(false) }
+    // 「重试」必须能真正重跑初始化：LaunchedEffect(Unit) 只跑一次，
+    // 旧实现点重试只改了局部状态、界面永远停在进度条（2026-11 审查发现）。
+    var retryKey by remember { mutableIntStateOf(0) }
+    // 初始化失败的原始信息，便于用户反馈时提供线索（不打印敏感数据）
+    var bootError by remember { mutableStateOf<String?>(null) }
+    // 本页是否已经放行过（避免切页后回调重复触发）
+    var finished by remember { mutableStateOf(false) }
     
     // Use current release version
     val appVersion = "v${com.pyneon.academy.utils.AppConstants.VERSION_NAME}"
@@ -74,7 +81,8 @@ fun BootScreen(
     }
     var shown by remember { mutableIntStateOf(0) }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(consented, retryKey) {
+        if (finished) return@LaunchedEffect
         shown = 1
         delay(170L)
         shown = 2
@@ -87,10 +95,18 @@ fun BootScreen(
             // Python.start()，同步加载 5.4MB libpython + 标准库。
             // 此前它直接跑在 LaunchedEffect 的默认调度器（主线程）上，
             // 冷启动首帧会被卡住，用户看到白屏（2026-11 实测）。
-            val ok = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
-                runtime.ensureStarted(context)
-                runtime.warmup()
-            }
+            //
+            // runCatching：Chaquopy 原生库缺失、标准库解压失败等会抛 Throwable，
+            // 旧实现让异常从 LaunchedEffect 逃逸直接闪退，恢复页根本到不了
+            // （2026-11 审查发现）。
+            val ok = runCatching {
+                kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                    runtime.ensureStarted(context)
+                    runtime.warmup()
+                }
+            }.onFailure { e ->
+                bootError = "${e.javaClass.simpleName}: ${e.message?.take(120) ?: ""}"
+            }.getOrDefault(false)
             pyStatus = if (ok) "OK" else "FAIL"
             if (ok) {
                 streakVm.onAppOpen()
@@ -101,7 +117,10 @@ fun BootScreen(
                 return@LaunchedEffect
             }
         } else {
-            // 未同意：跳过一切数据处理，直接交给上层继续弹同意框
+            // 未同意：跳过一切数据处理，直接交给上层继续弹同意框。
+            // 注意：此时 onDone 仍会执行（动画播完即离开），用户点「同意」后
+            // 由 AppNav 把 consented 置为 true 并重启 BootScreen（见 AppNav 的
+            // consentEpoch key），否则运行时会永远不初始化（2026-11 审查发现）。
             pyStatus = "SKIP"
         }
 
@@ -111,6 +130,7 @@ fun BootScreen(
             delay(190L)
         }
         delay(650)
+        finished = true
         onDone()
     }
 
@@ -149,6 +169,14 @@ fun BootScreen(
                     style = MaterialTheme.typography.bodyMedium,
                     color = NeonMagenta
                 )
+                bootError?.let {
+                    Text(
+                        it,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = TextMid,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
                 Text(
                     "可尝试：重启应用 / 查看诊断日志 / 反馈给开发者",
                     style = MaterialTheme.typography.bodySmall,
@@ -159,7 +187,12 @@ fun BootScreen(
                 com.pyneon.academy.ui.components.NeonButton(
                     label = "重试",
                     accent = NeonCyan,
-                    onClick = { bootFailed = false; pyStatus = "RUN" }
+                    onClick = {
+                        // retryKey 变化会重启 LaunchedEffect，真正重新初始化
+                        bootFailed = false
+                        pyStatus = "RUN"
+                        retryKey += 1
+                    }
                 )
                 Spacer(Modifier.height(8.dp))
                 com.pyneon.academy.ui.components.NeonButton(

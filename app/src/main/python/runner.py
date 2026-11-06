@@ -79,9 +79,34 @@ def _truncate(text):
     return text
 
 
+class OutputTooLong(Exception):
+    """输出超过硬上限，立即中断执行（防 OOM）。"""
+
+
+class _BoundedBuffer(io.StringIO):
+    """带上限的输出缓冲。
+
+    只在执行结束后截断挡不住内存问题：`while True: print('x'*10000)` 在 8 秒
+    超时之前能把内存吃到几百 MB，低端机直接被系统杀掉。这里在写入侧累计长度，
+    超过 HARD_LIMIT 立刻抛 OutputTooLong，由 _run_protected 翻译成用户可读错误。
+    """
+
+    HARD_LIMIT = MAX_OUTPUT * 4
+
+    def __init__(self):
+        super().__init__()
+        self._written = 0
+
+    def write(self, s):
+        self._written += len(s)
+        if self._written > self.HARD_LIMIT:
+            raise OutputTooLong()
+        return super().write(s)
+
+
 def _run_protected(code, namespace, stdin_lines, timeout):
-    out_buf = io.StringIO()
-    err_buf = io.StringIO()
+    out_buf = _BoundedBuffer()
+    err_buf = _BoundedBuffer()
     state = {"finished": False, "error": None}
     import builtins
 
@@ -104,6 +129,13 @@ def _run_protected(code, namespace, stdin_lines, timeout):
                 "type": "Timeout",
                 "message": "代码运行超过 %.1f 秒，已被强制中断（可能是死循环）"
                 % timeout,
+                "traceback": "",
+            }
+        except OutputTooLong:
+            state["error"] = {
+                "type": "OutputTooLong",
+                "message": "输出超过 %d KB 上限，已中断（疑似死循环打印）"
+                % (_BoundedBuffer.HARD_LIMIT // 1024),
                 "traceback": "",
             }
         except InputExhausted as exc:

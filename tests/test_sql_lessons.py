@@ -85,3 +85,33 @@ class SqlPackTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+class SqlTimeoutTests(unittest.TestCase):
+    """SQL 必须有执行超时：死循环 CTE 不能把线程永久占住（2026-11 发布前审计）。"""
+
+    def test_infinite_cte_is_interrupted(self):
+        import time
+        sql = (
+            "WITH RECURSIVE seq(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM seq) "
+            "SELECT COUNT(*) AS c FROM seq;"
+        )
+        started = time.time()
+        result = sql_runner.run_sql(sql, timeout=0.5)
+        elapsed = time.time() - started
+        self.assertFalse(result["ok"], "死循环查询必须失败")
+        self.assertEqual("Timeout", result["error"]["type"])
+        self.assertLess(elapsed, 5.0, f"超时未生效，耗时 {elapsed:.1f}s")
+
+    def test_check_sql_also_times_out(self):
+        sql = (
+            "WITH RECURSIVE seq(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM seq) "
+            "SELECT COUNT(*) AS c FROM seq;"
+        )
+        result = sql_runner.check_sql(sql, ["assert True"], timeout=0.5)
+        self.assertFalse(result["passed"])
+        self.assertEqual("Timeout", result["error"]["type"])
+
+    def test_normal_query_is_unaffected(self):
+        result = sql_runner.run_sql("SELECT 1 AS a;", timeout=2.0)
+        self.assertTrue(result["ok"])

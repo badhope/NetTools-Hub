@@ -179,9 +179,27 @@ fun ChallengeDetailScreen(challengeId: String, onBack: () -> Unit) {
                             scope.launch {
                                 busy = true
                                 result = null
-                                val r = withContext(Dispatchers.Default) {
-                                    LanguageRegistry.get(challenge.lang)
-                                        .checkExercise(editorValue.text, challenge.tests, emptyList())
+                                // 运行时异常必须兜住：旧实现在这里裸调用 checkExercise，
+                                // Python 未初始化、JNI 崩溃、JSON 解析失败都会让异常
+                                // 逃逸到主线程直接闪退，用户刚写的代码全部丢失。
+                                // 课程详情页有 try/catch，挑战页漏了（2026-11 审查发现）。
+                                val r = try {
+                                    withContext(Dispatchers.Default) {
+                                        LanguageRegistry.get(challenge.lang)
+                                            .checkExercise(editorValue.text, challenge.tests, emptyList())
+                                    }
+                                } catch (t: Throwable) {
+                                    com.pyneon.academy.lang.RunResult(
+                                        ok = false,
+                                        stdout = "",
+                                        stderr = "",
+                                        errorType = "RuntimeCrash",
+                                        errorMessage = "运行时执行失败：${t.javaClass.simpleName} ${t.message?.take(120) ?: ""}",
+                                        traceback = null,
+                                        durationMs = 0L,
+                                        variables = emptyList(),
+                                        passed = false
+                                    )
                                 }
                                 result = r
                                 busy = false
