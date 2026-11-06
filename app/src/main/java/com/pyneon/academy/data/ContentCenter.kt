@@ -21,7 +21,13 @@ data class ContentPack(
     /** 内容类型：course = 课程包（增补/语言），默认 course */
     val kind: String = "course",
     /** 该包课程所属语言 id；空表示不绑定语言（Python 增补包除外都应有值） */
-    val lang: String = ""
+    val lang: String = "",
+    /** 讲数（catalog 提供，仅用于展示；缺失为 0 时 UI 不显示） */
+    val lessons: Int = 0,
+    /** 包体积（字节，catalog 提供；缺失为 0 时 UI 不显示） */
+    val bytes: Long = 0,
+    /** 难度层级：basics / core / advanced；空表示未分层 */
+    val tier: String = ""
 )
 
 data class ContentCatalog(
@@ -94,7 +100,10 @@ class ContentCenter {
                             description = p.optString("description"),
                             sha256 = p.optString("sha256").takeIf { it.isNotBlank() },
                             kind = p.optString("kind", "course"),
-                            lang = p.optString("lang", "")
+                            lang = p.optString("lang", ""),
+                            lessons = p.optInt("lessons", 0),
+                            bytes = p.optLong("bytes", 0L),
+                            tier = p.optString("tier", "")
                         )
                     )
                 }

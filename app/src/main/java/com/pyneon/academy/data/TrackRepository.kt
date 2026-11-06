@@ -22,7 +22,9 @@ data class Track(
     val doneCount: Int = 0,
     /** 语言中心课程包 id；null 表示 APK 内置 */
     val packId: String? = null,
-    val lang: String = LanguageIds.PYTHON
+    val lang: String = LanguageIds.PYTHON,
+    /** 该路线由多个课程包组成时列出全部 id（单包路线与 packId 相同） */
+    val packIds: List<String> = emptyList()
 ) {
     val progressPercent: Int
         get() = if (lessonCount <= 0) 0 else (doneCount * 100 / lessonCount).coerceIn(0, 100)
@@ -52,26 +54,36 @@ object TrackRepository {
         val accent: Long,
         val packId: String?,
         val lang: String,
-        val ids: Set<String>
+        val ids: Set<String>,
+        val packIds: List<String> = listOfNotNull(packId)
     ) {
         val expectedCount: Int get() = ids.size
     }
+
+    /**
+     * 一门语言的 30 讲固定拆成三包：基础 / 核心 / 进阶。
+     * 语言中心与路线页共用这套命名，避免两边各写一份字符串。
+     */
+    private fun tiers(prefix: String): List<String> = listOf("$prefix-basics", "$prefix-core", "$prefix-advanced")
 
     private val specs = listOf(
         Spec(
             "python", "Python 主线", "38 讲：print 到异步协程，内置判题实战",
             "编程语言", CYAN, null, LanguageIds.PYTHON,
-            (1..38).map { "l%02d".format(it) }.toSet()
+            (1..38).map { "l%02d".format(it) }.toSet(),
+            packIds = emptyList()
         ),
         Spec(
-            "js", "JavaScript 启程", "6 讲：console.log 到对象统计，Rhino 运行时",
+            "js", "JavaScript 全阶", "30 讲：console.log 到生成器与项目实战，Rhino 运行时",
             "编程语言", YELLOW, "js-basics", LanguageIds.JAVASCRIPT,
-            (1..6).map { "js%02d".format(it) }.toSet()
+            (1..30).map { "js%02d".format(it) }.toSet(),
+            packIds = tiers("js")
         ),
         Spec(
-            "ts", "TypeScript 启程", "6 讲：类型标注到 enum，转译后跑在 Rhino 上",
+            "ts", "TypeScript 全阶", "30 讲：类型标注到类型建模，转译后跑在 Rhino 上",
             "编程语言", CYAN, "ts-basics", LanguageIds.TYPESCRIPT,
-            (1..6).map { "ts%02d".format(it) }.toSet()
+            (1..30).map { "ts%02d".format(it) }.toSet(),
+            packIds = tiers("ts")
         ),
         Spec(
             "dsa-basics", "DSA 算法基础", "5 讲：复杂度 / 双指针 / 哈希 / 栈队列 / 递归",
@@ -84,19 +96,22 @@ object TrackRepository {
             (6..10).map { "dsa%02d".format(it) }.toSet()
         ),
         Spec(
-            "c", "C 启程", "6 讲：printf 到语言边界，设备端解释执行",
+            "c", "C 全阶", "30 讲：printf 到指针、结构体与综合项目，设备端解释执行",
             "编程语言", MAGENTA, "c-basics", LanguageIds.C,
-            (1..6).map { "c%02d".format(it) }.toSet()
+            (1..30).map { "c%02d".format(it) }.toSet(),
+            packIds = tiers("c")
         ),
         Spec(
-            "lua", "Lua 启程", "6 讲：print 到 string 库，LuaJ 运行时",
+            "lua", "Lua 全阶", "30 讲：print 到元表与协程，LuaJ 运行时",
             "编程语言", GREEN, "lua-basics", LanguageIds.LUA,
-            (1..6).map { "lua%02d".format(it) }.toSet()
+            (1..30).map { "lua%02d".format(it) }.toSet(),
+            packIds = tiers("lua")
         ),
         Spec(
-            "sql", "SQL 启程", "6 讲：SELECT 到子查询，SQLite 运行时",
+            "sql", "SQL 全阶", "30 讲：SELECT 到窗口函数与事务，SQLite 运行时",
             "编程语言", CYAN, "sql-basics", LanguageIds.SQL,
-            (1..6).map { "sql%02d".format(it) }.toSet()
+            (1..30).map { "sql%02d".format(it) }.toSet(),
+            packIds = tiers("sql")
         ),
         Spec(
             "bonus-builtin", "彩蛋 · 内置函数巡礼", "1 讲：len / sorted / enumerate / zip / any / all",
@@ -111,7 +126,10 @@ object TrackRepository {
         val all = LessonRepository.lessons(context)
         return specs.mapNotNull { s ->
             val present = all.filter { it.id in s.ids }
-            val available = s.packId == null || s.packId in installed
+            // 多包路线：装齐任一包即可学习该包内容，但路线整体仍是「未装齐」
+            val installedPacks = s.packIds.count { it in installed }
+            val available = s.packId == null || installedPacks > 0
+            val complete = s.packIds.isEmpty() || installedPacks == s.packIds.size
             // 未下载的内容包也列出（可下载状态），否则路线页在全新安装时只剩一行
             if (present.isEmpty() && available) return@mapNotNull null
             Track(
@@ -124,8 +142,13 @@ object TrackRepository {
                 lessonCount = if (present.isEmpty()) s.expectedCount else present.size,
                 doneCount = present.count { it.id in done },
                 packId = s.packId,
-                lang = s.lang
-            )
+                lang = s.lang,
+                packIds = s.packIds
+            ).let { t ->
+                if (!complete && s.packIds.isNotEmpty()) {
+                    t.copy(subtitle = t.subtitle + " · 已装 $installedPacks/${s.packIds.size} 包")
+                } else t
+            }
         }
     }
 

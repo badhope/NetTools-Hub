@@ -27,6 +27,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.pyneon.academy.data.ContentCatalog
 import com.pyneon.academy.data.ContentCenter
+import com.pyneon.academy.data.ContentPack
 import com.pyneon.academy.data.LessonRepository
 import com.pyneon.academy.debug.DebugLog
 import com.pyneon.academy.lang.LanguageIds
@@ -138,6 +139,11 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
         }
 
         SectionHeader("课程包（按需下载）", accent = NeonYellow)
+        Text(
+            "每门语言 30 讲，拆成基础 / 核心 / 进阶三包。点哪包下哪包，也可以整门一次装齐。",
+            style = MaterialTheme.typography.bodySmall,
+            color = TextDim
+        )
         Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
             NeonButton(
                 label = if (loading) "检查中…" else "检查课程包",
@@ -153,59 +159,152 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
 
         catalog?.let { cat ->
             val installedLangs = LessonRepository.lessons(context).map { it.lang }.distinct()
-            cat.packs.forEach { pack ->
-                val ver = installed[pack.id]
-                val runtime = if (pack.lang.isBlank()) null else LanguageRegistry.get(pack.lang)
+
+            /** 下载一个包；返回是否成功。批量下载循环复用，避免两套错误处理。 */
+            fun downloadPack(pack: ContentPack): Boolean = try {
+                center.download(context, pack, catalogBase)
+                installed = center.installedVersions(context)
+                LessonRepository.invalidateCache()
+                DebugLog.i("Content", "课程包安装成功 ${pack.id} v${pack.version}")
+                true
+            } catch (e: Exception) {
+                DebugLog.e("Content", "课程包下载失败 ${pack.id}", e)
+                throw e
+            }
+
+            // 按语言分组：一门语言的三个包排在一起，先看得到「整门 30 讲」的规模
+            val grouped = cat.packs.groupBy { it.lang }
+
+            grouped.forEach { (lang, packs) ->
+                val runtime = if (lang.isBlank()) null else LanguageRegistry.get(lang)
                 val runtimeReady = runtime == null || runtime.isAvailable()
-                val state = when {
-                    !runtimeReady -> null
-                    ver == null -> "下载"
-                    ver < pack.version -> "更新到 v${pack.version}"
-                    else -> null
-                }
-                NeonCard(accent = if (state == null) NeonGreen else NeonYellow) {
+
+                val lessonSum = packs.sumOf { it.lessons }
+                val sizeSum = packs.sumOf { it.bytes }
+                val missing = packs.filter { (installed[it.id] ?: 0) < it.version }
+                val allInstalled = missing.isEmpty()
+
+                NeonCard(accent = if (allInstalled) NeonGreen else NeonYellow) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(pack.name, style = MaterialTheme.typography.titleMedium, color = TextHi)
                             Text(
-                                if (pack.lang.isBlank()) "通用" else "语言：${LanguageIds.displayNameOf(pack.lang)}",
+                                if (lang.isBlank()) "通用资源" else "${LanguageIds.displayNameOf(lang)} · 全阶课程",
+                                style = MaterialTheme.typography.titleMedium,
+                                color = TextHi
+                            )
+                            Text(
+                                buildString {
+                                    if (lessonSum > 0) append("$lessonSum 讲")
+                                    if (sizeSum > 0) {
+                                        if (isNotEmpty()) append(" · ")
+                                        append(formatBytes(sizeSum))
+                                    }
+                                    if (packs.size > 1) {
+                                        if (isNotEmpty()) append(" · ")
+                                        append("${packs.size} 个包")
+                                    }
+                                    if (lang.isNotBlank()) {
+                                        if (isNotEmpty()) append(" · ")
+                                        append(if (installedLangs.contains(lang)) "已可学习" else "待下载")
+                                    }
+                                },
                                 style = MaterialTheme.typography.labelSmall,
                                 color = TextDim
                             )
                         }
-                        if (pack.lang.isNotBlank() && installedLangs.contains(pack.lang)) {
-                            Text("已可学习", style = MaterialTheme.typography.labelMedium, color = NeonGreen)
+                        if (allInstalled) {
+                            Text("✓ 已装齐", style = MaterialTheme.typography.labelMedium, color = NeonGreen)
                         }
                     }
-                    Text(pack.description, style = MaterialTheme.typography.bodySmall, color = TextMid, modifier = Modifier.padding(top = 4.dp))
-                    Spacer(Modifier.height(10.dp))
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                        if (!runtimeReady) {
-                            Text("缺运行时，暂不可下载", style = MaterialTheme.typography.labelMedium, color = NeonMagenta)
-                        } else if (state != null) {
+
+                    if (!runtimeReady) {
+                        Text(
+                            "缺运行时，暂不可下载",
+                            style = MaterialTheme.typography.labelMedium,
+                            color = NeonMagenta,
+                            modifier = Modifier.padding(top = 6.dp)
+                        )
+                    } else {
+                        if (missing.isNotEmpty() && packs.size > 1) {
                             NeonButton(
-                                label = state,
-                                accent = NeonYellow,
+                                label = "全部下载（${missing.size} 包）",
+                                accent = NeonCyan,
+                                modifier = Modifier.padding(top = 8.dp),
                                 onClick = {
                                     scope.launch {
-                                        message = "下载中 ${pack.name}…"
-                                        try {
-                                            withContext(Dispatchers.IO) { center.download(context, pack, catalogBase) }
-                                            installed = center.installedVersions(context)
-                                            LessonRepository.invalidateCache()
-                                            DebugLog.i("Content", "课程包安装成功 ${pack.id} v${pack.version}")
-                                            message = "安装完成，课程列表已刷新"
-                                        } catch (e: Exception) {
-                                            DebugLog.e("Content", "课程包下载失败 ${pack.id}", e)
-                                            message = "下载失败：${e.message?.take(50)}"
+                                        var ok = 0
+                                        for (pack in missing) {
+                                            message = "下载中 ${pack.name}…"
+                                            try {
+                                                withContext(Dispatchers.IO) { downloadPack(pack) }
+                                                ok++
+                                            } catch (e: Exception) {
+                                                message = "下载失败 ${pack.name}：${e.message?.take(40)}"
+                                                break
+                                            }
                                         }
+                                        if (ok > 0) message = "已安装 $ok 个包，课程列表已刷新"
                                     }
                                 }
                             )
-                        } else {
-                            Text("✓ 已是最新 v$ver", style = MaterialTheme.typography.labelMedium, color = NeonGreen)
                         }
-                        Text("v${pack.version}", style = MaterialTheme.typography.labelSmall, color = TextDim)
+
+                        packs.forEach { pack ->
+                            val ver = installed[pack.id]
+                            val state = when {
+                                ver == null -> "下载"
+                                ver < pack.version -> "更新到 v${pack.version}"
+                                else -> null
+                            }
+                            Row(
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Column(Modifier.weight(1f)) {
+                                    Text(
+                                        tierLabel(pack.tier).ifBlank { pack.name },
+                                        style = MaterialTheme.typography.bodyMedium,
+                                        color = TextHi
+                                    )
+                                    Text(
+                                        buildString {
+                                            if (pack.lessons > 0) append("${pack.lessons} 讲 · ")
+                                            if (pack.bytes > 0) append("${formatBytes(pack.bytes)} · ")
+                                            append("v${pack.version}")
+                                        },
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = TextDim
+                                    )
+                                }
+                                if (state != null) {
+                                    NeonButton(
+                                        label = state,
+                                        accent = NeonYellow,
+                                        onClick = {
+                                            scope.launch {
+                                                message = "下载中 ${pack.name}…"
+                                                try {
+                                                    withContext(Dispatchers.IO) { downloadPack(pack) }
+                                                    message = "安装完成，课程列表已刷新"
+                                                } catch (e: Exception) {
+                                                    message = "下载失败：${e.message?.take(50)}"
+                                                }
+                                            }
+                                        }
+                                    )
+                                } else {
+                                    Text("✓ v$ver", style = MaterialTheme.typography.labelMedium, color = NeonGreen)
+                                }
+                            }
+                            Text(
+                                pack.description,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextMid,
+                                modifier = Modifier.padding(top = 2.dp)
+                            )
+                        }
                     }
                 }
             }
@@ -214,4 +313,20 @@ fun LanguageCenterScreen(onBack: () -> Unit) {
             }
         }
     }
+}
+
+/** 层级标签：课程包按基础/核心/进阶拆包时，UI 只显示这三档，避免三行长标题。 */
+private fun tierLabel(tier: String): String = when (tier) {
+    "basics" -> "基础篇 · 入门到能写"
+    "core" -> "核心篇 · 语言主体"
+    "advanced" -> "进阶篇 · 高级应用"
+    else -> ""
+}
+
+/** 体积显示：KB 以下给 B，1MB 以下给 KB，其余给一位小数 MB。 */
+private fun formatBytes(bytes: Long): String = when {
+    bytes <= 0 -> ""
+    bytes < 1024 -> "$bytes B"
+    bytes < 1024 * 1024 -> "${bytes / 1024} KB"
+    else -> String.format("%.1f MB", bytes / 1024.0 / 1024.0)
 }
