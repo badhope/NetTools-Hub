@@ -1,4 +1,4 @@
-/* 码上 · Mashang — 网页版 (web/app.js)
+/* CodeLearning · 码上 — 网页版 (web/app.js)
  * 浏览器内 CPython 3.13（Pyodide 0.29.5），与 Android 端共用同一份 runner.py。
  * 设计要点：
  *  - 所有用户/课程文本走 textContent（el()），不做 HTML 字符串拼接，杜绝 DOM XSS。
@@ -364,7 +364,7 @@
       // 非 Python 语言：只读代码 + 明确说明在 App 内可运行
       card.appendChild(el("pre", "term", code));
       card.appendChild(el("div", "run-tag",
-        langLabel(lang) + " · 网页端仅有 Python 引擎，此代码请在「码上」App 内运行"));
+        langLabel(lang) + " · 网页端仅有 Python 引擎，此代码请在「CodeLearning」App 内运行"));
       return card;
     }
     var ta = el("textarea", "code-area");
@@ -570,7 +570,7 @@
       c.appendChild(pre);
       if (b.hint) c.appendChild(el("div", "hint", "💡 " + b.hint));
       c.appendChild(el("div", "run-tag",
-        langLabel(exLang) + " · 网页端仅有 Python 引擎，判题请在「码上」App 内进行"));
+        langLabel(exLang) + " · 网页端仅有 Python 引擎，判题请在「CodeLearning」App 内进行"));
       return c;
     }
     var ta = el("textarea", "code-area");
@@ -731,9 +731,9 @@
 
     var hero = el("section", "home-hero");
     var titleWrap = el("div", "hero-copy");
-    titleWrap.appendChild(el("div", "eyebrow", "MASHANG · WEB TERMINAL"));
+    titleWrap.appendChild(el("div", "eyebrow", "CODELEARNING · WEB TERMINAL"));
     titleWrap.appendChild(el("h1", "hero-title", "码上，就是马上。"));
-    titleWrap.appendChild(el("p", "hero-sub", "38 讲课程、assert 自动判题、变量快照。与手机端同源，打开浏览器就能写。"));
+    titleWrap.appendChild(el("p", "hero-sub", "六门语言、每门 30 讲、共 180+ 讲，assert 自动判题、变量快照。与手机端同源，打开浏览器就能写。"));
     var actions = el("div", "hero-actions");
     var startBtn = el("a", "btn-primary", next.lesson ? (done === 0 ? "开始第 1 讲" : "继续第 " + next.lesson.order + " 讲") : "回顾课程");
     startBtn.href = next.lesson ? "#/lesson/" + next.lesson.id : "#/lessons";
@@ -1024,7 +1024,7 @@
       c.appendChild(title);
       c.appendChild(el("div", "ad", (ch.lang || "javascript") + " · 难度 " + (ch.difficulty || "") + " · +" + (ch.xp || 0) + " XP"));
       c.appendChild(el("div", "ab", ch.brief));
-      c.appendChild(el("div", "ab dim", "JavaScript 挑战需要手机端多语言运行时，请在「码上」App 内打开。"));
+      c.appendChild(el("div", "ab dim", "JavaScript 挑战需要手机端多语言运行时，请在「CodeLearning」App 内打开。"));
       grid.appendChild(c);
     });
     view.appendChild(grid);
@@ -1039,7 +1039,7 @@
     if ((ch.lang || "python") !== "python") {
       var notice = el("div", "card");
       notice.appendChild(el("div", "blk-heading", ch.title + " · " + ch.lang));
-      notice.appendChild(el("div", "brief", "此挑战为 " + ch.lang + " 语言，网页端仅有 Python 引擎，请在「码上」App 内体验。"));
+      notice.appendChild(el("div", "brief", "此挑战为 " + ch.lang + " 语言，网页端仅有 Python 引擎，请在「CodeLearning」App 内体验。"));
       view.appendChild(notice);
       return;
     }

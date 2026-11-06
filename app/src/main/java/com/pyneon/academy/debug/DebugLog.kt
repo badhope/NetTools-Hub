@@ -76,7 +76,7 @@ object DebugLog {
 
     /** 导出为纯文本，供「复制」或「分享」使用 */
     fun export(): String = buildString {
-        appendLine("# Mashang debug log")
+        appendLine("# CodeLearning debug log")
         appendLine("# entries: ${buffer.size}")
         appendLine()
         buffer.forEach { appendLine(it.format()) }

@@ -1,15 +1,16 @@
 <div align="center">
 
-<img src="docs/banner.png" alt="Mashang" width="830"/>
+<img src="docs/banner.png" alt="CodeLearning · 码上" width="830"/>
 
-**スマホでコードを書く。6 言語が本当に動く。ネット不要。**
+**CodeLearning · 码上 —— スマホでコードを書く。6 言語、各 30 レッスン、すべてオフライン。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00E5FF.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-7.0%2B-00E5FF.svg)]()
 [![Languages](https://img.shields.io/badge/Languages-6-00FF9C.svg)]()
+[![Lessons](https://img.shields.io/badge/Lessons-180%2B-F7FF00.svg)]()
 [![Download](https://img.shields.io/badge/Download-APK-FF2D78.svg)](https://github.com/badhope/mashang/releases/latest)
 
-🌐 [English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
+[English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
 
 </div>
 
@@ -31,16 +32,16 @@
 
 | 言語 | ランタイム | レッスン |
 |---|---|---|
-| **Python** | CPython 3.13 | 38 + DSA + 組み込み関数 |
-| **JavaScript** | Rhino 1.7.15 | 6 |
-| **TypeScript** | 型消去 → Rhino | 6 |
-| **C** | 内蔵インタプリタ | 6 |
-| **Lua** | LuaJ 3.0.1 | 6 |
-| **SQL** | SQLite | 6 |
+| **Python** | CPython 3.13 | 38（内蔵メインライン）+ DSA + 組み込み関数 |
+| **JavaScript** | Rhino 1.7.15 | 30（基礎 / コア / 上級パック） |
+| **TypeScript** | 型消去 → Rhino | 30（基礎 / コア / 上級パック） |
+| **C** | 内蔵インタプリタ | 30（基礎 / コア / 上級パック） |
+| **Lua** | LuaJ 3.0.1 | 30（基礎 / コア / 上級パック） |
+| **SQL** | SQLite | 30（基礎 / コア / 上級パック） |
 
 Python メインラインは APK に内蔵。残り 5 言語は「言語センター」からオンデマンドでダウンロード。初回インストール約 39 MB。
 
-C と TypeScript は学習用サブセットです（C はポインタ・構造体なし、TypeScript はデコレータ・名前空間なし）。非対応時は明示します。
+C と TypeScript は学習用サブセットです（C はプリプロセッサ・goto・関数ポインタなし、TypeScript はデコレータ・名前空間なし）。非対応時は明示します。
 
 ---
 
@@ -61,7 +62,7 @@ C と TypeScript は学習用サブセットです（C はポインタ・構造�
 
 MIT。サードパーティのライセンスはアプリ内「About → オープンソースライセンス」に記載。
 
-📄 [プライバシー](PRIVACY_POLICY.md) · [利用規約](TERMS_OF_SERVICE.md)
+[プライバシー](PRIVACY_POLICY.md) · [利用規約](TERMS_OF_SERVICE.md)
 
 ---
 

@@ -1,15 +1,16 @@
 <div align="center">
 
-<img src="docs/banner.png" alt="码上 · Mashang" width="830"/>
+<img src="docs/banner.png" alt="CodeLearning · 码上" width="830"/>
 
-**手机上写代码，六种语言真跑，不用联网。**
+**CodeLearning · 码上 —— 手机上写代码。六门语言，每门 30 讲，全程离线。**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00E5FF.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-7.0%2B-00E5FF.svg)]()
 [![Languages](https://img.shields.io/badge/Languages-6-00FF9C.svg)]()
+[![Lessons](https://img.shields.io/badge/Lessons-180%2B-F7FF00.svg)]()
 [![Download](https://img.shields.io/badge/Download-APK-FF2D78.svg)](https://github.com/badhope/mashang/releases/latest)
 
-🌐 [English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
+[English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
 
 </div>
 
@@ -31,16 +32,16 @@
 
 | 语言 | 运行时 | 课程 |
 |---|---|---|
-| **Python** | CPython 3.13 | 38 讲 + DSA + 内置函数 |
-| **JavaScript** | Rhino 1.7.15 | 6 讲 |
-| **TypeScript** | 类型擦除 → Rhino | 6 讲 |
-| **C** | 内置解释器 | 6 讲 |
-| **Lua** | LuaJ 3.0.1 | 6 讲 |
-| **SQL** | SQLite | 6 讲 |
+| **Python** | CPython 3.13 | 38 讲内置主线 + DSA + 内置函数 |
+| **JavaScript** | Rhino 1.7.15 | 30 讲（基础 / 核心 / 进阶三包） |
+| **TypeScript** | 类型擦除 → Rhino | 30 讲（基础 / 核心 / 进阶三包） |
+| **C** | 内置解释器 | 30 讲（基础 / 核心 / 进阶三包） |
+| **Lua** | LuaJ 3.0.1 | 30 讲（基础 / 核心 / 进阶三包） |
+| **SQL** | SQLite | 30 讲（基础 / 核心 / 进阶三包） |
 
 Python 主线随 APK 内置；其余五门从「语言中心」按需下载。首装约 39 MB。
 
-C 和 TypeScript 是教学子集（C 无指针/结构体，TS 无装饰器/命名空间），遇到会明确提示。
+C 和 TypeScript 是教学子集（C 不支持预处理指令、goto 与函数指针，TS 不支持装饰器与命名空间），遇到会明确提示。
 
 ---
 
@@ -61,7 +62,7 @@ C 和 TypeScript 是教学子集（C 无指针/结构体，TS 无装饰器/命�
 
 MIT。第三方组件许可见应用内「关于 → 开源许可」。
 
-📄 [隐私政策](PRIVACY_POLICY.md) · [用户协议](TERMS_OF_SERVICE.md)
+[隐私政策](PRIVACY_POLICY.md) · [用户协议](TERMS_OF_SERVICE.md)
 
 ---
 

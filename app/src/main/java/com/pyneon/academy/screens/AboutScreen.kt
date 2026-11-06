@@ -61,7 +61,7 @@ fun AboutScreen(
             }
         }
         Text(
-            "${AppConstants.APP_NAME} · ${AppConstants.APP_NAME_CN}\n版本 v${AppConstants.VERSION_NAME}",
+            "CodeLearning · 码上\n版本 v${AppConstants.VERSION_NAME}",
             style = MaterialTheme.typography.bodyMedium,
             color = TextMid
         )
@@ -69,7 +69,7 @@ fun AboutScreen(
         SectionHeader("开源与授权", accent = NeonCyan)
         Text(
             "本应用以 MIT 协议开源：允许自由使用、修改与再分发（含个人、教育及商业用途），只需保留版权与许可声明。" +
-                "按「原样」提供，不附带任何担保。\"码上\"、\"Mashang\" 名称与标识为保留商标。",
+                "按「原样」提供，不附带任何担保。\"CodeLearning\"、\"码上\" 名称与标识为保留商标。",
             style = MaterialTheme.typography.bodySmall,
             color = TextMid
         )
@@ -80,7 +80,7 @@ fun AboutScreen(
                 "· Mozilla Rhino 1.7.15 — 设备端嵌入的 JavaScript 运行时\n" +
                 "· Chaquopy — Android 上的 Python 集成\n" +
                 "· Jetpack Compose / AndroidX — UI 与架构\n" +
-                "· 课程设计与码上视觉系统由开发团队原创",
+                "· 课程设计与 CodeLearning 视觉系统由开发团队原创",
             style = MaterialTheme.typography.bodySmall,
             color = TextMid
         )
@@ -117,7 +117,7 @@ fun AboutScreen(
             NeonButton(
                 label = "联系我们",
                 accent = NeonCyan,
-                onClick = { ShareHelper.sendEmail(context, AppConstants.CONTACT_EMAIL, "码上 联系") },
+                onClick = { ShareHelper.sendEmail(context, AppConstants.CONTACT_EMAIL, "CodeLearning 联系") },
                 modifier = Modifier.weight(1f)
             )
         }

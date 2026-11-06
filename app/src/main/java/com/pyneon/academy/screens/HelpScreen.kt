@@ -100,7 +100,7 @@ fun HelpScreen(onBack: () -> Unit) {
         NeonButton(
             label = "联系我们",
             accent = NeonGreen,
-            onClick = { ShareHelper.sendEmail(context, AppConstants.CONTACT_EMAIL, "码上 使用咨询") },
+            onClick = { ShareHelper.sendEmail(context, AppConstants.CONTACT_EMAIL, "CodeLearning 使用咨询") },
             modifier = Modifier.fillMaxWidth()
         )
         NeonButton(

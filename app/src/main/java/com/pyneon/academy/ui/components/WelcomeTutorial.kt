@@ -91,12 +91,12 @@ fun WelcomeTutorial(onComplete: () -> Unit) {
 
             // Title
             Text(
-                "欢迎使用码上",
+                "欢迎使用 CodeLearning",
                 style = MaterialTheme.typography.headlineMedium,
                 color = NeonCyan
             )
             Text(
-                "编程学院",
+                "码上 · 编程学院",
                 style = MaterialTheme.typography.bodyMedium,
                 color = NeonMagenta,
                 modifier = Modifier.padding(top = 8.dp)

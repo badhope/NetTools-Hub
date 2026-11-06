@@ -1,15 +1,16 @@
 <div align="center">
 
-<img src="docs/banner.png" alt="Mashang" width="830"/>
+<img src="docs/banner.png" alt="CodeLearning" width="830"/>
 
-**Write code on your phone. Six languages, really running, no network.**
+**CodeLearning · 码上 — write code on your phone. Six languages, 30 lessons each, all offline.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-00E5FF.svg)](LICENSE)
 [![Android](https://img.shields.io/badge/Android-7.0%2B-00E5FF.svg)]()
 [![Languages](https://img.shields.io/badge/Languages-6-00FF9C.svg)]()
+[![Lessons](https://img.shields.io/badge/Lessons-180%2B-F7FF00.svg)]()
 [![Download](https://img.shields.io/badge/Download-APK-FF2D78.svg)](https://github.com/badhope/mashang/releases/latest)
 
-🌐 [English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
+[English](README.md) | [中文](README.zh-CN.md) | [日本語](README.ja-JP.md)
 
 </div>
 
@@ -31,16 +32,16 @@
 
 | Language | Runtime | Lessons |
 |---|---|---|
-| **Python** | CPython 3.13 | 38 + DSA + builtins |
-| **JavaScript** | Rhino 1.7.15 | 6 |
-| **TypeScript** | type erasure → Rhino | 6 |
-| **C** | built-in interpreter | 6 |
-| **Lua** | LuaJ 3.0.1 | 6 |
-| **SQL** | SQLite | 6 |
+| **Python** | CPython 3.13 | 38 built-in mainline + DSA + builtins |
+| **JavaScript** | Rhino 1.7.15 | 30 (basic / core / advanced packs) |
+| **TypeScript** | type erasure to Rhino | 30 (basic / core / advanced packs) |
+| **C** | built-in interpreter | 30 (basic / core / advanced packs) |
+| **Lua** | LuaJ 3.0.1 | 30 (basic / core / advanced packs) |
+| **SQL** | SQLite | 30 (basic / core / advanced packs) |
 
-The Python mainline ships in the APK. The other five download on demand from the Language Center. First install ~39 MB.
+The Python mainline ships inside the APK. The other five download on demand from the Language Center. First install ~39 MB.
 
-C and TypeScript are teaching subsets (C has no pointers/structs; TypeScript has no decorators/namespaces) and say so explicitly.
+C and TypeScript are teaching subsets (C has no preprocessor, `goto` or function pointers; TypeScript has no decorators or namespaces) and say so explicitly when you hit a gap.
 
 ---
 
@@ -61,7 +62,7 @@ Build from source:
 
 MIT. Third-party licenses are listed in-app under About → Open Source Licenses.
 
-📄 [Privacy](PRIVACY_POLICY.md) · [Terms](TERMS_OF_SERVICE.md)
+[Privacy](PRIVACY_POLICY.md) · [Terms](TERMS_OF_SERVICE.md)
 
 ---
 

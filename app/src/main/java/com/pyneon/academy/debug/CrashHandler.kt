@@ -119,7 +119,7 @@ object CrashHandler {
     fun shareByEmail(context: Context, email: String) {
         val intent = Intent(Intent.ACTION_SENDTO).apply {
             data = android.net.Uri.parse("mailto:$email")
-            putExtra(Intent.EXTRA_SUBJECT, "[崩溃报告] 码上 ${com.pyneon.academy.utils.AppConstants.VERSION_NAME}")
+            putExtra(Intent.EXTRA_SUBJECT, "[崩溃报告] CodeLearning ${com.pyneon.academy.utils.AppConstants.VERSION_NAME}")
             putExtra(Intent.EXTRA_TEXT, crashReportText(context))
         }
         runCatching { context.startActivity(intent) }

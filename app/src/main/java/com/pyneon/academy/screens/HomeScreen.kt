@@ -114,8 +114,8 @@ fun HomeScreen(
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
-                GlitchText("码上", style = MaterialTheme.typography.headlineMedium, color = NeonCyan)
-                Text("编程学院 v${AppConstants.VERSION_NAME}", style = MaterialTheme.typography.labelSmall, color = TextDim)
+                GlitchText("CodeLearning", style = MaterialTheme.typography.headlineMedium, color = NeonCyan)
+                Text("码上 · 编程学院 v${AppConstants.VERSION_NAME}", style = MaterialTheme.typography.labelSmall, color = TextDim)
             }
             // 运行时名可能很长（如 "JavaScript Rhino 1.7.15 (ES5/部分 ES6)"），
             // 不限制宽度会把左侧品牌名与版本号挤成两行，因此限宽 + 单行省略。

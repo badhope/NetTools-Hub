@@ -98,7 +98,7 @@ fun TerminalScreen() {
         runtime.ensureStarted(context)
         withContext(Dispatchers.Default) { runtime.replStart() }
         lines.clear()
-        lines.add(TermLine("sys", "码上终端 v${AppConstants.VERSION_NAME} · ${runtime.displayName} ${runtime.version}"))
+        lines.add(TermLine("sys", "CodeLearning 终端 v${AppConstants.VERSION_NAME} · ${runtime.displayName} ${runtime.version}"))
         lines.add(TermLine("sys", "逐行输入代码语句；多行块以空行结束。"))
     }
 

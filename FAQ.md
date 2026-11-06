@@ -2,13 +2,13 @@
 
 ## 产品与定位
 
-**Q：码上是什么？和 Pydroid / SoloLearn / Mimo 有什么不同？**
+**Q：CodeLearning 是什么？和 Pydroid / SoloLearn / Mimo 有什么不同？**
 
-码上是一台「课程 + 判题 + 运行环境」打包在一起的离线学习终端。Pydroid 给你一个空白 IDE；SoloLearn/Mimo 给你选择题和云端判题。码上要求你**真的写代码**，用 assert 判题卡住进度，解释器就在手机里，全程可断网。
+CodeLearning（码上）是一台「课程 + 判题 + 运行环境」打包在一起的离线学习终端。Pydroid 给你一个空白 IDE；SoloLearn/Mimo 给你选择题和云端判题。CodeLearning 要求你**真的写代码**，用 assert 判题卡住进度，解释器就在手机里，全程可断网。
 
-**Q：为什么叫「码上」？**
+**Q：为什么叫「CodeLearning」/「码上」？**
 
-「码上」谐音「马上」——打开就能写，不用等编译、不用等云端返回。英文名 Mashang。
+英文名 CodeLearning 直白点题：在代码里学习。中文名「码上」谐音「马上」——打开就能写，不用等编译、不用等云端返回。
 
 **Q：只学 Python 吗？**
 
@@ -32,7 +32,7 @@
 
 **Q：换手机怎么迁移？**
 
-「我的 → 备份/恢复 → 导出备份」生成 JSON 到 Downloads/Mashang；新机用同一入口导入。备份含 XP、通关、连击、错题本与复习卡。
+「我的 → 备份/恢复 → 导出备份」生成 JSON 到 Downloads/Mashang（目录名为兼容旧版保留）；新机用同一入口导入。备份含 XP、通关、连击、错题本与复习卡。
 
 **Q：可以商用吗？**
 
@@ -67,7 +67,7 @@
 ```bash
 ./gradlew :app:assembleDebug          # Debug APK
 ./gradlew :app:assembleRelease        # 需 KEYSTORE_PATH 等 4 个环境变量
-python -m unittest discover -s tests  # 232 条测试
+python -m unittest discover -s tests  # 234 条测试
 python tests/validate_content.py      # 55 个 Python 判题项 / 201 用例
 ```
 

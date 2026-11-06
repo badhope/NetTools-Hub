@@ -105,15 +105,15 @@ fun LicensesScreen(onBack: () -> Unit) {
         SectionHeader("本应用许可", accent = NeonGreen)
         NeonCard(accent = NeonGreen) {
             Text(
-                "码上（Mashang）以 MIT 协议开源。你可以自由使用、修改、分发（含商业用途），" +
-                    "只需保留版权声明与本许可文本。「码上」「Mashang」名称与标识为保留商标。",
+                "CodeLearning（码上）以 MIT 协议开源。你可以自由使用、修改、分发（含商业用途），" +
+                    "只需保留版权声明与本许可文本。「CodeLearning」「码上」名称与标识为保留商标。",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextMid
             )
             Spacer(Modifier.height(8.dp))
             Text(
                 "MIT License\n\n" +
-                    "Copyright (c) 2026 码上 (Mashang) Team\n\n" +
+                    "Copyright (c) 2026 CodeLearning (码上) Team\n\n" +
                     "Permission is hereby granted, free of charge, to any person obtaining a copy " +
                     "of this software and associated documentation files (the \"Software\"), to deal " +
                     "in the Software without restriction, including without limitation the rights " +
