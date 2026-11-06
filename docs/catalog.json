@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "9cd19a9b418c4305946338d1c3663e534c0b993419aea4330c6a8fcfc40dc192",
+  "sha256": "d4ad368f51d2ded026703a2b40bcc8a034498d11d4a551477e87b80e0d36a9b8",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -18,11 +18,11 @@
       "name": "C · 进阶篇",
       "version": 2,
       "description": "10 讲：字符串库实战 / 结构体嵌套 / 算法 / 复杂度 / 调试 / 综合项目。",
-      "sha256": "1d5930c9184c6d9ce82bba32c68ef881f879336cd84bdc2854bdc02038e2c42f",
+      "sha256": "3eb58b6a7b5bcfeb0465a0a6838cd8ad6df4e8adf2e74833ce9988fdac8b2b1c",
       "kind": "course",
       "lang": "c",
       "lessons": 10,
-      "bytes": 78630,
+      "bytes": 78750,
       "tier": "advanced"
     },
     {
@@ -42,11 +42,11 @@
       "name": "C · 核心篇",
       "version": 2,
       "description": "10 讲：指针 / 数组 / 结构体 / typedef / 二维数组 / 递归 / 位运算。",
-      "sha256": "cccf415ad2e5fc326daf04a194d06d6272b292b1a1a1ca1b85560eea6e96b9ae",
+      "sha256": "ccf919e7928ea2a508db72e317ee9d3c8fe4072da6984b74c3a3afebde329ace",
       "kind": "course",
       "lang": "c",
       "lessons": 10,
-      "bytes": 72726,
+      "bytes": 72814,
       "tier": "core"
     },
     {
