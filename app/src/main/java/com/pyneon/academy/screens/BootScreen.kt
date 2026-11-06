@@ -83,8 +83,12 @@ fun BootScreen(
         if (consented) {
             // 只在已同意后才初始化运行时、写连击数据
             val runtime = LanguageRegistry.current(context)
-            runtime.ensureStarted(context)
+            // ensureStarted 也必须离开主线程：Python 运行时内部会调用 Chaquopy 的
+            // Python.start()，同步加载 5.4MB libpython + 标准库。
+            // 此前它直接跑在 LaunchedEffect 的默认调度器（主线程）上，
+            // 冷启动首帧会被卡住，用户看到白屏（2026-11 实测）。
             val ok = kotlinx.coroutines.withContext(kotlinx.coroutines.Dispatchers.IO) {
+                runtime.ensureStarted(context)
                 runtime.warmup()
             }
             pyStatus = if (ok) "OK" else "FAIL"

@@ -126,6 +126,33 @@ def main():
         fail("AndroidManifest 中未找到包名 com.pyneon.academy")
     print("[PASS] AndroidManifest 包名就位")
 
+    # ===== 发布级 APK 检查（2026-11 补充）=====
+    # 这几条都是「能在真机上炸」的问题，必须在打包阶段就拦住。
+
+    # R6: 不得混入源码/调试器/示例文件（体积与信息泄漏）
+    junk = [n for n in names if n.lower().endswith((".java", ".kt", ".md"))
+            or "/debugger/" in n or n.endswith("DebugProbesKt.bin")]
+    if junk:
+        fail(f"APK 混入无关文件 {len(junk)} 个，例如：{junk[:3]}")
+    print("[PASS] 无源码/调试器残留")
+
+    # R7: release 包必须不可调试
+    if "android:debuggable" in manifest and "--require-release" in sys.argv:
+        fail("release APK 仍标记为 debuggable")
+    print("[PASS] 非 debuggable")
+
+    # R8: 混淆必须真的生效（dex 显著小于 debug 版）
+    dex_total = sum(i.file_size for i in z.infolist() if i.filename.endswith(".dex"))
+    if "--require-release" in sys.argv and dex_total > 20 * 1024 * 1024:
+        fail(f"release dex 过大（{dex_total/1048576:.1f}MB），R8 可能未生效")
+    print(f"[PASS] dex 体积 {dex_total/1048576:.1f} MB")
+
+    # R9: ABI 必须包含 arm64-v8a（国内商店强制 64 位）
+    if not any(n.startswith("lib/arm64-v8a/") for n in names):
+        fail("APK 缺少 arm64-v8a 原生库")
+    print("[PASS] arm64-v8a 就位")
+
+
     if require_release:
         # release 特有：R8 处理后仍有 dex，且 APK 带 v2+ 签名块。
         # minSdk 29 且 AGP 8 默认只出 v2 签名（不写 META-INF/*.RSA），
@@ -139,7 +166,11 @@ def main():
             fh.seek(max(0, size - 1_048_576))
             tail = fh.read()
         if b"APK Sig Block 42" not in tail:
-            fail("release APK 未签名（缺 APK Signing Block，v2/v3 签名）")
+            # --require-release 是「这个包准备发布」的严格模式：必须已签名。
+            # 本地只想检查「产物结构对不对」时不要加该参数（会得到 WARN）。
+            if "--require-release" in sys.argv:
+                fail("release APK 未签名（缺 APK Signing Block）——请先配置 keystore")
+            print("[WARN] release APK 未签名（本地构建正常；发布前需配置 keystore）")
         # 注：签名块存在不等于用的是 release 密钥（debug 包同样有签名块），
         # 证书指纹校验由 CI 的 apksigner --print-certs 步骤负责。
         print(f"[PASS] release 产物含 dex({len(dexes)}) 且带 APK 签名块")

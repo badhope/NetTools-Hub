@@ -1,9 +1,6 @@
 package com.pyneon.academy
 
 import android.app.Application
-import android.util.Log
-import com.chaquo.python.Python
-import com.chaquo.python.android.AndroidPlatform
 import com.pyneon.academy.c.CBridge
 import com.pyneon.academy.debug.CrashHandler
 import com.pyneon.academy.debug.DebugLog
@@ -28,14 +25,13 @@ class PyNeonApp : Application() {
         LanguageRegistry.register(SqlBridge)
         DebugLog.i("App", "启动 v" + com.pyneon.academy.utils.AppConstants.VERSION_NAME +
             " · 已注册运行时 " + LanguageRegistry.ids().joinToString(","))
-        try {
-            if (!Python.isStarted()) {
-                Python.start(AndroidPlatform(this))
-                DebugLog.i("Python", "解释器启动成功")
-            }
-        } catch (t: Throwable) {
-            Log.e("PyNeon", "Python runtime failed to start", t)
-            DebugLog.e("Python", "解释器启动失败", t)
-        }
+        // 不在 Application.onCreate 里启动 CPython。
+        //
+        // 原因：Python.start() 是同步的，会在这里阻塞主线程加载 5.4MB 的
+        // libpython3.13.so + 4MB 标准库，直接把冷启动时间拉长 1-2 秒，
+        // 且此时还没有界面，用户看到的是白屏。
+        // 现在交给 BootScreen 的 LaunchedEffect：那里已经在后台线程执行，
+        // 并有启动动画作为视觉缓冲（PyBridge.ensureStarted 内部有幂等保护）。
+        DebugLog.i("App", "运行时就绪（延迟到 BootScreen 初始化）")
     }
 }

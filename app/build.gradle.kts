@@ -74,7 +74,18 @@ android {
         buildConfig = true
     }
     packaging {
-        resources.excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1")
+        resources.excludes += setOf(
+            "META-INF/AL2.0",
+            "META-INF/LGPL2.1",
+            // Rhino 自带的调试器脚本与示例（我们只用解释器核心，不用 GUI 调试器）
+            "org/mozilla/javascript/tools/debugger/**",
+            "org/mozilla/javascript/tools/shell/**",
+            // Eclipse JDT 注解库把 .java 源码打进了 jar，运行时用不到
+            "src/**",
+            // Kotlin 协程调试探针（release 无调试器，纯冗余）
+            "DebugProbesKt.bin",
+            "META-INF/*.kotlin_module",
+        )
     }
     lint {
         // 本机 local.properties 的路径转义告警不影响构建（CI 上不生成该文件）

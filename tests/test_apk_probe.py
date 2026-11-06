@@ -62,6 +62,8 @@ def _write_apk(path, layout="py", *, with_assets=True, runner=None, repl=None):
                 z.writestr(f"assets/syntaxes/{_lang}.tmLanguage.json", "{}")
         z.writestr("AndroidManifest.xml", "com.pyneon.academy".encode("utf-16-le"))
         z.writestr("classes.dex", b"dex-035")
+        # R9 检查要求 arm64-v8a 原生库就位（国内商店强制 64 位）
+        z.writestr("lib/arm64-v8a/libpython3.13.so", b"ELF-fake-lib")
         for i in range(520):
             z.writestr(f"res/dummy_{i}.txt", "x")
 
