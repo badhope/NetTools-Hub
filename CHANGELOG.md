@@ -2,6 +2,42 @@
 
 本项目遵循 [语义化版本](https://semver.org/lang/zh-CN/)。完整发布说明见 [GitHub Releases](https://github.com/badhope/mashang/releases)。
 
+## [0.7.0] - 2026-11-07
+
+### Added
+- **六门语言统一 38 讲**：JavaScript / TypeScript / C / Lua / SQL 各拆 4 包
+  （基础 10 + 核心 10 + 进阶 10 + 专业 8），Python 主线 38 讲内置不变。
+  全库 23 个课程包、239 讲、2402 个内容块、351 个可运行代码块、803 条判题用例。
+- **C 解释器扩展到完整教学子集**：switch（含 fallthrough）、do-while、位运算与复合赋值、
+  单级指针（& / * / p[i] / p++ / NULL）、结构体（typedef / 嵌套 / 数组 / ->）、
+  sizeof 教学模型、二维数组、常用字符串与数学库函数。150 条单测覆盖。
+- **语言中心按需加载重做**：按语言分组显示讲数与体积，支持单包下载与整门一键装齐；
+  catalog 新增 `lessons` / `bytes` / `tier` 元数据。
+- **品牌升级 CodeLearning · 码上**：新 Logo（`< >` 括号 + 上升阶梯）、自适应图标、
+  banner / OG / 特色图 / 宣传海报重建，首页、证书、终端、官网、三语 README 全量同步。
+
+### Fixed
+- **同意隐私政策后运行时永不初始化**（发布阻断）：Boot 在未同意时已跑完并导航离开，
+  点同意只改状态不重跑初始化，Python/SQL 从此不 start，判题全部报错。
+  现在同意后清空回退栈并以 `consentEpoch` 重建 BootScreen。
+- **SQL 执行无超时**（发布阻断）：漏写终止条件的 `WITH RECURSIVE` 会永久占住线程。
+  改用 `set_progress_handler` 指令级看门狗，超时中断并报 `Timeout`。
+- **课程列表筛选后序号错乱 / 解锁指错课**：改用 lesson.id 定位章节位置，不再依赖列表下标。
+- **批量下载部分失败被成功提示覆盖**：失败时提示「已装 X/Y 包 + 失败原因」并允许重试。
+- **每日任务跨天仍显示已完成**：`dailyMissionDone` 增加日期校验。
+- **连击断档后历史徽章被清空**：徽章改为只增不减，按历史最长连击补发，首日补发 `first_day`。
+- **路线进度因装新包而倒退**：多包路线分母固定为整门 38 讲。
+- **彩蛋包与 Python 第三幕章节重名**导致「下一课」串课、进度条变 x/9：彩蛋包独立章节名。
+- **未注册语言静默回落到 Python**：改为返回 `UnsupportedRuntime`，不再用 Python 顶替。
+- **挑战页判题异常直接闪退**：补 try/catch，异常转 `RuntimeCrash` 结果。
+- **输出只在结束后截断，挡不住 OOM**：Python / JS / Lua 改为写入侧硬上限，超限立即中断。
+- 修正 Python 主线 l34（线程完成顺序不确定）、l38（版本约束解析输出错误）两处代码块。
+- C / Lua 专业篇综合项目标题与进阶篇重名，改为可区分的标题。
+
+### Changed
+- 版本 0.6.0 → **0.7.0**（versionCode 18 → 19）
+- 课程口径统一为「六门语言 · 每门 38 讲 · 共 230+ 讲」
+
 ## [Unreleased]
 
 ### Added

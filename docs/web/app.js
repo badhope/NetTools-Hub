@@ -11,7 +11,7 @@
 
   var STORAGE_KEY = "mashang.web.v1";
   var THEME_KEY = "mashang.web.theme";
-  var APP_VERSION = "0.6.0";
+  var APP_VERSION = "0.7.0";
   var PYODIDE_VERSION = "0.29.5";
   var PYODIDE_SOURCES = [
     { js: "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE_VERSION + "/full/pyodide.js", index: "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE_VERSION + "/full/" },

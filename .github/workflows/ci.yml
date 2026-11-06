@@ -58,7 +58,7 @@ jobs:
           REQUIRE_YAML: "1"
         run: python -m unittest discover -s tests -v
 
-      - name: 课程内容校验（55 讲 / 8 挑战 / all judge cases）
+      - name: 课程内容校验（全部讲 / 8 挑战 / all judge cases）
         run: python tests/validate_content.py
 
       - name: Pages 资产同步（catalog / 课程包 / 网页端副本，必须可复现）
@@ -239,14 +239,21 @@ jobs:
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: ./gradlew :app:assembleRelease --no-daemon
 
-      - name: 校验签名（apksigner + 证书主体）
+      - name: 校验签名（apksigner + 非 debug 证书）
         run: |
           set -euo pipefail
           APK=$(ls app/build/outputs/apk/release/*.apk | head -1)
           APKSIGNER=$(find "$ANDROID_HOME/build-tools" -name apksigner -type f | sort | tail -1)
           "$APKSIGNER" verify --verbose "$APK"
-          # 必须是 Mashang release 证书，防止误用 debug keystore 签名后当成正式版
-          "$APKSIGNER" verify --print-certs "$APK" | grep -F "CN=Mashang"             || { echo "签名证书不是 Mashang release 证书"; exit 1; }
+          # 必须不是 debug 证书（防止误用 debug keystore 当正式版发布）。
+          # 不硬编码 CN 文案：证书主体可能是历史品牌名（CN=Mashang），
+          # 品牌升级为 CodeLearning 后不应因此阻断发布。
+          CERTS=$("$APKSIGNER" verify --print-certs "$APK")
+          if echo "$CERTS" | grep -q "CN=Android Debug"; then
+            echo "错误：APK 使用了 debug 证书，拒绝发布"
+            exit 1
+          fi
+          echo "$CERTS"
 
       - name: 归档并重命名为 mashang-<tag>.apk
         run: |
