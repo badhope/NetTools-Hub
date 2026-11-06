@@ -368,7 +368,8 @@ class AccessibilityTests(unittest.TestCase):
 
     def test_minimal_style_disables_autoplay(self):
         """简洁风格下可视化块不应自动播放（避免持续动画干扰阅读）。"""
-        text = _read(JAVA, "screens", "LessonBlockCards.kt")
+        # 2026-11 拆分：可视化组件移到 LessonVisualCards.kt
+        text = _read(JAVA, "screens", "LessonVisualCards.kt")
         seg = text[text.index("fun VisualizeCard"):]
         self.assertIn("pressAnimationEnabled", seg,
                       "自动播放按钮应受风格开关控制")

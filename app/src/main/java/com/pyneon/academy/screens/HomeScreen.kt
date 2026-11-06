@@ -19,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.MenuBook
+import androidx.compose.material.icons.outlined.ChevronRight
 import androidx.compose.material.icons.outlined.Bolt
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.LocalFireDepartment
@@ -32,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -68,7 +70,9 @@ fun HomeScreen(
     onOpenTerminal: () -> Unit,
     onOpenArena: () -> Unit,
     onOpenLessons: () -> Unit,
-    onOpenTracks: () -> Unit
+    onOpenTracks: () -> Unit,
+    /** 全部课程完成后「继续学习」按钮改指复习台（null 允许调用方缺省为空操作） */
+    onOpenReview: () -> Unit = {}
 ) {
     val context = LocalContext.current
     val progress by ProgressStore.flow(context).collectAsState(initial = Progress())
@@ -79,10 +83,23 @@ fun HomeScreen(
     val runtime = remember { LanguageRegistry.current(context) }
     val pythonVersion = remember { runtime.version }
 
+    // 「继续学习」目标：
+    //   1. 优先上一个没完成的课（学习的自然推进）
+    //   2. 全部完成后不再把用户踹回 l01 从头再来——那等于宣告「你的进度没意义」；
+    //      此时按钮应指向复习（学完了就该复习巩固），由调用方处理 null
     val continueTarget = remember(progress.completedLessons) {
-        lessons.firstOrNull { it.id !in progress.completedLessons }?.id ?: lessons.firstOrNull()?.id
+        lessons.firstOrNull { it.id !in progress.completedLessons }?.id
     }
     val doneCount = coreLessons.count { it.id in progress.completedLessons }
+
+    // 断点续读：最近一次【打开】的课（不是最近完成的）。与「继续学习」互补——
+    // 「继续学习」指向下一节新课；「继续上次」回到可能还没读完的那节。
+    val resumeTarget by produceState("", progress.completedLessons) {
+        value = ProgressStore.lastOpenedLesson(context) ?: ""
+    }
+    val resumeLesson = remember(resumeTarget, lessons) {
+        lessons.firstOrNull { it.id == resumeTarget }
+    }
 
     Column(
         Modifier
@@ -193,11 +210,48 @@ fun HomeScreen(
             }
         }
 
+        resumeLesson?.let { resume ->
+            if (resume.id !in progress.completedLessons) {
+                SectionHeader("继续上次")
+                NeonCard(accent = NeonGreen, onClick = { onOpenLesson(resume.id) }) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Icon(
+                            Icons.AutoMirrored.Outlined.MenuBook,
+                            contentDescription = null,
+                            tint = NeonGreen,
+                            modifier = Modifier.size(22.dp)
+                        )
+                        Spacer(Modifier.size(12.dp))
+                        Column(Modifier.weight(1f)) {
+                            Text(
+                                resume.title,
+                                style = MaterialTheme.typography.titleMedium,
+                                color = TextHi
+                            )
+                            Text(
+                                "上次学到这一讲，点这里接着学",
+                                style = MaterialTheme.typography.bodySmall,
+                                color = TextMid
+                            )
+                        }
+                        Icon(
+                            Icons.Outlined.ChevronRight,
+                            contentDescription = null,
+                            tint = NeonGreen
+                        )
+                    }
+                }
+            }
+        }
+
         SectionHeader("继续行动")
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             NeonButton(
-                label = "继续学习",
-                onClick = { continueTarget?.let(onOpenLesson) },
+                label = if (continueTarget != null) "继续学习" else "已完成，去复习",
+                onClick = {
+                    // 全部完成时把入口让给复习——比「回到 l01 重学」更符合学习闭环
+                    if (continueTarget != null) onOpenLesson(continueTarget) else onOpenReview()
+                },
                 modifier = Modifier.weight(1f),
                 accent = NeonMagenta,
                 leadingIcon = Icons.Outlined.PlayArrow

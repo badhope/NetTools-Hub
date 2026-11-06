@@ -46,7 +46,9 @@ data class Progress(
     val nightOwl: Boolean = false,
     val terminalHead: Boolean = false,
     val badges: Set<String> = emptySet(),
-    val recentActivities: List<ActivityRecord> = emptyList()
+    val recentActivities: List<ActivityRecord> = emptyList(),
+    /** 最近打开的课程 id（断点续读）。空串表示从未打开过任何课。 */
+    val lastLessonId: String = ""
 )
 
 object ProgressStore {
@@ -75,6 +77,16 @@ object ProgressStore {
     suspend fun snapshot(context: Context): Progress =
         context.applicationContext.progressDataStore.data.first().toProgress()
 
+    /**
+     * 读取「最近打开的课程 id」（断点续读）。
+     *
+     * 为什么独立提供：首页只需要这一个字段，snapshot 会把全部偏好读一遍。
+     * 该键由 [markLessonOpened] 在进入课程详情页时写入。
+     */
+    suspend fun lastOpenedLesson(context: Context): String? =
+        context.applicationContext.progressDataStore.data.first()[KEY_LAST_LESSON]
+            ?.takeIf { it.isNotBlank() }
+
     private fun Preferences.toProgress(): Progress = Progress(
         xpTotal = this[KEY_XP] ?: 0,
         completedLessons = this[KEY_DONE_LESSONS] ?: emptySet(),
@@ -89,7 +101,8 @@ object ProgressStore {
         nightOwl = this[KEY_NIGHT_OWL] ?: false,
         terminalHead = this[KEY_TERMINAL_HEAD] ?: false,
         badges = this[KEY_BADGES] ?: emptySet(),
-        recentActivities = parseActivities(this[KEY_ACTIVITY_LOG] ?: emptySet())
+        recentActivities = parseActivities(this[KEY_ACTIVITY_LOG] ?: emptySet()),
+        lastLessonId = this[KEY_LAST_LESSON] ?: ""
     )
 
     private fun parseActivities(raw: Set<String>): List<ActivityRecord> =

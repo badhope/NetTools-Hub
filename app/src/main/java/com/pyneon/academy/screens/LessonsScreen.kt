@@ -2,6 +2,7 @@
 
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,17 +15,21 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CutCornerShape
+import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CheckCircle
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -53,11 +58,41 @@ fun LessonsScreen(openLesson: (String) -> Unit) {
     val allLessons = remember { LessonRepository.lessons(context) }
     // 语言过滤：null = 全部；选项来自课程数据里实际出现过的语言
     var langFilter by remember { mutableStateOf<String?>(null) }
-    val lessons = remember(langFilter) {
-        if (langFilter == null) allLessons else allLessons.filter { it.lang == langFilter }
+    // 搜索：匹配标题 / 副标题 / 章节名。79 讲规模下找「装饰器」「JOIN」
+    // 这类关键词，逐个翻列表不可接受（2026-11 技术债清理）。
+    var query by rememberSaveable { mutableStateOf("") }
+    val lessons = remember(langFilter, query, allLessons) {
+        var r = if (langFilter == null) allLessons else allLessons.filter { it.lang == langFilter }
+        val q = query.trim()
+        if (q.isNotEmpty()) {
+            r = r.filter {
+                it.title.contains(q, ignoreCase = true) ||
+                    it.subtitle.contains(q, ignoreCase = true) ||
+                    it.chapterName.contains(q, ignoreCase = true)
+            }
+        }
+        r
     }
     val langOptions = remember(allLessons) {
         allLessons.map { it.lang }.distinct().map { it to com.pyneon.academy.lang.LanguageIds.displayNameOf(it) }
+    }
+
+    // 每讲的「章节内序号」一次性预计算。
+    // 此前写在 items {} 循环里：每渲染一行就对全表做 indexOfFirst 线性扫描，
+    // 79 讲 = 每帧 ~6200 次比较（O(n²)），滚动掉帧。提到 remember 外只算一次。
+    val orderInChapter = remember(allLessons) {
+        val result = HashMap<Int, Int>(allLessons.size)
+        var chapterStart = 0
+        var i = 0
+        while (i < allLessons.size) {
+            val chapter = allLessons[i].chapterName
+            var j = i
+            while (j < allLessons.size && allLessons[j].chapterName == chapter) j++
+            for (k in i until j) result[k] = k - chapterStart + 1
+            chapterStart = j
+            i = j
+        }
+        result
     }
 
     Column(
@@ -76,6 +111,30 @@ fun LessonsScreen(openLesson: (String) -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
                 color = TextDim,
                 modifier = Modifier.padding(top = 4.dp)
+            )
+            OutlinedTextField(
+                value = query,
+                onValueChange = { query = it },
+                singleLine = true,
+                placeholder = {
+                    Text("搜索课程：标题 / 主题（如 装饰器、JOIN）",
+                        style = MaterialTheme.typography.bodySmall, color = TextDim)
+                },
+                leadingIcon = {
+                    Icon(Icons.Outlined.Search, contentDescription = "搜索", tint = TextMid)
+                },
+                trailingIcon = {
+                    if (query.isNotEmpty()) {
+                        Icon(
+                            Icons.Outlined.Close, contentDescription = "清空搜索",
+                            tint = TextMid,
+                            modifier = Modifier.clickable { query = "" }
+                        )
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp)
             )
             if (langOptions.size > 1) {
                 com.pyneon.academy.ui.components.LangChipRow(
@@ -104,12 +163,11 @@ fun LessonsScreen(openLesson: (String) -> Unit) {
                 // 用全局 index-1 会导致「下载了 C 语言，第一讲却被 Python 的 l38 锁住」，
                 // 每门语言必须先学完上一门——这与「六门语言任选」的定位矛盾。
                 // 现在：每个包的第一讲默认解锁，包内逐讲推进；序号显示包内 01..N。
-                val chapterStart = lessons.indexOfFirst { it.chapterName == lesson.chapterName }
-                val indexInChapter = index - chapterStart
-                val locked = indexInChapter > 0 &&
+                val indexInChapter = orderInChapter[index] ?: 1
+                val locked = indexInChapter > 1 &&
                     lessons[index - 1].id !in progress.completedLessons
-                val prevLesson = if (indexInChapter > 0) lessons[index - 1] else null
-                val displayOrder = indexInChapter + 1
+                val prevLesson = if (indexInChapter > 1) lessons[index - 1] else null
+                val displayOrder = indexInChapter
                 val done = lesson.id in progress.completedLessons
                 Column {
                     if (showHeader && lesson.chapterName.isNotBlank()) {

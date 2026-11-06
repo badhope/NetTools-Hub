@@ -17,12 +17,17 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -87,6 +92,12 @@ fun AppRoot() {
     val showWelcome = remember { mutableStateOf(AppPrefs.isFirstLaunch(context)) }
     // 首次启动必须明示同意隐私政策（华为/工信部合规）
     var showConsent by remember { mutableStateOf(!AppPrefs.isPrivacyConsented(context)) }
+
+    // 崩溃后首次启动提示：CrashHandler 在崩溃时已把记录写入本机，
+    // 但普通用户不会进「开发者诊断」，所以这里主动问一次（一次性，处理后即清除标记）。
+    var showCrashNotice by remember {
+        mutableStateOf(com.pyneon.academy.debug.CrashHandler.hasPendingCrash(context))
+    }
 
     Scaffold(
         containerColor = Bg0,
@@ -179,7 +190,8 @@ fun AppRoot() {
                     onOpenTerminal = { navController.navigate("terminal") },
                     onOpenArena = { navController.navigate("arena") },
                     onOpenLessons = { navController.navigate("lessons") },
-                    onOpenTracks = { navController.navigate("tracks") }
+                    onOpenTracks = { navController.navigate("tracks") },
+                    onOpenReview = { navController.navigate("review") }
                 )
             }
             composable("tracks") {
@@ -282,5 +294,48 @@ fun AppRoot() {
                 onDecline = { finishApp(context) }
             )
         }
-}
+
+        // 崩溃后首次启动的一次性提示：优先级低于隐私同意（首次安装两弹连出会很吵）
+        if (showCrashNotice && !showConsent) {
+            val crash = com.pyneon.academy.debug.CrashHandler.lastCrash(context)
+            androidx.compose.material3.AlertDialog(
+                onDismissRequest = { showCrashNotice = false },
+                title = {
+                    Text(
+                        "上次未正常退出",
+                        color = com.pyneon.academy.ui.theme.NeonYellow,
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                },
+                text = {
+                    Column {
+                        Text(
+                            "应用上次异常退出（${crash?.type ?: "未知"}）。你的学习数据保存在本机，不受影响。",
+                            color = com.pyneon.academy.ui.theme.TextMid
+                        )
+                        Spacer(Modifier.height(6.dp))
+                        Text(
+                            "如果反复出现，欢迎把诊断日志发给开发者定位原因。",
+                            style = MaterialTheme.typography.bodySmall,
+                            color = com.pyneon.academy.ui.theme.TextDim
+                        )
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = {
+                        com.pyneon.academy.debug.CrashHandler.clear(context)
+                        showCrashNotice = false
+                    }) { Text("知道了", color = com.pyneon.academy.ui.theme.NeonCyan) }
+                },
+                dismissButton = {
+                    TextButton(onClick = {
+                        showCrashNotice = false
+                        // 不清除记录，让用户能到诊断页里导出/发送
+                        navController.navigate("diagnostics")
+                    }) { Text("查看诊断", color = com.pyneon.academy.ui.theme.TextMid) }
+                },
+                containerColor = com.pyneon.academy.ui.theme.SurfaceDark
+            )
+        }
+    }
 }

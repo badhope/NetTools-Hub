@@ -88,6 +88,15 @@ object CrashHandler {
         )
     }
 
+    /**
+     * 是否有尚未告知用户的崩溃记录。
+     *
+     * 「上次未正常退出」弹窗展示一次后即调 [clear]；
+     * 用户选择「查看诊断」时保留记录（诊断页仍可读），但弹窗不再出现——
+     * 由调用方用会话内状态保证，不在此处持久化「已展示」标记。
+     */
+    fun hasPendingCrash(context: Context): Boolean = lastCrash(context) != null
+
     fun clear(context: Context) {
         context.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
             .edit().remove(KEY_LAST_CRASH).apply()
