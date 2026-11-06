@@ -71,7 +71,7 @@ fun BackupScreen(onBack: () -> Unit) {
         scope.launch {
             status = BackupUtil.exportBackup(context).fold(
                 onSuccess = { _ ->
-                    true to "备份已导出到 下载/Mashang 文件夹。"
+                    true to "备份已导出到 下载/CodeLearning 文件夹。"
                 },
                 onFailure = { e -> false to (e.message ?: "导出失败") }
             )

@@ -38,7 +38,7 @@ object UpdateChecker {
                     readTimeout = 6000
                     requestMethod = "GET"
                     setRequestProperty("Accept", "application/json")
-                    setRequestProperty("User-Agent", "Mashang-Android")
+                    setRequestProperty("User-Agent", "CodeLearning-Android")
                 }
                 try {
                     if (conn.responseCode != 200) {

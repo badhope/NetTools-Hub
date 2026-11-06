@@ -38,7 +38,7 @@ object BackupUtil {
         val mistakes: List<MistakeRecord>
     )
 
-    // Export backup to Downloads/Mashang
+    // Export backup to Downloads/CodeLearning
     suspend fun exportBackup(context: Context): Result<Uri> = withContext(Dispatchers.IO) {
         try {
             val progress = ProgressStore.snapshot(context)
@@ -64,7 +64,7 @@ object BackupUtil {
             )
 
             val jsonString = backupToJson(backup).toString(2)
-            val uri = saveToStorage(context, jsonString, "mashang_backup_${System.currentTimeMillis()}.json")
+            val uri = saveToStorage(context, jsonString, "codelearning_backup_${System.currentTimeMillis()}.json")
             Result.success(uri)
         } catch (e: Exception) {
             Result.failure(e)
@@ -295,7 +295,7 @@ object BackupUtil {
         val values = ContentValues().apply {
             put(MediaStore.Downloads.DISPLAY_NAME, fileName)
             put(MediaStore.Downloads.MIME_TYPE, "application/json")
-            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/Mashang")
+            put(MediaStore.Downloads.RELATIVE_PATH, Environment.DIRECTORY_DOWNLOADS + "/CodeLearning")
             put(MediaStore.Downloads.IS_PENDING, 1)
         }
 

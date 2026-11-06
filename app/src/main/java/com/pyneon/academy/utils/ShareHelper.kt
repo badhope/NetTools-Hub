@@ -27,7 +27,7 @@ object ShareHelper {
      */
     fun copyText(context: Context, text: String) {
         val cm = context.getSystemService(Context.CLIPBOARD_SERVICE) as android.content.ClipboardManager
-        cm.setPrimaryClip(android.content.ClipData.newPlainText("Mashang", text))
+        cm.setPrimaryClip(android.content.ClipData.newPlainText("CodeLearning", text))
     }
 
     fun sendEmail(context: Context, email: String, subject: String = "") {
