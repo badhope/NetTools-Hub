@@ -61,10 +61,11 @@ object TrackRepository {
     }
 
     /**
-     * 一门语言的 30 讲固定拆成三包：基础 / 核心 / 进阶。
+     * 一门语言的课程按层级拆包：基础 / 核心 / 进阶 /（专业）。
      * 语言中心与路线页共用这套命名，避免两边各写一份字符串。
      */
-    private fun tiers(prefix: String): List<String> = listOf("$prefix-basics", "$prefix-core", "$prefix-advanced")
+    private fun tiers(prefix: String): List<String> =
+        listOf("$prefix-basics", "$prefix-core", "$prefix-advanced", "$prefix-expert")
 
     private val specs = listOf(
         Spec(
@@ -74,15 +75,15 @@ object TrackRepository {
             packIds = emptyList()
         ),
         Spec(
-            "js", "JavaScript 全阶", "30 讲：console.log 到生成器与项目实战，Rhino 运行时",
+            "js", "JavaScript 全阶", "38 讲：console.log 到事件循环与项目实战，Rhino 运行时",
             "编程语言", YELLOW, "js-basics", LanguageIds.JAVASCRIPT,
-            (1..30).map { "js%02d".format(it) }.toSet(),
+            (1..38).map { "js%02d".format(it) }.toSet(),
             packIds = tiers("js")
         ),
         Spec(
-            "ts", "TypeScript 全阶", "30 讲：类型标注到类型建模，转译后跑在 Rhino 上",
+            "ts", "TypeScript 全阶", "38 讲：类型标注到类型级编程，转译后跑在 Rhino 上",
             "编程语言", CYAN, "ts-basics", LanguageIds.TYPESCRIPT,
-            (1..30).map { "ts%02d".format(it) }.toSet(),
+            (1..38).map { "ts%02d".format(it) }.toSet(),
             packIds = tiers("ts")
         ),
         Spec(
@@ -96,21 +97,21 @@ object TrackRepository {
             (6..10).map { "dsa%02d".format(it) }.toSet()
         ),
         Spec(
-            "c", "C 全阶", "30 讲：printf 到指针、结构体与综合项目，设备端解释执行",
+            "c", "C 全阶", "38 讲：printf 到指针、结构体、链表与综合项目，设备端解释执行",
             "编程语言", MAGENTA, "c-basics", LanguageIds.C,
-            (1..30).map { "c%02d".format(it) }.toSet(),
+            (1..38).map { "c%02d".format(it) }.toSet(),
             packIds = tiers("c")
         ),
         Spec(
-            "lua", "Lua 全阶", "30 讲：print 到元表与协程，LuaJ 运行时",
+            "lua", "Lua 全阶", "38 讲：print 到元表、协程与游戏脚本模式，LuaJ 运行时",
             "编程语言", GREEN, "lua-basics", LanguageIds.LUA,
-            (1..30).map { "lua%02d".format(it) }.toSet(),
+            (1..38).map { "lua%02d".format(it) }.toSet(),
             packIds = tiers("lua")
         ),
         Spec(
-            "sql", "SQL 全阶", "30 讲：SELECT 到窗口函数与事务，SQLite 运行时",
+            "sql", "SQL 全阶", "38 讲：SELECT 到窗口函数、事务与分析函数，SQLite 运行时",
             "编程语言", CYAN, "sql-basics", LanguageIds.SQL,
-            (1..30).map { "sql%02d".format(it) }.toSet(),
+            (1..38).map { "sql%02d".format(it) }.toSet(),
             packIds = tiers("sql")
         ),
         Spec(

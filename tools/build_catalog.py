@@ -44,6 +44,11 @@ META = {
     "sql-basics": ("SQL · 基础篇", "10 讲：SELECT 到主键约束，SQLite 内存库真跑。", "sql", "basics"),
     "sql-core": ("SQL · 核心篇", "10 讲：多表 JOIN / 子查询 / CASE / 字符串与日期函数 / 视图。", "sql", "core"),
     "sql-advanced": ("SQL · 进阶篇", "10 讲：CTE / 窗口函数 / 事务 / 索引 / 触发器 / 查询优化 / 项目实战。", "sql", "advanced"),
+    "js-expert": ("JavaScript · 专业篇", "8 讲：函数式 / 设计模式 / 模块化演进 / 性能 / 闭包陷阱 / 事件循环 / 测试 / 综合项目。", "javascript", "expert"),
+    "ts-expert": ("TypeScript · 专业篇", "8 讲：高级泛型 / 类型级编程 / 模块增强 / 类型安全数据层 / 领域建模 / 迁移 / 工程化 / 项目。", "typescript", "expert"),
+    "c-expert": ("C · 专业篇", "8 讲：内存布局 / 动态内存 / 文件 I/O / 预处理器 / 多文件链接 / 链表 / 栈队列 / 综合项目。", "c", "expert"),
+    "lua-expert": ("Lua · 专业篇", "8 讲：表优化 / GC / 元表进阶 / 协程调度 / 序列化 / 游戏脚本模式 / 调试 / 综合项目。", "lua", "expert"),
+    "sql-expert": ("SQL · 专业篇", "8 讲：执行计划 / 索引设计 / 事务隔离 / 并发锁 / JSON / 数据仓库 / 分析函数 / 留存漏斗。", "sql", "expert"),
 }
 
 # 包版本：内容更新但 id 不变时递增，客户端据此提示「更新到 vN」

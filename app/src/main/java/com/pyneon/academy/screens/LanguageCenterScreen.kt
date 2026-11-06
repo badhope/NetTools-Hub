@@ -320,6 +320,7 @@ private fun tierLabel(tier: String): String = when (tier) {
     "basics" -> "基础篇 · 入门到能写"
     "core" -> "核心篇 · 语言主体"
     "advanced" -> "进阶篇 · 高级应用"
+    "expert" -> "专业篇 · 工程与实战"
     else -> ""
 }
 
