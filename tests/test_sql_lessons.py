@@ -25,11 +25,11 @@ class SqlPackTests(unittest.TestCase):
 
     def test_pack_exists_and_has_lessons(self):
         self.assertEqual(
-            ["sql-advanced.json", "sql-basics.json", "sql-core.json"],
+            ["sql-advanced.json", "sql-basics.json", "sql-core.json", "sql-expert.json"],
             [p.name for p in self.pack_paths],
-            "SQL 课程应为 基础/核心/进阶 三包",
+            "SQL 课程应为 基础/核心/进阶/专业 四包",
         )
-        self.assertEqual(30, len(self.lessons), "SQL 课程合计 30 讲")
+        self.assertEqual(38, len(self.lessons), "SQL 课程合计 38 讲")
         self.assertTrue(all(l["lang"] == "sql" for l in self.lessons))
 
     def test_every_solution_passes_its_tests(self):

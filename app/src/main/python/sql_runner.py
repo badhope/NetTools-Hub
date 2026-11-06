@@ -72,7 +72,11 @@ def _format_table(cursor):
 
 def _execute(sql):
     started = time.perf_counter()
-    conn = sqlite3.connect(":memory:")
+    # isolation_level=None 关闭 Python 的隐式事务管理：否则 sqlite3 会在每条语句前
+    # 自动 BEGIN，用户写的 BEGIN / COMMIT / ROLLBACK 会直接报
+    # 「cannot start a transaction within a transaction」。
+    # 关闭后行为与 sqlite3 命令行一致，事务控制权完全交给 SQL 本身。
+    conn = sqlite3.connect(":memory:", isolation_level=None)
     conn.set_authorizer(_authorizer)
     out = []
     error = None
@@ -91,6 +95,10 @@ def _execute(sql):
                 out.append("OK (%d rows affected)" % cursor.rowcount)
         conn.commit()
     except BaseException:  # aqg: top-level boundary
+        try:
+            conn.rollback()  # 未提交的事务在报错时必须撤销，避免半成品状态
+        except Exception:
+            pass
         etype, evalue, tb = __import__("sys").exc_info()
         trimmed = tb.tb_next if tb is not None else None
         error = {

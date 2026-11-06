@@ -29,7 +29,7 @@ class TypeScriptCoursePacksTest {
 
     private fun packFiles(): List<File> {
         val files = repoRoot().resolve("content_packs").listFiles()
-            ?.filter { it.name.matches(Regex("""ts-(basics|core|advanced)\.json""")) }
+            ?.filter { it.name.matches(Regex("""ts-(basics|core|advanced|expert)\.json""")) }
             ?.sortedBy { it.name }
             ?: emptyList()
         assertTrue("缺少 content_packs/ts-*.json", files.isNotEmpty())
@@ -63,12 +63,12 @@ class TypeScriptCoursePacksTest {
     }
 
     @Test
-    fun `packs cover 30 lessons across three tiers`() {
+    fun `packs cover 38 lessons across four tiers`() {
         val packs = loadPacks()
-        assertEquals("TypeScript 课程应为 基础/核心/进阶 三包", 3, packs.size)
+        assertEquals("TypeScript 课程应为 基础/核心/进阶/专业 四包", 4, packs.size)
         val ids = mutableListOf<String>()
         packs.forEach { pack ->
-            assertEquals("每包 10 讲", 10, pack.length())
+            assertTrue("每包至少 8 讲", pack.length() >= 8)
             for (i in 0 until pack.length()) {
                 val lesson = pack.getJSONObject(i)
                 assertEquals("typescript", lesson.getString("lang"))
@@ -76,8 +76,8 @@ class TypeScriptCoursePacksTest {
                 ids.add(lesson.getString("id"))
             }
         }
-        assertEquals("合计 30 讲", 30, ids.size)
-        assertEquals("讲 id 不得重复", 30, ids.distinct().size)
+        assertEquals("合计 38 讲", 38, ids.size)
+        assertEquals("讲 id 不得重复", 38, ids.distinct().size)
     }
 
     @Test
@@ -110,7 +110,7 @@ class TypeScriptCoursePacksTest {
                 checked++
             }
         }
-        assertEquals("应覆盖全部 30 讲", 30, checked)
+        assertEquals("应覆盖全部 38 讲", 38, checked)
     }
 
     @Test

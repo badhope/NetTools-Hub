@@ -176,16 +176,16 @@ class JsPackBehaviorTests(unittest.TestCase):
             with self.subTest(lesson=lesson["id"]):
                 self.assertGreaterEqual(lesson["order"], 300)
 
-    def test_pack_covers_30_lessons_in_three_tiers(self):
-        """30 讲 = 基础/核心/进阶各 10 讲，id 连续不重复。"""
+    def test_pack_covers_38_lessons_in_four_tiers(self):
+        """38 讲 = 基础/核心/进阶各 10 讲 + 专业篇 8 讲，id 连续不重复。"""
         self.assertEqual(
-            ["js-advanced.json", "js-basics.json", "js-core.json"],
+            ["js-advanced.json", "js-basics.json", "js-core.json", "js-expert.json"],
             [p.name for p in PACKS],
-            "JavaScript 课程应为 基础/核心/进阶 三包",
+            "JavaScript 课程应为 基础/核心/进阶/专业 四包",
         )
         ids = [l["id"] for l in self.lessons]
-        self.assertEqual(30, len(ids))
-        self.assertEqual(sorted(ids), sorted({f"js{i:02d}" for i in range(1, 31)}))
+        self.assertEqual(38, len(ids))
+        self.assertEqual(sorted(ids), sorted({f"js{i:02d}" for i in range(1, 39)}))
 
     def test_js01_greeting(self):
         self._assert_lesson_ok("js01")

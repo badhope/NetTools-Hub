@@ -103,30 +103,27 @@ def rebalance_text(blocks, target=3):
         return blocks
     paragraphs = []
     for b in texts:
-        for para in b["text"].split("
-
-"):
+        for para in b["text"].split("\n\n"):
             para = para.strip()
             if para:
                 paragraphs.append(para)
-    total = sum(_cjk(x) for x in paragraphs)
-    quota = total / target
-    groups, cur, acc = [], [], 0
+    prefix, acc = [0], 0
     for para in paragraphs:
-        cur.append(para)
         acc += _cjk(para)
-        if acc >= quota and len(groups) < target - 1:
-            groups.append(cur)
-            cur, acc = [], 0
-    if cur:
-        groups.append(cur)
-    while len(groups) < target:
-        groups.append([])
-    groups = groups[:target]
+        prefix.append(acc)
+    total = prefix[-1]
+    quota = total / target
 
-    rebuilt = ["
+    cuts = [0]
+    for k in range(1, target):
+        low = cuts[-1] + 1
+        high = len(paragraphs) - (target - k)
+        best = min(range(low, high + 1), key=lambda i: abs(prefix[i] - quota * k))
+        cuts.append(best)
+    cuts.append(len(paragraphs))
+    groups = [paragraphs[cuts[i]:cuts[i + 1]] for i in range(target)]
 
-".join(g) for g in groups]
+    rebuilt = ["\n\n".join(g) for g in groups]
     out, ti = [], 0
     for b in blocks:
         if b.get("type") == "text":
@@ -647,7 +644,7 @@ def lua34():
     blocks = [
         h("协程之间的来回对话"),
         p(
-            "基础篇里我们把协程当成「可以暂停的函数」：resume 启动，yield 交出控制权。进阶的用法是让数据双向流动。"
+            "第 25 讲把协程当成「可以暂停的函数」：resume 启动，yield 交出控制权。进阶的用法是让数据双向流动。"
             "第一次 resume(co, a, b) 的参数会成为协程函数的参数；之后每次 resume(co, x) 的参数会成为上一个 yield 的"
             "返回值。也就是说，yield 不但是「交出值」，还是「等待一个回信」。生产者把任务 yield 出去，消费者处理完，"
             "把结果通过下一次 resume 送回协程，协程从 yield 的返回值继续执行。\n\n"

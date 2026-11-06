@@ -25,7 +25,7 @@ class LuaCoursePacksTest {
 
     private fun packFiles(): List<File> {
         val files = File(repoRoot(), "content_packs").listFiles()
-            ?.filter { it.name.matches(Regex("""lua-(basics|core|advanced)\.json""")) }
+            ?.filter { it.name.matches(Regex("""lua-(basics|core|advanced|expert)\.json""")) }
             ?.sortedBy { it.name }
             ?: emptyList()
         assertTrue("缺少 content_packs/lua-*.json", files.isNotEmpty())

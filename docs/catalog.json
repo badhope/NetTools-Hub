@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "d4ad368f51d2ded026703a2b40bcc8a034498d11d4a551477e87b80e0d36a9b8",
+  "sha256": "ad99c7fe90d95a8f45f0ed498dd47622ebf44c79cb9ab4d218222e6968dfec54",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -48,6 +48,18 @@
       "lessons": 10,
       "bytes": 72814,
       "tier": "core"
+    },
+    {
+      "id": "c-expert",
+      "name": "C · 专业篇",
+      "version": 2,
+      "description": "8 讲：内存布局 / 动态内存 / 文件 I/O / 预处理器 / 多文件链接 / 链表 / 栈队列 / 综合项目。",
+      "sha256": "a9225dad43dd69c95b3451a993b72d7fccfce56293c8f6e838d99b5afebb1214",
+      "kind": "course",
+      "lang": "c",
+      "lessons": 8,
+      "bytes": 75486,
+      "tier": "expert"
     },
     {
       "id": "dsa-basics",
@@ -108,6 +120,18 @@
       "tier": "core"
     },
     {
+      "id": "js-expert",
+      "name": "JavaScript · 专业篇",
+      "version": 2,
+      "description": "8 讲：函数式 / 设计模式 / 模块化演进 / 性能 / 闭包陷阱 / 事件循环 / 测试 / 综合项目。",
+      "sha256": "e0ab39ba3f692b08fbaf4c85dd6ed7f268a3eb7c34d38f0061b449f58afd6c32",
+      "kind": "course",
+      "lang": "javascript",
+      "lessons": 8,
+      "bytes": 88530,
+      "tier": "expert"
+    },
+    {
       "id": "lua-advanced",
       "name": "Lua · 进阶篇",
       "version": 2,
@@ -142,6 +166,18 @@
       "lessons": 10,
       "bytes": 74908,
       "tier": "core"
+    },
+    {
+      "id": "lua-expert",
+      "name": "Lua · 专业篇",
+      "version": 2,
+      "description": "8 讲：表优化 / GC / 元表进阶 / 协程调度 / 序列化 / 游戏脚本模式 / 调试 / 综合项目。",
+      "sha256": "42ddfa8ac341e397acdd36c8b391c1828209f7a2b3d7fe42b228623ce6abd69a",
+      "kind": "course",
+      "lang": "lua",
+      "lessons": 8,
+      "bytes": 81071,
+      "tier": "expert"
     },
     {
       "id": "sql-advanced",
@@ -180,6 +216,18 @@
       "tier": "core"
     },
     {
+      "id": "sql-expert",
+      "name": "SQL · 专业篇",
+      "version": 2,
+      "description": "8 讲：执行计划 / 索引设计 / 事务隔离 / 并发锁 / JSON / 数据仓库 / 分析函数 / 留存漏斗。",
+      "sha256": "28e4c98a43b767cb36e153a11bdcbc799556e2225ca7d74b3e2dcca04416c92c",
+      "kind": "course",
+      "lang": "sql",
+      "lessons": 8,
+      "bytes": 65618,
+      "tier": "expert"
+    },
+    {
       "id": "ts-advanced",
       "name": "TypeScript · 进阶篇",
       "version": 2,
@@ -214,6 +262,18 @@
       "lessons": 10,
       "bytes": 82232,
       "tier": "core"
+    },
+    {
+      "id": "ts-expert",
+      "name": "TypeScript · 专业篇",
+      "version": 2,
+      "description": "8 讲：高级泛型 / 类型级编程 / 模块增强 / 类型安全数据层 / 领域建模 / 迁移 / 工程化 / 项目。",
+      "sha256": "de648217a7f4d8f2edc7a80a690aa47873f7b5dbef5bb11bd2f4c8d09cd79d69",
+      "kind": "course",
+      "lang": "typescript",
+      "lessons": 8,
+      "bytes": 94481,
+      "tier": "expert"
     }
   ]
 }
