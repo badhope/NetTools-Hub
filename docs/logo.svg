@@ -1,35 +1,38 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="CodeLearning · 码上">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07090F"/>
-      <stop offset="1" stop-color="#0B1220"/>
+    <linearGradient id="cl-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0E17"/>
+      <stop offset="1" stop-color="#121A2A"/>
     </linearGradient>
-    <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <linearGradient id="cl-sweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00FF9C"/>
+    </linearGradient>
+    <filter id="cl-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
     </filter>
-    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="5" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.07"/>
+    <pattern id="cl-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.05"/>
     </pattern>
   </defs>
 
-  <rect width="1200" height="300" fill="url(#bg)"/>
-  <rect width="1200" height="300" fill="url(#grid)"/>
+  <rect width="1200" height="300" rx="20" fill="url(#cl-bg)"/>
+  <rect width="1200" height="300" rx="20" fill="url(#cl-grid)"/>
+  <rect x="0.75" y="0.75" width="1198.5" height="298.5" rx="19.5" fill="none" stroke="#00E5FF" stroke-opacity="0.18" stroke-width="1.5"/>
 
-  <g filter="url(#glowCyan)">
-    <path d="M150 90 L215 150 L150 210" fill="none" stroke="#00E5FF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <g transform="translate(44 55) scale(1.75)" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#cl-glow)">
+    <path d="M41 32 L27 54 L41 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M67 32 L81 54 L67 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M40 74 L40 64 L51 64 L51 54 L62 54 L62 44" stroke="#00FF9C" stroke-width="8"/>
   </g>
-  <g filter="url(#glowGreen)">
-    <path d="M245 196 L330 196" fill="none" stroke="#00FF9C" stroke-width="16" stroke-linecap="round"/>
-  </g>
 
-  <text x="380" y="150" font-family="Consolas, Menlo, monospace" font-size="96" font-weight="bold" fill="#E6F1FF">码上</text>
-  <text x="384" y="212" font-family="Consolas, Menlo, monospace" font-size="34" font-weight="bold" fill="#FF2D78">MASHANG</text>
-  <text x="600" y="212" font-family="Consolas, Menlo, monospace" font-size="26" fill="#8FA3BF">offline · cyberpunk · assert-judged</text>
+  <text x="250" y="139" font-family="Segoe UI, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-1.5" fill="#F9FAFB">Code<tspan fill="url(#cl-sweep)">Learning</tspan></text>
+  <text x="253" y="197" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="29" font-weight="500" letter-spacing="3.5" fill="#93A3B8">码上 · 离线编程学习终端</text>
 
-  <rect x="0" y="288" width="1200" height="12" fill="#00E5FF" opacity="0.25"/>
+  <rect x="253" y="230" width="64" height="3.5" rx="1.75" fill="#00E5FF"/>
+  <text x="333" y="237" font-family="Consolas, 'SF Mono', Menlo, monospace" font-size="17" letter-spacing="2.6" fill="#00E5FF" opacity="0.62">OFFLINE FIRST · 6 LANGUAGES</text>
 </svg>

@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "66d334ccfb33eca708ed2d86b0eff75239ecb0b5c2971d5a7ce3b38869730f94",
+  "sha256": "9cd19a9b418c4305946338d1c3663e534c0b993419aea4330c6a8fcfc40dc192",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -14,16 +14,40 @@
       "bytes": 5246
     },
     {
+      "id": "c-advanced",
+      "name": "C · 进阶篇",
+      "version": 2,
+      "description": "10 讲：字符串库实战 / 结构体嵌套 / 算法 / 复杂度 / 调试 / 综合项目。",
+      "sha256": "1d5930c9184c6d9ce82bba32c68ef881f879336cd84bdc2854bdc02038e2c42f",
+      "kind": "course",
+      "lang": "c",
+      "lessons": 10,
+      "bytes": 78630,
+      "tier": "advanced"
+    },
+    {
       "id": "c-basics",
       "name": "C · 基础篇",
       "version": 2,
       "description": "10 讲：main/printf 到字符串与作用域，设备端解释执行。",
-      "sha256": "69715babf026abf40c7eb1f114f2cfd7422fad274c2e8869466ed620eb5b87e4",
+      "sha256": "0f204294b47205e0ab8d6fad646c7cbe7e7ba6e1580e9929c22a833a305fcfc6",
       "kind": "course",
       "lang": "c",
-      "lessons": 6,
-      "bytes": 22958,
+      "lessons": 10,
+      "bytes": 76474,
       "tier": "basics"
+    },
+    {
+      "id": "c-core",
+      "name": "C · 核心篇",
+      "version": 2,
+      "description": "10 讲：指针 / 数组 / 结构体 / typedef / 二维数组 / 递归 / 位运算。",
+      "sha256": "cccf415ad2e5fc326daf04a194d06d6272b292b1a1a1ca1b85560eea6e96b9ae",
+      "kind": "course",
+      "lang": "c",
+      "lessons": 10,
+      "bytes": 72726,
+      "tier": "core"
     },
     {
       "id": "dsa-basics",
@@ -64,11 +88,11 @@
       "name": "JavaScript · 基础篇",
       "version": 2,
       "description": "10 讲：从 console.log 到函数与作用域，Rhino 运行时真跑真判题。",
-      "sha256": "398741e36883c60fc02a0ec056ef7429069dad8ac6a0dd964d87058a65ab2e05",
+      "sha256": "e54495570cfc0ee2fe8817b1453938e202db5d53d63266057d9bb1767f02b899",
       "kind": "course",
       "lang": "javascript",
       "lessons": 10,
-      "bytes": 79580,
+      "bytes": 80537,
       "tier": "basics"
     },
     {

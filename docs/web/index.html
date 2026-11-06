@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>码上 · Mashang — 网页版学习终端</title>
-  <meta name="description" content="码上 Mashang 网页版：浏览器内运行 CPython 3.13，38 讲课程、assert 自动判题、变量快照与进度存档。与 Android 端共用同一套课程与判题引擎。" />
+  <title>CodeLearning · 码上 — 网页版学习终端</title>
+  <meta name="description" content="CodeLearning · 码上 网页版：浏览器内运行 CPython 3.13，六门语言、每门 30 讲、共 180+ 讲课程，assert 自动判题、变量快照与进度存档。与 Android 端共用同一套课程与判题引擎。" />
   <meta name="theme-color" content="#07090F" />
-  <meta property="og:title" content="码上 · Mashang — 网页版学习终端" />
-  <meta property="og:description" content="浏览器里跑 CPython 3.13：38 讲课程、assert 判题、变量快照、进度本地存档。" />
+  <meta property="og:title" content="CodeLearning · 码上 — 网页版学习终端" />
+  <meta property="og:description" content="浏览器里跑 CPython 3.13：180+ 讲课程、assert 判题、变量快照、进度本地存档。" />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307090F'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' fill='%2300E5FF' text-anchor='middle'%3E%E7%A0%81%3C/text%3E%3Crect x='6' y='25' width='20' height='2.5' fill='%2300FF9C'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
@@ -22,12 +22,9 @@
   <div id="boot" class="boot" role="status" aria-live="polite">
     <div class="boot-box">
       <pre class="boot-art" aria-hidden="true">
-███╗   ███╗ █████╗ ███████╗██╗  ██╗ █████╗ ███╗   ██╗ ██████╗
-████╗ ████║██╔══██╗██╔════╝██║  ██║██╔══██╗████╗  ██║██╔════╝
-██╔████╔██║███████║███████╗███████║███████║██╔██╗ ██║██║  ███╗
-██║╚██╔╝██║██╔══██║╚════██║██╔══██║██╔══██║██║╚██╗██║██║   ██║
-██║ ╚═╝ ██║██║  ██║███████║██║  ██║██║  ██║██║ ╚████║╚██████╔╝
-╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝ ╚═════╝
+█▀▀  █▀█  █▀▄  █▀▀  █    █▀▀  █▀█  █▀▄  █▄ █  █  █▄ █  █▀▀
+█    █ █  █ █  █▀▀  █    █▀▀  █▀█  █▀▄  █ ▀█  █  █ ▀█  █ █
+█▄▄  ▀▀▀  █▄▀  █▄▄  █▄▄  █▄▄  ▀ ▀  ▀ ▀  ▀  ▀  █  ▀  ▀  ▀▀▀
       </pre>
       <div class="boot-line" id="boot-line">> 正在载入 CPython 内核…</div>
       <div class="boot-actions" id="boot-actions" hidden>
@@ -38,7 +35,7 @@
   </div>
 
   <header class="hud-top">
-    <a class="logo" href="#/home" aria-label="码上首页">码上<span class="slash">_</span> <span class="logo-sub">Mashang · 网页版</span></a>
+    <a class="logo" href="#/home" aria-label="CodeLearning 首页">CodeLearning<span class="slash">_</span> <span class="logo-sub">码上 · 网页版</span></a>
     <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="打开导航">☰</button>
     <nav class="nav" id="main-nav" aria-label="主导航">
       <a class="nav-btn" data-tab="home" href="#/home">指挥台</a>
@@ -58,7 +55,7 @@
 
   <footer class="foot">
     <div class="foot-row">
-      <span>码上 · Mashang — <b id="foot-version">v0.6.0</b> · MIT</span>
+      <span>CodeLearning · 码上 — <b id="foot-version">v0.6.0</b> · MIT</span>
       <span class="sep">/</span>
       <a href="https://github.com/badhope/mashang" target="_blank" rel="noopener">GitHub</a>
       <a href="https://gitcode.com/badhope/mashang" target="_blank" rel="noopener">GitCode</a>

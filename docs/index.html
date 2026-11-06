@@ -3,25 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>码上 · Mashang — 装进口袋的赛博朋克编程学习终端</title>
-<meta name="description" content="码上 · Mashang：内嵌真实语言运行时的离线编程学习终端。38 讲闯关、assert 自动判题、变量可视化、六段位成长。Android 7.0+ 免费下载，MIT 开源。">
+<title>CodeLearning · 码上 — 装进口袋的赛博朋克编程学习终端</title>
+<meta name="description" content="CodeLearning · 码上：内嵌真实语言运行时的离线编程学习终端。六门语言、每门 30 讲、共 180+ 讲，assert 自动判题、变量可视化、六段位成长。Android 7.0+ 免费下载，MIT 开源。">
 <meta name="theme-color" content="#07090F">
 <meta name="author" content="badhope">
 <link rel="canonical" href="https://badhope.github.io/mashang/">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="码上 · Mashang">
-<meta property="og:title" content="码上 · Mashang — 装进口袋的赛博朋克编程学习终端">
-<meta property="og:description" content="内嵌 CPython 3.13、JavaScript、Lua、SQL 四个运行时的离线编程学习终端：38 讲闯关、assert 判题、变量快照、六段位成长。Android 7.0+，MIT 开源。">
+<meta property="og:site_name" content="CodeLearning · 码上">
+<meta property="og:title" content="CodeLearning · 码上 — 装进口袋的赛博朋克编程学习终端">
+<meta property="og:description" content="内嵌 CPython 3.13、JavaScript、TypeScript、C、Lua、SQL 六个运行时的离线编程学习终端：六门语言、每门 30 讲、共 180+ 讲，assert 判题、变量快照、六段位成长。Android 7.0+，MIT 开源。">
 <meta property="og:url" content="https://badhope.github.io/mashang/">
 <meta property="og:image" content="https://badhope.github.io/mashang/assets/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="码上 · Mashang — 离线编程学习终端">
-<meta name="twitter:description" content="CPython 3.13 装进口袋：38 讲课程 + assert 判题 + 变量快照，全离线。">
+<meta name="twitter:title" content="CodeLearning · 码上 — 离线编程学习终端">
+<meta name="twitter:description" content="CPython 3.13 装进口袋：六门语言、每门 30 讲、共 180+ 讲 + assert 判题 + 变量快照，全离线。">
 <meta name="twitter:image" content="https://badhope.github.io/mashang/assets/og.jpg">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"SoftwareApplication","name":"码上 Mashang","operatingSystem":"Android 7.0+","applicationCategory":"EducationalApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/badhope/mashang/releases/latest","codeRepository":"https://github.com/badhope/mashang","description":"内嵌 CPython 3.13、JavaScript、Lua、SQL 四个运行时的离线编程学习终端，38 讲课程、assert 自动判题、变量快照与六段位成长。"}
+{"@context":"https://schema.org","@type":"SoftwareApplication","name":"CodeLearning · 码上","operatingSystem":"Android 7.0+","applicationCategory":"EducationalApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"CNY"},"license":"https://opensource.org/licenses/MIT","downloadUrl":"https://github.com/badhope/mashang/releases/latest","codeRepository":"https://github.com/badhope/mashang","description":"内嵌 CPython 3.13、JavaScript、TypeScript、C、Lua、SQL 六个运行时的离线编程学习终端，六门语言、每门 30 讲、共 180+ 讲，assert 自动判题、变量快照与六段位成长。"}
 </script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2307090F'/%3E%3Ctext x='16' y='21' font-family='monospace' font-size='13' font-weight='700' fill='%2300E5FF' text-anchor='middle'%3E%E7%A0%81%3C/text%3E%3Crect x='6' y='25' width='20' height='2.5' fill='%2300FF9C'/%3E%3C/svg%3E">
 <style>
@@ -476,7 +476,7 @@ footer .fine b{color:var(--dim)}
 
 <nav id="nav">
   <div class="wrap">
-    <a class="nav-logo" href="#hero">码上<span style="color:var(--green)">_</span></a>
+    <a class="nav-logo" href="#hero">CodeLearning<span style="color:var(--green)">_</span></a>
     <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks" aria-label="打开导航">☰</button>
     <div class="nav-links" id="navLinks">
       <a href="#shots"><i>01</i>实拍</a>
@@ -501,45 +501,41 @@ footer .fine b{color:var(--dim)}
   <div id="boot" class="mono"></div>
 
   <div class="wrap hero-inner">
-    <div class="glitch-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+    <div class="glitch-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="CodeLearning · 码上">
   <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07090F"/>
-      <stop offset="1" stop-color="#0B1220"/>
+    <linearGradient id="cl-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0A0E17"/>
+      <stop offset="1" stop-color="#121A2A"/>
     </linearGradient>
-    <filter id="glowCyan" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <linearGradient id="cl-sweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00FF9C"/>
+    </linearGradient>
+    <filter id="cl-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
-    <filter id="glowGreen" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="5" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.07"/>
+    <pattern id="cl-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.05"/>
     </pattern>
   </defs>
-
-  <rect width="1200" height="300" fill="url(#bg)"/>
-  <rect width="1200" height="300" fill="url(#grid)"/>
-
-  <g filter="url(#glowCyan)">
-    <path d="M150 90 L215 150 L150 210" fill="none" stroke="#00E5FF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="1200" height="300" rx="20" fill="url(#cl-bg)"/>
+  <rect width="1200" height="300" rx="20" fill="url(#cl-grid)"/>
+  <rect x="0.75" y="0.75" width="1198.5" height="298.5" rx="19.5" fill="none" stroke="#00E5FF" stroke-opacity="0.18" stroke-width="1.5"/>
+  <g transform="translate(44 55) scale(1.75)" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#cl-glow)">
+    <path d="M41 32 L27 54 L41 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M67 32 L81 54 L67 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M40 74 L40 64 L51 64 L51 54 L62 54 L62 44" stroke="#00FF9C" stroke-width="8"/>
   </g>
-  <g filter="url(#glowGreen)">
-    <path d="M245 196 L330 196" fill="none" stroke="#00FF9C" stroke-width="16" stroke-linecap="round"/>
-  </g>
-
-  <text x="380" y="150" font-family="Consolas, Menlo, monospace" font-size="84" font-weight="bold" fill="#E6F1FF">码上</text>
-  <text x="384" y="212" font-family="Consolas, Menlo, monospace" font-size="34" font-weight="bold" fill="#FF2D78">MASHANG</text>
-  <text x="580" y="212" font-family="Consolas, Menlo, monospace" font-size="26" fill="#8FA3BF">offline · cyberpunk · assert-judged</text>
-
-  <rect x="0" y="288" width="1200" height="12" fill="#00E5FF" opacity="0.25"/>
+  <text x="250" y="139" font-family="Segoe UI, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-1.5" fill="#F9FAFB">Code<tspan fill="url(#cl-sweep)">Learning</tspan></text>
+  <text x="253" y="197" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="29" font-weight="500" letter-spacing="3.5" fill="#93A3B8">码上 · 离线编程学习终端</text>
+  <rect x="253" y="230" width="64" height="3.5" rx="1.75" fill="#00E5FF"/>
+  <text x="333" y="237" font-family="Consolas, 'SF Mono', Menlo, monospace" font-size="17" letter-spacing="2.6" fill="#00E5FF" opacity="0.62">OFFLINE FIRST · 6 LANGUAGES</text>
 </svg></div>
-    <h1 class="sr-only">码上 Mashang — 离线编程学习终端</h1>
+    <h1 class="sr-only">CodeLearning · 码上 — 离线编程学习终端</h1>
     <div class="hero-tag">码上，<em>就是马上。</em></div>
-    <div class="hero-tag-en">CODE NOW · PYTHON + JAVASCRIPT · LEARN OFFLINE, ANYWHERE</div>
-    <div class="hero-sub">装进口袋的赛博朋克编程学习终端 —— 内嵌真·<b>CPython 3.13</b>、<b>JavaScript</b>、<b>Lua</b>、<b>SQL</b> 运行时，<b>核心学习零网络</b>：写码、运行、判题全在本机；另有同源<b>网页版</b>可直接试玩</div>
+    <div class="hero-tag-en">CODE NOW · SIX LANGUAGES · LEARN OFFLINE, ANYWHERE</div>
+    <div class="hero-sub">装进口袋的赛博朋克编程学习终端 —— 内嵌真·<b>CPython 3.13</b>、<b>JavaScript</b>、<b>TypeScript</b>、<b>C</b>、<b>Lua</b>、<b>SQL</b> 运行时，<b>核心学习零网络</b>：写码、运行、判题全在本机；另有同源<b>网页版</b>可直接试玩</div>
 
     <div class="hero-cta">
       <a class="btn btn-primary" href="https://github.com/badhope/mashang/releases/latest" target="_blank" rel="noopener">
@@ -557,7 +553,7 @@ footer .fine b{color:var(--dim)}
     </div>
 
     <div class="hero-stats">
-      <span><b>Python</b> · <b>JS</b> · <b>Lua</b> · <b>SQL</b></span><span class="sep">//</span>
+      <span><b>6</b> 门语言 · <b>180+</b> 讲</span><span class="sep">//</span>
       <span><b>真实运行时</b> 全部离线</span><span class="sep">//</span>
       <span><b>assert</b> 自动判题</span><span class="sep">//</span>
       <span><b>语言包</b> 按需下载</span><span class="sep">//</span>
@@ -678,7 +674,7 @@ footer .fine b{color:var(--dim)}
       <div class="sec-id sec-cyan"><span class="bar"></span><b>04</b> // UNDER THE HOOD</div>
       <h2>内核可视化<small>HOW A PHONE RUNS PYTHON — FULLY OFFLINE</small></h2>
     </div>
-    <p class="sys-sub rv">别的学习 App 靠<b>云端执行</b>、断网即瘫；码上 把完整 <b>CPython 3.13</b> 直接嵌进 APK，所有代码都在这台手机本地跑。下面四张图把「它怎么做到」画给你看。</p>
+    <p class="sys-sub rv">别的学习 App 靠<b>云端执行</b>、断网即瘫；CodeLearning 把完整 <b>CPython 3.13</b> 直接嵌进 APK，所有代码都在这台手机本地跑。下面四张图把「它怎么做到」画给你看。</p>
 
     <div class="viz rv">
       <div class="vtag">// ARCHITECTURE</div>
@@ -727,12 +723,14 @@ footer .fine b{color:var(--dim)}
 
     <div class="viz rv">
       <div class="vtag">// WHAT YOU LEARN</div>
-      <h3>四门语言，都能真跑<small>REAL RUNTIME · LESSONS · ASSERT JUDGING</small></h3>
+      <h3>六门语言，都能真跑<small>REAL RUNTIME · LESSONS · ASSERT JUDGING</small></h3>
       <div class="bars">
-        <div class="bar-row"><span class="bl">Python · CPython 3.13 内置 —— print 到异步协程，38 讲主线 + DSA + 内置函数</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bv">内置</span></div>
-        <div class="bar-row"><span class="bl">JavaScript · Rhino —— console.log、字符串、分支、数组、对象统计</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="bv">6 讲</span></div>
-        <div class="bar-row"><span class="bl">Lua · LuaJ —— local 与类型、table、多返回值、string 库</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="bv">6 讲</span></div>
-        <div class="bar-row"><span class="bl">SQL · SQLite —— SELECT、聚合分组、JOIN、子查询与 NULL</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="bv">6 讲</span></div>
+        <div class="bar-row"><span class="bl">Python · CPython 3.13 内置 —— print 到异步协程，38 讲主线 + DSA + 内置函数</span>
+        <div class="bar-row"><span class="bl">TypeScript · 类型擦除 → Rhino —— 类型标注到类型建模</span><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><span class="bv">30 讲</span></div>
+        <div class="bar-row"><span class="bl">C · 内置解释器 —— printf 到指针、结构体与综合项目</span><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><span class="bv">30 讲</span></div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bv">内置</span></div>
+        <div class="bar-row"><span class="bl">JavaScript · Rhino —— console.log 到生成器与项目实战</span><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><span class="bv">30 讲</span></div>
+        <div class="bar-row"><span class="bl">Lua · LuaJ —— local 与类型、table、元表与协程</span><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><span class="bv">30 讲</span></div>
+        <div class="bar-row"><span class="bl">SQL · SQLite —— SELECT 到窗口函数与事务</span><div class="bar-track"><div class="bar-fill" style="width:79%"></div></div><span class="bv">30 讲</span></div>
       </div>
     </div>
   </div>
@@ -755,7 +753,7 @@ footer .fine b{color:var(--dim)}
         <div class="act"><span class="tag fin">第四幕 · 边界之外</span><span class="rng">27-30</span><span class="desc">资源管家 → 文件 IO → 自定义异常 → __main__ 守卫</span></div>
         <div class="act"><span class="tag plus">第五幕 · 生产实战</span><span class="rng">31-38</span><span class="desc">正则 → 类型提示 → 并发/异步 → 测试与工程化</span></div>
         <div class="act"><span class="tag plus">+ 角斗场 ARENA</span><span class="desc">8 大挑战（6 Python + 2 JavaScript，App 内可跑）· 霓虹计数器 / 回文侦测 / 密码防火墙…</span></div>
-        <div class="act"><span class="tag plus">+ 内容中枢 HUB</span><span class="desc">内建函数巡礼 1 讲 · DSA 基础/进阶各 5 讲 · JavaScript / Lua / SQL 各 6 讲（共 +29 讲）</span></div>
+        <div class="act"><span class="tag plus">+ 内容中枢 HUB</span><span class="desc">内建函数巡礼 1 讲 · DSA 基础/进阶各 5 讲 · JavaScript / TypeScript / C / Lua / SQL 各 30 讲（共 +161 讲，全库 180+ 讲）</span></div>
       </div>
     </div>
     <p class="curr-foot rv">每一讲都包含：<b>可运行示例 + OUTPUT 预览 + 图示/表格 + 随堂一问 + assert 判题实战</b> —— 通关即掌握。</p>
@@ -827,7 +825,7 @@ footer .fine b{color:var(--dim)}
   <div class="wrap">
     <div class="sec-head rv">
       <div class="sec-id sec-green"><span class="bar"></span><b>07</b> // DOWNLOAD</div>
-      <h2>获取 码上<small>FREE · OPEN SOURCE · NO SIGN-UP</small></h2>
+      <h2>获取 CodeLearning<small>FREE · OPEN SOURCE · NO SIGN-UP</small></h2>
     </div>
     <div class="dl-card rv">
       <div class="dl-left">
@@ -877,7 +875,7 @@ python tests/validate_content.py</div>
       </details>
       <details class="rv">
         <summary>和 Pydroid3 这类 IDE 有什么区别？</summary>
-        <div class="ans">Pydroid 是开发工具；码上 是<b>「课程即代码」的学习终端</b>——每讲自带判题挑战与成长体系。我们的目标是<b>教会你</b>，而不是只给你一个空白编辑器。</div>
+        <div class="ans">Pydroid 是开发工具；CodeLearning 是<b>「课程即代码」的学习终端</b>——每讲自带判题挑战与成长体系。我们的目标是<b>教会你</b>，而不是只给你一个空白编辑器。</div>
       </details>
       <details class="rv">
         <summary>会有 iOS 版吗？</summary>
@@ -894,36 +892,36 @@ python tests/validate_content.py</div>
 <!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap foot-center">
-    <div class="rv foot-logo"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="码上 Mashang">
+    <div class="rv foot-logo"><svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300" role="img" aria-label="CodeLearning · 码上">
   <defs>
     <linearGradient id="fbg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#07090F"/>
-      <stop offset="1" stop-color="#0B1220"/>
+      <stop offset="0" stop-color="#0A0E17"/>
+      <stop offset="1" stop-color="#121A2A"/>
     </linearGradient>
-    <filter id="fglowCyan" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="fglowGreen" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="5" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <linearGradient id="fsweep" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#00FF9C"/>
+    </linearGradient>
+    <filter id="fglow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
     <pattern id="fgrid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.07"/>
+      <path d="M48 0H0V48" fill="none" stroke="#00E5FF" stroke-opacity="0.05"/>
     </pattern>
   </defs>
-  <rect width="1200" height="300" fill="url(#fbg)"/>
-  <rect width="1200" height="300" fill="url(#fgrid)"/>
-  <g filter="url(#fglowCyan)">
-    <path d="M150 90 L215 150 L150 210" fill="none" stroke="#00E5FF" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="1200" height="300" rx="20" fill="url(#fbg)"/>
+  <rect width="1200" height="300" rx="20" fill="url(#fgrid)"/>
+  <rect x="0.75" y="0.75" width="1198.5" height="298.5" rx="19.5" fill="none" stroke="#00E5FF" stroke-opacity="0.18" stroke-width="1.5"/>
+  <g transform="translate(44 55) scale(1.75)" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#fglow)">
+    <path d="M41 32 L27 54 L41 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M67 32 L81 54 L67 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M40 74 L40 64 L51 64 L51 54 L62 54 L62 44" stroke="#00FF9C" stroke-width="8"/>
   </g>
-  <g filter="url(#fglowGreen)">
-    <path d="M245 196 L330 196" fill="none" stroke="#00FF9C" stroke-width="16" stroke-linecap="round"/>
-  </g>
-  <text x="380" y="150" font-family="Consolas, Menlo, monospace" font-size="84" font-weight="bold" fill="#E6F1FF">码上</text>
-  <text x="384" y="212" font-family="Consolas, Menlo, monospace" font-size="34" font-weight="bold" fill="#FF2D78">MASHANG</text>
-  <text x="580" y="212" font-family="Consolas, Menlo, monospace" font-size="26" fill="#8FA3BF">offline · cyberpunk · assert-judged</text>
-  <rect x="0" y="288" width="1200" height="12" fill="#00E5FF" opacity="0.25"/>
+  <text x="250" y="139" font-family="Segoe UI, Inter, 'Helvetica Neue', Arial, sans-serif" font-size="86" font-weight="700" letter-spacing="-1.5" fill="#F9FAFB">Code<tspan fill="url(#fsweep)">Learning</tspan></text>
+  <text x="253" y="197" font-family="Microsoft YaHei, PingFang SC, Noto Sans SC, sans-serif" font-size="29" font-weight="500" letter-spacing="3.5" fill="#93A3B8">码上 · 离线编程学习终端</text>
+  <rect x="253" y="230" width="64" height="3.5" rx="1.75" fill="#00E5FF"/>
+  <text x="333" y="237" font-family="Consolas, 'SF Mono', Menlo, monospace" font-size="17" letter-spacing="2.6" fill="#00E5FF" opacity="0.62">OFFLINE FIRST · 6 LANGUAGES</text>
 </svg></div>
     <div class="tag">CODE NOW · PYTHON + JAVASCRIPT · LEARN OFFLINE, ANYWHERE</div>
     <div class="foot-links">
@@ -936,7 +934,7 @@ python tests/validate_content.py</div>
       <a href="https://github.com/badhope/mashang/blob/main/PRIVACY_POLICY.md" target="_blank" rel="noopener">隐私政策</a>
     </div>
     <div class="fine">
-      <b>码上</b> · Mashang — 装进口袋的赛博朋克编程学习终端<br>
+      <b>CodeLearning</b> · 码上 — 装进口袋的赛博朋克编程学习终端<br>
       badhope / mashang · © 2026 · MIT · BUILT WITH NEON &amp; CAFFEINE
     </div>
   </div>
@@ -953,9 +951,9 @@ python tests/validate_content.py</div>
 
   /* ---- boot log typing ---- */
   const BOOT=[
-    ['> 码上 BOOT SEQUENCE v0.5.0','c'],
+    ['> CodeLearning BOOT SEQUENCE v0.5.0','c'],
     ['> mounting /dev/python ............ <b>OK</b>',''],
-    ['> curriculum: 38 lessons .......... <b>LOADED</b>',''],
+    ['> curriculum: 180+ lessons ....... <b>LOADED</b>',''],
     ['> assert judge .................... <b>ARMED</b>',''],
     ['> variable snapshot ............... <b>READY</b>',''],
     ['> network ......................... <b style="color:#00FF9C">OPTIONAL</b>','']

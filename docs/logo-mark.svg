@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 108 108" role="img" aria-label="CodeLearning mark">
+  <defs>
+    <radialGradient id="mark-bg" cx="0.32" cy="0.18" r="1.05">
+      <stop offset="0" stop-color="#16213A"/>
+      <stop offset="1" stop-color="#0A0E17"/>
+    </radialGradient>
+    <filter id="mark-glow" x="-35%" y="-35%" width="170%" height="170%">
+      <feGaussianBlur stdDeviation="1.6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="108" height="108" rx="24" fill="url(#mark-bg)"/>
+  <rect x="0.4" y="0.4" width="107.2" height="107.2" rx="23.7" fill="none" stroke="#00E5FF" stroke-opacity="0.16" stroke-width="0.8"/>
+
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#mark-glow)">
+    <path d="M41 32 L27 54 L41 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M67 32 L81 54 L67 76" stroke="#00E5FF" stroke-width="8"/>
+    <path d="M40 74 L40 64 L51 64 L51 54 L62 54 L62 44" stroke="#00FF9C" stroke-width="8"/>
+  </g>
+</svg>
