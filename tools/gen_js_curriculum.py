@@ -109,6 +109,15 @@ def pair(src, expected):
     return [code(src), output(expected)]
 
 
+def compare(title, columns):
+    """多语言对照块：同一件事在几门语言里怎么写，每栏可独立运行。"""
+    return {"type": "compare", "title": title, "columns": columns}
+
+
+def col(lang, src, note=""):
+    return {"lang": lang, "code": src.strip("\n"), "note": note}
+
+
 def exercise(title, brief, starter, hint, tests, solution, xp=100):
     return {
         "title": title,
@@ -277,6 +286,15 @@ let 是块级作用域""",
             ),
             warn(
                 "不要用 typeof 判断数组或 null。数组用 Array.isArray(x)，null 用 x === null。"
+            ),
+            compare(
+                "同一个变量，四种写法",
+                [
+                    col("python", "level = 66\nname = 'V'\nprint(level, name)", "不用声明，直接赋值"),
+                    col("javascript", "var level = 66;\nvar name = 'V';\nconsole.log(level, name);", "var / let / const 三选一"),
+                    col("typescript", "var level: number = 66;\nvar name: string = 'V';\nconsole.log(level, name);", "多了类型标注，运行时被擦除"),
+                    col("c", "int main() {\n    int level = 66;\n    char name[] = \"V\";\n    printf(\"%d %s\\n\", level, name);\n    return 0;\n}", "必须写类型，还要声明 main"),
+                ],
             ),
             quiz(
                 "const user = { name: 'V' }; user.name = 'J'; 的结果是？",

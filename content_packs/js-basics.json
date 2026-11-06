@@ -187,6 +187,32 @@
         "text": "不要用 typeof 判断数组或 null。数组用 Array.isArray(x)，null 用 x === null。"
       },
       {
+        "type": "compare",
+        "title": "同一个变量，四种写法",
+        "columns": [
+          {
+            "lang": "python",
+            "code": "level = 66\nname = 'V'\nprint(level, name)",
+            "note": "不用声明，直接赋值"
+          },
+          {
+            "lang": "javascript",
+            "code": "var level = 66;\nvar name = 'V';\nconsole.log(level, name);",
+            "note": "var / let / const 三选一"
+          },
+          {
+            "lang": "typescript",
+            "code": "var level: number = 66;\nvar name: string = 'V';\nconsole.log(level, name);",
+            "note": "多了类型标注，运行时被擦除"
+          },
+          {
+            "lang": "c",
+            "code": "int main() {\n    int level = 66;\n    char name[] = \"V\";\n    printf(\"%d %s\\n\", level, name);\n    return 0;\n}",
+            "note": "必须写类型，还要声明 main"
+          }
+        ]
+      },
+      {
         "type": "quiz",
         "question": "const user = { name: 'V' }; user.name = 'J'; 的结果是？",
         "options": [
