@@ -18,12 +18,18 @@ import sql_runner  # noqa: E402
 class SqlPackTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.pack_path = ROOT / "content_packs" / "sql-basics.json"
-        cls.lessons = json.loads(cls.pack_path.read_text(encoding="utf-8"))
+        cls.pack_paths = sorted((ROOT / "content_packs").glob("sql-*.json"))
+        cls.lessons = []
+        for path in cls.pack_paths:
+            cls.lessons.extend(json.loads(path.read_text(encoding="utf-8")))
 
     def test_pack_exists_and_has_lessons(self):
-        self.assertTrue(self.pack_path.is_file())
-        self.assertGreaterEqual(len(self.lessons), 6)
+        self.assertEqual(
+            ["sql-advanced.json", "sql-basics.json", "sql-core.json"],
+            [p.name for p in self.pack_paths],
+            "SQL 课程应为 基础/核心/进阶 三包",
+        )
+        self.assertEqual(30, len(self.lessons), "SQL 课程合计 30 讲")
         self.assertTrue(all(l["lang"] == "sql" for l in self.lessons))
 
     def test_every_solution_passes_its_tests(self):

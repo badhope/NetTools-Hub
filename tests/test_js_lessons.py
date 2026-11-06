@@ -26,9 +26,15 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+PACKS = sorted((ROOT / "content_packs").glob("js-*.json"))
 PACK = ROOT / "content_packs" / "js-basics.json"
 
 # 与 JsBridge.checkInternal 的判题语义一一对应
+#
+# 关键细节：Rhino 在每次 evaluateString 返回前会把微任务队列（Promise 回调）
+# 跑干净，所以「上一条用例注册的 then 回调」在下一条用例开始时已经执行。
+# node 的 vm 不会自动这么做，因此这里在每条用例之间显式让出一轮事件循环，
+# 否则 Promise 相关课程会被误判为失败（实测 js28）。
 HARNESS = r"""
 const fs = require('fs');
 const vm = require('vm');
@@ -47,40 +53,52 @@ function makeSandbox() {
   return { sandbox: sandbox, out: out };
 }
 
+/** 让出一轮事件循环，把已排队的 Promise 微任务跑完（对齐 Rhino 的语义）。 */
+function flushMicrotasks() {
+  return new Promise(function (resolve) { setImmediate(resolve); });
+}
+
 const result = { parse: [], blocks: [], judge: { ok: false, failures: [], output: '' } };
 
-// 1) 语法检查（只编译不执行）
-const sources = task.blocks.concat([task.starter, task.solution]);
-sources.forEach(function (src, i) {
-  try { new Function(src); }
-  catch (e) { result.parse.push({ index: i, error: String((e && e.message) || e) }); }
-});
+async function main() {
+  // 1) 语法检查（只编译不执行）
+  const sources = task.blocks.concat([task.starter, task.solution]);
+  sources.forEach(function (src, i) {
+    try { new Function(src); }
+    catch (e) { result.parse.push({ index: i, error: String((e && e.message) || e) }); }
+  });
 
-// 2) 可运行代码块真实执行
-task.blocks.forEach(function (src, i) {
+  // 2) 可运行代码块真实执行
+  for (let i = 0; i < task.blocks.length; i++) {
+    try {
+      const sb = makeSandbox();
+      vm.createContext(sb.sandbox);
+      vm.runInContext(task.blocks[i], sb.sandbox, { timeout: 5000 });
+      await flushMicrotasks();
+    } catch (e) { result.blocks.push({ index: i, error: String((e && e.message) || e) }); }
+  }
+
+  // 3) 判题：参考答案 + 逐条测试，共享作用域（用例间可共享状态）
   try {
     const sb = makeSandbox();
     vm.createContext(sb.sandbox);
-    vm.runInContext(src, sb.sandbox, { timeout: 5000 });
-  } catch (e) { result.blocks.push({ index: i, error: String((e && e.message) || e) }); }
-});
+    vm.runInContext(task.solution, sb.sandbox, { timeout: 5000 });
+    await flushMicrotasks();
+    for (let i = 0; i < task.tests.length; i++) {
+      try { vm.runInContext(task.tests[i], sb.sandbox, { timeout: 2000 }); }
+      catch (e) { result.judge.failures.push({ index: i + 1, reason: String((e && e.message) || e) }); }
+      await flushMicrotasks();
+    }
+    result.judge.output = sb.out.join('\n');
+    result.judge.ok = result.judge.failures.length === 0;
+  } catch (e) {
+    result.judge.failures.push({ index: 0, reason: 'user-code: ' + String((e && e.message) || e) });
+  }
 
-// 3) 判题：参考答案 + 逐条测试，共享作用域（用例间可共享状态）
-try {
-  const sb = makeSandbox();
-  vm.createContext(sb.sandbox);
-  vm.runInContext(task.solution, sb.sandbox, { timeout: 5000 });
-  task.tests.forEach(function (t, i) {
-    try { vm.runInContext(t, sb.sandbox, { timeout: 2000 }); }
-    catch (e) { result.judge.failures.push({ index: i + 1, reason: String((e && e.message) || e) }); }
-  });
-  result.judge.output = sb.out.join('\n');
-  result.judge.ok = result.judge.failures.length === 0;
-} catch (e) {
-  result.judge.failures.push({ index: 0, reason: 'user-code: ' + String((e && e.message) || e) });
+  process.stdout.write(JSON.stringify(result));
 }
 
-process.stdout.write(JSON.stringify(result));
+main();
 """
 
 
@@ -108,7 +126,9 @@ if _REQUIRE_NODE and not NODE:
 class JsPackBehaviorTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.lessons = json.loads(PACK.read_text(encoding="utf-8"))
+        cls.lessons = []
+        for path in PACKS:
+            cls.lessons.extend(json.loads(path.read_text(encoding="utf-8")))
         cls.tmp = tempfile.TemporaryDirectory()
         cls.harness_path = os.path.join(cls.tmp.name, "js_harness.js")
         with open(cls.harness_path, "w", encoding="utf-8") as f:
@@ -156,6 +176,17 @@ class JsPackBehaviorTests(unittest.TestCase):
             with self.subTest(lesson=lesson["id"]):
                 self.assertGreaterEqual(lesson["order"], 300)
 
+    def test_pack_covers_30_lessons_in_three_tiers(self):
+        """30 讲 = 基础/核心/进阶各 10 讲，id 连续不重复。"""
+        self.assertEqual(
+            ["js-advanced.json", "js-basics.json", "js-core.json"],
+            [p.name for p in PACKS],
+            "JavaScript 课程应为 基础/核心/进阶 三包",
+        )
+        ids = [l["id"] for l in self.lessons]
+        self.assertEqual(30, len(ids))
+        self.assertEqual(sorted(ids), sorted({f"js{i:02d}" for i in range(1, 31)}))
+
     def test_js01_greeting(self):
         self._assert_lesson_ok("js01")
 
@@ -173,6 +204,12 @@ class JsPackBehaviorTests(unittest.TestCase):
 
     def test_js06_objects(self):
         self._assert_lesson_ok("js06")
+
+    def test_every_lesson_runs_and_passes(self):
+        """30 讲全量端到端：每讲代码块实跑 + 参考答案通过全部判题。"""
+        for lesson in self.lessons:
+            with self.subTest(lesson=lesson["id"]):
+                self._assert_lesson_ok(lesson["id"])
 
     def _assert_lesson_ok(self, lid):
         lesson = next(l for l in self.lessons if l["id"] == lid)

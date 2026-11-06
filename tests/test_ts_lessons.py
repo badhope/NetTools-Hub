@@ -143,15 +143,22 @@ console.log(s);
 class CoursePackContractTests(unittest.TestCase):
     """TypeScript 课程包契约。"""
 
-    PACK = os.path.join(ROOT, "content_packs", "ts-basics.json")
+    PACKS = [
+        os.path.join(ROOT, "content_packs", name)
+        for name in ("ts-basics.json", "ts-core.json", "ts-advanced.json")
+    ]
+    PACK = PACKS[0]
 
     def test_pack_exists(self):
-        self.assertTrue(os.path.exists(self.PACK), "缺少 content_packs/ts-basics.json")
+        for path in self.PACKS:
+            self.assertTrue(os.path.exists(path), f"缺少 {path}")
 
     def test_pack_contract(self):
-        with open(self.PACK, encoding="utf-8") as f:
-            lessons = json.load(f)
-        self.assertGreaterEqual(len(lessons), 6, "TS 启程包至少 6 讲")
+        lessons = []
+        for path in self.PACKS:
+            with open(path, encoding="utf-8") as f:
+                lessons.extend(json.load(f))
+        self.assertEqual(len(lessons), 30, "TS 课程应为 基础/核心/进阶 三包各 10 讲")
         for lesson in lessons:
             with self.subTest(lesson=lesson["id"]):
                 self.assertEqual(lesson.get("lang"), "typescript")
@@ -160,10 +167,19 @@ class CoursePackContractTests(unittest.TestCase):
                 ex = lesson.get("exercise")
                 self.assertIsNotNone(ex, "每讲必须有练习")
                 self.assertTrue(ex.get("tests"), "练习必须有判题用例")
-                # 课程里不得出现转译器不支持的高级特性
-                blob = json.dumps(lesson, ensure_ascii=False)
+                # 课程里不得出现转译器不支持的高级特性。
+                # 只扫「可执行的代码」，正文讲解允许提到 declare module / 装饰器等概念
+                # ——否则讲「声明文件」这一课连概念都不能提（2026-11 修正）。
+                code_blobs = [
+                    b.get("code", "")
+                    for b in lesson.get("blocks", [])
+                    if b.get("type") == "code" and b.get("runnable", True)
+                ]
+                code_blobs.append(ex.get("starterCode", ""))
+                code_blobs.append(ex.get("solution", ""))
+                blob = json.dumps(code_blobs, ensure_ascii=False)
                 for bad in ("@decorator", "namespace ", "declare module"):
-                    self.assertNotIn(bad, blob, f"{lesson['id']} 含不支持的 TS 特性：{bad}")
+                    self.assertNotIn(bad, blob, f"{lesson['id']} 的可执行代码含不支持的 TS 特性：{bad}")
 
     def test_ids_do_not_collide(self):
         """课程 id 必须跨语言全局唯一。"""
