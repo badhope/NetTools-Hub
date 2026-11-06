@@ -286,7 +286,7 @@
       {
         "type": "code",
         "runnable": true,
-        "code": "import threading, time\n\ndef work(name, sec):\n    time.sleep(sec)\n    print(f'{name} 完成')\n\nt1 = threading.Thread(target=work, args=('任务A', 1))\nt2 = threading.Thread(target=work, args=('任务B', 1))\nt1.start(); t2.start()\nt1.join(); t2.join()\nprint('全部完成')"
+        "code": "import threading, time\n\nresults = {}\n\ndef work(name, sec):\n    time.sleep(sec)\n    results[name] = f'{name} 完成'\n\nt1 = threading.Thread(target=work, args=('任务A', 1))\nt2 = threading.Thread(target=work, args=('任务B', 1))\nt1.start(); t2.start()\nt1.join(); t2.join()\n\nfor name in ('任务A', '任务B'):\n    print(results[name])\nprint('全部完成')"
       },
       {
         "type": "output",
@@ -561,11 +561,11 @@
       {
         "type": "code",
         "runnable": true,
-        "code": "req = '''requests==2.32.3\nflask>=3.0\npytest\n'''\n\n# 解析依赖清单：每行转成 (名字, 版本约束)\nlines = [ln.strip() for ln in req.strip().splitlines() if ln.strip()]\nfor ln in lines:\n    if '==' in ln:\n        name, ver = ln.split('==')\n    elif '>=' in ln:\n        name, ver = ln.split('>=')\n    else:\n        name, ver = ln, ''\n    print(f'{name} ({ver})')"
+        "code": "req = '''requests==2.32.3\nflask>=3.0\npytest\n'''\n\n# 解析依赖清单：每行转成 (名字, 版本约束)；约束要保留比较符\nlines = [ln.strip() for ln in req.strip().splitlines() if ln.strip()]\nfor ln in lines:\n    for sep in ('==', '>='):\n        if sep in ln:\n            name, ver = ln.split(sep, 1)\n            print(f'{name} ({sep}{ver})')\n            break\n    else:\n        print(f'{ln} ()')"
       },
       {
         "type": "output",
-        "text": "requests (2.32.3)\nflask (>=3.0)\npytest ()"
+        "text": "requests (==2.32.3)\nflask (>=3.0)\npytest ()"
       },
       {
         "type": "warn",

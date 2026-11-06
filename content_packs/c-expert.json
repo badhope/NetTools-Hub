@@ -862,7 +862,7 @@
     "chapter": 74,
     "chapterName": "C · 专业篇",
     "lang": "c",
-    "title": "综合项目：学生成绩管理",
+    "title": "综合项目：成绩排名与查询",
     "subtitle": "结构体数组、排序、统计与报表",
     "xp": 220,
     "blocks": [

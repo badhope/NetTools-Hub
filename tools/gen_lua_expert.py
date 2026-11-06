@@ -1664,7 +1664,7 @@ def lua38():
         "end\n",
         xp=150,
     )
-    return lesson("lua38", 437, "综合项目", "背包、结算与回合驱动", 150, blocks, ex)
+    return lesson("lua38", 437, "综合项目：背包掉落结算", "背包、结算与回合驱动", 150, blocks, ex)
 
 
 def main():

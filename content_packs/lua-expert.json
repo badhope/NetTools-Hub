@@ -833,7 +833,7 @@
     "chapter": 44,
     "chapterName": "Lua · 专业篇",
     "lang": "lua",
-    "title": "综合项目",
+    "title": "综合项目：背包掉落结算",
     "subtitle": "背包、结算与回合驱动",
     "xp": 150,
     "blocks": [

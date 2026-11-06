@@ -1,6 +1,6 @@
 {
   "updated_at": "2026-11-06",
-  "sha256": "ad99c7fe90d95a8f45f0ed498dd47622ebf44c79cb9ab4d218222e6968dfec54",
+  "sha256": "45fa71fca0f4e4933be7103660ebf6d96b4a23a58d255de5281944b6ad8d4ec0",
   "packs": [
     {
       "id": "bonus-builtin",
@@ -54,11 +54,11 @@
       "name": "C · 专业篇",
       "version": 2,
       "description": "8 讲：内存布局 / 动态内存 / 文件 I/O / 预处理器 / 多文件链接 / 链表 / 栈队列 / 综合项目。",
-      "sha256": "a9225dad43dd69c95b3451a993b72d7fccfce56293c8f6e838d99b5afebb1214",
+      "sha256": "8b60a422cde8e55fd8ae5992426e35e82967303c4da0e39d139bd77aef416e78",
       "kind": "course",
       "lang": "c",
       "lessons": 8,
-      "bytes": 75486,
+      "bytes": 75489,
       "tier": "expert"
     },
     {
@@ -172,11 +172,11 @@
       "name": "Lua · 专业篇",
       "version": 2,
       "description": "8 讲：表优化 / GC / 元表进阶 / 协程调度 / 序列化 / 游戏脚本模式 / 调试 / 综合项目。",
-      "sha256": "42ddfa8ac341e397acdd36c8b391c1828209f7a2b3d7fe42b228623ce6abd69a",
+      "sha256": "1bcbeb3bf2fcd22c1e999826974fc9c05b3150d0b635a3a264a30907d63a0f21",
       "kind": "course",
       "lang": "lua",
       "lessons": 8,
-      "bytes": 81071,
+      "bytes": 81092,
       "tier": "expert"
     },
     {
