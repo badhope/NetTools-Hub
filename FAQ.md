@@ -67,7 +67,7 @@
 ```bash
 ./gradlew :app:assembleDebug          # Debug APK
 ./gradlew :app:assembleRelease        # 需 KEYSTORE_PATH 等 4 个环境变量
-python -m unittest discover -s tests  # 228 条测试
+python -m unittest discover -s tests  # 232 条测试
 python tests/validate_content.py      # 55 个 Python 判题项 / 201 用例
 ```
 

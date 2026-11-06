@@ -64,6 +64,31 @@ android {
             // D1: 仅当环境变量齐备、release 签名已创建时才挂载，否则保持未签名
             signingConfigs.findByName("release")?.let { signingConfig = it }
         }
+
+        /**
+         * 本地可安装的「类正式版」构建。
+         *
+         * 与 release 的差异只有一处：用 debug keystore 签名。
+         * 目的：让你**不需要生成任何密钥**就能装到手机上测真实体验——
+         * 开启 R8 与资源压缩（体积 ~25MB，dex ~5MB），debuggable=false
+         * （不可被调试器附加、无调试开销），性能与正式版一致。
+         *
+         * **不要用它发布**：
+         *  - 证书主体是 CN=Android Debug，商店会拒收；CI 的签名校验也会失败
+         *  - 无法覆盖安装到正式版（签名不同），反之亦然
+         *
+         * 用法：./gradlew :app:assembleLocalRelease
+         * 产物：app/build/outputs/apk/localRelease/app-localRelease.apk
+         */
+        create("localRelease") {
+            initWith(getByName("release"))
+            applicationIdSuffix = ".local"
+            versionNameSuffix = "-local"
+            isDebuggable = false
+            // 用 debug 证书签名：本机 ~/.android/debug.keystore，Gradle 自动生成
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks += listOf("release")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

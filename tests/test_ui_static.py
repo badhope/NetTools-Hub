@@ -375,6 +375,45 @@ class AccessibilityTests(unittest.TestCase):
                       "自动播放按钮应受风格开关控制")
 
 
+class BuildVariantTests(unittest.TestCase):
+    """构建变体契约。
+
+    localRelease 是「本地可装、接近正式版」的构建：不需要开发者提供 keystore
+    就能在真机上测 R8 版本的真实性能。它必须与正式版隔离（包名后缀），
+    否则会互相覆盖安装、导致学习进度丢失。
+    """
+
+    def test_local_release_variant_exists(self):
+        gradle = _read(os.path.join(ROOT, "app", "build.gradle.kts"))
+        self.assertIn('create("localRelease")', gradle,
+                      "缺少 localRelease 构建变体")
+        self.assertIn("initWith(getByName(\"release\"))", gradle,
+                      "localRelease 必须继承 release 的 R8 配置")
+
+    def test_local_release_uses_debug_signing(self):
+        gradle = _read(os.path.join(ROOT, "app", "build.gradle.kts"))
+        seg = gradle[gradle.index('create("localRelease")'):][:800]
+        self.assertIn("signingConfigs.getByName(\"debug\")", seg,
+                      "localRelease 应用 debug keystore 签名（无需用户提供密钥）")
+        self.assertIn("isDebuggable = false", seg,
+                      "localRelease 必须不可调试，否则性能不代表真实体验")
+
+    def test_local_release_is_isolated_from_production(self):
+        """包名必须加后缀，避免与正式版互相覆盖安装。"""
+        gradle = _read(os.path.join(ROOT, "app", "build.gradle.kts"))
+        seg = gradle[gradle.index('create("localRelease")'):][:800]
+        self.assertIn('applicationIdSuffix = ".local"', seg,
+                      "localRelease 包名应加 .local 后缀")
+        self.assertIn("versionNameSuffix", seg,
+                      "localRelease 版本号应带后缀以便区分")
+
+    def test_manifest_does_not_hardcode_debuggable(self):
+        """硬编码 android:debuggable 会触发 lint HardcodedDebugMode。"""
+        manifest = _read(os.path.join(ROOT, "app", "src", "main", "AndroidManifest.xml"))
+        self.assertNotIn("android:debuggable", manifest,
+                         "不得硬编码 debuggable，交由构建类型决定")
+
+
 class PlatformDecisionTests(unittest.TestCase):
     """平台策略决策（2026-11）：只支持 Android 10+，主发国内渠道。
 

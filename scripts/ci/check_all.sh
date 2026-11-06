@@ -112,6 +112,13 @@ if [ "$FAST" -eq 0 ]; then
   else
     bad "androidTest 编译"
   fi
+
+  printf '\n>> localRelease 构建（本地可装、R8 生效、debug 证书签名）\n'
+  if ./gradlew :app:assembleLocalRelease --no-daemon -q 2>/dev/null; then
+    ok "localRelease 构建"
+  else
+    bad "localRelease 构建"
+  fi
 fi
 
 printf '\n========== 汇总 ==========\n'
